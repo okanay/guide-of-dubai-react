@@ -1,10 +1,9 @@
 import { PropsWithChildren } from 'react'
 import { Toaster } from 'sonner'
-import { ColorThemeProvider } from './theme-color'
 
 export const AppProviders = ({ children }: PropsWithChildren) => {
   return (
-    <ColorThemeProvider>
+    <>
       <Toaster
         position="top-right"
         richColors
@@ -19,6 +18,6 @@ export const AppProviders = ({ children }: PropsWithChildren) => {
         }}
       />
       {children}
-    </ColorThemeProvider>
+    </>
   )
 }
