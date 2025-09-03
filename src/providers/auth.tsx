@@ -1,9 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react'
 import { createStore, StoreApi, useStore } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
-import { getHeaders } from '@tanstack/react-start/server'
 import { createServerFn } from '@tanstack/react-start'
-import { parseCookies } from 'src/utils/parse-cookies'
 import { AppFetch } from 'src/api/app-fetch'
 
 // ================================
@@ -12,7 +10,6 @@ import { AppFetch } from 'src/api/app-fetch'
 
 interface AuthState {
   user: UserProfileView | null
-  permissions: Permission[]
   sessionStatus: SessionStatus
 }
 
@@ -34,35 +31,27 @@ const createAuthStore = (initialData?: LoginResponse | null) => {
   const initialState: AuthState = initialData
     ? {
         user: initialData.user,
-        permissions: initialData.permissions,
         sessionStatus: 'authenticated',
       }
     : {
         user: null,
-        permissions: [],
         sessionStatus: 'unauthenticated',
       }
 
   return createStore<AuthStore>()(
     immer((set, get) => ({
-      // Initial state
       ...initialState,
 
-      // Actions
       setAuthData: (data: LoginResponse) => {
         set((state) => {
           state.user = data.user
-          state.permissions = data.permissions
           state.sessionStatus = 'authenticated'
         })
-        // Cookie kaydı kaldırıldı, bu satır kaldırıldı
-        // setAuthCookies(data)
       },
 
       clearAuth: () => {
         set((state) => {
           state.user = null
-          state.permissions = []
           state.sessionStatus = 'unauthenticated'
         })
       },
@@ -101,17 +90,12 @@ const AuthContext = createContext<AuthContext>(undefined)
 
 interface AuthProviderProps extends PropsWithChildren {
   initialUser?: UserProfileView | null
-  initialPermissions?: Permission[]
 }
 
-export function AuthProvider({
-  children,
-  initialUser,
-  initialPermissions = [],
-}: AuthProviderProps) {
+export function AuthProvider({ children, initialUser }: AuthProviderProps) {
   // Store'u oluştururken initial data kullan
   const [store] = useState(() => {
-    const initialData = initialUser ? { user: initialUser, permissions: initialPermissions } : null
+    const initialData = initialUser ? { user: initialUser } : null
 
     return createAuthStore(initialData)
   })
@@ -221,7 +205,6 @@ export const apiGetMeInitial = createServerFn().handler(async () => {
   } catch (error) {
     return {
       user: null,
-      permissions: [],
     }
   }
 })
@@ -233,19 +216,4 @@ export const apiGetMeInitial = createServerFn().handler(async () => {
 export function useUser() {
   const { user } = useAuth()
   return user
-}
-
-export function useHasPermission(
-  permission: Permission | Permission[],
-  requireAll = false,
-): boolean {
-  const { permissions } = useAuth()
-
-  if (Array.isArray(permission)) {
-    return requireAll
-      ? permission.every((p) => permissions.includes(p))
-      : permission.some((p) => permissions.includes(p))
-  }
-
-  return permissions.includes(permission)
 }
