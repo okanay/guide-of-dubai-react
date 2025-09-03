@@ -1,0 +1,83 @@
+{
+  "name": "wtfi-frontend",
+  "module": "index.ts",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "dev:locale": "vite dev --host 0.0.0.0",
+    "start:locale": "bun run .output/server/index.mjs --host 0.0.0.0",
+    "build:locale": "NODE_ENV=development vite build --mode development",
+    "build:production": "NODE_ENV=production vite build --mode production",
+    "deploy": "bunx wrangler deploy .output/server/index.mjs --assets .output/public",
+    "clean": "rm -rf .output && rm -rf .tanstack && rm -rf .nitro && rm -rf dist"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "5.2.1",
+    "@phosphor-icons/react": "^2.1.10",
+    "@tailwindcss/postcss": "4.1.11",
+    "@tailwindcss/vite": "4.1.11",
+    "@tanstack/react-router": "^1.130.12",
+    "@tanstack/react-start": "^1.130.15",
+    "@tanstack/router": "^0.0.1-beta.53",
+    "@tanstack/start": "^1.120.20",
+    "@types/js-cookie": "3.0.6",
+    "@types/leaflet": "^1.9.20",
+    "@types/react-window": "^1.8.8",
+    "axios": "1.11.0",
+    "browser-image-compression": "2.0.2",
+    "date-fns": "4.1.0",
+    "i18next": "25.3.5",
+    "i18next-browser-languagedetector": "8.2.0",
+    "i18next-http-backend": "3.0.2",
+    "immer": "10.1.1",
+    "js-cookie": "3.0.5",
+    "leaflet": "^1.9.4",
+    "lucide-react": "0.539.0",
+    "motion": "12.23.12",
+    "postcss": "8.5.6",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "react-hook-form": "7.62.0",
+    "react-i18next": "15.6.1",
+    "react-image-crop": "11.0.10",
+    "react-leaflet": "^5.0.0",
+    "sonner": "2.0.7",
+    "tailwind-merge": "3.3.1",
+    "tailwindcss": "4.1.11",
+    "unenv": "1.10.0",
+    "zod": "^4.1.5",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.20",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.2",
+    "babel-plugin-react-compiler": "19.1.0-rc.2",
+    "prettier": "3.6.2",
+    "prettier-plugin-tailwindcss": "0.6.14",
+    "vite": "^7.1.3",
+    "vite-tsconfig-paths": "^5.1.4"
+  },
+  "overrides": {
+    "@tanstack/react-router": "1.130.12",
+    "@tanstack/react-start": "1.130.15",
+    "@tanstack/router": "0.0.1-beta.53",
+    "@tanstack/start": "1.120.20"
+  },
+  "resolutions": {
+    "@tanstack/react-router": "1.130.12",
+    "@tanstack/react-start": "1.130.15",
+    "@tanstack/router": "0.0.1-beta.53",
+    "@tanstack/start": "1.120.20"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "bun": ">=1.2.0"
+  },
+  "packageManager": "bun@1.2.0",
+  "peerDependencies": {
+    "typescript": "^5.9.2"
+  }
+}

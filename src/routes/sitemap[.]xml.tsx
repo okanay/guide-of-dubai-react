@@ -1,0 +1,254 @@
+import { createServerFileRoute } from '@tanstack/react-start/server'
+
+interface BackendSitemapData {
+  contents: { url: string; lastModified?: string }[]
+  lists: { url: string; lastModified?: string }[]
+}
+
+export const ServerRoute = createServerFileRoute('/sitemap.xml').methods({
+  GET: async () => {
+    const baseUrl = getBaseUrl()
+    const backendUrl = process.env.VITE_APP_BACKEND_URL || 'http://localhost:8080'
+
+    // --- Statik Sayfalar ---
+    const staticPages: SitemapUrl[] = [
+      {
+        url: '/',
+        lastModified: new Date(),
+        changeFrequency: 'daily',
+        priority: 1.0,
+      },
+      {
+        url: '/news',
+        lastModified: new Date(),
+        changeFrequency: 'daily',
+        priority: 0.9,
+      },
+      {
+        url: '/article',
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.9,
+      },
+      {
+        url: '/opinion',
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.9,
+      },
+      {
+        url: '/report',
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.8,
+      },
+      {
+        url: '/magazine',
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.8,
+      },
+      {
+        url: '/townhalls',
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.8,
+      },
+      {
+        url: '/stream',
+        lastModified: new Date(),
+        changeFrequency: 'daily',
+        priority: 0.9,
+      },
+      {
+        url: '/list',
+        lastModified: new Date(),
+        changeFrequency: 'daily',
+        priority: 0.9,
+      },
+      {
+        url: '/contact',
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.7,
+      },
+      {
+        url: '/login',
+        lastModified: new Date(),
+        changeFrequency: 'daily',
+        priority: 0.5,
+      },
+      {
+        url: '/register',
+        lastModified: new Date(),
+        changeFrequency: 'daily',
+        priority: 0.5,
+      },
+      {
+        url: '/forgot-password',
+        lastModified: new Date(),
+        changeFrequency: 'daily',
+        priority: 0.5,
+      },
+      {
+        url: '/search',
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.8,
+      },
+      {
+        url: '/terms-privacy',
+        lastModified: new Date(),
+        changeFrequency: 'yearly',
+        priority: 0.5,
+      },
+      {
+        url: '/terms-service',
+        lastModified: new Date(),
+        changeFrequency: 'yearly',
+        priority: 0.5,
+      },
+    ]
+
+    try {
+      const response = await fetch(`${backendUrl}/v1/public/content/sitemap`)
+      if (!response.ok) {
+        throw new Error(`Backend'den sitemap verisi alınamadı: ${response.statusText}`)
+      }
+      const data: BackendSitemapData = await response.json()
+
+      // İçerik URL'lerini formatla
+      const contentUrls: SitemapUrl[] = data.contents.map((item) => ({
+        url: item.url,
+        lastModified: item.lastModified ? new Date(item.lastModified) : new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.8,
+      }))
+
+      // Liste URL'lerini formatla
+      const listUrls: SitemapUrl[] = data.lists.map((item) => ({
+        url: item.url,
+        lastModified: item.lastModified ? new Date(item.lastModified) : new Date(),
+        changeFrequency: 'daily',
+        priority: 0.9,
+      }))
+
+      // Tüm URL'leri birleştir
+      const allUrls = [...staticPages, ...contentUrls, ...listUrls]
+
+      const sitemapConfig: SitemapResponse = {
+        urls: allUrls,
+        host: baseUrl,
+      }
+
+      const sitemapXml = generateSitemapXml(sitemapConfig, baseUrl)
+
+      return new Response(sitemapXml, {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/xml; charset=utf-8',
+        },
+      })
+    } catch (error) {
+      console.error('Sitemap oluşturma hatası:', error)
+      const fallbackConfig: SitemapResponse = { urls: staticPages, host: baseUrl }
+      const sitemapXml = generateSitemapXml(fallbackConfig, baseUrl)
+      return new Response(sitemapXml, {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/xml; charset=utf-8',
+        },
+      })
+    }
+  },
+})
+
+// Helper functions
+function normalizeUrl(url: string, baseUrl: string): string {
+  const cleanBaseUrl = baseUrl.replace(/\/$/, '')
+  const cleanUrl = url.startsWith('/') ? url : `/${url}`
+  return `${cleanBaseUrl}${cleanUrl}`
+}
+
+function formatDate(date: Date | string | undefined): string {
+  if (!date) return new Date().toISOString()
+
+  if (typeof date === 'string') {
+    // Eğer string zaten ISO format'taysa direkt döndür
+    if (date.includes('T') || date.includes('Z')) return date
+    // Eğer sadece tarih formatındaysa Date'e çevir
+    return new Date(date).toISOString()
+  }
+
+  return date.toISOString()
+}
+
+function generateSitemapXml(config: SitemapResponse, baseUrl: string): string {
+  const lines: string[] = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
+    '        xmlns:xhtml="http://www.w3.org/1999/xhtml">',
+  ]
+
+  config.urls.forEach((urlConfig) => {
+    lines.push('  <url>')
+    lines.push(`    <loc>${normalizeUrl(urlConfig.url, baseUrl)}</loc>`)
+
+    if (urlConfig.lastModified) {
+      lines.push(`    <lastmod>${formatDate(urlConfig.lastModified)}</lastmod>`)
+    }
+
+    if (urlConfig.changeFrequency) {
+      lines.push(`    <changefreq>${urlConfig.changeFrequency}</changefreq>`)
+    }
+
+    if (urlConfig.priority !== undefined) {
+      lines.push(`    <priority>${urlConfig.priority.toFixed(1)}</priority>`)
+    }
+
+    // Add alternate language links
+    if (urlConfig.alternates?.languages) {
+      Object.entries(urlConfig.alternates.languages).forEach(([lang, href]) => {
+        lines.push(`    <xhtml:link rel="alternate" hreflang="${lang}" href="${href}" />`)
+      })
+    }
+
+    lines.push('  </url>')
+  })
+
+  lines.push('</urlset>')
+  return lines.join('\n')
+}
+
+function getBaseUrl(): string {
+  return (
+    process.env.VITE_APP_CANONICAL_URL ||
+    process.env.VITE_APP_FRONTEND_URL ||
+    'http://localhost:3000'
+  ).replace(/\/$/, '')
+}
+
+function getCacheControl(isDev: boolean): string {
+  return isDev
+    ? 'no-cache, no-store, must-revalidate'
+    : 'public, max-age=1800, s-maxage=1800, stale-while-revalidate=1800'
+}
+
+// Types
+interface SitemapUrl {
+  url: string
+  lastModified?: Date | string
+  changeFrequency?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never'
+  priority?: number
+  alternates?: {
+    languages?: { [key: string]: string }
+    media?: { [key: string]: string }
+  }
+}
+
+interface SitemapResponse {
+  urls: SitemapUrl[]
+  host?: string
+}
+
+export type { SitemapUrl, SitemapResponse }

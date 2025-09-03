@@ -1,0 +1,45 @@
+@import './color-theme.css';
+@import './font.css';
+@import './typography.css';
+@import './leaflet.css';
+
+@import 'tailwindcss';
+
+@theme {
+  --font-custom-sans: 'Libre Franklin', 'Inter', 'Helvetica Neue', 'Arial', 'sans-serif';
+
+  --opacity-hover: 0.08;
+  --opacity-focus: 0.1;
+  --opacity-pressed: 0.12;
+  --opacity-dragged: 0.14;
+  --opacity-disabled: 0.38;
+  --opacity-on-disabled: 0.38;
+  --opacity-scrim: 0.32;
+}
+
+@layer base {
+  * {
+    @apply appearance-none font-custom-sans focus:outline-none;
+  }
+
+  input:checked {
+    @apply appearance-auto border-primary bg-primary/10;
+  }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@layer utilities {
+  .btn-default {
+    @apply relative isolate overflow-hidden transition-all duration-500 ease-in-out select-none after:border-transparent hover:before:opacity-hover hover:after:border-current/16 focus:before:opacity-focus focus:before:ring-current focus:after:border-current/10 active:before:opacity-pressed;
+  }
+  .btn-default::before {
+    @apply absolute inset-0 rounded-[inherit] bg-current opacity-0 transition-opacity duration-300 content-[''];
+  }
+  .btn-default::after {
+    @apply absolute inset-0 rounded-[inherit] bg-transparent opacity-100 transition-opacity duration-300 content-[''];
+  }
+}

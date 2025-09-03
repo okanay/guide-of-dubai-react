@@ -1,0 +1,62 @@
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.production
+.env.local
+wrangler.toml
+
+# Local
+.DS_Store
+*.local
+*.log*
+
+# Example Project
+go-github-updater
+
+
+# Dist
+node_modules/
+dist/
+.vinxi/
+.output/
+.vercel/
+.netlify/
+.wrangler/
+.nitro/types/
+**/.git/
+**/.next/
+**/node_modules/
+**/.nitro/
+**/.output/
+**/.wrangler/
+**/tanstack/
+**/.tanstack/
+**/.DS_Store/
+**/bin/
+**/tmp/
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# output
+out
+dist
+*.tgz
+
+# code coverage
+coverage
+*.lcov
+
+# logs
+logs
+_.log
+report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
+
+# caches
+.eslintcache
+.cache
+*.tsbuildinfo

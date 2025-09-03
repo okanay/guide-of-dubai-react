@@ -1,0 +1,14 @@
+{
+  "root": {
+    "title": "Guide Of Dubai | Blog - Book Hotels, Tours & Flights Easily",
+    "description": "Plan your Dubai trip in one app – book flights, hotels, tours, and activities with ease. Trusted by travelers for seamless Dubai experiences."
+  },
+  "notFound": {
+    "title": "Page Not Found | Guide Of Dubai - Return to Dubai Travel Planning",
+    "description": "The page you're looking for doesn't exist. Return to Guide Of Dubai to continue planning your perfect Dubai trip with our booking services."
+  },
+  "error": {
+    "title": "Error Occurred | Guide Of Dubai - Continue Your Travel Planning",
+    "description": "An error occurred. Return to Guide Of Dubai to continue your travel planning and explore our booking services."
+  }
+}
