@@ -39,3 +39,11 @@
     @apply absolute inset-0 rounded-[inherit] bg-transparent opacity-100 transition-opacity duration-300 content-[''];
   }
 }
+
+@utility btn-default {
+    position: relative;
+}
+
+@utility max-w-8xl {
+    max-width: 90.12rem /* 90.12rem = 1442px */;
+}
