@@ -1,0 +1,14 @@
+{
+  "root": {
+    "title": "Dubai Rehberi | Blog - Otelleri, Turları ve Uçuşları Kolayca Rezervasyon Yapın",
+    "description": "Dubai seyahatinizi tek bir uygulamada planlayın - uçuş, otel, tur ve aktiviteleri kolayca rezervasyon yapın. Gezginler tarafından kusursuz Dubai deneyimleri için güvenilir."
+  },
+  "notFound": {
+    "title": "Sayfa Bulunamadı | Dubai Rehberi - Dubai Seyahat Planlamasına Dönün",
+    "description": "Aradığınız sayfa mevcut değil. Mükemmel Dubai seyahatinizi rezervasyon hizmetlerimizle planlamaya devam etmek için Dubai Rehberi'ne dönün."
+  },
+  "error": {
+    "title": "Bir Hata Oluştu | Dubai Rehberi - Seyahat Planlamanıza Devam Edin",
+    "description": "Bir hata oluştu. Seyahat planlamanıza devam etmek ve rezervasyon hizmetlerimizi keşfetmek için Dubai Rehberi'ne dönün."
+  }
+}

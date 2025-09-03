@@ -25,7 +25,6 @@ export const ServerRoute = createServerFileRoute('/robots.txt').methods({
         {
           userAgent: '*',
           allow: '/',
-          disallow: ['/editor/', '/forgot-password-confirm', '/verify-email'],
         },
         {
           userAgent: ['AhrefsBot', 'SemrushBot', 'MJ12bot', 'DotBot'],

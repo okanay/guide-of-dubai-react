@@ -6,7 +6,7 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-custom-sans: 'Libre Franklin', 'Inter', 'Helvetica Neue', 'Arial', 'sans-serif';
+  --font-custom-sans: 'Cairo', 'Inter', 'Helvetica Neue', 'Arial', 'sans-serif';
 
   --opacity-hover: 0.08;
   --opacity-focus: 0.1;
@@ -19,11 +19,7 @@
 
 @layer base {
   * {
-    @apply appearance-none font-custom-sans focus:outline-none;
-  }
-
-  input:checked {
-    @apply appearance-auto border-primary bg-primary/10;
+    @apply font-custom-sans focus:outline-none ;
   }
 
   button:not(:disabled),

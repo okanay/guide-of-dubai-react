@@ -1,21 +1,25 @@
 import { createFileRoute, useLocation, useRouter } from '@tanstack/react-router'
 import { useEffect } from 'react'
-import { Link } from 'src/i18n/link'
+import { useTranslation } from 'react-i18next'
+import { useLanguage } from 'src/i18n/prodiver'
+import { Link } from 'src/i18n/router/link'
 
 export const CustomNotFoundPage = () => {
+  const { t } = useTranslation('error-pages')
+
   return (
-    <main className="bg-background text-on-background flex min-h-screen items-center justify-center">
-      <div className="bg-surface mx-auto flex max-w-7xl flex-col items-center p-6 text-center">
-        <h1 className="text-primary mb-4 text-7xl font-extrabold">404</h1>
-        <p className="text-on-surface text-3xl font-semibold">Page Not Found</p>
-        <p className="text-on-surface-variant mb-6 mt-2 max-w-2xl text-balance text-xl font-semibold">
-          The page you are looking for could not be found. Please check the address and try again.
+    <main className="flex min-h-screen items-center justify-center bg-box-surface text-on-box-black">
+      <div className="mx-auto flex max-w-7xl flex-col items-center rounded-2xl bg-gray-surface p-6 text-center shadow-lg">
+        <h1 className="mb-4 text-7xl font-extrabold text-primary-500">404</h1>
+        <p className="text-3xl font-semibold text-on-box-black">{t('not-found.title')}</p>
+        <p className="mt-2 mb-6 max-w-2xl text-xl font-semibold text-balance text-gray-600">
+          {t('not-found.description')}
         </p>
         <Link
-          to="/"
-          className={`btn-state-layer bg-secondary-container text-on-secondary-container hover:before:opacity-hover focus:before:opacity-focus active:before:opacity-pressed inline-flex h-16 items-center justify-center overflow-hidden rounded-full px-8 text-lg font-medium tracking-wide transition-transform duration-500`}
+          to="/$lang"
+          className="inline-flex h-16 items-center justify-center overflow-hidden rounded-full bg-btn-primary px-8 text-lg font-medium tracking-wide text-on-btn-primary shadow-md transition-all duration-300 hover:bg-btn-primary-hover hover:shadow-lg focus:bg-btn-primary-focus active:scale-95"
         >
-          Go To Homepage
+          {t('not-found.return-link')}
         </Link>
       </div>
       <NavigateNotFound />
@@ -24,12 +28,13 @@ export const CustomNotFoundPage = () => {
 }
 
 const NavigateNotFound = () => {
+  const { language } = useLanguage()
   const location = useLocation()
   const router = useRouter()
 
   useEffect(() => {
     if (location.pathname !== '/not-found') {
-      router.navigate({ to: '/$lang/not-found', params: { lang: 'en' } })
+      router.navigate({ to: '/$lang/not-found', params: { lang: language.value } })
     }
   }, [])
 

@@ -1,4 +1,5 @@
 import { Link as RouterLink, type LinkProps } from '@tanstack/react-router'
+import { useLanguage } from '../prodiver'
 
 interface Props
   extends Omit<React.ComponentPropsWithoutRef<'a'>, 'children' | 'target'>,
@@ -8,8 +9,19 @@ interface Props
 }
 
 export const Link: React.FC<Props> = ({ children, ...rest }) => {
+  const { language } = useLanguage()
+
   return (
-    <RouterLink {...rest} resetScroll={true} preload={'intent'} preloadDelay={500}>
+    <RouterLink
+      {...rest}
+      params={{
+        lang: language.value,
+        ...(rest.params as any),
+      }}
+      resetScroll={true}
+      preload={'intent'}
+      preloadDelay={500}
+    >
       {children}
     </RouterLink>
   )

@@ -20,7 +20,7 @@ type Props = PropsWithChildren & {
 
 export const THEME_SET: Theme[] = ['light', 'dark', 'system']
 export const THEME_DEFAULT: Theme = 'system'
-export const THEME_COOKIE_KEY = 'theme'
+export const THEME_COOKIE_NAME = 'theme'
 export const THEME_COOKIE_DURATION = 365
 
 export function ThemeStore({ children, initialTheme }: Props) {
@@ -34,7 +34,7 @@ export function ThemeStore({ children, initialTheme }: Props) {
           set({ theme })
 
           if (theme === 'system') {
-            Cookies.remove(THEME_COOKIE_KEY)
+            Cookies.remove(THEME_COOKIE_NAME)
             localStorage.removeItem('theme')
             document.documentElement.removeAttribute('data-theme')
             document.documentElement.removeAttribute('class')
@@ -44,7 +44,7 @@ export function ThemeStore({ children, initialTheme }: Props) {
             document.documentElement.setAttribute('data-theme', systemTheme)
             document.documentElement.className = systemTheme
           } else {
-            Cookies.set(THEME_COOKIE_KEY, theme, { expires: THEME_COOKIE_DURATION })
+            Cookies.set(THEME_COOKIE_NAME, theme, { expires: THEME_COOKIE_DURATION })
             localStorage.setItem('theme', theme)
             document.documentElement.setAttribute('data-theme', theme)
             document.documentElement.className = theme
@@ -87,7 +87,7 @@ export function ThemeStore({ children, initialTheme }: Props) {
 }
 
 export const getPreferedTheme = createServerFn({ method: 'GET' }).handler(async () => {
-  const themeFromCookie = getCookie(THEME_COOKIE_KEY) as Theme | undefined
+  const themeFromCookie = getCookie(THEME_COOKIE_NAME) as Theme | undefined
 
   if (themeFromCookie && THEME_SET.includes(themeFromCookie)) {
     return themeFromCookie

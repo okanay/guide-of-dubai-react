@@ -1,7 +1,7 @@
-/* Libre Franklin Start */
+/* Cairo Start */
 
 @font-face {
-  font-family: 'Libre Franklin';
+  font-family: 'Cairo';
   font-style: normal;
   font-weight: 900;
   src: url('/fonts/custom-sans/black.woff2') format('woff2');
@@ -9,7 +9,7 @@
 }
 
 @font-face {
-  font-family: 'Libre Franklin';
+  font-family: 'Cairo';
   font-style: normal;
   font-weight: 800;
   src: url('/fonts/custom-sans/extra-bold.woff2') format('woff2');
@@ -17,7 +17,7 @@
 }
 
 @font-face {
-  font-family: 'Libre Franklin';
+  font-family: 'Cairo';
   font-style: normal;
   font-weight: 700;
   src: url('/fonts/custom-sans/bold.woff2') format('woff2');
@@ -25,7 +25,7 @@
 }
 
 @font-face {
-  font-family: 'Libre Franklin';
+  font-family: 'Cairo';
   font-style: normal;
   font-weight: 600;
   src: url('/fonts/custom-sans/semibold.woff2') format('woff2');
@@ -33,7 +33,7 @@
 }
 
 @font-face {
-  font-family: 'Libre Franklin';
+  font-family: 'Cairo';
   font-style: normal;
   font-weight: 500;
   src: url('/fonts/custom-sans/medium.woff2') format('woff2');
@@ -41,7 +41,7 @@
 }
 
 @font-face {
-  font-family: 'Libre Franklin';
+  font-family: 'Cairo';
   font-style: normal;
   font-weight: 400;
   src: url('/fonts/custom-sans/regular.woff2') format('woff2');
@@ -49,7 +49,7 @@
 }
 
 @font-face {
-  font-family: 'Libre Franklin';
+  font-family: 'Cairo';
   font-style: normal;
   font-weight: 300;
   src: url('/fonts/custom-sans/light.woff2') format('woff2');
@@ -57,57 +57,11 @@
 }
 
 @font-face {
-  font-family: 'Libre Franklin';
+  font-family: 'Cairo';
   font-style: normal;
   font-weight: 200;
-  src: url('/fonts/custom-sans/thin.woff2') format('woff2');
+  src: url('/fonts/custom-sans/extra-light.woff2') format('woff2');
   font-display: swap;
 }
 
-@font-face {
-  font-family: 'Libre Franklin';
-  font-style: normal;
-  font-weight: 100;
-  src: url('/fonts/custom-sans/extra-thin.woff2') format('woff2');
-  font-display: swap;
-}
-
-/* Libre Franklin End */
-/* Libre Baskerville Start */
-
-@font-face {
-  font-family: 'Libre Baskerville';
-  font-style: normal;
-  font-weight: 700;
-  src: url('/fonts/custom-serif/bold.woff2') format('woff2');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Libre Baskerville';
-  font-style: italic;
-  font-weight: 400;
-  src: url('/fonts/custom-serif/italic.woff2') format('woff2');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Libre Baskerville';
-  font-style: normal;
-  font-weight: 400;
-  src: url('/fonts/custom-serif/regular.woff2') format('woff2');
-  font-display: swap;
-}
-
-/* Libre Baskerville End */
-/* Space Grotesk Start  */
-
-@font-face {
-  font-family: 'Space Grotesk';
-  font-style: normal;
-  font-weight: 700;
-  src: url('/fonts/space-grotesk/bold.woff2') format('woff2');
-  font-display: swap;
-}
-
-/* Space Grotesk End */
+/* Cairo End */

@@ -1,16 +1,41 @@
-import { createRootRoute, defer, HeadContent, Outlet, Scripts } from '@tanstack/react-router'
+import { createRootRoute, HeadContent, Outlet, redirect, Scripts } from '@tanstack/react-router'
 import { type ReactNode } from 'react'
-import { DEFAULT_LANGUAGE } from 'src/i18n/config'
 import { AppProviders } from 'src/providers'
 import globals from '../styles/globals.css?url'
-import { apiGetMeInitial, AuthProvider } from 'src/providers/auth'
+import { getMeInitial, AuthProvider } from 'src/providers/auth'
+import { getPreferedSettings } from 'src/i18n/get-prefered-settings'
+import { ThemeStore } from 'src/providers/theme-mode'
+import LanguageProvider from 'src/i18n/prodiver'
 
 const CANONICAL_URL = import.meta.env.VITE_APP_CANONICAL_URL
 
 export const Route = createRootRoute({
-  loader: async () => {
-    const { user, permissions } = await apiGetMeInitial()
-    return { user, permissions }
+  beforeLoad: async ({ location }) => {
+    const lang = location.pathname.split('/')[1]
+
+    return {
+      lang,
+    }
+  },
+  loader: async ({ context: { lang } }) => {
+    const [settings, me] = await Promise.all([
+      getPreferedSettings({ data: { lang: lang } }),
+      getMeInitial(),
+    ])
+
+    if (lang !== settings.language.value) {
+      throw redirect({
+        to: `/$lang`,
+        params: {
+          lang: settings.language.value,
+        },
+      })
+    }
+
+    return {
+      settings,
+      me,
+    }
   },
   head: () => ({
     meta: [
@@ -245,10 +270,15 @@ export const Route = createRootRoute({
 })
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
-  const language = DEFAULT_LANGUAGE
+  const data = Route.useLoaderData()
 
   return (
-    <html lang={language.locale} dir={language.direction}>
+    <html
+      lang={data.settings.language.locale}
+      dir={data.settings.language.direction}
+      data-currency={data.settings.currency.code}
+      data-theme={data.settings.theme}
+    >
       <head>
         <HeadContent />
       </head>
@@ -265,10 +295,14 @@ function RootComponent() {
 
   return (
     <RootDocument>
-      <AuthProvider initialUser={data.user} initialPermissions={data.permissions}>
-        <AppProviders>
-          <Outlet />
-        </AppProviders>
+      <AuthProvider initialUser={data.me.user}>
+        <ThemeStore initialTheme={data.settings.theme}>
+          <LanguageProvider serverLanguage={data.settings.language}>
+            <AppProviders>
+              <Outlet />
+            </AppProviders>
+          </LanguageProvider>
+        </ThemeStore>
       </AuthProvider>
     </RootDocument>
   )

@@ -1,5 +1,5 @@
 import { Route } from 'src/routes/$lang/_public'
 
 export const IndexPage = () => {
-  return <>Index Page</>
+  return <main className="flex items-start justify-start font-custom-sans">Index Page</main>
 }

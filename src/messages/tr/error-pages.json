@@ -1,0 +1,12 @@
+{
+  "not-found": {
+    "title": "Sayfa Bulunamadı",
+    "description": "Aradığınız sayfa bulunamadı. Lütfen adresi kontrol edin ve tekrar deneyin.",
+    "return-link": "Ana Sayfaya Dön"
+  },
+  "error": {
+    "title": "Bir Hata Oluştu",
+    "description": "Beklenmedik bir hata oluştu. Lütfen daha sonra tekrar deneyin veya bizimle iletişime geçin.",
+    "return-link": "Ana Sayfaya Dön"
+  }
+}

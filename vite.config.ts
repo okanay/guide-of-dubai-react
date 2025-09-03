@@ -1,8 +1,9 @@
+import tailwindcss from '@tailwindcss/vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
+import viteReact from '@vitejs/plugin-react'
 import dotenv from 'dotenv'
 import { defineConfig } from 'vite'
 import tsConfigPaths from 'vite-tsconfig-paths'
-import viteReact from '@vitejs/plugin-react'
 
 if (process.env.NODE_ENV === 'production') {
   dotenv.config({ path: '.env.production', override: true })
@@ -17,6 +18,7 @@ export default defineConfig({
     port: 3000,
   },
   plugins: [
+    tailwindcss(),
     tsConfigPaths(),
     tanstackStart({
       customViteReactPlugin: true,

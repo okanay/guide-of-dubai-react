@@ -184,7 +184,7 @@ async function apiLogout(): Promise<void> {
   }
 }
 
-export const apiGetMeInitial = createServerFn().handler(async () => {
+export const getMeInitial = createServerFn().handler(async () => {
   try {
     const response = await AppFetch('/v1/protected/auth/get-me', {
       method: 'GET',
@@ -197,11 +197,15 @@ export const apiGetMeInitial = createServerFn().handler(async () => {
     const result = await response.json()
 
     if (!result.success) {
-      throw new Error('Auth failed')
+      return {
+        user: null,
+      }
     }
 
     const data = result.data as LoginResponse
-    return data
+    return {
+      user: data.user,
+    }
   } catch (error) {
     return {
       user: null,

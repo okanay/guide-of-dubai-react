@@ -1,7 +1,7 @@
 {
-  "name": "WTFI Live - Global Tourism News & Analysis",
-  "short_name": "WTFI Live",
-  "description": "Breaking tourism industry news, analysis, editorial content, reports and podcasts from World Tourism Forum Institute",
+  "name": "Dubai Guide | Blog - Easily Book Hotels, Tours, and Flights",
+  "short_name": "Dubai Guide",
+  "description": "Plan your Dubai trip with a single app - easily book flights, hotels, tours, and activities. Trusted by travelers for impeccable Dubai experiences.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -37,58 +37,8 @@
       "type": "image/png"
     }
   ],
-  "screenshots": [
-    {
-      "src": "/screenshots/desktop-news.jpg",
-      "sizes": "1280x720",
-      "type": "image/jpeg",
-      "form_factor": "wide",
-      "label": "WTFI Live News Homepage"
-    },
-    {
-      "src": "/screenshots/mobile-articles.jpg",
-      "sizes": "540x720",
-      "type": "image/jpeg",
-      "form_factor": "narrow",
-      "label": "WTFI Live Article View"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Latest News",
-      "short_name": "News",
-      "description": "View latest tourism news",
-      "url": "/search?search=news&limit=20&page=1",
-      "icons": [
-        {
-          "src": "/icons/news-shortcut.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Podcasts",
-      "short_name": "Podcasts",
-      "description": "Listen to tourism podcasts",
-      "url": "/search?search=podcast&limit=20&page=1",
-      "icons": [
-        {
-          "src": "/icons/podcast-shortcut.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Reports",
-      "short_name": "Reports",
-      "description": "Read industry reports",
-      "url": "/search?search=report&limit=20&page=1",
-      "icons": [
-        {
-          "src": "/icons/report-shortcut.png",
-          "sizes": "96x96"
-        }
-      ]
+  "screenshots": [],
+  "shortcuts": []
     }
   ]
 }
