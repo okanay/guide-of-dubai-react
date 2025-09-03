@@ -15,13 +15,6 @@ interface ProtectedRouteProps extends PropsWithChildren {
   allowedRoles?: Role[]
 
   /**
-   * Kullanıcının sahip olması gereken permission'lar
-   * requireAllPermissions true ise hepsine sahip olmalı (AND logic)
-   * requireAllPermissions false ise en az birine sahip olması yeterli (OR logic)
-   */
-  allowedPermissions?: Permission[]
-
-  /**
    * Tüm permission'lara sahip olması gerekiyor mu?
    * @default false
    */
@@ -66,28 +59,13 @@ interface ProtectedRouteProps extends PropsWithChildren {
 // HELPER FUNCTIONS
 // ================================
 
-function checkAccess(
-  user: any,
-  permissions: Permission[],
-  allowedRoles?: Role[],
-  allowedPermissions?: Permission[],
-  requireAllPermissions?: boolean,
-): boolean {
+function checkAccess(user: any, allowedRoles?: Role[], requireAllPermissions?: boolean): boolean {
   if (!user) return false
 
   // Role kontrolü
   if (allowedRoles && allowedRoles.length > 0) {
     const hasRequiredRole = allowedRoles.includes(user.role)
     if (!hasRequiredRole) return false
-  }
-
-  // Permission kontrolü
-  if (allowedPermissions && allowedPermissions.length > 0) {
-    const hasPermission = requireAllPermissions
-      ? allowedPermissions.every((p) => permissions.includes(p))
-      : allowedPermissions.some((p) => permissions.includes(p))
-
-    if (!hasPermission) return false
   }
 
   return true
@@ -100,7 +78,6 @@ function checkAccess(
 export function ProtectedRoute({
   children,
   allowedRoles,
-  allowedPermissions,
   requireAllPermissions = false,
   redirectTo = '/login',
   redirectIfAuthenticated = false,
@@ -110,7 +87,7 @@ export function ProtectedRoute({
   useFallback = false,
 }: ProtectedRouteProps) {
   const navigate = useNavigate()
-  const { user, permissions, sessionStatus } = useAuth()
+  const { user, sessionStatus } = useAuth()
   const [shouldRender, setShouldRender] = useState(false)
 
   useEffect(() => {
@@ -142,13 +119,7 @@ export function ProtectedRoute({
     }
 
     // Authenticated ama role/permission kontrolü gerekiyorsa
-    const hasAccess = checkAccess(
-      user,
-      permissions,
-      allowedRoles,
-      allowedPermissions,
-      requireAllPermissions,
-    )
+    const hasAccess = checkAccess(user, allowedRoles)
 
     if (!hasAccess) {
       if (!useFallback) {
@@ -161,10 +132,8 @@ export function ProtectedRoute({
     }
   }, [
     user,
-    permissions,
     sessionStatus,
     allowedRoles,
-    allowedPermissions,
     requireAllPermissions,
     redirectTo,
     redirectIfAuthenticated,
@@ -199,13 +168,7 @@ export function ProtectedRoute({
 
     // Role/Permission kontrolü
     if (!redirectIfAuthenticated) {
-      const hasAccess = checkAccess(
-        user,
-        permissions,
-        allowedRoles,
-        allowedPermissions,
-        requireAllPermissions,
-      )
+      const hasAccess = checkAccess(user, allowedRoles)
 
       if (!hasAccess) {
         return <>{fallback || <div>You don't have permission to access this page</div>}</>
