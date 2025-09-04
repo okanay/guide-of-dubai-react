@@ -30,22 +30,6 @@ const slideConfigs: SlideConfig[] = [
   },
 ]
 
-const getActiveSlideIndex = (href: string): number | null => {
-  try {
-    const url = href.startsWith('http') ? new URL(href) : new URL(href, 'http://localhost')
-    const pathSegments = url.pathname.split('/').filter((segment) => segment !== '')
-
-    if (pathSegments.length >= 3) return null
-
-    const targetPath = pathSegments.length === 1 ? '' : pathSegments[1]
-    const slideIndex = slideConfigs.findIndex((slide) => slide.path === targetPath)
-
-    return slideIndex >= 0 ? slideIndex : null
-  } catch {
-    return null
-  }
-}
-
 export const PublicHeaderBackground = () => {
   const { href } = Route.useLoaderData()
 
@@ -69,7 +53,10 @@ export const PublicHeaderBackground = () => {
       >
         <div className="relative h-full" data-slide={hasSlide}>
           {/* Slider Container */}
-          <div className="absolute inset-0 z-30 overflow-hidden">
+          <div
+            className="absolute inset-0 z-30 overflow-hidden"
+            style={{ opacity: hasSlide ? 1 : 0, transition: 'opacity 300ms ease-in-out' }}
+          >
             <div
               className="flex h-full transition-transform duration-700 ease-in-out"
               style={{
@@ -89,7 +76,8 @@ export const PublicHeaderBackground = () => {
                     src={slide.imageSrc}
                     alt={slide.imageAlt}
                     className="absolute inset-0 h-full w-full object-cover"
-                    loading={index === 0 ? 'eager' : 'lazy'}
+                    loading={'eager'}
+                    fetchPriority={'high'}
                   />
                 </div>
               ))}
@@ -193,6 +181,22 @@ function NavigationTab({ to, icon: Icon, label, className }: NavigationTabProps)
       {label}
     </Link>
   )
+}
+
+const getActiveSlideIndex = (href: string): number | null => {
+  try {
+    const url = href.startsWith('http') ? new URL(href) : new URL(href, 'http://localhost')
+    const pathSegments = url.pathname.split('/').filter((segment) => segment !== '')
+
+    if (pathSegments.length >= 3) return null
+
+    const targetPath = pathSegments.length === 1 ? '' : pathSegments[1]
+    const slideIndex = slideConfigs.findIndex((slide) => slide.path === targetPath)
+
+    return slideIndex >= 0 ? slideIndex : null
+  } catch {
+    return null
+  }
 }
 
 // Icon Components (basitleştirilmiş)
