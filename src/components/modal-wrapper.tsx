@@ -58,13 +58,6 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   const overlayRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
-  // Find scope element
-  const scopeElement = scopeId
-    ? scopeId === 'body'
-      ? document.body
-      : document.getElementById(scopeId)
-    : document.body
-
   // Body scroll lock
   useEffect(() => {
     if (lockBodyScroll && isOpen) {
@@ -109,6 +102,13 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   }
 
   if (!isOpen) return null
+
+  // Find scope element
+  const scopeElement = scopeId
+    ? scopeId === 'body'
+      ? document.body
+      : document.getElementById(scopeId)
+    : document.body
 
   return createPortal(
     <div ref={overlayRef} className={containerClassName} role="dialog" aria-modal="true">

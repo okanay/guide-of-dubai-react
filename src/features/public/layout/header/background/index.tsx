@@ -1,54 +1,173 @@
 import { Link } from 'src/i18n/router/link'
 import { SearchButton } from '../search/button'
 import { LinkProps } from '@tanstack/react-router'
+import { Route } from 'src/routes/$lang/_public/route'
+import { useMemo } from 'react'
+import { twMerge } from 'tailwind-merge'
+
+interface SlideConfig {
+  path: string
+  imageSrc: string
+  imageAlt: string
+  title: string
+  searchPlaceholder: string
+}
+
+const slideConfigs: SlideConfig[] = [
+  {
+    path: '',
+    imageSrc: '/images/public/explore-header.jpg',
+    imageAlt: 'Dubai Frame manzarası',
+    title: "Dubai'de Dubai Frame'i keşfet",
+    searchPlaceholder: 'Gezilecek yerleri veya yapılacak şeyleri keşfet...',
+  },
+  {
+    path: 'tours',
+    imageSrc: '/images/public/tours-header.jpg',
+    imageAlt: 'Dubai Turları',
+    title: 'Dubai Turlarını Keşfedin',
+    searchPlaceholder: 'Gezilecek yerleri veya yapılacak şeyleri keşfet...',
+  },
+]
+
+const getActiveSlideIndex = (href: string): number | null => {
+  try {
+    const url = href.startsWith('http') ? new URL(href) : new URL(href, 'http://localhost')
+    const pathSegments = url.pathname.split('/').filter((segment) => segment !== '')
+
+    if (pathSegments.length >= 3) return null
+
+    const targetPath = pathSegments.length === 1 ? '' : pathSegments[1]
+    const slideIndex = slideConfigs.findIndex((slide) => slide.path === targetPath)
+
+    return slideIndex >= 0 ? slideIndex : null
+  } catch {
+    return null
+  }
+}
 
 export const PublicHeaderBackground = () => {
+  const { href } = Route.useLoaderData()
+
+  const activeSlideIndex = useMemo(() => getActiveSlideIndex(href), [href])
+  const hasSlide = activeSlideIndex !== null
+
+  const activeSlide = hasSlide ? slideConfigs[activeSlideIndex] : null
+
   return (
-    <div className="absolute top-0 left-0 h-[600px] w-full md:h-[600px]">
-      <div className="relative h-[600px] md:h-[600px]">
-        <img
-          src="/images/public/explore-header.jpg"
-          alt="Dubai Frame manzarası"
-          className="absolute inset-0 z-30 h-full w-full object-cover"
-        />
+    <>
+      {/* Layout Spacer */}
+      <div
+        className="transition-all duration-500 ease-in-out data-[slide=false]:h-[160px] data-[slide=true]:h-[540px]"
+        data-slide={hasSlide}
+      />
 
-        {/* Search Section */}
-        <div className="absolute inset-0 z-31 flex flex-col items-center justify-center gap-y-6">
-          <h1 className="text-body-3xl font-bold text-[#ffffff] md:text-heading-2">
-            Dubai'de Dubai Frame'i keşfet
-          </h1>
+      {/* Main Container */}
+      <div
+        className="absolute top-0 left-0 w-full bg-black transition-all duration-500 ease-in-out data-[slide=false]:h-[220px] data-[slide=true]:h-[600px] dark:bg-white"
+        data-slide={hasSlide}
+      >
+        <div className="relative h-full" data-slide={hasSlide}>
+          {/* Slider Container */}
+          <div className="absolute inset-0 z-30 overflow-hidden">
+            <div
+              className="flex h-full transition-transform duration-700 ease-in-out"
+              style={{
+                width: `${slideConfigs.length * 100}%`,
+                transform: hasSlide
+                  ? `translateX(-${(activeSlideIndex * 100) / slideConfigs.length}%)`
+                  : 'translateX(-100%)',
+              }}
+            >
+              {slideConfigs.map((slide, index) => (
+                <div
+                  key={slide.path}
+                  className="relative h-full flex-shrink-0"
+                  style={{ width: `${100 / slideConfigs.length}%` }}
+                >
+                  <img
+                    src={slide.imageSrc}
+                    alt={slide.imageAlt}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
 
-          <SearchButton
-            variant="hero"
-            placeholder="Gezilecek yerleri veya yapılacak şeyleri keşfet..."
-            className="flex h-11 items-center justify-start gap-x-2 rounded-full bg-[#ffffff] px-4 text-size-sm font-normal text-gray-600 md:h-13 md:w-[560px] md:text-size"
-          />
-        </div>
-
-        {/* Overlay */}
-        <div className="absolute inset-0 z-30 bg-gradient-to-b from-gray-500 to-gray-950 opacity-50" />
-
-        {/* Navigation Tabs */}
-        <div className="absolute -bottom-px left-0 z-32 w-full">
-          <nav
-            style={{ whiteSpace: 'nowrap', scrollbarWidth: 'none' }}
-            className="mx-auto flex w-full max-w-7xl items-center justify-start overflow-x-auto px-4 text-size-sm font-semibold"
-            role="navigation"
-            aria-label="Kategori navigasyonu"
+          {/* Hero Content */}
+          <div
+            className="absolute inset-0 z-31 flex flex-col items-center justify-center gap-y-6 px-4 transition-opacity duration-500 data-[slide=false]:pointer-events-none data-[slide=false]:opacity-0"
+            data-slide={hasSlide}
           >
-            <NavigationTab to="/$lang" icon={ExploreIcon} label="Keşfet" isActive />
-            <NavigationTab to="/$lang/not-found" icon={ToursIcon} label="Turlar" />
-            <NavigationTab to="/$lang/not-found" icon={TicketsIcon} label="Biletler" />
-            <NavigationTab to="/$lang/not-found" icon={HotelsIcon} label="Oteller" />
-            <NavigationTab to="/$lang/not-found" icon={SafariIcon} label="Safari Turu" />
-            <NavigationTab to="/$lang/not-found" icon={CarRentalIcon} label="Araç Kirala" />
-            <NavigationTab to="/$lang/not-found" icon={AccommodationIcon} label="Oteller" />
-            <NavigationTab to="/$lang/not-found" icon={TransferIcon} label="Transfer" />
-            <NavigationTab to="/$lang/not-found" icon={AllIcon} label="Tümü" />
-          </nav>
+            {activeSlide && (
+              <>
+                <h1 className="text-center text-size-3xl font-bold text-white transition-all duration-300 md:text-heading-2 dark:text-black">
+                  {activeSlide.title}
+                </h1>
+                <SearchButton
+                  variant="hero"
+                  placeholder={activeSlide.searchPlaceholder}
+                  className="flex h-11 w-[366px] items-center justify-start gap-x-2 rounded-full bg-white px-4 text-size-sm font-normal text-gray-600 shadow-lg md:h-13 md:w-[560px] md:text-size dark:bg-black"
+                />
+              </>
+            )}
+          </div>
+
+          {/* Gradient Overlay */}
+          <div
+            className="absolute inset-0 z-30 bg-gradient-to-b from-gray-500/30 to-gray-950/70 transition-opacity duration-500 data-[slide=false]:opacity-0"
+            data-slide={hasSlide}
+          />
+
+          {/* Navigation Tabs */}
+          <div className="absolute -bottom-px left-0 z-32 w-full">
+            <nav className="mx-auto flex w-full max-w-7xl items-center justify-start overflow-x-auto px-4 text-size-sm font-semibold [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <NavigationTab to="/$lang" icon={ExploreIcon} label="Keşfet" className="flex" />
+              <NavigationTab to="/$lang/tours" icon={ToursIcon} label="Turlar" className="flex" />
+              <NavigationTab
+                to="/$lang/tickets"
+                icon={TicketsIcon}
+                label="Biletler"
+                className="hidden sm:flex"
+              />
+              <NavigationTab
+                to="/$lang/not-found"
+                icon={HotelsIcon}
+                label="Aktiviteler"
+                className="flex"
+              />
+              <NavigationTab
+                to="/$lang/not-found"
+                icon={SafariIcon}
+                label="Safari Turu"
+                className="hidden sm:flex"
+              />
+              <NavigationTab
+                to="/$lang/not-found"
+                icon={CarRentalIcon}
+                label="Araç Kirala"
+                className="hidden sm:flex"
+              />
+              <NavigationTab
+                to="/$lang/not-found"
+                icon={AccommodationIcon}
+                label="Konaklama"
+                className="hidden sm:flex"
+              />
+              <NavigationTab
+                to="/$lang/not-found"
+                icon={TransferIcon}
+                label="Transfer"
+                className="hidden sm:flex"
+              />
+              <NavigationTab to="/$lang/not-found" icon={AllIcon} label="Tümü" className="flex" />
+            </nav>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -57,16 +176,20 @@ interface NavigationTabProps {
   to: LinkProps['to']
   icon: React.FC<{ className?: string }>
   label: string
-  isActive?: boolean
+  className?: string
 }
 
-function NavigationTab({ to, icon: Icon, label }: NavigationTabProps) {
+function NavigationTab({ to, icon: Icon, label, className }: NavigationTabProps) {
   return (
     <Link
       to={to}
-      className={`group flex min-w-[132px] items-center gap-x-2 px-6 py-3 text-[#fff] transition-colors duration-300 ease-in hover:bg-white-20 data-[status=active]:bg-[#fff] data-[status=active]:text-btn-primary`}
+      activeOptions={{ exact: true }}
+      className={twMerge(
+        'group shrink-0 items-center gap-x-2 px-6 py-3 text-white transition-colors duration-300 ease-in hover:bg-white/20 data-[status=active]:bg-white data-[status=active]:text-btn-primary sm:min-w-[132px] dark:text-black data-[status=active]:dark:bg-black',
+        className,
+      )}
     >
-      <Icon className={`fill-[#F8F8F8] group-data-[status=active]:fill-gray-700`} />
+      <Icon className="fill-[#F8F8F8] group-data-[status=active]:fill-gray-700" />
       {label}
     </Link>
   )

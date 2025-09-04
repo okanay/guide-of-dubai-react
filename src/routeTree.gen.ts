@@ -17,6 +17,8 @@ import { Route as LangNotFoundRouteImport } from './routes/$lang/not-found'
 import { Route as LangErrorRouteImport } from './routes/$lang/error'
 import { Route as LangPublicRouteRouteImport } from './routes/$lang/_public/route'
 import { Route as LangPublicIndexRouteImport } from './routes/$lang/_public/index'
+import { Route as LangPublicToursIndexRouteImport } from './routes/$lang/_public/tours.index'
+import { Route as LangPublicTicketsIndexRouteImport } from './routes/$lang/_public/tickets.index'
 import { ServerRoute as SitemapDotxmlServerRouteImport } from './routes/sitemap[.]xml'
 import { ServerRoute as RssDotxmlServerRouteImport } from './routes/rss[.]xml'
 import { ServerRoute as RobotsDottxtServerRouteImport } from './routes/robots[.]txt'
@@ -53,6 +55,16 @@ const LangPublicIndexRoute = LangPublicIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LangPublicRouteRoute,
 } as any)
+const LangPublicToursIndexRoute = LangPublicToursIndexRouteImport.update({
+  id: '/tours/',
+  path: '/tours/',
+  getParentRoute: () => LangPublicRouteRoute,
+} as any)
+const LangPublicTicketsIndexRoute = LangPublicTicketsIndexRouteImport.update({
+  id: '/tickets/',
+  path: '/tickets/',
+  getParentRoute: () => LangPublicRouteRoute,
+} as any)
 const SitemapDotxmlServerRoute = SitemapDotxmlServerRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -75,12 +87,16 @@ export interface FileRoutesByFullPath {
   '/$lang/error': typeof LangErrorRoute
   '/$lang/not-found': typeof LangNotFoundRoute
   '/$lang/': typeof LangPublicIndexRoute
+  '/$lang/tickets': typeof LangPublicTicketsIndexRoute
+  '/$lang/tours': typeof LangPublicToursIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$lang': typeof LangPublicIndexRoute
   '/$lang/error': typeof LangErrorRoute
   '/$lang/not-found': typeof LangNotFoundRoute
+  '/$lang/tickets': typeof LangPublicTicketsIndexRoute
+  '/$lang/tours': typeof LangPublicToursIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -90,12 +106,27 @@ export interface FileRoutesById {
   '/$lang/error': typeof LangErrorRoute
   '/$lang/not-found': typeof LangNotFoundRoute
   '/$lang/_public/': typeof LangPublicIndexRoute
+  '/$lang/_public/tickets/': typeof LangPublicTicketsIndexRoute
+  '/$lang/_public/tours/': typeof LangPublicToursIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$lang' | '/$lang/error' | '/$lang/not-found' | '/$lang/'
+  fullPaths:
+    | '/'
+    | '/$lang'
+    | '/$lang/error'
+    | '/$lang/not-found'
+    | '/$lang/'
+    | '/$lang/tickets'
+    | '/$lang/tours'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$lang' | '/$lang/error' | '/$lang/not-found'
+  to:
+    | '/'
+    | '/$lang'
+    | '/$lang/error'
+    | '/$lang/not-found'
+    | '/$lang/tickets'
+    | '/$lang/tours'
   id:
     | '__root__'
     | '/'
@@ -104,6 +135,8 @@ export interface FileRouteTypes {
     | '/$lang/error'
     | '/$lang/not-found'
     | '/$lang/_public/'
+    | '/$lang/_public/tickets/'
+    | '/$lang/_public/tours/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -184,6 +217,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangPublicIndexRouteImport
       parentRoute: typeof LangPublicRouteRoute
     }
+    '/$lang/_public/tours/': {
+      id: '/$lang/_public/tours/'
+      path: '/tours'
+      fullPath: '/$lang/tours'
+      preLoaderRoute: typeof LangPublicToursIndexRouteImport
+      parentRoute: typeof LangPublicRouteRoute
+    }
+    '/$lang/_public/tickets/': {
+      id: '/$lang/_public/tickets/'
+      path: '/tickets'
+      fullPath: '/$lang/tickets'
+      preLoaderRoute: typeof LangPublicTicketsIndexRouteImport
+      parentRoute: typeof LangPublicRouteRoute
+    }
   }
 }
 declare module '@tanstack/react-start/server' {
@@ -214,10 +261,14 @@ declare module '@tanstack/react-start/server' {
 
 interface LangPublicRouteRouteChildren {
   LangPublicIndexRoute: typeof LangPublicIndexRoute
+  LangPublicTicketsIndexRoute: typeof LangPublicTicketsIndexRoute
+  LangPublicToursIndexRoute: typeof LangPublicToursIndexRoute
 }
 
 const LangPublicRouteRouteChildren: LangPublicRouteRouteChildren = {
   LangPublicIndexRoute: LangPublicIndexRoute,
+  LangPublicTicketsIndexRoute: LangPublicTicketsIndexRoute,
+  LangPublicToursIndexRoute: LangPublicToursIndexRoute,
 }
 
 const LangPublicRouteRouteWithChildren = LangPublicRouteRoute._addFileChildren(
