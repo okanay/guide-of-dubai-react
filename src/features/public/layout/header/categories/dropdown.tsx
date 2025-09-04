@@ -18,16 +18,14 @@ export function CategoriesDropdown() {
       <div
         data-status={isCategoriesOpen ? 'active' : 'closed'}
         ref={dropdownRef}
-        className="absolute top-0 left-0 z-40 max-h-[554px] w-full origin-top overflow-hidden bg-white shadow-xl transition-all duration-300 ease-in-out data-[status=active]:pointer-events-auto data-[status=active]:translate-y-0 data-[status=active]:scale-y-100 data-[status=active]:opacity-100 data-[status=closed]:pointer-events-none data-[status=closed]:-translate-y-4 data-[status=closed]:scale-y-95 data-[status=closed]:opacity-0"
+        className="absolute top-0 left-0 z-40 max-h-[560px] w-full origin-top overflow-hidden bg-white shadow-xl transition-all duration-300 ease-in-out data-[status=active]:pointer-events-auto data-[status=active]:translate-y-0 data-[status=active]:scale-y-100 data-[status=active]:opacity-100 data-[status=closed]:pointer-events-none data-[status=closed]:-translate-y-4 data-[status=closed]:scale-y-95 data-[status=closed]:opacity-0"
       >
-        <div className="mt-16 max-h-[554px] w-full origin-top overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:hover:bg-gray-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100">
+        <div className="mt-16 max-h-[560px] w-full origin-top overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:hover:bg-gray-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100">
           <div
             data-status={isCategoriesOpen ? 'active' : 'closed'}
             className="mx-auto h-full max-w-8xl overflow-x-hidden overflow-y-auto scroll-smooth px-6 pb-20 transition-all duration-500 ease-out data-[status=active]:translate-y-0 data-[status=active]:opacity-100 data-[status=active]:delay-150 data-[status=closed]:translate-y-2 data-[status=closed]:opacity-0"
           >
-            <div className="pointer-events-none sticky top-0 right-0 left-0 z-10 mb-4 h-px bg-gradient-to-b from-white via-white to-transparent" />
-
-            <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
               {Array.from({ length: 14 }).map((_, index) => (
                 <Link
                   to={'/$lang/not-found'}

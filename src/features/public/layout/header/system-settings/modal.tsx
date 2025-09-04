@@ -1,55 +1,25 @@
 import { Check, DollarSign, Globe, Monitor, X } from 'lucide-react'
-import { useEffect, useRef } from 'react'
-import { createPortal } from 'react-dom'
 import { SUPPORTED_LANGUAGES } from 'src/i18n/config'
 import { SUPPORTED_CURRENCIES } from 'src/i18n/currency-config'
 import { useLanguage } from 'src/i18n/prodiver'
 import { useTheme } from 'src/providers/theme-mode'
 import { useSystemSettings } from './store'
+import { ModalWrapper } from 'src/components/modal-wrapper'
 
 export function SystemSettingsModal() {
   const { isOpen, closeModal, scopeId, currency, setCurrency } = useSystemSettings()
-  const modalRef = useRef<HTMLDivElement>(null)
   const { theme, setTheme } = useTheme()
   const { language, changeLanguage } = useLanguage()
 
-  // Find scope element for click outside
-  const scopeElement = scopeId
-    ? scopeId === 'body'
-      ? document.body
-      : document.getElementById(scopeId)
-    : document.body
-
-  // Body scroll lock
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [isOpen])
-
-  if (!isOpen) return null
-
-  return createPortal(
-    <div
-      className="fixed inset-0 z-50 flex items-start justify-start p-0 md:items-center md:justify-center md:p-4"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="settings-title"
+  return (
+    <ModalWrapper
+      isOpen={isOpen}
+      onClose={closeModal}
+      scopeId={scopeId}
+      disableOutsideClick={false}
     >
-      {/* Overlay - sadece desktop'ta görünür */}
-      <div className="absolute inset-0 hidden bg-black/50 md:block" />
-
       {/* Modal */}
-      <div
-        ref={modalRef}
-        className="relative flex h-full w-full flex-col overflow-hidden bg-box-surface md:h-auto md:max-h-[90vh] md:w-full md:max-w-md md:shadow-2xl"
-      >
+      <div className="relative flex h-full w-full flex-col overflow-hidden bg-box-surface md:h-auto md:max-h-[90vh] md:w-full md:max-w-md md:shadow-2xl">
         {/* Header - Her zaman sabit */}
         <div className="flex shrink-0 items-center justify-between border-b border-gray-200 bg-box-surface p-4">
           <h2 id="settings-title" className="text-lg font-semibold text-on-box-black">
@@ -187,7 +157,6 @@ export function SystemSettingsModal() {
           </button>
         </div>
       </div>
-    </div>,
-    scopeElement!,
+    </ModalWrapper>
   )
 }
