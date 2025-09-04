@@ -2,7 +2,7 @@ import { Link } from 'src/i18n/router/link'
 
 export const PublicHeaderLogo = () => {
   return (
-    <div className="relative z-42 h-[57px] w-[244px]">
+    <div className="relative z-42 h-[57px] w-[244px] translate-y-[-1px]">
       <Link to="/$lang" aria-label="Guide of Dubai ana sayfası">
         <LogoWrapper />
         <img

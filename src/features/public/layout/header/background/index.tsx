@@ -19,14 +19,56 @@ const slideConfigs: SlideConfig[] = [
     imageSrc: '/images/public/explore-header.jpg',
     imageAlt: 'Dubai Frame manzarası',
     title: "Dubai'de Dubai Frame'i keşfet",
-    searchPlaceholder: 'Gezilecek yerleri veya yapılacak şeyleri keşfet...',
+    searchPlaceholder: 'Keşif yapmak istediğiniz yer veya aktiviteyi arayın...',
   },
   {
     path: 'tours',
     imageSrc: '/images/public/tours-header.jpg',
-    imageAlt: 'Dubai Turları',
+    imageAlt: 'Dubai Turları manzarası',
     title: 'Dubai Turlarını Keşfedin',
-    searchPlaceholder: 'Gezilecek yerleri veya yapılacak şeyleri keşfet...',
+    searchPlaceholder: 'Keşfetmek istediğiniz turu veya etkinliği arayın...',
+  },
+  {
+    path: 'tickets-2',
+    imageSrc: '/images/public/tickets-header.jpg',
+    imageAlt: 'Dubai Biletleri manzarası',
+    title: 'Dubai Biletlerini Keşfedin',
+    searchPlaceholder: 'Bilet almak istediğiniz yer veya etkinliği arayın...',
+  },
+  {
+    path: 'hotels',
+    imageSrc: '/images/public/hotels-header.png',
+    imageAlt: 'Dubai Otelleri manzarası',
+    title: 'Dubai Otellerini Keşfedin',
+    searchPlaceholder: 'Konaklama yapmak istediğiniz oteli arayın...',
+  },
+  {
+    path: 'safari-tour',
+    imageSrc: '/images/public/safari-header.jpg',
+    imageAlt: 'Dubai Safari Turu manzarası',
+    title: 'Dubai Safari Turlarını Keşfedin',
+    searchPlaceholder: 'Katılmak istediğiniz safari turunu arayın...',
+  },
+  {
+    path: 'rent-a-car',
+    imageSrc: '/images/public/car-rental-header.jpg',
+    imageAlt: 'Dubai Araç Kiralama manzarası',
+    title: 'Dubai’de Araç Kiralayın',
+    searchPlaceholder: 'Kiralık araç seçeneklerini arayın...',
+  },
+  {
+    path: 'transfer',
+    imageSrc: '/images/public/transfer-header.jpg',
+    imageAlt: 'Dubai Transfer Hizmetleri manzarası',
+    title: 'Dubai Transferlerini Keşfedin',
+    searchPlaceholder: 'Transfer seçeneklerini arayın...',
+  },
+  {
+    path: 'all',
+    imageSrc: '/images/public/explore-header.jpg',
+    imageAlt: 'Dubai Genel manzarası',
+    title: 'Dubai’de Her Şeyi Keşfedin',
+    searchPlaceholder: 'Herhangi bir yer veya aktiviteyi arayın...',
   },
 ]
 
@@ -111,46 +153,46 @@ export const PublicHeaderBackground = () => {
 
           {/* Navigation Tabs */}
           <div className="absolute -bottom-px left-0 z-32 w-full">
-            <nav className="mx-auto flex w-full max-w-7xl items-center justify-start overflow-x-auto px-4 text-size-sm font-semibold [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <nav className="mx-auto flex w-full max-w-7xl items-center justify-start overflow-x-auto text-size-sm font-semibold [scrollbar-width:none] sm:px-4 [&::-webkit-scrollbar]:hidden">
               <NavigationTab to="/$lang" icon={ExploreIcon} label="Keşfet" className="flex" />
               <NavigationTab to="/$lang/tours" icon={ToursIcon} label="Turlar" className="flex" />
               <NavigationTab
                 to="/$lang/tickets"
                 icon={TicketsIcon}
-                label="Biletler"
+                label="Aktiviteler"
                 className="hidden sm:flex"
               />
               <NavigationTab
-                to="/$lang/not-found"
+                to="/$lang/hotels"
                 icon={HotelsIcon}
-                label="Aktiviteler"
+                label="Oteller"
                 className="flex"
               />
               <NavigationTab
-                to="/$lang/not-found"
+                to="/$lang/safari-tour"
                 icon={SafariIcon}
                 label="Safari Turu"
                 className="hidden sm:flex"
               />
               <NavigationTab
-                to="/$lang/not-found"
+                to="/$lang/rent-a-car"
                 icon={CarRentalIcon}
                 label="Araç Kirala"
                 className="hidden sm:flex"
               />
               <NavigationTab
-                to="/$lang/not-found"
+                to="/$lang/hotels"
                 icon={AccommodationIcon}
                 label="Konaklama"
                 className="hidden sm:flex"
               />
               <NavigationTab
-                to="/$lang/not-found"
+                to="/$lang/transfer"
                 icon={TransferIcon}
                 label="Transfer"
                 className="hidden sm:flex"
               />
-              <NavigationTab to="/$lang/not-found" icon={AllIcon} label="Tümü" className="flex" />
+              <NavigationTab to="/$lang/all" icon={AllIcon} label="Tümü" className="flex" />
             </nav>
           </div>
         </div>
@@ -172,6 +214,7 @@ function NavigationTab({ to, icon: Icon, label, className }: NavigationTabProps)
     <Link
       to={to}
       activeOptions={{ exact: true }}
+      preload={'render'}
       className={twMerge(
         'group shrink-0 items-center gap-x-2 px-6 py-3 text-white transition-colors duration-300 ease-in hover:bg-white/20 data-[status=active]:bg-white data-[status=active]:text-btn-primary sm:min-w-[132px] dark:text-black data-[status=active]:dark:bg-black',
         className,
