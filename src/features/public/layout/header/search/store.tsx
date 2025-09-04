@@ -1,16 +1,18 @@
-// src/features/public/layout/header/search/store.tsx
+// src/features/public/layout/header/system-settings/store.tsx
 import { createContext, PropsWithChildren, useContext, useState } from 'react'
 import { createStore, StoreApi, useStore } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
 interface SearchModalState {
   isOpen: boolean
+  scopeId: string | null
 }
 
 interface SearchModalActions {
-  openModal: () => void
+  openModal: (scopeId?: string) => void
   closeModal: () => void
-  toggleModal: () => void
+  toggleModal: (scopeId?: string) => void
+  setScopeId: (scopeId: string | null) => void
 }
 
 type SearchModalStore = SearchModalState & SearchModalActions
@@ -20,26 +22,35 @@ export function SearchModalStore({ children }: PropsWithChildren) {
     createStore<SearchModalStore>()(
       immer((set, get) => ({
         isOpen: false,
+        scopeId: null,
 
-        openModal: () => {
+        openModal: (scopeId = 'body') => {
           set((state) => {
             state.isOpen = true
+            state.scopeId = scopeId
           })
         },
 
         closeModal: () => {
           set((state) => {
             state.isOpen = false
+            state.scopeId = null
           })
         },
 
-        toggleModal: () => {
+        toggleModal: (scopeId = 'body') => {
           const { isOpen } = get()
           if (isOpen) {
             get().closeModal()
           } else {
-            get().openModal()
+            get().openModal(scopeId)
           }
+        },
+
+        setScopeId: (scopeId) => {
+          set((state) => {
+            state.scopeId = scopeId
+          })
         },
       })),
     ),

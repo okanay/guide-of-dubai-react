@@ -5,12 +5,14 @@ import { immer } from 'zustand/middleware/immer'
 
 interface BasketModalState {
   isOpen: boolean
+  scopeId: string | null
 }
 
 interface BasketModalActions {
-  openModal: () => void
+  openModal: (scopeId?: string) => void
   closeModal: () => void
-  toggleModal: () => void
+  toggleModal: (scopeId?: string) => void
+  setScopeId: (scopeId: string | null) => void
 }
 
 type BasketModalStore = BasketModalState & BasketModalActions
@@ -20,26 +22,35 @@ export function BasketModalStore({ children }: PropsWithChildren) {
     createStore<BasketModalStore>()(
       immer((set, get) => ({
         isOpen: false,
+        scopeId: null,
 
-        openModal: () => {
+        openModal: (scopeId = 'body') => {
           set((state) => {
             state.isOpen = true
+            state.scopeId = scopeId
           })
         },
 
         closeModal: () => {
           set((state) => {
             state.isOpen = false
+            state.scopeId = null
           })
         },
 
-        toggleModal: () => {
+        toggleModal: (scopeId = 'body') => {
           const { isOpen } = get()
           if (isOpen) {
             get().closeModal()
           } else {
-            get().openModal()
+            get().openModal(scopeId)
           }
+        },
+
+        setScopeId: (scopeId) => {
+          set((state) => {
+            state.scopeId = scopeId
+          })
         },
       })),
     ),

@@ -1,131 +1,131 @@
 import { Link } from 'src/i18n/router/link'
 import { LogoWrapper } from './components/logo-wrapper'
-import { ChevronDown } from 'lucide-react'
 import { LinkProps } from '@tanstack/react-router'
 import { SearchButton } from './search/button'
 import { BasketButton } from './basket/button'
 import { SystemSettingsButton } from './system-settings/button'
 import { AuthButton } from './auth/button'
+import { GoAiButton } from './go-ai/button'
+import { CategoriesButton } from './categories/button'
+import { CategoriesDropdown } from './categories/dropdown'
+import { useHeader } from './store'
 
 export function PublicHeader() {
+  const { isCategoriesOpen } = useHeader()
+
   return (
-    <>
-      <header>
-        <div className="relative z-40 lg:px-4">
-          <nav
-            className="mx-auto flex max-w-8xl items-center justify-between"
-            role="navigation"
-            aria-label="Ana navigasyon"
-          >
-            {/* Logo */}
-            <div className="relative h-[57px] w-[244px]">
-              <Link to="/$lang" aria-label="Guide of Dubai ana sayfası">
-                <LogoWrapper />
-                <img
-                  src="/images/brand/brand-full-white.svg"
-                  alt="Guide of Dubai"
-                  className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
-                  width={89}
-                  height={39}
-                />
-              </Link>
-            </div>
-
-            {/* Desktop Navigation */}
-            <div
-              style={{ whiteSpace: 'nowrap', scrollbarWidth: 'none' }}
-              className="relative z-50 hidden items-center gap-x-1.5 overflow-x-auto text-size-sm font-semibold text-[#ffffff] lg:flex"
-            >
-              {/* Search */}
-              <SearchButton />
-
-              {/* Categories */}
-              <button
-                className="group btn-default -mr-1 flex items-center rounded-full px-2 py-1"
-                aria-label="Tüm kategoriler menüsü"
-              >
-                <span>Tüm Kategoriler</span>
-                <ChevronDown
-                  className="ml-2 rounded-full text-primary-500 transition-colors duration-300 ease-in-out group-hover:bg-btn-primary group-hover:text-on-btn-primary group-focus:bg-btn-primary-focus group-focus:text-on-btn-primary hover:bg-btn-primary-hover"
-                  size={16}
-                />
-              </button>
-
-              {/* Basket */}
-              <BasketButton />
-
-              {/* Wishlist */}
-              <Link to="/$lang" aria-label="Beğenilen ürünler">
-                <span className="btn-default rounded-full px-2 py-1">Beğendiklerim</span>
-              </Link>
-
-              {/* Reservations */}
-              <Link to="/$lang" aria-label="Rezervasyonlar">
-                <span className="btn-default rounded-full px-2 py-1">Rezervasyonlar</span>
-              </Link>
-
-              {/* AI Assistant */}
-              <button className="btn-default rounded-full px-2 py-1" aria-label="Go.Ai asistanı">
-                Go.Ai
-              </button>
-
-              {/* System Settings */}
-              <SystemSettingsButton />
-
-              {/* Auth */}
-              <AuthButton />
-            </div>
-          </nav>
-        </div>
-
-        {/* Background Image Section */}
-        <div className="absolute top-0 left-0 h-[320px] w-full md:h-[600px]">
-          <div className="relative h-[320px] md:h-[600px]">
-            <img
-              src="/images/public/explore-header.jpg"
-              alt="Dubai Frame manzarası"
-              className="absolute inset-0 z-30 h-full w-full object-cover"
-            />
-
-            {/* Search Section */}
-            <div className="absolute inset-0 z-31 flex flex-col items-center justify-center gap-y-6">
-              <h1 className="text-body-3xl font-bold text-[#ffffff] md:text-heading-2">
-                Dubai'de Dubai Frame'i keşfet
-              </h1>
-
-              <SearchButton
-                variant="hero"
-                placeholder="Gezilecek yerleri veya yapılacak şeyleri keşfet..."
-                className="flex h-11 items-center justify-start gap-x-2 rounded-full bg-[#ffffff] px-4 text-size-sm font-normal text-gray-600 md:h-13 md:w-[560px] md:text-size"
+    <header>
+      <div className="relative z-40 lg:px-4">
+        <nav
+          className="mx-auto flex max-w-8xl items-center justify-between"
+          role="navigation"
+          aria-label="Ana navigasyon"
+        >
+          {/* Logo */}
+          <div className="relative z-42 h-[57px] w-[244px]">
+            <Link to="/$lang" aria-label="Guide of Dubai ana sayfası">
+              <LogoWrapper />
+              <img
+                src="/images/brand/brand-full-white.svg"
+                alt="Guide of Dubai"
+                className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
+                width={89}
+                height={39}
               />
-            </div>
+            </Link>
+          </div>
 
-            {/* Overlay */}
-            <div className="absolute inset-0 z-30 bg-gradient-to-b from-gray-500 to-gray-950 opacity-50" />
+          {/* Desktop Navigation */}
+          <div
+            style={{ whiteSpace: 'nowrap', scrollbarWidth: 'none' }}
+            data-color={isCategoriesOpen ? 'invert' : 'normal'}
+            className="group/h relative z-50 hidden items-center gap-x-1.5 overflow-x-auto text-size-sm font-semibold text-[#ffffff] data-[color=invert]:text-[#000] lg:flex data-[color=invert]:dark:text-[#fff]"
+          >
+            {/* Search */}
+            <SearchButton />
 
-            {/* Navigation Tabs */}
-            <div className="absolute -bottom-px left-0 z-32 w-full">
-              <nav
-                style={{ whiteSpace: 'nowrap', scrollbarWidth: 'none' }}
-                className="mx-auto flex w-full max-w-7xl items-center justify-start overflow-x-auto px-4 text-size-sm font-semibold"
-                role="navigation"
-                aria-label="Kategori navigasyonu"
-              >
-                <NavigationTab to="/$lang" icon={ExploreIcon} label="Keşfet" isActive />
-                <NavigationTab to="/$lang/not-found" icon={ToursIcon} label="Turlar" />
-                <NavigationTab to="/$lang/not-found" icon={TicketsIcon} label="Biletler" />
-                <NavigationTab to="/$lang/not-found" icon={HotelsIcon} label="Oteller" />
-                <NavigationTab to="/$lang/not-found" icon={SafariIcon} label="Safari Turu" />
-                <NavigationTab to="/$lang/not-found" icon={CarRentalIcon} label="Araç Kirala" />
-                <NavigationTab to="/$lang/not-found" icon={AccommodationIcon} label="Oteller" />
-                <NavigationTab to="/$lang/not-found" icon={TransferIcon} label="Transfer" />
-                <NavigationTab to="/$lang/not-found" icon={AllIcon} label="Tümü" />
-              </nav>
-            </div>
+            {/* Categories */}
+            <CategoriesButton />
+
+            {/* Basket */}
+            <BasketButton />
+
+            {/* Wishlist */}
+            <Link to="/$lang" aria-label="Beğenilen ürünler">
+              <span className="btn-default rounded-full px-2 py-1">Beğendiklerim</span>
+            </Link>
+
+            {/* Reservations */}
+            <Link to="/$lang" aria-label="Rezervasyonlar">
+              <span className="btn-default rounded-full px-2 py-1">Rezervasyonlar</span>
+            </Link>
+
+            {/* Reservations */}
+            <Link to="/$lang" aria-label="Rezervasyonlar">
+              <span className="btn-default rounded-full px-2 py-1">Blog</span>
+            </Link>
+
+            {/* AI Assistant */}
+            <GoAiButton />
+
+            {/* System Settings */}
+            <SystemSettingsButton />
+
+            {/* Auth */}
+            <AuthButton />
+          </div>
+        </nav>
+
+        <CategoriesDropdown />
+      </div>
+
+      {/* Background Image Section */}
+      <div className="absolute top-0 left-0 h-[320px] w-full md:h-[600px]">
+        <div className="relative h-[320px] md:h-[600px]">
+          <img
+            src="/images/public/explore-header.jpg"
+            alt="Dubai Frame manzarası"
+            className="absolute inset-0 z-30 h-full w-full object-cover"
+          />
+
+          {/* Search Section */}
+          <div className="absolute inset-0 z-31 flex flex-col items-center justify-center gap-y-6">
+            <h1 className="text-body-3xl font-bold text-[#ffffff] md:text-heading-2">
+              Dubai'de Dubai Frame'i keşfet
+            </h1>
+
+            <SearchButton
+              variant="hero"
+              placeholder="Gezilecek yerleri veya yapılacak şeyleri keşfet..."
+              className="flex h-11 items-center justify-start gap-x-2 rounded-full bg-[#ffffff] px-4 text-size-sm font-normal text-gray-600 md:h-13 md:w-[560px] md:text-size"
+            />
+          </div>
+
+          {/* Overlay */}
+          <div className="absolute inset-0 z-30 bg-gradient-to-b from-gray-500 to-gray-950 opacity-50" />
+
+          {/* Navigation Tabs */}
+          <div className="absolute -bottom-px left-0 z-32 w-full">
+            <nav
+              style={{ whiteSpace: 'nowrap', scrollbarWidth: 'none' }}
+              className="mx-auto flex w-full max-w-7xl items-center justify-start overflow-x-auto px-4 text-size-sm font-semibold"
+              role="navigation"
+              aria-label="Kategori navigasyonu"
+            >
+              <NavigationTab to="/$lang" icon={ExploreIcon} label="Keşfet" isActive />
+              <NavigationTab to="/$lang/not-found" icon={ToursIcon} label="Turlar" />
+              <NavigationTab to="/$lang/not-found" icon={TicketsIcon} label="Biletler" />
+              <NavigationTab to="/$lang/not-found" icon={HotelsIcon} label="Oteller" />
+              <NavigationTab to="/$lang/not-found" icon={SafariIcon} label="Safari Turu" />
+              <NavigationTab to="/$lang/not-found" icon={CarRentalIcon} label="Araç Kirala" />
+              <NavigationTab to="/$lang/not-found" icon={AccommodationIcon} label="Oteller" />
+              <NavigationTab to="/$lang/not-found" icon={TransferIcon} label="Transfer" />
+              <NavigationTab to="/$lang/not-found" icon={AllIcon} label="Tümü" />
+            </nav>
           </div>
         </div>
-      </header>
-    </>
+      </div>
+    </header>
   )
 }
 
