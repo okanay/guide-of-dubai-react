@@ -4,16 +4,14 @@ import { immer } from 'zustand/middleware/immer'
 
 interface HeaderState {
   isCategoriesOpen: boolean
-  isMobileMenuOpen: boolean
+  isInverted: boolean
 }
 
 interface HeaderActions {
   openCategories: () => void
   closeCategories: () => void
   toggleCategories: () => void
-  openMobileMenu: () => void
-  closeMobileMenu: () => void
-  toggleMobileMenu: () => void
+  setInverted: (value: boolean) => void
   closeAll: () => void
 }
 
@@ -24,18 +22,19 @@ export function HeaderStore({ children }: PropsWithChildren) {
     createStore<HeaderStore>()(
       immer((set, get) => ({
         isCategoriesOpen: false,
-        isMobileMenuOpen: false,
+        isInverted: false,
 
         openCategories: () => {
           set((state) => {
             state.isCategoriesOpen = true
-            state.isMobileMenuOpen = false
+            state.isInverted = true
           })
         },
 
         closeCategories: () => {
           set((state) => {
             state.isCategoriesOpen = false
+            state.isInverted = false
           })
         },
 
@@ -48,32 +47,15 @@ export function HeaderStore({ children }: PropsWithChildren) {
           }
         },
 
-        openMobileMenu: () => {
+        setInverted: (value: boolean) => {
           set((state) => {
-            state.isMobileMenuOpen = true
-            state.isCategoriesOpen = false
+            state.isInverted = value
           })
-        },
-
-        closeMobileMenu: () => {
-          set((state) => {
-            state.isMobileMenuOpen = false
-          })
-        },
-
-        toggleMobileMenu: () => {
-          const { isMobileMenuOpen } = get()
-          if (isMobileMenuOpen) {
-            get().closeMobileMenu()
-          } else {
-            get().openMobileMenu()
-          }
         },
 
         closeAll: () => {
           set((state) => {
             state.isCategoriesOpen = false
-            state.isMobileMenuOpen = false
           })
         },
       })),

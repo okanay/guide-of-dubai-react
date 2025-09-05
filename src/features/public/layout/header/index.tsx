@@ -7,11 +7,10 @@ import { PublicHeaderLogo } from './components/logo'
 import { GoAiButton } from './go-ai/button'
 import { SearchButton } from './search/button'
 import { useHeader } from './store'
-import { SystemSettingsButton } from './system-settings/button'
 import { PublicHeaderBackground } from './background'
 
 export function PublicHeader() {
-  const { isCategoriesOpen } = useHeader()
+  const { isInverted } = useHeader()
 
   return (
     <header>
@@ -27,7 +26,7 @@ export function PublicHeader() {
           {/* Desktop Navigation */}
           <div
             style={{ whiteSpace: 'nowrap', scrollbarWidth: 'none' }}
-            data-color={isCategoriesOpen ? 'invert' : 'normal'}
+            data-color={isInverted ? 'invert' : 'normal'}
             className="group/h relative z-50 hidden items-center gap-x-1.5 overflow-x-auto text-size-sm font-semibold text-[#ffffff] data-[color=invert]:text-[#000] lg:flex data-[color=invert]:dark:text-[#fff]"
           >
             {/* Search */}
@@ -56,9 +55,6 @@ export function PublicHeader() {
 
             {/* AI Assistant */}
             <GoAiButton />
-
-            {/* System Settings */}
-            <SystemSettingsButton />
 
             {/* Auth */}
             <AuthButton />
