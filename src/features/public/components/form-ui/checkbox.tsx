@@ -62,7 +62,7 @@ export function Checkbox({
             {label}
             {required && <span className="ml-1 text-error-500">*</span>}
           </label>
-          {error && <p className="mt-1 text-body-sm text-error-500">{error}</p>}
+          {error && <p className="mt-1 text-size-xs text-error-500">{error}</p>}
         </div>
       )}
     </div>

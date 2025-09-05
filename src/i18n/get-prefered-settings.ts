@@ -93,7 +93,6 @@ function determinePreferredCurrency(currencyCookie?: string) {
   if (!currencyCookie) return DEFAULT_CURRENCY
 
   const matchedCurrency = SUPPORTED_CURRENCIES.find((currency) => currency.code === currencyCookie)
-
   return matchedCurrency || DEFAULT_CURRENCY
 }
 

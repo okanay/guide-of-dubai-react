@@ -5,6 +5,9 @@ import { toast } from 'sonner'
 import { TextInput } from 'src/features/public/components/form-ui/text-input'
 import z from 'zod'
 import { useAuthModal } from './store'
+import { PhoneInput } from 'src/features/public/components/form-ui/phone-input'
+import { Checkbox } from 'src/features/public/components/form-ui/checkbox'
+import parsePhoneNumberFromString from 'libphonenumber-js/min'
 
 const registerSchema = z.object({
   firstName: z
@@ -18,11 +21,22 @@ const registerSchema = z.object({
     .min(2, 'Soyad en az 2 karakter olmalıdır')
     .max(50, 'Soyad en fazla 50 karakter olabilir'),
   nationality: z.string().min(1, 'Uyruk seçimi gereklidir'),
-  email: z.string().min(1, 'E-posta adresi gereklidir').email('Geçerli bir e-posta adresi girin'),
+  email: z.email('Geçerli bir e-posta adresi girin'),
   phone: z
     .string()
     .min(1, 'Telefon numarası gereklidir')
-    .regex(/^\+?[1-9]\d{1,14}$/, 'Geçerli bir telefon numarası girin'),
+    .refine((phone) => {
+      try {
+        const phoneNumber = parsePhoneNumberFromString(phone, 'TR')
+        return phoneNumber?.isValid() ?? false
+      } catch {
+        return false
+      }
+    }, 'Geçerli bir telefon numarası girin')
+    .transform((phone) => {
+      const phoneNumber = parsePhoneNumberFromString(phone, 'TR')
+      return phoneNumber!.format('E.164')
+    }),
   referralCode: z
     .string()
     .optional()
@@ -111,7 +125,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
       </header>
       <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto px-6 py-4">
         <form onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-2">
             <Controller
               name="firstName"
               control={control}
@@ -184,7 +198,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
             name="phone"
             control={control}
             render={({ field }) => (
-              <TextInput
+              <PhoneInput
                 label="Telefon Numarası"
                 placeholder="+90 532 546 8228"
                 value={field.value || ''}
@@ -235,37 +249,35 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
               name="privacyPolicy"
               control={control}
               render={({ field }) => (
-                <label className="flex items-start gap-2">
-                  <input
-                    type="checkbox"
-                    checked={field.value || false}
-                    onChange={field.onChange}
-                    className="mt-1"
-                  />
-                  <span className="text-sm">
-                    <span className="text-error">*</span> Gizlilik Politikasını ve Kullanım
-                    Şartlarını kabul ediyorum
-                  </span>
-                </label>
+                <Checkbox
+                  {...field}
+                  id="terms-checkbox"
+                  checked={field.value || false}
+                  error={errors.privacyPolicy?.message}
+                  onChange={field.onChange}
+                  label={(<span className="text-size-sm">Şartları kabul ediyorum</span>) as any}
+                />
               )}
             />
-            {errors.privacyPolicy && (
-              <p className="text-error text-sm">{errors.privacyPolicy.message}</p>
-            )}
 
             <Controller
               name="marketingConsent"
               control={control}
               render={({ field }) => (
-                <label className="flex items-start gap-2">
-                  <input
-                    type="checkbox"
-                    checked={field.value || false}
-                    onChange={field.onChange}
-                    className="mt-1"
-                  />
-                  <span className="text-sm">Guide of Dubai'den haberdar olmak istiyorum</span>
-                </label>
+                <Checkbox
+                  {...field}
+                  id="marketing-consent-checkbox"
+                  checked={field.value || false}
+                  error={errors.marketingConsent?.message}
+                  onChange={field.onChange}
+                  label={
+                    (
+                      <span className="text-size-sm">
+                        Guide of Dubai'den haberdar olmak istiyorum
+                      </span>
+                    ) as any
+                  }
+                />
               )}
             />
           </div>

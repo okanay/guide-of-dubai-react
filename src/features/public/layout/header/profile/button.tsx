@@ -15,13 +15,12 @@ export function AuthButton() {
   const dropdownRef = useClickOutside<HTMLDivElement>(closeDropdown, true, buttonRef)
 
   const { openModal: openAuthModal } = useAuthModal()
-  const { setInverted, isInverted, closeAll, closeCategories } = useHeader()
-  const { theme, setTheme } = useTheme()
+  const { setInverted, isInverted, closeCategories } = useHeader()
   const { sessionStatus, user, logout } = useAuth()
 
   function toggleDropdown() {
     if (isInverted) {
-      closeAll()
+      closeDropdown()
     } else {
       closeCategories()
       setInverted(true)
@@ -44,11 +43,11 @@ export function AuthButton() {
           data-visible={isInverted}
           <div className="pointer-events-none absolute inset-0 z-34 bg-black-40 data-[visible=true]:pointer-events-auto" />
           {/* Header şeridi */}
-          <div className="absolute top-0 left-0 z-35 h-17 w-full bg-box-surface" />
+          <div className="absolute top-0 left-0 z-35 h-16 w-full bg-box-surface" />
           {/* Dropdown */}
           <div
             ref={dropdownRef}
-            className="pointer-events-none absolute top-17 right-0 left-[50%] z-35 flex w-full max-w-8xl translate-x-[-50%] justify-end"
+            className="pointer-events-none absolute top-16 right-0 left-[50%] z-35 flex w-full max-w-8xl translate-x-[-50%] justify-end"
           >
             <div
               data-visible={isInverted}
@@ -182,7 +181,7 @@ function MenuItem({ label, description, value, onClick, showChevron, control }: 
   return (
     <button
       onClick={onClick}
-      className="flex w-full items-center justify-between px-4 py-3 text-left hover:bg-gray-100"
+      className="flex w-full items-center justify-between px-4 py-4 text-left hover:bg-gray-100"
     >
       <div className="flex items-center">
         <div>
@@ -205,7 +204,7 @@ function MobileAppDownload({ closeDropdown }: any) {
   return (
     <button
       aria-label="Download Mobile App"
-      className="flex items-center justify-between px-4 py-3 text-start"
+      className="flex items-center justify-between px-4 pt-3 pb-4 text-start"
       onClick={() => {
         const element = document.getElementById('app-promo-section')
         if (element) {
@@ -226,7 +225,7 @@ function MobileAppDownload({ closeDropdown }: any) {
 }
 
 function Separator() {
-  return <div className="my-1 border-t border-gray-100" />
+  return <div className="border-t border-gray-100" />
 }
 
 const UserIcon = () => (

@@ -406,7 +406,7 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
               className="h-4 w-6 object-cover"
               onError={(e) => ((e.currentTarget as HTMLImageElement).style.display = 'none')}
             />
-            <div className="ml-1 h-5 w-px bg-gray-200" />
+            <div className="ml-1 h-11 w-px bg-gray-200" />
           </div>
           <input
             {...props}

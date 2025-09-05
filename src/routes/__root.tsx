@@ -1,11 +1,12 @@
 import { createRootRoute, HeadContent, Outlet, redirect, Scripts } from '@tanstack/react-router'
 import { type ReactNode } from 'react'
-import { AppProviders } from 'src/providers'
-import globals from '../styles/globals.css?url'
-import { getMeInitial, AuthProvider } from 'src/providers/auth'
+import { SystemSettingsModalStore } from 'src/features/public/layout/header/system-settings/store'
 import { getPreferedSettings } from 'src/i18n/get-prefered-settings'
-import { ThemeStore } from 'src/providers/theme-mode'
 import LanguageProvider from 'src/i18n/prodiver'
+import { AppProviders } from 'src/providers'
+import { AuthProvider, getMeInitial } from 'src/providers/auth'
+import { ThemeStore } from 'src/providers/theme-mode'
+import globals from '../styles/globals.css?url'
 
 const CANONICAL_URL = import.meta.env.VITE_APP_CANONICAL_URL
 
@@ -298,9 +299,11 @@ function RootComponent() {
       <AuthProvider initialUser={data.me.user}>
         <ThemeStore initialTheme={data.settings.theme}>
           <LanguageProvider serverLanguage={data.settings.language}>
-            <AppProviders>
-              <Outlet />
-            </AppProviders>
+            <SystemSettingsModalStore initialCurrency={data.settings.currency}>
+              <AppProviders>
+                <Outlet />
+              </AppProviders>
+            </SystemSettingsModalStore>
           </LanguageProvider>
         </ThemeStore>
       </AuthProvider>
