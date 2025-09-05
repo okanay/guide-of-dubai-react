@@ -1,4 +1,4 @@
-import { ArrowLeft, Check, ChevronRight, DollarSign, Globe, Monitor, X } from 'lucide-react'
+import { ArrowLeft, Check, ChevronRight, DollarSign, Globe, Monitor, Moon, X } from 'lucide-react'
 import { ModalWrapper } from 'src/components/modal-wrapper'
 import { SUPPORTED_LANGUAGES } from 'src/i18n/config'
 import { SUPPORTED_CURRENCIES } from 'src/i18n/currency-config'
@@ -103,6 +103,7 @@ export function SystemSettingsModal() {
 function MainSettings() {
   const { setMode, currency } = useSystemSettings()
   const { language } = useLanguage()
+  const { theme } = useTheme()
 
   return (
     <div className="space-y-2 p-4">
@@ -128,6 +129,20 @@ function MainSettings() {
           <div>
             <p className="font-medium">Para Birimi</p>
             <p className="text-sm text-gray-500">{currency.name}</p>
+          </div>
+        </div>
+        <ChevronRight size={20} className="text-gray-400" />
+      </button>
+      <button
+        onClick={() => setMode('theme')}
+        className="flex w-full items-center justify-between border border-gray-200 p-3 text-left transition-colors hover:bg-gray-50"
+      >
+        <div className="flex items-center gap-3">
+          <Moon size={20} className="text-gray-600" />
+
+          <div>
+            <p className="font-medium">Tema</p>
+            <p className="text-sm text-gray-500 first-letter:uppercase">{theme}</p>
           </div>
         </div>
         <ChevronRight size={20} className="text-gray-400" />

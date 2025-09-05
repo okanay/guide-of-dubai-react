@@ -32,7 +32,7 @@ export function CategoriesDropdown() {
                   key={index}
                   data-status={isCategoriesOpen ? 'active' : 'closed'}
                   style={{
-                    transitionDelay: isCategoriesOpen ? `${index * 30}ms` : '0ms',
+                    transitionDelay: isCategoriesOpen ? `${index * 20}ms` : '0ms',
                   }}
                   className="group flex cursor-pointer items-start gap-x-4 p-3 transition-all duration-200 hover:-translate-y-0.5 hover:bg-gray-50 data-[status=active]:translate-y-0 data-[status=active]:opacity-100 data-[status=closed]:translate-y-4 data-[status=closed]:opacity-0"
                 >

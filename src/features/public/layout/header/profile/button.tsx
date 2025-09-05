@@ -57,16 +57,12 @@ export function AuthButton() {
               {sessionStatus === 'unauthenticated' ? (
                 <UnauthorizeDropdownContent
                   openAuthModal={openAuthModal}
-                  theme={theme}
-                  setTheme={setTheme}
                   closeDropdown={closeDropdown}
                 />
               ) : (
                 <AuthorizeDropdownContent
                   user={user}
                   logout={logout}
-                  theme={theme}
-                  setTheme={setTheme}
                   closeDropdown={closeDropdown}
                 />
               )}
@@ -80,7 +76,7 @@ export function AuthButton() {
       <button
         ref={buttonRef}
         onClick={toggleDropdown}
-        className="ml-2 flex items-center gap-x-2 bg-btn-primary px-4.5 py-2 text-on-btn-primary transition-colors duration-300 ease-in-out hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled"
+        className="ml-2 flex items-center gap-x-2 rounded-xs bg-btn-primary px-5 py-2 text-on-btn-primary transition-colors duration-300 ease-in-out hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled"
         aria-label="Kullanıcı profili ve ayarlar"
       >
         Profil
@@ -90,9 +86,10 @@ export function AuthButton() {
   )
 }
 
-function UnauthorizeDropdownContent({ openAuthModal, theme, setTheme, closeDropdown }: any) {
+function UnauthorizeDropdownContent({ openAuthModal, closeDropdown }: any) {
   const { openModal: openSystemSettingsModal, currency } = useSystemSettings()
   const { language } = useLanguage()
+  const { theme } = useTheme()
 
   return (
     <>
@@ -127,9 +124,13 @@ function UnauthorizeDropdownContent({ openAuthModal, theme, setTheme, closeDropd
       />
       <Separator />
       <MenuItem
-        label="Açık Tema"
-        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-        control={<ThemeToggle theme={theme} />}
+        label="Tema"
+        value={theme}
+        onClick={() => {
+          openSystemSettingsModal('theme')
+          closeDropdown()
+        }}
+        showChevron
       />
       <Separator />
       <MobileAppDownload closeDropdown={closeDropdown} />
@@ -170,11 +171,7 @@ function AuthorizeDropdownContent({ user, logout, theme, setTheme }: any) {
         onClick={() => openSystemSettingsModal('currency')}
         showChevron
       />
-      <MenuItem
-        label="Açık Tema"
-        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-        control={<ThemeToggle theme={theme} />}
-      />
+
       <Separator />
       <MenuItem label="Çıkış Yap" onClick={logout} />
     </>
@@ -194,18 +191,12 @@ function MenuItem({ label, description, value, onClick, showChevron, control }: 
         </div>
       </div>
       <div className="flex items-center">
-        {value && <span className="mr-2 text-size-sm text-gray-800">{value}</span>}
+        {value && (
+          <span className="mr-2 text-size-sm text-gray-800 first-letter:uppercase">{value}</span>
+        )}
         {control}
         {showChevron && <ChevronRight size={18} className="shrink-0 text-black" />}
       </div>
-    </button>
-  )
-}
-
-function ThemeToggle({ theme }: { theme: 'light' | 'dark' | 'system' }) {
-  return (
-    <button data-theme={theme} className="group/t h-5.5 w-11 rounded-sm bg-primary-100 p-0.5">
-      <div className="h-full w-5.5 translate-x-0 rounded bg-btn-primary transition-transform group-data-[theme=dark]/t:translate-x-full"></div>
     </button>
   )
 }
