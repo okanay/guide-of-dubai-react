@@ -147,7 +147,7 @@ export const PublicHeaderBackground = () => {
 
           {/* Gradient Overlay */}
           <div
-            className="absolute inset-0 z-30 bg-gradient-to-b from-gray-500/30 to-gray-950/70 transition-opacity duration-500 data-[slide=false]:opacity-0"
+            className="absolute inset-0 z-30 bg-gradient-to-b from-black to-gray-950 opacity-50 transition-opacity duration-500 data-[slide=false]:opacity-0"
             data-slide={hasSlide}
           />
 
