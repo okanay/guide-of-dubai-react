@@ -1,4 +1,3 @@
-import { Minus, Plus } from 'lucide-react'
 import { useState } from 'react'
 
 export const PublicFooter = () => {
@@ -13,7 +12,10 @@ export const PublicFooter = () => {
 export const AppPromoSection = () => {
   return (
     <section>
-      <div className="relative mx-auto flex h-[180px] w-full max-w-7xl flex-row items-center justify-evenly gap-x-0 bg-black text-white sm:gap-x-8 sm:px-4 sm:py-0 md:h-[320px]">
+      <div
+        id="app-promo-section"
+        className="relative mx-auto flex h-[180px] w-full max-w-7xl scroll-m-20 flex-row items-center justify-evenly gap-x-0 bg-black text-white sm:gap-x-8 sm:px-4 sm:py-0 md:h-[320px]"
+      >
         {/* Arka Plan Deseni */}
         <img
           src="/images/public/footer/background-image.png"

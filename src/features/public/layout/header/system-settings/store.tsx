@@ -9,18 +9,22 @@ import {
   SUPPORTED_CURRENCIES,
 } from 'src/i18n/currency-config'
 
+type ModalMode = 'main' | 'language' | 'currency' | 'theme'
+
 interface SystemSettingsModalState {
   isOpen: boolean
   scopeId: string | null
   currency: Currency
+  mode: ModalMode
 }
 
 interface SystemSettingsModalActions {
-  openModal: (scopeId?: string) => void
+  openModal: (mode?: ModalMode, scopeId?: string) => void
   closeModal: () => void
-  toggleModal: (scopeId?: string) => void
+  toggleModal: (mode?: ModalMode, scopeId?: string) => void
   setScopeId: (scopeId: string | null) => void
   setCurrency: (currencyCode: CurrencyCode) => void
+  setMode: (mode: ModalMode) => void
 }
 
 type SystemSettingsModalStore = SystemSettingsModalState & SystemSettingsModalActions
@@ -39,11 +43,13 @@ export function SystemSettingsModalStore({
         isOpen: false,
         scopeId: null,
         currency: initialCurrency,
+        mode: 'main',
 
-        openModal: (scopeId = 'body') => {
+        openModal: (mode = 'main', scopeId = 'body') => {
           set((state) => {
             state.isOpen = true
             state.scopeId = scopeId
+            state.mode = mode
           })
         },
 
@@ -54,12 +60,12 @@ export function SystemSettingsModalStore({
           })
         },
 
-        toggleModal: (scopeId = 'body') => {
+        toggleModal: (mode = 'main', scopeId = 'body') => {
           const { isOpen } = get()
           if (isOpen) {
             get().closeModal()
           } else {
-            get().openModal(scopeId)
+            get().openModal(mode, scopeId)
           }
         },
 
@@ -79,20 +85,21 @@ export function SystemSettingsModalStore({
             return
           }
 
-          // Update currency in store
           set((state) => {
             state.currency = newCurrency
           })
 
-          // Persist to cookie and localStorage
           Cookies.set(CURRENCY_COOKIE_NAME, newCurrency.code, CURRENCY_COOKIE_OPTIONS)
 
           if (typeof window !== 'undefined') {
             localStorage.setItem('currency', newCurrency.code)
-
-            // Update HTML data attribute for CSS theming
             document.documentElement.setAttribute('data-currency', newCurrency.code)
           }
+        },
+        setMode: (mode) => {
+          set((state) => {
+            state.mode = mode
+          })
         },
       })),
     ),

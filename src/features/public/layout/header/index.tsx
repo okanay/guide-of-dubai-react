@@ -1,5 +1,5 @@
 import { Link } from 'src/i18n/router/link'
-import { AuthButton } from './auth/button'
+import { AuthButton } from './profile/button'
 import { BasketButton } from './basket/button'
 import { CategoriesButton } from './categories/button'
 import { CategoriesDropdown } from './categories/dropdown'
