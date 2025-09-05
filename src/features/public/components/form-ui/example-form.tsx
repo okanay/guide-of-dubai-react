@@ -6,6 +6,8 @@ import { Slider } from './slider'
 import { SliderMinMax } from './slider-min-max'
 import { TextInput } from './text-input'
 import { ToggleSwitch } from './toggle-switch'
+import { PhoneInput } from './phone-input'
+import { NumericStepper } from './numeric-stepper'
 
 export function ExampleForm() {
   // State'ler
@@ -16,6 +18,8 @@ export function ExampleForm() {
   const [selectedGender, setSelectedGender] = useState('')
   const [sliderValue, setSliderValue] = useState(50)
   const [budgetRange, setBudgetRange] = useState<[number, number]>([0, 25000])
+  const [phone, setPhone] = useState('')
+  const [adults, setAdults] = useState(1)
 
   // Options
   const countryOptions = [
@@ -78,7 +82,6 @@ export function ExampleForm() {
         step={500}
         value={budgetRange}
         onChange={setBudgetRange}
-        currency="$"
       />
 
       {/* Select */}
@@ -88,6 +91,23 @@ export function ExampleForm() {
         options={countryOptions}
         value={selectedCountry}
         onChange={setSelectedCountry}
+        required
+      />
+
+      <NumericStepper
+        label="Yetişkin Sayısı"
+        value={adults}
+        onChange={setAdults}
+        min={1}
+        max={10}
+        description="Minimum 1 yetişkin olmalıdır."
+      />
+
+      <PhoneInput
+        label="Telefon Numarası"
+        value={phone}
+        onChange={setPhone}
+        placeholder="+90 (5XX) XXX XX XX"
         required
       />
 
