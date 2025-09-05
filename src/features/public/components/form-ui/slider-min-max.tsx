@@ -1,3 +1,4 @@
+import { useSystemSettings } from '../../layout/header/system-settings/store'
 import { BaseInput } from './base-input'
 import { useCallback } from 'react'
 
@@ -11,7 +12,6 @@ interface Props {
   onChange?: (value: [number, number]) => void
   className?: string
   formatValue?: (value: number) => string
-  currency?: string
 }
 
 export const SliderMinMax = ({
@@ -24,13 +24,15 @@ export const SliderMinMax = ({
   onChange,
   className,
   formatValue,
-  currency = '$',
 }: Props) => {
+  const {
+    currency: { symbol },
+  } = useSystemSettings()
   const [minValue, maxValue] = value
 
   const defaultFormatValue = (val: number) => {
     if (formatValue) return formatValue(val)
-    return `${currency}${val.toLocaleString()}`
+    return `${symbol}${val.toLocaleString()}`
   }
 
   const handleMinChange = useCallback(

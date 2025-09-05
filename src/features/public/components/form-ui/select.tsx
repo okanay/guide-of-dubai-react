@@ -1,4 +1,5 @@
 import { twMerge } from 'tailwind-merge'
+import { ChevronDown } from 'lucide-react'
 import { BaseInput } from './base-input'
 
 interface SelectOption {
@@ -34,31 +35,43 @@ export const Select = ({
 }: Props) => {
   return (
     <BaseInput htmlFor={id} label={label} error={error} required={required} className={className}>
-      <select
-        {...props}
-        ref={ref}
-        id={id}
-        value={value}
-        onChange={(e) => onChange?.(e.target.value)}
-        className={twMerge(
-          'w-full rounded-xs border-2 px-3 py-2.5 text-body transition-colors',
-          'border-gray-300 bg-white text-on-box-black',
-          'focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none',
-          'disabled:bg-gray-100 disabled:opacity-50',
-          error && 'border-error-500 focus:border-error-500 focus:ring-error-500/20',
-        )}
-      >
-        {placeholder && (
-          <option value="" disabled>
-            {placeholder}
-          </option>
-        )}
-        {options.map((option) => (
-          <option key={option.value} value={option.value} disabled={option.disabled}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      <div className="relative">
+        <select
+          {...props}
+          ref={ref}
+          id={id}
+          value={value}
+          onChange={(e) => onChange?.(e.target.value)}
+          className={twMerge(
+            'w-full appearance-none rounded-xs border-2 px-3 py-1.5 pr-10 text-body transition-colors',
+            'border-gray-300 bg-white text-on-box-black',
+            'focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none',
+            'disabled:bg-gray-100 disabled:opacity-50',
+            error && 'border-error-500 focus:border-error-500 focus:ring-error-500/20',
+          )}
+        >
+          {placeholder && (
+            <option value="" disabled>
+              {placeholder}
+            </option>
+          )}
+          {options.map((option) => (
+            <option key={option.value} value={option.value} disabled={option.disabled}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+
+        {/* Chevron Down Icon */}
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+          <ChevronDown
+            className={twMerge(
+              'h-4 w-4 text-gray-400 transition-colors',
+              error && 'text-error-400',
+            )}
+          />
+        </div>
+      </div>
     </BaseInput>
   )
 }
