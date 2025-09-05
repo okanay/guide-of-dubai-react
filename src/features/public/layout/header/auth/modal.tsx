@@ -1,50 +1,168 @@
-import { X } from 'lucide-react'
-import { useAuthModal } from './store'
+import React from 'react'
 import { ModalWrapper } from 'src/components/modal-wrapper'
+import { ForgotPasswordForm } from './form-forgot-password'
+import { EmailLoginForm } from './form-login'
+import { RegisterForm } from './form-register'
+import {
+  AppleIcon,
+  CancelIcon,
+  ChevronRight,
+  EmailIcon,
+  FacebookIcon,
+  GoogleIcon,
+  PhoneIcon,
+} from './icons'
+import { useAuthModal } from './store'
+
+// ==================================
+// Main Modal Component
+// ==================================
 
 export function AuthModal() {
-  const { isOpen, closeModal, scopeId, mode } = useAuthModal()
+  const { isOpen, closeModal, scopeId, mode, setMode } = useAuthModal()
+
+  const handleClose = () => {
+    closeModal()
+    setTimeout(() => setMode('login'), 300)
+  }
+
+  const renderContent = () => {
+    switch (mode) {
+      case 'email-login':
+        return <EmailLoginForm onClose={handleClose} />
+      case 'register':
+        return <RegisterForm onClose={handleClose} />
+      case 'forgot-password':
+        return <ForgotPasswordForm onClose={handleClose} />
+      case 'phone-login':
+        return <EmailLoginForm onClose={handleClose} />
+      case 'login':
+      default:
+        return <LoginOptions onClose={handleClose} />
+    }
+  }
 
   return (
-    <ModalWrapper isOpen={isOpen} onClose={closeModal} scopeId={scopeId}>
-      {/* Modal */}
+    <ModalWrapper isOpen={isOpen} onClose={handleClose} scopeId={scopeId}>
       <div className="relative flex h-full w-full flex-col overflow-hidden bg-box-surface md:h-auto md:max-h-[90vh] md:w-full md:max-w-md md:shadow-2xl">
-        {/* Header - Her zaman sabit */}
-        <div className="flex shrink-0 items-center justify-between border-b border-gray-200 bg-box-surface p-4">
-          <h2 id="auth-title" className="text-lg font-semibold text-on-box-black">
-            {mode === 'login'
-              ? 'Giriş Yap'
-              : mode === 'register'
-                ? 'Kayıt Ol'
-                : mode === 'forgot-password'
-                  ? 'Şifre Sıfırla'
-                  : 'Doğrulama'}
-          </h2>
-          <button
-            onClick={closeModal}
-            className="rounded-full p-1 text-on-box-black transition-colors duration-300 hover:text-black-60"
-            aria-label="Auth modal'ı kapat"
-          >
-            <X className="size-6" />
-          </button>
-        </div>
+        {/* Dinamik içerik (Header + Body) */}
+        {renderContent()}
 
-        {/* Content - Kaydırılabilir alan */}
-        <div className="flex-1 overflow-y-auto">
-          <div className="p-4">
-            <div className="flex h-64 items-center justify-center">
-              <p className="text-gray-600">Content</p>
+        {/* Footer */}
+        <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4 text-center">
+          {mode === 'login' && (
+            <p className="text-xs text-gray-500">
+              Oturum açarak veya bir hesap oluşturarak,{' '}
+              <a href="#" className="underline">
+                Hizmet Şartlarımızı
+              </a>{' '}
+              ve{' '}
+              <a href="#" className="underline">
+                Gizlilik Politikamızı
+              </a>{' '}
+              kabul etmiş olursunuz.
+            </p>
+          )}
+          {(mode === 'email-login' || mode === 'forgot-password') && (
+            <div className="text-sm">
+              <span>Hesabınız yok mu? </span>
+              <button
+                onClick={() => setMode('register')}
+                className="font-semibold text-primary-600"
+              >
+                Hesap oluşturun
+              </button>
             </div>
-            {/* Mobil için extra spacing */}
-            <div className="h-20 md:hidden" />
-          </div>
-        </div>
-
-        {/* Footer - Her zaman sabit */}
-        <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4">
-          <p className="text-center text-gray-600">Footer</p>
+          )}
+          {mode === 'register' && (
+            <div className="text-sm">
+              <span>Zaten hesabınız var mı? </span>
+              <button
+                onClick={() => setMode('email-login')}
+                className="font-semibold text-primary-600"
+              >
+                Giriş yapın
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </ModalWrapper>
+  )
+}
+
+function LoginOptions({ onClose }: { onClose: () => void }) {
+  const { setMode } = useAuthModal()
+
+  return (
+    <>
+      <div className="flex shrink-0 items-start justify-between border-b border-gray-200 bg-box-surface px-6 py-4">
+        <div className="flex-1 text-center">
+          <h2 className="text-start text-lg font-semibold text-on-box-black">
+            Guide of Dubai'ye Hoşgeldiniz
+          </h2>
+          <p className="mt-1 text-start text-sm text-gray-600">
+            Üyelere özel fırsatlar, kişiselleştirilmiş öneriler ve çok daha fazlası için oturum açın
+            veya üye olun.
+          </p>
+        </div>
+        <div className="w-8">
+          <button
+            onClick={onClose}
+            className="rounded-full bg-gray-200 p-1 text-on-box-black transition-colors duration-300 hover:text-black-60"
+            aria-label="Kapat"
+          >
+            <CancelIcon />
+          </button>
+        </div>
+      </div>
+      <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto p-6">
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <AuthButton
+              icon={<PhoneIcon />}
+              label="Telefon ile Devam Et"
+              onClick={() => setMode('phone-login')}
+            />
+            <AuthButton
+              icon={<EmailIcon />}
+              label="Mail ile Devam Et"
+              onClick={() => setMode('email-login')}
+            />
+          </div>
+          <div className="flex items-center gap-x-2 py-2">
+            <div className="h-px flex-1 bg-gray-200" />
+            <span className="text-xs text-gray-500">veya</span>
+            <div className="h-px flex-1 bg-gray-200" />
+          </div>
+          <div className="space-y-2">
+            <AuthButton icon={<AppleIcon />} label="Apple ile Devam Et" onClick={() => {}} />
+            <AuthButton icon={<GoogleIcon />} label="Google ile Devam Et" onClick={() => {}} />
+            <AuthButton icon={<FacebookIcon />} label="Facebook ile Devam Et" onClick={() => {}} />
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
+
+interface AuthButtonProps {
+  icon: React.ReactNode
+  label: string
+  onClick: () => void
+}
+
+function AuthButton({ icon, label, onClick }: AuthButtonProps) {
+  return (
+    <button
+      onClick={onClick}
+      className="flex w-full items-center justify-between rounded-xs border border-gray-300 p-3 hover:bg-gray-50"
+    >
+      <div className="flex items-center gap-x-4">
+        {icon}
+        <span className="font-semibold">{label}</span>
+      </div>
+      <ChevronRight />
+    </button>
   )
 }

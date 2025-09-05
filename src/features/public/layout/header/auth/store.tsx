@@ -2,16 +2,25 @@ import { createContext, PropsWithChildren, useContext, useState } from 'react'
 import { createStore, StoreApi, useStore } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
+// Genişletilmiş mod türleri
+export type AuthModalMode =
+  | 'login'
+  | 'register'
+  | 'forgot-password'
+  | 'verify'
+  | 'email-login'
+  | 'phone-login'
+
 interface AuthModalState {
   isOpen: boolean
-  mode: 'login' | 'register' | 'forgot-password' | 'verify'
+  mode: AuthModalMode
   scopeId: string | null
 }
 
 interface AuthModalActions {
-  openModal: (mode?: 'login' | 'register' | 'forgot-password' | 'verify', scopeId?: string) => void
+  openModal: (mode?: AuthModalMode, scopeId?: string) => void
   closeModal: () => void
-  setMode: (mode: 'login' | 'register' | 'forgot-password' | 'verify') => void
+  setMode: (mode: AuthModalMode) => void
   setScopeId: (scopeId: string | null) => void
 }
 
@@ -22,7 +31,7 @@ export function AuthModalStore({ children }: PropsWithChildren) {
     createStore<AuthModalStore>()(
       immer((set) => ({
         isOpen: false,
-        mode: 'login',
+        mode: 'login', // Varsayılan mod
         scopeId: null,
 
         openModal: (mode = 'login', scopeId = 'body') => {
