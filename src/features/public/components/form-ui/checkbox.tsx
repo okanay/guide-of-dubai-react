@@ -1,7 +1,7 @@
 import { twMerge } from 'tailwind-merge'
 
 // =============================================================================
-// CHECKBOX COMPONENT
+// CHECKBOX COMPONENT - FIXED
 // =============================================================================
 interface CheckboxProps {
   id?: string
@@ -9,17 +9,32 @@ interface CheckboxProps {
   error?: string
   required?: boolean
   className?: string
+  checked?: boolean
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   [key: string]: any
 }
 
-export function Checkbox({ id, label, error, required, className, ...props }: CheckboxProps) {
+export function Checkbox({
+  id,
+  label,
+  error,
+  required,
+  className,
+  checked,
+  onChange,
+  ...props
+}: CheckboxProps) {
   return (
-    <div
-      data-checked={props.checked}
-      className={twMerge('group/cb flex items-start gap-3', className)}
-    >
+    <div data-checked={checked} className={twMerge('group/cb flex items-start gap-3', className)}>
       <div className="relative">
-        <input {...props} type="checkbox" id={id} className="peer sr-only" />
+        <input
+          {...props}
+          type="checkbox"
+          id={id}
+          checked={checked}
+          onChange={onChange}
+          className="peer sr-only"
+        />
         <label
           htmlFor={id}
           className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-xs border-2 border-gray-300 bg-white transition-all group-data-[checked=true]/cb:border-primary-500 group-data-[checked=true]/cb:bg-primary-500 peer-focus:ring-2 peer-focus:ring-primary-500/20"

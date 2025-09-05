@@ -1,70 +1,78 @@
 import { twMerge } from 'tailwind-merge'
+import { BaseInput } from './base-input'
 
 interface RadioOption {
   value: string
   label: string
+  disabled?: boolean
 }
 
-interface RadioGroupProps {
+interface Props {
   label?: string
   error?: string
   required?: boolean
   options: RadioOption[]
   name: string
+  value?: string
+  onChange?: (value: string) => void
   className?: string
-  [key: string]: any
 }
 
-export function RadioGroup({
+export const RadioGroup = ({
   label,
   error,
   required,
   options,
   name,
+  value,
+  onChange,
   className,
-  ...props
-}: RadioGroupProps) {
+}: Props) => {
   return (
-    <div className={twMerge('space-y-3', className)}>
-      {label && (
-        <div className="text-body font-medium text-on-box-black">
-          {label}
-          {required && <span className="ml-1 text-error-500">*</span>}
-        </div>
-      )}
-
+    <BaseInput label={label} error={error} required={required} className={className}>
       <div className="space-y-2">
         {options.map((option) => {
           const radioId = `${name}-${option.value}`
+          const isChecked = option.value === value
+
           return (
             <div
-              data-checked={option.value === props.value}
+              data-checked={isChecked}
               key={option.value}
               className="group/ri flex items-center gap-3"
             >
               <input
-                {...props}
                 type="radio"
                 id={radioId}
                 name={name}
                 value={option.value}
+                checked={isChecked}
+                onChange={(e) => onChange?.(e.target.value)}
+                disabled={option.disabled}
                 className="peer sr-only"
               />
               <label
                 htmlFor={radioId}
-                className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-2 border-gray-300 transition-all group-data-[checked=true]/ri:border-primary-500 peer-focus:ring-2 peer-focus:ring-primary-500/20"
+                className={twMerge(
+                  'flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-2 border-gray-300 transition-all group-data-[checked=true]/ri:border-primary-500 peer-focus:ring-2 peer-focus:ring-primary-500/20',
+                  option.disabled && 'cursor-not-allowed opacity-50',
+                )}
               >
                 <span className="size-[95%] rounded-full bg-primary-500 opacity-0 transition-opacity group-data-[checked=true]/ri:opacity-100" />
               </label>
-              <label htmlFor={radioId} className="cursor-pointer text-body text-on-box-black">
+              <label
+                htmlFor={radioId}
+                className={twMerge(
+                  'cursor-pointer text-body text-on-box-black',
+                  option.disabled && 'cursor-not-allowed opacity-50',
+                )}
+              >
                 {option.label}
               </label>
             </div>
           )
         })}
       </div>
-
-      {error && <p className="text-body-sm text-error-500">{error}</p>}
-    </div>
+    </BaseInput>
   )
 }

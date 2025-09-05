@@ -1,10 +1,7 @@
 import React from 'react'
 import { twMerge } from 'tailwind-merge'
 
-// ==================================
-// BaseInput Component
-// ==================================
-interface BaseInputProps {
+interface Props {
   htmlFor?: string
   label?: string
   error?: string
@@ -14,7 +11,7 @@ interface BaseInputProps {
   description?: string
 }
 
-export const BaseInput: React.FC<BaseInputProps> = ({
+export const BaseInput: React.FC<Props> = ({
   htmlFor,
   label,
   error,
