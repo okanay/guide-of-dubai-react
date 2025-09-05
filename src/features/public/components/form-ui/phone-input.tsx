@@ -398,7 +398,7 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
         className={className}
         description={description}
       >
-        <div className="relative">
+        <div className="group relative">
           <div className="pointer-events-none absolute top-1/2 left-3 z-10 flex -translate-y-1/2 items-center gap-2">
             <img
               src={flagUrl}
@@ -406,7 +406,7 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
               className="h-4 w-6 object-cover"
               onError={(e) => ((e.currentTarget as HTMLImageElement).style.display = 'none')}
             />
-            <div className="ml-1 h-11 w-px bg-gray-200" />
+            <div className="ml-1 h-10 w-px bg-gray-200 transition-colors group-focus-within:bg-primary-500" />
           </div>
           <input
             {...props}
