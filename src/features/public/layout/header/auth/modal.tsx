@@ -68,7 +68,7 @@ export function AuthModal() {
               <span>Hesabınız yok mu? </span>
               <button
                 onClick={() => setMode('register')}
-                className="font-semibold text-primary-600"
+                className="font-semibold text-btn-primary"
               >
                 Hesap oluşturun
               </button>
@@ -79,7 +79,7 @@ export function AuthModal() {
               <span>Zaten hesabınız var mı? </span>
               <button
                 onClick={() => setMode('email-login')}
-                className="font-semibold text-primary-600"
+                className="font-semibold text-btn-primary"
               >
                 Giriş yapın
               </button>

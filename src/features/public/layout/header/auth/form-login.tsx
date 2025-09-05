@@ -119,8 +119,8 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
           </button>
         </form>
 
-        <div className="mt-4 text-center">
-          <button onClick={() => setMode('forgot-password')} className="text-sm text-primary-600">
+        <div className="mt-4 text-center font-semibold">
+          <button onClick={() => setMode('forgot-password')} className="text-sm text-btn-primary">
             Şifrenizi mi unuttunuz?
           </button>
         </div>

@@ -251,7 +251,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
               render={({ field }) => (
                 <Checkbox
                   {...field}
-                  id="terms-checkbox"
+                  id="privacy-checkbox"
                   checked={field.value || false}
                   error={errors.privacyPolicy?.message}
                   onChange={field.onChange}
