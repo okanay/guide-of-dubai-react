@@ -42,7 +42,7 @@ export const TextInput = ({
           placeholder={placeholder}
           maxLength={maxLength}
           className={twMerge(
-            'w-full rounded-xs border px-3 py-2 text-sm transition-colors',
+            'h-11 w-full rounded-xs border px-3 py-2 text-size transition-colors',
             'border-gray-300 bg-box-surface text-on-box-black',
             'placeholder:text-gray-500',
             'focus:border-primary-500 focus:ring-1 focus:ring-primary-500 focus:outline-none',

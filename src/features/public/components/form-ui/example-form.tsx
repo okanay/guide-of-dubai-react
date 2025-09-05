@@ -8,6 +8,8 @@ import { TextInput } from './text-input'
 import { ToggleSwitch } from './toggle-switch'
 import { PhoneInput } from './phone-input'
 import { NumericStepper } from './numeric-stepper'
+import { DatePicker } from './date-picker'
+import { TimePicker } from './time-picker'
 
 export function ExampleForm() {
   // State'ler
@@ -20,6 +22,8 @@ export function ExampleForm() {
   const [budgetRange, setBudgetRange] = useState<[number, number]>([0, 25000])
   const [phone, setPhone] = useState('')
   const [adults, setAdults] = useState(1)
+  const [alisTarihi, setAlisTarihi] = useState<Date | null>(new Date())
+  const [standardTime, setStandardTime] = useState('10:00')
 
   // Options
   const countryOptions = [
@@ -57,12 +61,22 @@ export function ExampleForm() {
         required
       />
 
+      <DatePicker label="Alış Tarihi" value={alisTarihi} onChange={setAlisTarihi} required />
+
       {/* ToggleSwitch */}
       <ToggleSwitch
         checked={isToggled}
         onChange={(e) => setIsToggled(e.target.checked)}
         label="Bildirimler"
         id="notifications"
+      />
+
+      <TimePicker
+        label="Etkinlik Saati"
+        value={standardTime}
+        onChange={setStandardTime}
+        allowedTimes={['09:00', '12:30', '16:00', '20:00']}
+        description="Etkinlik sadece 09:00, 12:30, 16:00 ve 20:00'de mevcuttur. Girdiğiniz saat en yakınına sabitlenir."
       />
 
       {/* Slider */}

@@ -25,7 +25,7 @@ export function Checkbox({
   ...props
 }: CheckboxProps) {
   return (
-    <div data-checked={checked} className={twMerge('group/cb flex items-start gap-3', className)}>
+    <div data-checked={checked} className={twMerge('group/cb flex items-center gap-3', className)}>
       <div className="relative">
         <input
           {...props}
@@ -40,13 +40,18 @@ export function Checkbox({
           className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-xs border-2 border-gray-300 bg-white transition-all group-data-[checked=true]/cb:border-primary-500 group-data-[checked=true]/cb:bg-primary-500 peer-focus:ring-2 peer-focus:ring-primary-500/20"
         >
           <svg
-            className="size-4 text-white opacity-0 transition-opacity group-data-[checked=true]/cb:opacity-100"
-            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
             viewBox="0 0 24 24"
+            fill="none"
             stroke="currentColor"
-            strokeWidth={3}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-4 w-4 text-[#fff] opacity-0 transition-opacity group-data-[checked=true]/cb:opacity-100"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            <path d="M20 6 9 17l-5-5" />
           </svg>
         </label>
       </div>

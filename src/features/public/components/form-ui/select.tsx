@@ -43,8 +43,8 @@ export const Select = ({
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
           className={twMerge(
-            'w-full appearance-none rounded-xs border-2 px-3 py-1.5 pr-10 text-body transition-colors',
-            'border-gray-300 bg-white text-on-box-black',
+            'w-full appearance-none rounded-xs border bg-box-surface px-3 py-2 pr-10 text-size transition-colors',
+            'border-gray-300 text-on-box-black',
             'focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none',
             'disabled:bg-gray-100 disabled:opacity-50',
             error && 'border-error-500 focus:border-error-500 focus:ring-error-500/20',

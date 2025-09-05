@@ -1,0 +1,266 @@
+import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
+import { twMerge } from 'tailwind-merge'
+import { useLanguage } from 'src/i18n/prodiver'
+import { BaseInput } from './base-input'
+import useClickOutside from 'src/hooks/use-click-outside'
+import {
+  addMonths,
+  eachDayOfInterval,
+  endOfMonth,
+  endOfWeek,
+  format,
+  isSameDay,
+  isSameMonth,
+  isToday,
+  startOfMonth,
+  startOfWeek,
+  subMonths,
+} from 'date-fns'
+
+// ============================================================================
+// PROPS INTERFACE
+// ============================================================================
+interface DatePickerProps {
+  label?: string
+  value: Date | null
+  onChange: (date: Date | null) => void
+  error?: string
+  description?: string
+  className?: string
+  id?: string
+  required?: boolean
+  disabled?: boolean
+  placeholder?: string
+  minDate?: Date
+}
+
+// ============================================================================
+// INTERNAL HOOK (Komponent Mantığı)
+// ============================================================================
+function useDatePicker(selectedDate: Date | null, locale: string, minDate?: Date) {
+  const [isOpen, setIsOpen] = useState(false)
+  const [viewDate, setViewDate] = useState(selectedDate || new Date())
+
+  const openCalendar = () => setIsOpen(true)
+  const closeCalendar = useCallback(() => setIsOpen(false), [])
+
+  const monthName = useMemo(
+    () => new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(viewDate),
+    [viewDate, locale],
+  )
+
+  const weekdays = useMemo(() => {
+    const firstDayOfWeek = startOfWeek(new Date())
+    return Array.from({ length: 7 }, (_, i) =>
+      new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(
+        new Date(firstDayOfWeek.setDate(firstDayOfWeek.getDate() + i)),
+      ),
+    )
+  }, [locale])
+
+  const calendarGrid = useMemo(() => {
+    const start = startOfWeek(startOfMonth(viewDate))
+    const end = endOfWeek(endOfMonth(viewDate))
+    return eachDayOfInterval({ start, end })
+  }, [viewDate, locale])
+
+  const goToNextMonth = () => setViewDate((current) => addMonths(current, 1))
+  const goToPrevMonth = () => setViewDate((current) => subMonths(current, 1))
+
+  useEffect(() => {
+    if (selectedDate) {
+      setViewDate(selectedDate)
+    }
+  }, [selectedDate])
+
+  return {
+    isOpen,
+    viewDate,
+    monthName,
+    weekdays,
+    calendarGrid,
+    openCalendar,
+    closeCalendar,
+    goToNextMonth,
+    goToPrevMonth,
+  }
+}
+
+// ============================================================================
+// CALENDAR PANEL (Portal İçinde Render Edilecek)
+// ============================================================================
+interface CalendarPanelProps {
+  value: Date | null
+  onChange: (date: Date | null) => void
+  onClose: () => void
+  triggerRef: any
+  hook: ReturnType<typeof useDatePicker>
+  minDate?: Date
+}
+
+function CalendarPanel({
+  value,
+  onChange,
+  onClose,
+  triggerRef,
+  hook,
+  minDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24),
+}: CalendarPanelProps) {
+  const panelRef = useClickOutside<HTMLDivElement>(onClose, true, triggerRef)
+  const [position, setPosition] = useState({ top: 0, left: 0 })
+
+  useEffect(() => {
+    if (triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect()
+      setPosition({
+        top: rect.bottom + window.scrollY + 8,
+        left: rect.left + window.scrollX,
+      })
+    }
+  }, [triggerRef])
+
+  const handleSelectDate = (day: Date) => {
+    onChange(day)
+    onClose()
+  }
+
+  return createPortal(
+    <div
+      ref={panelRef}
+      className="absolute z-50 w-80 rounded-xs border border-gray-200 bg-box-surface p-4 shadow-lg"
+      style={{ top: position.top, left: position.left }}
+      role="dialog"
+      aria-modal="true"
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between pb-4">
+        <button
+          type="button"
+          onClick={hook.goToPrevMonth}
+          className="rounded-full p-1.5 hover:bg-gray-100"
+          aria-label="Önceki ay"
+        >
+          <ChevronLeft className="size-5" />
+        </button>
+        <div className="font-semibold">{hook.monthName}</div>
+        <button
+          type="button"
+          onClick={hook.goToNextMonth}
+          className="rounded-full p-1.5 hover:bg-gray-100"
+          aria-label="Sonraki ay"
+        >
+          <ChevronRight className="size-5" />
+        </button>
+      </div>
+
+      {/* Grid */}
+      <div className="grid grid-cols-7 gap-y-1 text-center">
+        {hook.weekdays.map((day) => (
+          <div key={day} className="text-xs font-medium text-gray-500">
+            {day}
+          </div>
+        ))}
+        {hook.calendarGrid.map((day) => {
+          const isCurrentMonth = isSameMonth(day, hook.viewDate)
+          const isSelected = value ? isSameDay(day, value) : false
+          const isTodaysDate = isToday(day)
+          const isDisabled = minDate && day < minDate
+
+          return (
+            <button
+              key={day.toString()}
+              type="button"
+              onClick={() => handleSelectDate(day)}
+              className={twMerge(
+                'flex h-9 w-9 items-center justify-center rounded-full text-sm transition-colors',
+                !isCurrentMonth && 'text-gray-400',
+                isCurrentMonth && 'hover:bg-gray-100',
+                isTodaysDate && 'font-bold text-primary-600',
+                isSelected && 'bg-primary-500 text-on-btn-primary hover:bg-primary-600',
+                isDisabled && 'cursor-not-allowed opacity-50',
+              )}
+              disabled={isDisabled}
+            >
+              {format(day, 'd')}
+            </button>
+          )
+        })}
+      </div>
+    </div>,
+    document.body,
+  )
+}
+
+// ============================================================================
+// MAIN COMPONENT (Dışarıya Açılan)
+// ============================================================================
+export const DatePicker = ({
+  label,
+  value,
+  onChange,
+  error,
+  description,
+  className,
+  id,
+  required,
+  disabled = false,
+  placeholder = 'Tarih seçin',
+  minDate,
+}: DatePickerProps) => {
+  const { language } = useLanguage()
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const datePickerHook = useDatePicker(value, language.locale, minDate)
+
+  const formattedDate = useMemo(() => {
+    if (!value) return ''
+    return new Intl.DateTimeFormat(language.locale, {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    }).format(value)
+  }, [value, language.locale])
+
+  return (
+    <BaseInput
+      htmlFor={id}
+      label={label}
+      error={error}
+      required={required}
+      className={className}
+      description={description}
+    >
+      <button
+        ref={triggerRef}
+        id={id}
+        type="button"
+        onClick={datePickerHook.openCalendar}
+        disabled={disabled}
+        className={twMerge(
+          'relative h-11 w-full cursor-pointer rounded-xs border border-gray-300 bg-box-surface px-3 py-2 text-left text-size transition-colors',
+          'focus:border-primary-500 focus:ring-1 focus:ring-primary-500 focus:outline-none',
+          'disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500 disabled:opacity-50',
+          error && 'border-error-500',
+          !value && 'text-gray-500',
+        )}
+      >
+        {formattedDate || placeholder}
+        <Calendar className="absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+      </button>
+
+      {datePickerHook.isOpen && (
+        <CalendarPanel
+          value={value}
+          onChange={onChange}
+          onClose={datePickerHook.closeCalendar}
+          triggerRef={triggerRef}
+          hook={datePickerHook}
+          minDate={minDate}
+        />
+      )}
+    </BaseInput>
+  )
+}
+
+DatePicker.displayName = 'DatePicker'

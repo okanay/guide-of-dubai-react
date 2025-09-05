@@ -406,8 +406,7 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
               className="h-4 w-6 object-cover"
               onError={(e) => ((e.currentTarget as HTMLImageElement).style.display = 'none')}
             />
-            <span className="text-sm font-medium text-on-box-black">+{activeCountry.dialCode}</span>
-            <div className="h-5 w-px bg-gray-200" />
+            <div className="ml-1 h-5 w-px bg-gray-200" />
           </div>
           <input
             {...props}
@@ -417,7 +416,7 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
             onChange={handleChange}
             placeholder={placeholder}
             className={twMerge(
-              'w-full rounded-xs border px-3 py-2 pl-24 text-sm transition-colors',
+              'w-full rounded-xs border px-3 py-2 pl-14 text-size transition-colors',
               'border-gray-300 bg-box-surface text-on-box-black',
               'placeholder:text-gray-500',
               'focus:border-primary-500 focus:ring-1 focus:ring-primary-500 focus:outline-none',
