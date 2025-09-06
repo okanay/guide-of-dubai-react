@@ -153,7 +153,7 @@ export const PublicHeaderBackground = () => {
 
           {/* Navigation Tabs */}
           <div className="absolute -bottom-px left-0 z-32 w-full">
-            <nav className="mx-auto flex w-full max-w-7xl items-center justify-start overflow-x-auto text-size-sm font-semibold [scrollbar-width:none] sm:px-4 [&::-webkit-scrollbar]:hidden">
+            <nav className="mx-auto flex w-full max-w-7xl items-center justify-start overflow-x-auto text-size-sm font-semibold [scrollbar-width:none] sm:px-4 xl:justify-center [&::-webkit-scrollbar]:hidden">
               <NavigationTab to="/$lang" icon={ExploreIcon} label="Keşfet" className="flex" />
               <NavigationTab to="/$lang/tours" icon={ToursIcon} label="Turlar" className="flex" />
               <NavigationTab

@@ -1,5 +1,5 @@
 import { Clock } from 'lucide-react'
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { BaseInput } from './base-input'
 
@@ -33,73 +33,168 @@ export const TimePicker = ({
   allowedTimes,
 }: Props) => {
   const [inputValue, setInputValue] = useState(value)
+  const [isFocused, setIsFocused] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    setInputValue(value)
-  }, [value])
+    // Sadece focus dışındayken external value'yu kabul et
+    if (!isFocused) {
+      setInputValue(value)
+    }
+  }, [value, isFocused])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const rawValue = e.target.value.replace(/[^0-9]/g, '')
+    const rawValue = e.target.value.replace(/[^0-9:]/g, '')
 
-    if (rawValue.length === 0) {
-      setInputValue('')
+    // Kullanıcı siliyorsa izin ver
+    if (rawValue.length < inputValue.length) {
+      setInputValue(rawValue)
       return
     }
 
-    let hour = rawValue.slice(0, 2)
-    let minute = rawValue.slice(2, 4)
-
-    if (hour.length === 2 && parseInt(hour, 10) > 23) {
-      hour = '23'
+    // Eğer zaten : varsa ve kullanıcı : yazmaya çalışıyorsa, engellle
+    if (rawValue.includes(':') && e.target.value.endsWith(':') && inputValue.includes(':')) {
+      return
     }
 
-    if (minute.length === 2 && parseInt(minute, 10) > 59) {
-      minute = '59'
+    // Max 5 karakter (SS:DD)
+    if (rawValue.replace(':', '').length > 4) {
+      return
     }
 
-    const formattedValue = rawValue.length > 2 ? `${hour}:${minute}` : hour
-    setInputValue(formattedValue)
+    // Otomatik : ekleme - kullanıcı 3. karakteri yazınca
+    if (rawValue.length === 2 && !rawValue.includes(':') && inputValue.length === 1) {
+      const hour = rawValue
+      if (parseInt(hour, 10) <= 23) {
+        setInputValue(hour + ':')
+        // Cursor'ı : sonrasına taşı
+        setTimeout(() => {
+          if (inputRef.current) {
+            inputRef.current.setSelectionRange(3, 3)
+          }
+        }, 0)
+      } else {
+        // 24 ve üzeri, sadece ilk rakamı al ve : ekle
+        setInputValue(rawValue[0] + ':' + rawValue[1])
+      }
+      return
+    }
+
+    // Normal durum - değeri ayarla
+    setInputValue(rawValue)
   }
 
-  const handleBlur = useCallback(() => {
-    if (!inputValue) {
-      onChange('')
-      return
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // Backspace ile : silinmeye çalışıldığında
+    if (e.key === 'Backspace' && inputValue.endsWith(':')) {
+      e.preventDefault()
+      setInputValue(inputValue.slice(0, -1))
     }
+  }
 
-    const parts = inputValue.split(':')
-    let hour = parseInt(parts[0], 10) || 0
-    let minute = parseInt(parts[1], 10) || 0
+  const formatAndValidateTime = (input: string): string => {
+    // Boş input
+    if (!input) return ''
 
-    if (hour > 23 || minute > 59) {
-      if (hour === 24 && minute === 0) {
-        // 24:00 -> 00:00 olarak kabul edilecek
+    // : işaretini temizle
+    const numbers = input.replace(/[^0-9]/g, '')
+
+    if (numbers.length === 0) return ''
+
+    let hour: number
+    let minute: number
+
+    if (numbers.length === 1) {
+      // Tek haneli saat - kullanıcı mantığı:
+      // 0-2: Başına 0 ekle (00, 01, 02)
+      // 3-9: Olduğu gibi kabul et, dakika 00 (03:00 - 09:00)
+      const h = parseInt(numbers, 10)
+      if (h <= 2) {
+        hour = h
+        minute = 0
       } else {
-        hour = 0
+        hour = h
         minute = 0
       }
+    } else if (numbers.length === 2) {
+      // İki haneli - saat olarak kabul et
+      hour = parseInt(numbers, 10)
+      minute = 0
+      if (hour > 23) {
+        // 24-99 arası, ilk rakamı saat, ikinciyi dakika yap
+        hour = parseInt(numbers[0], 10)
+        minute = parseInt(numbers[1], 10) * 10 // x0 dakika
+      }
+    } else if (numbers.length === 3) {
+      // 3 haneli - ilk 2'si saat, 3. dakikanın ilk hanesi
+      const h = parseInt(numbers.slice(0, 2), 10)
+      if (h <= 23) {
+        hour = h
+        minute = parseInt(numbers[2], 10) * 10 // x0 dakika
+      } else {
+        // İlki saat, son ikisi dakika
+        hour = parseInt(numbers[0], 10)
+        minute = parseInt(numbers.slice(1, 3), 10)
+      }
+    } else {
+      // 4 haneli - SS DD
+      hour = parseInt(numbers.slice(0, 2), 10)
+      minute = parseInt(numbers.slice(2, 4), 10)
     }
 
-    let finalTime: string
-    let totalMinutes = hour * 60 + minute
+    // Saat ve dakika validasyonu
+    hour = Math.min(hour, 23)
+    minute = Math.min(minute, 59)
 
+    return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`
+  }
+
+  const applyRoundingAndConstraints = (timeString: string): string => {
+    if (!timeString) return ''
+
+    const [hours, minutes] = timeString.split(':').map(Number)
+    let totalMinutes = hours * 60 + minutes
+
+    // Allowed times varsa en yakınını bul
     if (allowedTimes && allowedTimes.length > 0) {
-      finalTime = allowedTimes.reduce((prev, curr) => {
+      return allowedTimes.reduce((prev, curr) => {
         const prevDiff = Math.abs(timeStringToMinutes(prev) - totalMinutes)
         const currDiff = Math.abs(timeStringToMinutes(curr) - totalMinutes)
         return currDiff < prevDiff ? curr : prev
       })
-    } else if (rounding && rounding > 0) {
-      const roundedMinute = Math.round(minute / rounding) * rounding
-      totalMinutes = hour * 60 + roundedMinute
-      const finalHour = Math.floor(totalMinutes / 60) % 24
-      const finalMinute = totalMinutes % 60
-      finalTime = minutesToTimeString(finalHour * 60 + finalMinute)
-    } else {
-      const finalHour = Math.floor(totalMinutes / 60) % 24
-      const finalMinute = totalMinutes % 60
-      finalTime = minutesToTimeString(finalHour * 60 + finalMinute)
     }
+
+    // Rounding varsa uygula
+    if (rounding && rounding > 0) {
+      const roundedMinute = Math.round(minutes / rounding) * rounding
+      totalMinutes = hours * 60 + roundedMinute
+    }
+
+    // Final değerleri hesapla
+    const finalHour = Math.floor(totalMinutes / 60) % 24
+    const finalMinute = totalMinutes % 60
+
+    return `${String(finalHour).padStart(2, '0')}:${String(finalMinute).padStart(2, '0')}`
+  }
+
+  const handleFocus = () => {
+    setIsFocused(true)
+  }
+
+  const handleBlur = useCallback(() => {
+    setIsFocused(false)
+
+    // Format ve validate et
+    const formatted = formatAndValidateTime(inputValue)
+
+    if (!formatted) {
+      onChange('')
+      setInputValue('')
+      return
+    }
+
+    // Rounding ve constraints uygula
+    const finalTime = applyRoundingAndConstraints(formatted)
 
     onChange(finalTime)
     setInputValue(finalTime)
@@ -116,14 +211,18 @@ export const TimePicker = ({
     >
       <div className="relative">
         <input
+          ref={inputRef}
           id={id}
-          type="number"
+          type="text" // text tutuyoruz ama inputMode ile sayısal klavye açıyoruz
+          inputMode="numeric" // Mobile'da sayısal klavye açar
+          pattern="[0-9:]*" // iOS Safari için ek destek
           value={inputValue}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          onFocus={handleFocus}
           onBlur={handleBlur}
           disabled={disabled}
           placeholder={placeholder}
-          maxLength={5}
           className={twMerge(
             'w-full rounded-xs border px-3 py-2 pl-10 text-size transition-colors',
             'border-gray-300 bg-box-surface text-on-box-black',
