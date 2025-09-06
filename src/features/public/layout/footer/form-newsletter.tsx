@@ -13,7 +13,7 @@ export const NewsletterForm = () => {
 
         <label
           htmlFor="footer-email"
-          className="pointer-events-none absolute top-2 left-2 z-10 origin-[0] -translate-y-2 scale-75 transform px-2 text-size-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-2 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-primary-500"
+          className="pointer-events-none absolute top-2 left-2 z-10 origin-[0] -translate-y-2 scale-75 transform px-2 text-size text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-2 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-primary-500"
         >
           Mail Adresiniz
         </label>

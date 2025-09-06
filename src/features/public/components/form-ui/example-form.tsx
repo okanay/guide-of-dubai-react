@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { Checkbox } from './checkbox'
+import { DatePickerText, DatePicker } from './date-picker'
+import { NumericStepper } from './numeric-stepper'
+import { PhoneInput } from './phone-input'
 import { RadioGroup } from './radio-input'
 import { Select } from './select'
 import { Slider } from './slider'
 import { SliderMinMax } from './slider-min-max'
 import { TextInput } from './text-input'
-import { ToggleSwitch } from './toggle-switch'
-import { PhoneInput } from './phone-input'
-import { NumericStepper } from './numeric-stepper'
-import { DatePicker } from './date-picker'
 import { TimePicker } from './time-picker'
+import { ToggleSwitch } from './toggle-switch'
 
 export function ExampleForm() {
   // State'ler
@@ -62,6 +62,7 @@ export function ExampleForm() {
       />
 
       <DatePicker label="Alış Tarihi" value={alisTarihi} onChange={setAlisTarihi} required />
+      <DatePickerText />
 
       {/* ToggleSwitch */}
       <ToggleSwitch
