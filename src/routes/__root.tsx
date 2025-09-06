@@ -279,6 +279,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       dir={data.settings.language.direction}
       data-currency={data.settings.currency.code}
       data-theme={data.settings.theme}
+      className={data.settings.theme}
     >
       <head>
         <HeadContent />
