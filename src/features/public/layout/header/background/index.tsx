@@ -139,7 +139,7 @@ export const PublicHeaderBackground = () => {
                 <SearchButton
                   variant="hero"
                   placeholder={activeSlide.searchPlaceholder}
-                  className="flex h-11 w-[366px] items-center justify-start gap-x-2 rounded-full bg-white px-4 text-size-sm font-normal text-gray-600 shadow-lg md:h-13 md:w-[560px] md:text-size dark:bg-black"
+                  className="line-clamp-1 flex h-11 w-full max-w-[400px] items-center justify-start gap-x-2 rounded-full bg-white px-4 text-size-sm font-normal text-gray-600 shadow-lg md:h-13 md:w-[560px] md:text-size dark:bg-black"
                 />
               </>
             )}

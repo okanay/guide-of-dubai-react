@@ -117,7 +117,7 @@ export const TimePicker = ({
       <div className="relative">
         <input
           id={id}
-          type="text"
+          type="number"
           value={inputValue}
           onChange={handleInputChange}
           onBlur={handleBlur}
