@@ -5,13 +5,13 @@ import { SUPPORTED_CURRENCIES } from 'src/i18n/currency-config'
 import { useLanguage } from 'src/i18n/prodiver'
 import { useTheme } from 'src/providers/theme-mode'
 import { useSystemSettings } from './store'
+import { RadioIndicator } from 'src/features/public/components/form-ui/radio-input'
 
 export function SystemSettingsModal() {
   const { isOpen, closeModal, scopeId, mode, setMode } = useSystemSettings()
 
   const handleClose = () => {
     closeModal()
-    // Modalı kapatırken animasyonun bitmesini bekleyip modu sıfırlıyoruz.
     setTimeout(() => setMode('main'), 300)
   }
 
@@ -158,21 +158,18 @@ function LanguageSettings() {
     <div className="p-4">
       <div className="space-y-2">
         {SUPPORTED_LANGUAGES.map((lang) => (
-          <button
+          <SystemSettingsRadioCard
             key={lang.value}
-            onClick={() => changeLanguage(lang.value)}
-            data-status={language.value === lang.value ? 'active' : 'inactive'}
-            className="flex h-12 w-full items-center justify-between gap-x-4 border border-gray-200 px-3 py-3 font-medium text-on-box-black transition-all duration-200 hover:border-primary-200 hover:bg-gray-50 data-[status=active]:border-primary-500 data-[status=active]:bg-primary-50"
-          >
-            <div className="flex items-center gap-3">
+            icon={
               <div
                 className="flex h-6 w-6 items-center justify-center"
                 dangerouslySetInnerHTML={{ __html: lang.icon }}
               />
-              <span>{lang.label}</span>
-            </div>
-            {language.value === lang.value && <Check size={16} className="text-primary-500" />}
-          </button>
+            }
+            title={lang.label}
+            isSelected={language.value === lang.value}
+            onClick={() => changeLanguage(lang.value)}
+          />
         ))}
       </div>
     </div>
@@ -181,27 +178,22 @@ function LanguageSettings() {
 
 function CurrencySettings() {
   const { currency, setCurrency } = useSystemSettings()
+
   return (
     <div className="p-4">
       <div className="space-y-2">
         {SUPPORTED_CURRENCIES.map((curr) => (
-          <button
+          <SystemSettingsRadioCard
             key={curr.code}
-            onClick={() => setCurrency(curr.code)}
-            data-status={currency.code === curr.code ? 'active' : 'inactive'}
-            className="flex h-14 w-full items-center justify-between gap-x-4 border border-gray-200 px-3 py-3 font-medium text-on-box-black transition-all duration-200 hover:border-primary-200 hover:bg-gray-50 data-[status=active]:border-primary-500 data-[status=active]:bg-primary-50"
-          >
-            <div className="flex items-center gap-3">
+            icon={
               <div className="flex h-8 w-8 items-center justify-center text-xl">{curr.flag}</div>
-              <div className="text-left">
-                <div className="text-sm font-medium">{curr.name}</div>
-                <div className="text-xs text-gray-600">
-                  {curr.symbol} - {curr.code.toUpperCase()}
-                </div>
-              </div>
-            </div>
-            {currency.code === curr.code && <Check size={16} className="text-primary-500" />}
-          </button>
+            }
+            title={curr.name}
+            description={`${curr.symbol} - ${curr.code.toUpperCase()}`}
+            isSelected={currency.code === curr.code}
+            onClick={() => setCurrency(curr.code)}
+            className="h-14"
+          />
         ))}
       </div>
     </div>
@@ -210,43 +202,67 @@ function CurrencySettings() {
 
 function ThemeSettings() {
   const { theme, setTheme } = useTheme()
+
   return (
     <div className="p-4">
       <div className="space-y-2">
-        <button
+        <SystemSettingsRadioCard
+          icon="🖥️"
+          title="Sistem Teması"
+          isSelected={theme === 'system'}
           onClick={() => setTheme('system')}
-          data-status={theme === 'system' ? 'active' : 'inactive'}
-          className="flex h-12 w-full items-center justify-between gap-x-4 border border-gray-200 px-4 font-medium text-on-box-black transition-all duration-200 hover:border-primary-200 hover:bg-gray-50 data-[status=active]:border-primary-500 data-[status=active]:bg-primary-50"
-        >
-          <div className="flex items-center gap-3">
-            <span>🖥️</span>
-            <span>Sistem Teması</span>
-          </div>
-          {theme === 'system' && <Check size={16} className="text-primary-500" />}
-        </button>
-        <button
+        />
+
+        <SystemSettingsRadioCard
+          icon="☀️"
+          title="Açık Tema"
+          isSelected={theme === 'light'}
           onClick={() => setTheme('light')}
-          data-status={theme === 'light' ? 'active' : 'inactive'}
-          className="flex h-12 w-full items-center justify-between gap-x-4 border border-gray-200 px-4 font-medium text-on-box-black transition-all duration-200 hover:border-primary-200 hover:bg-gray-50 data-[status=active]:border-primary-500 data-[status=active]:bg-primary-50"
-        >
-          <div className="flex items-center gap-3">
-            <span>☀️</span>
-            <span>Açık Tema</span>
-          </div>
-          {theme === 'light' && <Check size={16} className="text-primary-500" />}
-        </button>
-        <button
+        />
+
+        <SystemSettingsRadioCard
+          icon="🌙"
+          title="Koyu Tema"
+          isSelected={theme === 'dark'}
           onClick={() => setTheme('dark')}
-          data-status={theme === 'dark' ? 'active' : 'inactive'}
-          className="flex h-12 w-full items-center justify-between gap-x-4 border border-gray-200 px-4 font-medium text-on-box-black transition-all duration-200 hover:border-primary-200 hover:bg-gray-50 data-[status=active]:border-primary-500 data-[status=active]:bg-primary-50"
-        >
-          <div className="flex items-center gap-3">
-            <span>🌙</span>
-            <span>Koyu Tema</span>
-          </div>
-          {theme === 'dark' && <Check size={16} className="text-primary-500" />}
-        </button>
+        />
       </div>
     </div>
+  )
+}
+
+interface RadioCard {
+  icon?: React.ReactNode
+  title: string
+  description?: string
+  isSelected: boolean
+  onClick: () => void
+  className?: string
+}
+
+const SystemSettingsRadioCard = ({
+  icon,
+  title,
+  description,
+  isSelected,
+  onClick,
+  className,
+}: RadioCard) => {
+  return (
+    <button
+      onClick={onClick}
+      data-checked={isSelected}
+      className={`group/ri flex h-12 w-full items-center justify-between gap-x-4 border border-gray-200 px-4 font-medium text-on-box-black transition-all duration-200 group-data-[checked=true]/ri:border-primary-500 group-data-[checked=true]/ri:bg-primary-50 hover:border-primary-200 hover:bg-gray-50 ${className || ''}`}
+    >
+      <div className="flex items-center gap-3">
+        {icon && <span>{icon}</span>}
+        <div className="text-left">
+          <div className="text-sm font-medium">{title}</div>
+          {description && <div className="text-xs text-gray-600">{description}</div>}
+        </div>
+      </div>
+
+      <RadioIndicator />
+    </button>
   )
 }

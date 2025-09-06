@@ -1,13 +1,17 @@
 import { twMerge } from 'tailwind-merge'
 import { BaseInput } from './base-input'
 
+// =============================================================================
+// DEFAULT RADIO GROUP - Indicator kullanarak
+// =============================================================================
+
 interface RadioOption {
   value: string
   label: string
   disabled?: boolean
 }
 
-interface Props {
+interface RadioGroupProps {
   label?: string
   error?: string
   required?: boolean
@@ -27,14 +31,13 @@ export const RadioGroup = ({
   value,
   onChange,
   className,
-}: Props) => {
+}: RadioGroupProps) => {
   return (
     <BaseInput label={label} error={error} required={required} className={className}>
       <div className="space-y-2">
         {options.map((option) => {
           const radioId = `${name}-${option.value}`
           const isChecked = option.value === value
-
           return (
             <div
               data-checked={isChecked}
@@ -51,15 +54,13 @@ export const RadioGroup = ({
                 disabled={option.disabled}
                 className="peer sr-only"
               />
-              <label
-                htmlFor={radioId}
-                className={twMerge(
-                  'flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-2 border-gray-300 transition-all group-data-[checked=true]/ri:border-primary-500 peer-focus:ring-2 peer-focus:ring-primary-500/20',
-                  option.disabled && 'cursor-not-allowed opacity-50',
-                )}
-              >
-                <span className="size-[95%] rounded-full bg-primary-500 opacity-0 transition-opacity group-data-[checked=true]/ri:opacity-100" />
+
+              <label htmlFor={radioId}>
+                <RadioIndicator
+                  className={option.disabled ? 'cursor-not-allowed opacity-50' : ''}
+                />
               </label>
+
               <label
                 htmlFor={radioId}
                 className={twMerge(
@@ -74,5 +75,22 @@ export const RadioGroup = ({
         })}
       </div>
     </BaseInput>
+  )
+}
+
+interface RadioIndicatorProps {
+  className?: string
+}
+
+export const RadioIndicator = ({ className }: RadioIndicatorProps) => {
+  return (
+    <div
+      className={twMerge(
+        'flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-2 border-gray-300 transition-all group-data-[checked=true]/ri:border-primary-500 peer-focus:ring-2 peer-focus:ring-primary-500/20',
+        className,
+      )}
+    >
+      <span className="size-[95%] rounded-full bg-primary-500 opacity-0 transition-opacity group-data-[checked=true]/ri:opacity-100" />
+    </div>
   )
 }
