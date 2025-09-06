@@ -25,14 +25,22 @@ export const SliderMinMax = ({
   className,
   formatValue,
 }: Props) => {
+  const [minValue, maxValue] = value
+
   const {
     currency: { symbol },
   } = useSystemSettings()
-  const [minValue, maxValue] = value
 
   const defaultFormatValue = (val: number) => {
     if (formatValue) return formatValue(val)
-    return `${symbol}${val.toLocaleString()}`
+
+    // Sabit bir locale belirleyin
+    const formattedNumber = val.toLocaleString('en-US', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    })
+
+    return `${symbol}${formattedNumber}`
   }
 
   const handleMinChange = useCallback(
