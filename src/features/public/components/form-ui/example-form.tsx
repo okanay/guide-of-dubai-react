@@ -8,8 +8,13 @@ import { Select } from './select'
 import { Slider } from './slider'
 import { SliderMinMax } from './slider-min-max'
 import { TextInput } from './text-input'
-import { TimePicker } from './time-picker'
+import { TimePicker, TimePickerRaw } from './time-picker'
 import { ToggleSwitch } from './toggle-switch'
+import {
+  BetweenDatePicker,
+  BetweenDatePickerRaw,
+  BetweenDatePickerText,
+} from './date-picker-between'
 
 export function ExampleForm() {
   // State'ler
@@ -24,6 +29,8 @@ export function ExampleForm() {
   const [adults, setAdults] = useState(1)
   const [alisTarihi, setAlisTarihi] = useState<Date | null>(new Date())
   const [standardTime, setStandardTime] = useState('10:00')
+  const [startDate, setStartDate] = useState<Date | null>(null)
+  const [endDate, setEndDate] = useState<Date | null>(null)
 
   // Options
   const countryOptions = [
@@ -41,7 +48,6 @@ export function ExampleForm() {
   return (
     <form className="mx-auto max-w-md space-y-6 p-6">
       <h1 className="mb-8 text-center text-heading-2 font-bold">Form Test</h1>
-
       {/* TextInput */}
       <TextInput
         label="İsim"
@@ -51,7 +57,6 @@ export function ExampleForm() {
         required
         maxLength={50}
       />
-
       {/* Checkbox */}
       <Checkbox
         id="terms-checkbox" // ID eklendi
@@ -60,10 +65,20 @@ export function ExampleForm() {
         label="Şartları kabul ediyorum"
         required
       />
-
       <DatePicker label="Alış Tarihi" value={alisTarihi} onChange={setAlisTarihi} required />
       <DatePickerText />
-
+      <BetweenDatePicker
+        label="Tarih Aralığı"
+        startDate={startDate}
+        endDate={endDate}
+        onChange={(start, end) => {
+          setStartDate(start)
+          setEndDate(end)
+        }}
+        startPlaceholder="Check-in"
+        endPlaceholder="Check-out"
+      />
+      <BetweenDatePickerText />
       {/* ToggleSwitch */}
       <ToggleSwitch
         checked={isToggled}
@@ -71,7 +86,6 @@ export function ExampleForm() {
         label="Bildirimler"
         id="notifications"
       />
-
       <TimePicker
         label="Etkinlik Saati"
         value={standardTime}
@@ -79,6 +93,15 @@ export function ExampleForm() {
         allowedTimes={['09:00', '12:30', '16:00', '20:00']}
         description="Etkinlik sadece 09:00, 12:30, 16:00 ve 20:00'de mevcuttur. Girdiğiniz saat en yakınına sabitlenir."
       />
+      <TimePicker label="Saat" value={standardTime} onChange={setStandardTime} rounding={15} />
+
+      <TimePickerRaw value={standardTime} onChange={setStandardTime} rounding={30}>
+        {({ inputProps, isValid, formattedValue }) => (
+          <div className="custom-time-wrapper">
+            <input {...inputProps} placeholder="HH:MM" className="my-custom-input" />
+          </div>
+        )}
+      </TimePickerRaw>
 
       {/* Slider */}
       <Slider
@@ -88,7 +111,6 @@ export function ExampleForm() {
         value={sliderValue}
         onChange={setSliderValue}
       />
-
       {/* Slider */}
       <SliderMinMax
         label="Bütçe Aralığı"
@@ -98,7 +120,6 @@ export function ExampleForm() {
         value={budgetRange}
         onChange={setBudgetRange}
       />
-
       {/* Select */}
       <Select
         label="Ülke"
@@ -108,7 +129,6 @@ export function ExampleForm() {
         onChange={setSelectedCountry}
         required
       />
-
       <NumericStepper
         label="Yetişkin Sayısı"
         value={adults}
@@ -117,7 +137,6 @@ export function ExampleForm() {
         max={10}
         description="Minimum 1 yetişkin olmalıdır."
       />
-
       <PhoneInput
         label="Telefon Numarası"
         value={phone}
@@ -125,7 +144,6 @@ export function ExampleForm() {
         placeholder="+90 (5XX) XXX XX XX"
         required
       />
-
       {/* RadioGroup */}
       <RadioGroup
         label="Cinsiyet"
