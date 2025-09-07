@@ -54,6 +54,65 @@
       "alt": "Dubai General view"
     }
   },
+  "categories": {
+    "detail_link": "Go to Details",
+    "dubai_visa": {
+      "title": "Dubai Visa AI",
+      "description": "Apply for visa. Check visa status"
+    },
+    "desert_safari": {
+      "title": "Desert Safari",
+      "description": "Discover the desert experience with morning and evening safari tours."
+    },
+    "activities": {
+      "title": "Activities",
+      "description": "More than 50 activities are waiting for you."
+    },
+    "tours": {
+      "title": "Tours",
+      "description": "Discover and book Dubai's most popular tours."
+    },
+    "hotels": {
+      "title": "Hotels",
+      "description": "Choose from luxury and comfortable hotels."
+    },
+    "rent_a_car": {
+      "title": "Rent a Car",
+      "description": "More than 50 activities are waiting for you."
+    },
+    "esim": {
+      "title": "eSIM",
+      "description": "Uninterrupted internet with 6, 10, 18GB options."
+    },
+    "hospitals": {
+      "title": "Hospitals",
+      "description": "More than 50 activities are waiting for you."
+    },
+    "restaurants": {
+      "title": "Restaurants",
+      "description": "Discover Dubai's most delicious restaurants."
+    },
+    "flight_tickets": {
+      "title": "Flight Tickets",
+      "description": "Choose from luxury and comfortable hotels."
+    },
+    "yacht_tours": {
+      "title": "Yacht Tours",
+      "description": "More than 50 activities are waiting for you."
+    },
+    "transfer": {
+      "title": "Transfer",
+      "description": "More than 50 activities are waiting for you."
+    },
+    "hospitals_detail": {
+      "title": "Hospitals",
+      "description": "More than 50 activities are waiting for you."
+    },
+    "museums": {
+      "title": "Museums",
+      "description": "More than 50 activities are waiting for you."
+    }
+  },
   "auth": {
     "welcome_title": "Welcome to Guide of Dubai",
     "welcome_description": "Log in or sign up for exclusive member offers, personalized recommendations and much more.",

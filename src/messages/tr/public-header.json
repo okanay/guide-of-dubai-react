@@ -54,6 +54,65 @@
       "alt": "Dubai Genel manzarası"
     }
   },
+  "categories": {
+    "detail_link": "Detaya Git",
+    "dubai_visa": {
+      "title": "Dubai Vize Al",
+      "description": "Vize başvurusu yap. Vize durumunu kontrol et"
+    },
+    "desert_safari": {
+      "title": "Çöl Safari",
+      "description": "Sabah ve akşam safari turları ile çöl deneyimini keşfet."
+    },
+    "activities": {
+      "title": "Etkinlikler",
+      "description": "50'den fazla etkinlik seni bekliyor."
+    },
+    "tours": {
+      "title": "Turlar",
+      "description": "Dubai'nin en popüler turlarını keşfet ve rezervasyon yap."
+    },
+    "hotels": {
+      "title": "Oteller",
+      "description": "Lüks ve konforlu oteller arasından seçim yap."
+    },
+    "rent_a_car": {
+      "title": "Rent a Car",
+      "description": "50'den fazla etkinlik seni bekliyor."
+    },
+    "esim": {
+      "title": "eSIM",
+      "description": "6, 10, 18GB seçenekleri ile kesintisiz internet."
+    },
+    "hospitals": {
+      "title": "Hastaneler",
+      "description": "50'den fazla etkinlik seni bekliyor."
+    },
+    "restaurants": {
+      "title": "Restorantlar",
+      "description": "Dubai'nin en lezzetli restoranlarını keşfet."
+    },
+    "flight_tickets": {
+      "title": "Uçak Bileti",
+      "description": "Lüks ve konforlu oteller arasından seçim yap."
+    },
+    "yacht_tours": {
+      "title": "Yat Turları",
+      "description": "50'den fazla etkinlik seni bekliyor."
+    },
+    "transfer": {
+      "title": "Transfer",
+      "description": "50'den fazla etkinlik seni bekliyor."
+    },
+    "hospitals_detail": {
+      "title": "Hastaneler",
+      "description": "50'den fazla etkinlik seni bekliyor."
+    },
+    "museums": {
+      "title": "Müzeler",
+      "description": "50'den fazla etkinlik seni bekliyor."
+    }
+  },
   "auth": {
     "welcome_title": "Guide of Dubai'ye Hoşgeldiniz",
     "welcome_description": "Üyelere özel fırsatlar, kişiselleştirilmiş öneriler ve çok daha fazlası için oturum açın veya üye olun.",
