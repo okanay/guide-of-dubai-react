@@ -17,7 +17,7 @@ export const PublicFooterMobileAppSection = () => {
         <div className="relative w-[160px] flex-shrink-0 md:w-[270px]">
           {/* Telefon Görseli */}
           <img
-            src="/images/public/footer/phone-2.png"
+            src="/images/public/footer/phone.png"
             alt="Guide of Dubai mobil uygulaması"
             className="absolute bottom-full z-10 h-[180px] w-full translate-y-[50%] object-contain sm:left-4 md:h-[362px] md:translate-y-[44.25%]"
           />

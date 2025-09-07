@@ -1,6 +1,7 @@
 import { useLanguage } from 'src/i18n/prodiver'
 import { useSystemSettings } from '../header/system-settings/store'
 import { NewsletterForm } from './form-newsletter'
+import Icon from '@/components/icon'
 
 // Abonelik ve ödeme yöntemleri bölümü
 export const SubscriptionSection = () => (
@@ -21,14 +22,10 @@ export const SubscriptionSection = () => (
         <div>
           <h4 className="mb-4 text-size-sm font-semibold text-gray-300">Ödeme Kanalları</h4>
           <div className="flex items-center gap-x-3">
-            <img
-              src="/images/public/footer/american-express.svg"
-              alt="American Express"
-              className="h-7"
-            />
-            <img src="/images/public/footer/visa.svg" alt="Visa" className="h-7" />
-            <img src="/images/public/footer/mastercard.svg" alt="Mastercard" className="h-7" />
-            <img src="/images/public/footer/union-pay.svg" alt="UnionPay" className="h-7" />
+            <Icon name="american-express" className="h-7 w-7" />
+            <Icon name="visa" className="h-7 w-7" />
+            <Icon name="mastercard" className="h-7 w-7" />
+            <Icon name="union-pay" className="h-7 w-7" />
           </div>
         </div>
         <SystemSettingsButton />
