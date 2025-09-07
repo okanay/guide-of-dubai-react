@@ -19,10 +19,13 @@ import { RadioIndicator } from 'src/features/public/components/form-ui/radio-inp
 import { useTranslation } from 'react-i18next'
 import { useState, useRef } from 'react'
 import Icon from '@/components/icon'
+import { useNavigate } from '@tanstack/react-router'
 
 export function SystemSettingsModal() {
   const { isOpen, closeModal, scopeId, mode, setMode } = useSystemSettings()
   const { t } = useTranslation('public-header')
+  const navigate = useNavigate()
+  const { language } = useLanguage()
 
   // useRef ile language değişikliği takibi (state değil!)
   const languageChangedRef = useRef(false)
@@ -34,7 +37,12 @@ export function SystemSettingsModal() {
     // Sadece dil değiştirilmişse reload yap
     if (languageChangedRef.current) {
       languageChangedRef.current = false
-      window.location.reload()
+      navigate({
+        to: '.',
+        params: { lang: language.value },
+        resetScroll: true,
+        reloadDocument: true,
+      })
     }
   }
 
