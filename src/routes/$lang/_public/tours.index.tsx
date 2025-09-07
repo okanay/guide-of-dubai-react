@@ -1,6 +1,6 @@
+import { ToursIndexPage } from '@/features/public/pages/tour'
 import { createFileRoute } from '@tanstack/react-router'
-import { ExampleForm } from 'src/features/public/components/form-ui/example-form'
 
 export const Route = createFileRoute('/$lang/_public/tours/')({
-  component: ExampleForm,
+  component: ToursIndexPage,
 })
