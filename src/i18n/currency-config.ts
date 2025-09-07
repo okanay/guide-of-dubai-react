@@ -11,25 +11,25 @@ export const SUPPORTED_CURRENCIES = [
     code: 'aed',
     name: 'UAE Dirham',
     symbol: 'د.إ',
-    flag: '🇦🇪',
+    flag: 'flags/united-arab-emirates',
   },
   {
     code: 'usd',
     name: 'US Dollar',
     symbol: '$',
-    flag: '🇺🇸',
+    flag: 'flags/united-states',
   },
   {
     code: 'eur',
     name: 'Euro',
     symbol: '€',
-    flag: '🇪🇺',
+    flag: 'flags/european-union',
   },
   {
     code: 'gbp',
     name: 'British Pound',
     symbol: '£',
-    flag: '🇬🇧',
+    flag: 'flags/united-kingdom',
   },
 ] as const
 

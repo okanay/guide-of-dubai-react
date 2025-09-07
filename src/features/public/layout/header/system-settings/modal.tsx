@@ -17,36 +17,42 @@ import { useTheme } from 'src/providers/theme-mode'
 import { useSystemSettings } from './store'
 import { RadioIndicator } from 'src/features/public/components/form-ui/radio-input'
 import { useTranslation } from 'react-i18next'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import Icon from '@/components/icon'
 
 export function SystemSettingsModal() {
   const { isOpen, closeModal, scopeId, mode, setMode } = useSystemSettings()
   const { t } = useTranslation('public-header')
-  const [refresh, setRefresh] = useState(false)
+
+  // useRef ile language değişikliği takibi (state değil!)
+  const languageChangedRef = useRef(false)
 
   const handleClose = () => {
     closeModal()
     setTimeout(() => setMode('main'), 300)
 
-    if (refresh) {
+    // Sadece dil değiştirilmişse reload yap
+    if (languageChangedRef.current) {
+      languageChangedRef.current = false
       window.location.reload()
     }
+  }
+
+  // Language değişikliği için callback
+  const handleLanguageChange = () => {
+    languageChangedRef.current = true
   }
 
   const renderContent = () => {
     switch (mode) {
       case 'language':
-        setRefresh(true)
-        return <LanguageSettings />
+        return <LanguageSettings onLanguageChange={handleLanguageChange} />
       case 'currency':
-        setRefresh(false)
         return <CurrencySettings />
       case 'theme':
-        setRefresh(false)
         return <ThemeSettings />
       case 'main':
       default:
-        setRefresh(false)
         return <MainSettings />
     }
   }
@@ -94,7 +100,7 @@ export function SystemSettingsModal() {
           </h2>
           <div className="w-8">
             <button
-              onClick={() => handleClose()}
+              onClick={handleClose}
               className="rounded-full p-1 text-on-box-black transition-colors duration-300 hover:text-black-60"
               aria-label="Ayarları kapat"
             >
@@ -111,7 +117,7 @@ export function SystemSettingsModal() {
         {/* Footer */}
         <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4">
           <button
-            onClick={() => handleClose()}
+            onClick={handleClose}
             className="w-full bg-btn-primary px-4 py-3 font-medium text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled"
           >
             {t('settings.ok')}
@@ -181,8 +187,16 @@ function MainSettings() {
   )
 }
 
-function LanguageSettings() {
+// Language Settings'e onLanguageChange prop'u eklendi
+function LanguageSettings({ onLanguageChange }: { onLanguageChange: () => void }) {
   const { language, changeLanguage } = useLanguage()
+
+  const handleLanguageChange = (newLanguage: LanguageValue) => {
+    if (newLanguage !== language.value) {
+      onLanguageChange() // Parent'a bildir
+      changeLanguage(newLanguage) // Dili değiştir
+    }
+  }
 
   return (
     <div className="p-4">
@@ -190,15 +204,10 @@ function LanguageSettings() {
         {SUPPORTED_LANGUAGES.map((lang) => (
           <SystemSettingsRadioCard
             key={lang.value}
-            icon={
-              <div
-                className="flex h-6 w-6 items-center justify-center"
-                dangerouslySetInnerHTML={{ __html: lang.icon }}
-              />
-            }
+            icon={<Icon name={lang.flag} className="flex h-6 w-6 items-center justify-center" />}
             title={lang.label}
             isSelected={language.value === lang.value}
-            onClick={() => changeLanguage(lang.value)}
+            onClick={() => handleLanguageChange(lang.value)}
           />
         ))}
       </div>
@@ -215,9 +224,7 @@ function CurrencySettings() {
         {SUPPORTED_CURRENCIES.map((curr) => (
           <SystemSettingsRadioCard
             key={curr.code}
-            icon={
-              <div className="flex h-8 w-8 items-center justify-center text-xl">{curr.flag}</div>
-            }
+            icon={<Icon name={curr.flag} className="flex h-6 w-6 items-center justify-center" />}
             title={curr.name}
             description={`${curr.symbol} - ${curr.code.toUpperCase()}`}
             isSelected={currency.code === curr.code}

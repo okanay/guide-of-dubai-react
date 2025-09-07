@@ -13,15 +13,23 @@ import { AuthModal } from './header/auth/modal'
 
 export const LayoutStores = ({ children }: { children: React.ReactNode }) => {
   return (
-    <ComposeProviders
-      components={[HeaderStore, SearchModalStore, BasketModalStore, AuthModalStore, GoAiModalStore]}
-    >
-      {children}
-      <GoAiModal />
-      <SystemSettingsModal />
-      <AuthModal />
-      <BasketModal />
-      <SearchModal />
-    </ComposeProviders>
+    <>
+      <ComposeProviders
+        components={[
+          HeaderStore,
+          SearchModalStore,
+          BasketModalStore,
+          AuthModalStore,
+          GoAiModalStore,
+        ]}
+      >
+        {children}
+        <GoAiModal />
+        <SystemSettingsModal />
+        <AuthModal />
+        <BasketModal />
+        <SearchModal />
+      </ComposeProviders>
+    </>
   )
 }

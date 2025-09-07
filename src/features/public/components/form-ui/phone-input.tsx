@@ -8,7 +8,35 @@ import {
 import examples from 'libphonenumber-js/mobile/examples'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { CircleFlag } from 'react-circle-flags'
 import { BaseInput } from './base-input'
+
+// +1 242 555 0123  → 🇧🇸 Bahamas
+// +1 246 555 0123  → 🇧🇧 Barbados
+// +1 264 555 0123  → 🇦🇮 Anguilla
+// +1 268 555 0123  → 🇦🇬 Antigua ve Barbuda
+// +1 284 555 0123  → 🇻🇬 British Virgin Islands
+// +1 340 555 0123  → 🇻🇮 US Virgin Islands
+// +1 345 555 0123  → 🇰🇾 Cayman Islands
+// +1 441 555 0123  → 🇧🇲 Bermuda
+// +1 473 555 0123  → 🇬🇩 Grenada
+// +1 649 555 0123  → 🇹🇨 Turks ve Caicos
+// +1 664 555 0123  → 🇲🇸 Montserrat
+// +1 670 555 0123  → 🇲🇵 Northern Mariana Islands
+// +1 671 555 0123  → 🇬🇺 Guam
+// +1 684 555 0123  → 🇦🇸 American Samoa
+// +1 721 555 0123  → 🇸🇽 Sint Maarten
+// +1 758 555 0123  → 🇱🇨 Saint Lucia
+// +1 767 555 0123  → 🇩🇲 Dominica
+// +1 784 555 0123  → 🇻🇨 Saint Vincent ve Grenadines
+// +1 787 555 0123  → 🇵🇷 Puerto Rico
+// +1 809 555 0123  → 🇩🇴 Dominican Republic
+// +1 829 555 0123  → 🇩🇴 Dominican Republic (ikinci kod)
+// +1 849 555 0123  → 🇩🇴 Dominican Republic (üçüncü kod)
+// +1 868 555 0123  → 🇹🇹 Trinidad ve Tobago
+// +1 869 555 0123  → 🇰🇳 Saint Kitts ve Nevis
+// +1 876 555 0123  → 🇯🇲 Jamaica
+// +1 939 555 0123  → 🇵🇷 Puerto Rico (ikinci kod)
 
 // ============================================================================
 // 1. REACT KOMPONENTİ (UI)
@@ -47,8 +75,6 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, Props>(
       onChange,
     )
 
-    const flagUrl = `https://flagcdn.com/h80/${activeCountry.iso2.toLowerCase()}.png`
-
     const handleBlur = () => {
       if (inputValue === '+') {
         onChange?.('')
@@ -66,12 +92,15 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, Props>(
       >
         <div className="group relative">
           <div className="pointer-events-none absolute top-1/2 left-3 z-10 flex -translate-y-1/2 items-center gap-2">
-            <img
-              src={flagUrl}
-              alt={`${activeCountry.name} flag`}
-              className="h-4 w-6 object-cover"
-              onError={(e) => ((e.currentTarget as HTMLImageElement).style.display = 'none')}
-            />
+            {/* API bağımsız bayrak komponenti */}
+            <div className="flex size-6 items-center justify-center overflow-hidden rounded-sm">
+              <CircleFlag
+                countryCode={activeCountry.iso2.toLowerCase()}
+                height="24"
+                width="24"
+                className="object-cover"
+              />
+            </div>
             <div className="ml-1 h-10 w-px bg-gray-200 transition-colors group-focus-within:bg-primary-500" />
           </div>
           <input
@@ -109,6 +138,16 @@ interface Country {
   format: string
 }
 
+// Sadece kısa kodlar için öncelik haritası (tam numara girilmediğinde)
+const INITIAL_PRIORITY_MAP: Record<string, CountryCode> = {
+  '1': 'US', // +1 yazınca ABD gelsin
+  '44': 'GB', // +44 yazınca İngiltere gelsin
+  '7': 'RU', // +7 yazınca Rusya gelsin
+  '39': 'IT', // +39 yazınca İtalya gelsin (Vatikan değil)
+  '47': 'NO', // +47 yazınca Norveç gelsin
+  '61': 'AU', // +61 yazınca Avustralya gelsin
+}
+
 const usePhoneInput = (
   initialValue: string = '',
   defaultCountry: CountryCode = DEFAULT_ISO,
@@ -118,21 +157,24 @@ const usePhoneInput = (
 
   const detectedCountry = useMemo((): CountryCode => {
     const potentialNumber = inputValue.startsWith('+') ? inputValue : `+${inputValue}`
-
-    // YENİ KURAL: Eğer numara "+1" ise, önceliği ABD'ye ver.
     const digitsOnly = potentialNumber.replace(/\D/g, '')
-    if (digitsOnly === '1') {
-      return 'US'
-    }
 
-    // `libphonenumber-js` tam numarayı (alan koduyla birlikte) parse ederek en doğru sonucu verir.
+    if (!digitsOnly) return defaultCountry
+
+    // ÖNCELİKLE libphonenumber-js ile tam parse et (ORİJİNAL KODUNDAKI GİBİ)
     const phoneNumber = parsePhoneNumberFromString(potentialNumber)
     if (phoneNumber && phoneNumber.country) {
       return phoneNumber.country
     }
 
-    // Fallback: Kısa kodlar için manuel ülke tespiti yap.
-    if (!digitsOnly) return defaultCountry
+    // Eğer tam parse edilemiyorsa (kısa kod), öncelik haritasını kullan
+    for (const [dialCode, priorityCountry] of Object.entries(INITIAL_PRIORITY_MAP)) {
+      if (digitsOnly.startsWith(dialCode)) {
+        return priorityCountry
+      }
+    }
+
+    // Fallback: Diğer ülkeler için normal arama (ORİJİNAL KODUNDAKI GİBİ)
     const sortedCountries = [...countries].sort((a, b) => b.dialCode.length - a.dialCode.length)
     const matchedCountry = sortedCountries.find((c) => digitsOnly.startsWith(c.dialCode))
 
