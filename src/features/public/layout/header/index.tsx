@@ -8,9 +8,11 @@ import { GoAiButton } from './go-ai/button'
 import { SearchButton } from './search/button'
 import { useHeader } from './store'
 import { PublicHeaderBackground } from './background'
+import { useTranslation } from 'react-i18next'
 
 export function PublicHeader() {
   const { isInverted } = useHeader()
+  const { t } = useTranslation('public-header')
 
   return (
     <header>
@@ -39,18 +41,18 @@ export function PublicHeader() {
             <BasketButton />
 
             {/* Wishlist */}
-            <Link to="/$lang" aria-label="Beğenilen ürünler">
-              <span className="btn-default rounded-full px-2 py-1">Beğendiklerim</span>
+            <Link to="/$lang" aria-label={t('nav.wishlist')}>
+              <span className="btn-default rounded-full px-2 py-1">{t('nav.wishlist')}</span>
             </Link>
 
             {/* Reservations */}
-            <Link to="/$lang" aria-label="Rezervasyonlar">
-              <span className="btn-default rounded-full px-2 py-1">Rezervasyonlar</span>
+            <Link to="/$lang" aria-label={t('nav.reservations')}>
+              <span className="btn-default rounded-full px-2 py-1">{t('nav.reservations')}</span>
             </Link>
 
-            {/* Reservations */}
-            <Link to="/$lang" aria-label="Rezervasyonlar">
-              <span className="btn-default rounded-full px-2 py-1">Blog</span>
+            {/* Blog */}
+            <Link to="/$lang" aria-label={t('nav.blog')}>
+              <span className="btn-default rounded-full px-2 py-1">{t('nav.blog')}</span>
             </Link>
 
             {/* AI Assistant */}

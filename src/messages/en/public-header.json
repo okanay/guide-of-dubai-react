@@ -15,27 +15,90 @@
   "slides": {
     "explore": {
       "title": "Explore the Dubai Frame in Dubai",
-      "placeholder": "Search for a place or activity you want to explore..."
+      "placeholder": "Search for a place or activity you want to explore...",
+      "alt": "Dubai Frame view"
     },
     "tours": {
       "title": "Discover Dubai Tours",
-      "placeholder": "Search for the tour or event you want to discover..."
+      "placeholder": "Search for the tour or event you want to discover...",
+      "alt": "Dubai Tours view"
     },
     "tickets": {
       "title": "Discover Dubai Tickets",
-      "placeholder": "Search for the place or event you want to buy tickets for..."
+      "placeholder": "Search for the place or event you want to buy tickets for...",
+      "alt": "Dubai Tickets view"
+    },
+    "hotels": {
+      "title": "Discover Dubai Hotels",
+      "placeholder": "Search for the hotel you want to stay in...",
+      "alt": "Dubai Hotels view"
+    },
+    "safari_tour": {
+      "title": "Discover Dubai Safari Tours",
+      "placeholder": "Search for the safari tour you want to join...",
+      "alt": "Dubai Safari Tour view"
+    },
+    "rent_a_car": {
+      "title": "Rent a Car in Dubai",
+      "placeholder": "Search for rental car options...",
+      "alt": "Dubai Car Rental view"
+    },
+    "transfer": {
+      "title": "Discover Dubai Transfers",
+      "placeholder": "Search for transfer options...",
+      "alt": "Dubai Transfer Services view"
+    },
+    "all": {
+      "title": "Discover Everything in Dubai",
+      "placeholder": "Search for any place or activity...",
+      "alt": "Dubai General view"
     }
   },
-  "go_ai_assistant": "Go.Ai assistant",
-  "all_categories_menu": "All categories menu",
-  "all_categories": "All Categories",
-  "settings_title": "Settings",
-  "language": "Language",
-  "currency": "Currency",
-  "theme": "Appearance",
-  "themes": {
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System"
+  "auth": {
+    "welcome_title": "Welcome to Guide of Dubai",
+    "welcome_description": "Log in or sign up for exclusive member offers, personalized recommendations and much more.",
+    "continue_with_phone": "Continue with Phone",
+    "continue_with_email": "Continue with Email",
+    "continue_with_apple": "Continue with Apple",
+    "continue_with_google": "Continue with Google",
+    "continue_with_facebook": "Continue with Facebook",
+    "or_divider": "or",
+    "terms_text": "By logging in or creating an account, you agree to our",
+    "terms_link": "Terms of Service",
+    "privacy_link": "Privacy Policy",
+    "terms_accept": ".",
+    "no_account": "Don't have an account?",
+    "create_account": "Create account",
+    "have_account": "Already have an account?",
+    "login_link": "Log in"
+  },
+  "profile": {
+    "title": "Profile",
+    "login_register": "Log in or sign up",
+    "my_profile": "My Profile",
+    "my_reservations": "My Reservations",
+    "my_favorites": "My Favorites",
+    "logout": "Log Out",
+    "download_app": "Download App",
+    "download_app_description": "Download the app from the store to take advantage of the benefits!"
+  },
+  "buttons": {
+    "all_categories": "All Categories",
+    "basket": "My Basket",
+    "search": "Search...",
+    "go_ai": "Go.Ai"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "currency": "Currency",
+    "theme": "Appearance",
+    "language_selection": "Language Selection",
+    "currency_selection": "Currency Selection",
+    "theme_selection": "Theme Selection",
+    "system_theme": "System Theme",
+    "light_theme": "Light Theme",
+    "dark_theme": "Dark Theme",
+    "ok": "OK"
   }
 }

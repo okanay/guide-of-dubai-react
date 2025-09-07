@@ -6,21 +6,26 @@ import { TextInput } from 'src/features/public/components/form-ui/text-input'
 import z from 'zod'
 import { useAuthModal } from './store'
 import Icon from '@/components/icon'
-
-const loginSchema = z.object({
-  email: z.email('Geçerli bir e-posta adresi girin'),
-  password: z.string().min(1, 'Parola gereklidir').min(6, 'Parola en az 6 karakter olmalıdır'),
-})
-
-const LOGIN_DEFAULT_VALUES: Partial<LoginFormData> = {
-  email: '',
-  password: '',
-}
-
-type LoginFormData = z.infer<typeof loginSchema>
+import { useTranslation } from 'react-i18next'
 
 export function EmailLoginForm({ onClose }: { onClose: () => void }) {
   const { setMode } = useAuthModal()
+  const { t } = useTranslation(['auth', 'zod-errors', 'common'])
+
+  const loginSchema = z.object({
+    email: z.string().email(t('zod-errors:invalid_email')),
+    password: z
+      .string()
+      .min(1, t('zod-errors:required'))
+      .min(6, t('zod-errors:password_min', { min: 6 })),
+  })
+
+  type LoginFormData = z.infer<typeof loginSchema>
+
+  const LOGIN_DEFAULT_VALUES: Partial<LoginFormData> = {
+    email: '',
+    password: '',
+  }
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -39,10 +44,10 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
       console.log('Login data:', data)
       // API çağrısı yapılacak
       await new Promise((resolve) => setTimeout(resolve, 1000)) // Simülasyon
-      toast.success('Giriş başarılı!')
+      toast.success(t('common:success_title'))
       onClose()
     } catch (error) {
-      toast.error('Giriş yapılırken bir hata oluştu')
+      toast.error(t('common:error_title'))
       console.error('Login error:', error)
     }
   }
@@ -52,7 +57,7 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
       .map((error) => error?.message)
       .filter(Boolean)
     if (errorMessages.length > 0) {
-      toast.error('Form hatalarını düzeltin', {
+      toast.error(t('common:error_title'), {
         description: errorMessages.join(', '),
       })
     }
@@ -66,10 +71,12 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
           className="flex items-center gap-x-1 text-size font-semibold"
         >
           <ChevronLeft />
-          Geri git
+          {t('common:back')}
         </button>
         <Icon name="brand/full-primary" width={144} className="mt-4 inline-block" />
-        <h2 className="mb-1 text-size-4xl font-semibold text-on-box-black">Tekrar Hoşgeldiniz</h2>
+        <h2 className="mb-1 text-size-4xl font-semibold text-on-box-black">
+          {t('auth:login_title')}
+        </h2>
         <p className="text-size-sm text-on-box-black">
           Hemen giriş yapın ve keşfetmeye devam edin.
         </p>
@@ -83,8 +90,8 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
               <TextInput
                 {...field}
                 id="email"
-                label="E-posta"
-                placeholder="E-posta adresinizi girin"
+                label={t('auth:email_label')}
+                placeholder={t('auth:email_label')}
                 required
                 value={field.value || ''}
                 error={errors.email?.message}
@@ -100,8 +107,8 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
                 {...field}
                 id="password"
                 type="password"
-                label="Parola"
-                placeholder="Parolanızı girin"
+                label={t('auth:password_label')}
+                placeholder={t('auth:password_label')}
                 required
                 value={field.value || ''}
                 error={errors.password?.message}
@@ -114,13 +121,13 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
             disabled={isSubmitting}
             className="w-full rounded-xs bg-btn-primary py-2.5 font-semibold text-on-btn-primary hover:bg-btn-primary-hover disabled:opacity-50"
           >
-            {isSubmitting ? 'Giriş yapılıyor...' : 'Giriş Yapın'}
+            {isSubmitting ? t('common:sending') : t('auth:login_button')}
           </button>
         </form>
 
         <div className="mt-4 text-center font-semibold">
           <button onClick={() => setMode('forgot-password')} className="text-sm text-btn-primary">
-            Şifrenizi mi unuttunuz?
+            {t('auth:forgot_password_title')}
           </button>
         </div>
       </div>

@@ -15,27 +15,90 @@
   "slides": {
     "explore": {
       "title": "Dubai'de Dubai Frame'i keşfet",
-      "placeholder": "Keşif yapmak istediğiniz yer veya aktiviteyi arayın..."
+      "placeholder": "Keşif yapmak istediğiniz yer veya aktiviteyi arayın...",
+      "alt": "Dubai Frame manzarası"
     },
     "tours": {
       "title": "Dubai Turlarını Keşfedin",
-      "placeholder": "Keşfetmek istediğiniz turu veya etkinliği arayın..."
+      "placeholder": "Keşfetmek istediğiniz turu veya etkinliği arayın...",
+      "alt": "Dubai Turları manzarası"
     },
     "tickets": {
       "title": "Dubai Biletlerini Keşfedin",
-      "placeholder": "Bilet almak istediğiniz yer veya etkinliği arayın..."
+      "placeholder": "Bilet almak istediğiniz yer veya etkinliği arayın...",
+      "alt": "Dubai Biletleri manzarası"
+    },
+    "hotels": {
+      "title": "Dubai Otellerini Keşfedin",
+      "placeholder": "Konaklama yapmak istediğiniz oteli arayın...",
+      "alt": "Dubai Otelleri manzarası"
+    },
+    "safari_tour": {
+      "title": "Dubai Safari Turlarını Keşfedin",
+      "placeholder": "Katılmak istediğiniz safari turunu arayın...",
+      "alt": "Dubai Safari Turu manzarası"
+    },
+    "rent_a_car": {
+      "title": "Dubai'de Araç Kiralayın",
+      "placeholder": "Kiralık araç seçeneklerini arayın...",
+      "alt": "Dubai Araç Kiralama manzarası"
+    },
+    "transfer": {
+      "title": "Dubai Transferlerini Keşfedin",
+      "placeholder": "Transfer seçeneklerini arayın...",
+      "alt": "Dubai Transfer Hizmetleri manzarası"
+    },
+    "all": {
+      "title": "Dubai'de Her Şeyi Keşfedin",
+      "placeholder": "Herhangi bir yer veya aktiviteyi arayın...",
+      "alt": "Dubai Genel manzarası"
     }
   },
-  "go_ai_assistant": "Go.Ai asistanı",
-  "all_categories_menu": "Tüm kategoriler menüsü",
-  "all_categories": "Tüm Kategoriler",
-  "settings_title": "Ayarlar",
-  "language": "Dil",
-  "currency": "Para Birimi",
-  "theme": "Görünüm",
-  "themes": {
-    "light": "Açık",
-    "dark": "Koyu",
-    "system": "Sistem"
+  "auth": {
+    "welcome_title": "Guide of Dubai'ye Hoşgeldiniz",
+    "welcome_description": "Üyelere özel fırsatlar, kişiselleştirilmiş öneriler ve çok daha fazlası için oturum açın veya üye olun.",
+    "continue_with_phone": "Telefon ile Devam Et",
+    "continue_with_email": "Mail ile Devam Et",
+    "continue_with_apple": "Apple ile Devam Et",
+    "continue_with_google": "Google ile Devam Et",
+    "continue_with_facebook": "Facebook ile Devam Et",
+    "or_divider": "veya",
+    "terms_text": "Oturum açarak veya bir hesap oluşturarak,",
+    "terms_link": "Hizmet Şartlarımızı",
+    "privacy_link": "Gizlilik Politikamızı",
+    "terms_accept": "kabul etmiş olursunuz.",
+    "no_account": "Hesabınız yok mu?",
+    "create_account": "Hesap oluşturun",
+    "have_account": "Zaten hesabınız var mı?",
+    "login_link": "Giriş yapın"
+  },
+  "profile": {
+    "title": "Profil",
+    "login_register": "Oturum açın veya kaydolun",
+    "my_profile": "Profilim",
+    "my_reservations": "Rezervasyonlarım",
+    "my_favorites": "Favorilerim",
+    "logout": "Çıkış Yap",
+    "download_app": "Uygulamayı İndir",
+    "download_app_description": "Avantajlardan faydalanmak için uygulamayı stordan indir!"
+  },
+  "buttons": {
+    "all_categories": "Tüm Kategoriler",
+    "basket": "Sepetim",
+    "search": "Ara...",
+    "go_ai": "Go.Ai"
+  },
+  "settings": {
+    "title": "Ayarlar",
+    "language": "Dil",
+    "currency": "Para Birimi",
+    "theme": "Görünüm",
+    "language_selection": "Dil Seçimi",
+    "currency_selection": "Para Birimi Seçimi",
+    "theme_selection": "Tema Seçimi",
+    "system_theme": "Sistem Teması",
+    "light_theme": "Açık Tema",
+    "dark_theme": "Koyu Tema",
+    "ok": "Tamam"
   }
 }

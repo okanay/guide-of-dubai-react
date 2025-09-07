@@ -9,70 +9,80 @@ import { PhoneInput } from 'src/features/public/components/form-ui/phone-input'
 import { Checkbox } from 'src/features/public/components/form-ui/checkbox'
 import parsePhoneNumberFromString from 'libphonenumber-js/min'
 import Icon from '@/components/icon'
-
-const registerSchema = z.object({
-  firstName: z
-    .string()
-    .min(1, 'Ad gereklidir')
-    .min(2, 'Ad en az 2 karakter olmalıdır')
-    .max(50, 'Ad en fazla 50 karakter olabilir'),
-  lastName: z
-    .string()
-    .min(1, 'Soyad gereklidir')
-    .min(2, 'Soyad en az 2 karakter olmalıdır')
-    .max(50, 'Soyad en fazla 50 karakter olabilir'),
-  nationality: z.string().min(1, 'Uyruk seçimi gereklidir'),
-  email: z.email('Geçerli bir e-posta adresi girin'),
-  phone: z
-    .string()
-    .min(1, 'Telefon numarası gereklidir')
-    .refine((phone) => {
-      try {
-        const phoneNumber = parsePhoneNumberFromString(phone, 'TR')
-        return phoneNumber?.isValid() ?? false
-      } catch {
-        return false
-      }
-    }, 'Geçerli bir telefon numarası girin')
-    .transform((phone) => {
-      const phoneNumber = parsePhoneNumberFromString(phone, 'TR')
-      return phoneNumber!.format('E.164')
-    }),
-  referralCode: z
-    .string()
-    .optional()
-    .refine((val) => !val || /^[A-Z0-9]{6,12}$/.test(val), {
-      message: 'Referans kodu 6-12 karakter arası büyük harf ve rakam içermelidir',
-    }),
-  password: z
-    .string()
-    .min(1, 'Parola gereklidir')
-    .min(6, 'Parola en az 6 karakter olmalıdır')
-    .regex(/[A-Z]/, 'Parola en az bir büyük harf içermelidir')
-    .regex(/[a-z]/, 'Parola en az bir küçük harf içermelidir')
-    .regex(/\d/, 'Parola en az bir rakam içermelidir'),
-  privacyPolicy: z.boolean().refine((val) => val === true, {
-    message: 'Gizlilik politikasını kabul etmelisiniz',
-  }),
-  marketingConsent: z.boolean().optional(),
-})
-
-const REGISTER_DEFAULT_VALUES: Partial<RegisterFormData> = {
-  firstName: '',
-  lastName: '',
-  nationality: '',
-  email: '',
-  phone: '',
-  referralCode: '',
-  password: '',
-  privacyPolicy: false,
-  marketingConsent: false,
-}
-
-type RegisterFormData = z.infer<typeof registerSchema>
+import { useTranslation } from 'react-i18next'
 
 export function RegisterForm({ onClose }: { onClose: () => void }) {
   const { setMode } = useAuthModal()
+  const { t } = useTranslation(['auth', 'zod-errors', 'common'])
+
+  // Zod Schema with i18n
+  const registerSchema = z
+    .object({
+      firstName: z
+        .string()
+        .min(1, t('zod-errors:required'))
+        .min(2, t('zod-errors:string_min', { min: 2 }))
+        .max(50, t('zod-errors:string_max', { max: 50 })),
+      lastName: z
+        .string()
+        .min(1, t('zod-errors:required'))
+        .min(2, t('zod-errors:string_min', { min: 2 }))
+        .max(50, t('zod-errors:string_max', { max: 50 })),
+      nationality: z.string().min(1, t('zod-errors:nationality_required')),
+      email: z.string().min(1, t('zod-errors:required')).email(t('zod-errors:invalid_email')),
+      phone: z
+        .string()
+        .min(1, t('zod-errors:required'))
+        .refine((phone) => {
+          try {
+            const phoneNumber = parsePhoneNumberFromString(phone, 'TR')
+            return phoneNumber?.isValid() ?? false
+          } catch {
+            return false
+          }
+        }, t('zod-errors:phone_invalid'))
+        .transform((phone) => {
+          const phoneNumber = parsePhoneNumberFromString(phone, 'TR')
+          return phoneNumber!.format('E.164')
+        }),
+      referralCode: z
+        .string()
+        .optional()
+        .refine((val) => !val || /^[A-Z0-9]{6,12}$/.test(val), {
+          message: t('zod-errors:referral_code_format', { min: 6, max: 12 }),
+        }),
+      password: z
+        .string()
+        .min(1, t('zod-errors:required'))
+        .min(6, t('zod-errors:password_min', { min: 6 }))
+        .regex(/[A-Z]/, t('zod-errors:password_uppercase'))
+        .regex(/[a-z]/, t('zod-errors:password_lowercase'))
+        .regex(/\d/, t('zod-errors:password_number')),
+      confirmPassword: z.string().min(1, t('zod-errors:required')),
+      privacyPolicy: z.boolean().refine((val) => val === true, {
+        message: t('zod-errors:privacy_acceptance'),
+      }),
+      marketingConsent: z.boolean().optional(),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t('zod-errors:confirm_password'),
+      path: ['confirmPassword'],
+    })
+
+  type RegisterFormData = z.infer<typeof registerSchema>
+
+  const REGISTER_DEFAULT_VALUES: Partial<RegisterFormData> = {
+    firstName: '',
+    lastName: '',
+    nationality: '',
+    email: '',
+    phone: '',
+    referralCode: '',
+    password: '',
+    confirmPassword: '',
+    privacyPolicy: false,
+    marketingConsent: false,
+  }
 
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
@@ -84,6 +94,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
+    watch,
   } = form
 
   const onValidSubmit = async (data: RegisterFormData) => {
@@ -91,10 +102,10 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
       console.log('Register data:', data)
       // API çağrısı yapılacak
       await new Promise((resolve) => setTimeout(resolve, 1000)) // Simülasyon
-      toast.success('Kayıt başarılı!')
+      toast.success(t('common:success_title'))
       onClose()
     } catch (error) {
-      toast.error('Kayıt olurken bir hata oluştu')
+      toast.error(t('common:error_title'))
       console.error('Register error:', error)
     }
   }
@@ -103,8 +114,9 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
     const errorMessages = Object.values(errors)
       .map((error) => error?.message)
       .filter(Boolean)
+
     if (errorMessages.length > 0) {
-      toast.error('Form hatalarını düzeltin', {
+      toast.error(t('common:error_title'), {
         description: errorMessages.join(', '),
       })
     }
@@ -118,14 +130,18 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
           className="flex items-center gap-x-1 text-size font-semibold"
         >
           <ChevronLeft />
-          Geri git
+          {t('common:back')}
         </button>
         <Icon name="brand/full-primary" width={144} className="mt-4 inline-block" />
-        <h2 className="mb-1 text-size-4xl font-semibold text-on-box-black">Hesap Oluşturun</h2>
-        <p className="text-size-sm text-on-box-black">Hemen kayıt olun ve keşfetmeye başlayın.</p>
+        <h2 className="mb-1 text-size-4xl font-semibold text-on-box-black">
+          {t('auth:register_title')}
+        </h2>
+        <p className="text-size-sm text-on-box-black">{t('auth:register_description')}</p>
       </header>
+
       <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto px-6 py-4">
         <form onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)} className="space-y-4">
+          {/* Ad ve Soyad */}
           <div className="grid grid-cols-2 gap-2">
             <Controller
               name="firstName"
@@ -134,8 +150,8 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                 <TextInput
                   {...field}
                   id="firstName"
-                  label="Ad"
-                  placeholder="Adınız"
+                  label={t('auth:first_name_label')}
+                  placeholder={t('auth:first_name_label')}
                   required
                   value={field.value || ''}
                   error={errors.firstName?.message}
@@ -151,8 +167,8 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                 <TextInput
                   {...field}
                   id="lastName"
-                  label="Soyad"
-                  placeholder="Soyadınız"
+                  label={t('auth:last_name_label')}
+                  placeholder={t('auth:last_name_label')}
                   required
                   value={field.value || ''}
                   error={errors.lastName?.message}
@@ -162,7 +178,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
             />
           </div>
 
-          {/* Nationality - Select olacak ama şimdilik text */}
+          {/* Uyruk */}
           <Controller
             name="nationality"
             control={control}
@@ -170,8 +186,8 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
               <TextInput
                 {...field}
                 id="nationality"
-                label="Uyruk"
-                placeholder="Seçiniz"
+                label={t('auth:nationality_label')}
+                placeholder={t('auth:nationality_label')}
                 required
                 value={field.value || ''}
                 error={errors.nationality?.message}
@@ -179,6 +195,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
             )}
           />
 
+          {/* E-posta */}
           <Controller
             name="email"
             control={control}
@@ -186,8 +203,9 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
               <TextInput
                 {...field}
                 id="email"
-                label="E-posta"
-                placeholder="E-posta adresinizi girin"
+                type="email"
+                label={t('auth:email_label')}
+                placeholder={t('auth:email_label')}
                 required
                 value={field.value || ''}
                 error={errors.email?.message}
@@ -195,12 +213,13 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
             )}
           />
 
+          {/* Telefon */}
           <Controller
             name="phone"
             control={control}
             render={({ field }) => (
               <PhoneInput
-                label="Telefon Numarası"
+                label={t('auth:phone_label')}
                 placeholder="+90 532 546 8228"
                 value={field.value || ''}
                 onChange={field.onChange}
@@ -210,6 +229,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
             )}
           />
 
+          {/* Referans Kodu */}
           <Controller
             name="referralCode"
             control={control}
@@ -217,15 +237,18 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
               <TextInput
                 {...field}
                 id="referralCode"
-                label="Referans Kodu"
-                placeholder="Referans kodu (opsiyonel)"
+                label={t('auth:referral_code_label')}
+                placeholder={t('auth:referral_code_placeholder')}
                 value={field.value || ''}
                 error={errors.referralCode?.message}
                 maxLength={12}
+                style={{ textTransform: 'uppercase' }}
+                onChange={(e) => field.onChange(e.target.value.toUpperCase())}
               />
             )}
           />
 
+          {/* Parola */}
           <Controller
             name="password"
             control={control}
@@ -234,18 +257,36 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                 {...field}
                 id="password"
                 type="password"
-                label="Parola"
-                placeholder="Parolanızı oluşturun"
+                label={t('auth:password_label')}
+                placeholder={t('auth:password_label')}
                 required
                 value={field.value || ''}
                 error={errors.password?.message}
-                description="Parola büyük harf, küçük harf, rakam ve en az 6 karakter içermelidir"
+                description={t('auth:password_description')}
               />
             )}
           />
 
-          {/* Checkbox'lar - şimdilik basit input */}
-          <div className="space-y-2">
+          {/* Parola Tekrarı */}
+          <Controller
+            name="confirmPassword"
+            control={control}
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                id="confirmPassword"
+                type="password"
+                label={t('auth:confirm_password_label')}
+                placeholder={t('auth:confirm_password_label')}
+                required
+                value={field.value || ''}
+                error={errors.confirmPassword?.message}
+              />
+            )}
+          />
+
+          {/* Checkbox'lar */}
+          <div className="space-y-3">
             <Controller
               name="privacyPolicy"
               control={control}
@@ -256,7 +297,9 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                   checked={field.value || false}
                   error={errors.privacyPolicy?.message}
                   onChange={field.onChange}
-                  label={(<span className="text-size-sm">Şartları kabul ediyorum</span>) as any}
+                  label={
+                    (<span className="text-size-sm">{t('auth:privacy_policy_label')}</span>) as any
+                  }
                 />
               )}
             />
@@ -273,9 +316,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                   onChange={field.onChange}
                   label={
                     (
-                      <span className="text-size-sm">
-                        Guide of Dubai'den haberdar olmak istiyorum
-                      </span>
+                      <span className="text-size-sm">{t('auth:marketing_consent_label')}</span>
                     ) as any
                   }
                 />
@@ -283,14 +324,18 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
             />
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={isSubmitting}
             className="w-full rounded-xs bg-btn-primary py-2.5 font-semibold text-on-btn-primary hover:bg-btn-primary-hover disabled:opacity-50"
           >
-            {isSubmitting ? 'Kayıt oluşturuluyor...' : 'Kayıt Ol'}
+            {isSubmitting ? t('common:sending') : t('auth:register_button')}
           </button>
         </form>
+
+        {/* Mobil için extra spacing */}
+        <div className="h-20 md:hidden" />
       </div>
     </>
   )

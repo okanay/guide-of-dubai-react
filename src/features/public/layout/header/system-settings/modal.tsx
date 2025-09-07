@@ -1,4 +1,14 @@
-import { ArrowLeft, Check, ChevronRight, DollarSign, Globe, Monitor, Moon, X } from 'lucide-react'
+import {
+  ArrowLeft,
+  Check,
+  ChevronRight,
+  DollarSign,
+  Globe,
+  Monitor,
+  Moon,
+  Sun,
+  X,
+} from 'lucide-react'
 import { ModalWrapper } from 'src/components/modal-wrapper'
 import { SUPPORTED_LANGUAGES } from 'src/i18n/config'
 import { SUPPORTED_CURRENCIES } from 'src/i18n/currency-config'
@@ -6,25 +16,37 @@ import { useLanguage } from 'src/i18n/prodiver'
 import { useTheme } from 'src/providers/theme-mode'
 import { useSystemSettings } from './store'
 import { RadioIndicator } from 'src/features/public/components/form-ui/radio-input'
+import { useTranslation } from 'react-i18next'
+import { useState } from 'react'
 
 export function SystemSettingsModal() {
   const { isOpen, closeModal, scopeId, mode, setMode } = useSystemSettings()
+  const { t } = useTranslation('public-header')
+  const [refresh, setRefresh] = useState(false)
 
   const handleClose = () => {
     closeModal()
     setTimeout(() => setMode('main'), 300)
+
+    if (refresh) {
+      window.location.reload()
+    }
   }
 
   const renderContent = () => {
     switch (mode) {
       case 'language':
+        setRefresh(true)
         return <LanguageSettings />
       case 'currency':
+        setRefresh(false)
         return <CurrencySettings />
       case 'theme':
+        setRefresh(false)
         return <ThemeSettings />
       case 'main':
       default:
+        setRefresh(false)
         return <MainSettings />
     }
   }
@@ -32,14 +54,14 @@ export function SystemSettingsModal() {
   const getTitle = () => {
     switch (mode) {
       case 'language':
-        return 'Dil Seçimi'
+        return t('settings.language_selection')
       case 'currency':
-        return 'Para Birimi Seçimi'
+        return t('settings.currency_selection')
       case 'theme':
-        return 'Tema Seçimi'
+        return t('settings.theme_selection')
       case 'main':
       default:
-        return 'Ayarlar'
+        return t('settings.title')
     }
   }
 
@@ -72,7 +94,7 @@ export function SystemSettingsModal() {
           </h2>
           <div className="w-8">
             <button
-              onClick={handleClose}
+              onClick={() => handleClose()}
               className="rounded-full p-1 text-on-box-black transition-colors duration-300 hover:text-black-60"
               aria-label="Ayarları kapat"
             >
@@ -89,10 +111,10 @@ export function SystemSettingsModal() {
         {/* Footer */}
         <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4">
           <button
-            onClick={handleClose}
+            onClick={() => handleClose()}
             className="w-full bg-btn-primary px-4 py-3 font-medium text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled"
           >
-            Tamam
+            {t('settings.ok')}
           </button>
         </div>
       </div>
@@ -104,6 +126,7 @@ function MainSettings() {
   const { setMode, currency } = useSystemSettings()
   const { language } = useLanguage()
   const { theme } = useTheme()
+  const { t } = useTranslation('public-header')
 
   return (
     <div className="space-y-2 p-4">
@@ -114,7 +137,7 @@ function MainSettings() {
         <div className="flex items-center gap-3">
           <Globe size={20} className="text-gray-600" />
           <div>
-            <p className="font-medium">Dil</p>
+            <p className="font-medium">{t('settings.language')}</p>
             <p className="text-sm text-gray-500">{language.label}</p>
           </div>
         </div>
@@ -127,7 +150,7 @@ function MainSettings() {
         <div className="flex items-center gap-3">
           <DollarSign size={20} className="text-gray-600" />
           <div>
-            <p className="font-medium">Para Birimi</p>
+            <p className="font-medium">{t('settings.currency')}</p>
             <p className="text-sm text-gray-500">{currency.name}</p>
           </div>
         </div>
@@ -138,11 +161,18 @@ function MainSettings() {
         className="flex w-full items-center justify-between border border-gray-200 p-3 text-left transition-colors hover:bg-gray-50"
       >
         <div className="flex items-center gap-3">
-          <Moon size={20} className="text-gray-600" />
-
+          {theme === 'light' ? (
+            <Sun size={20} className="text-gray-600" />
+          ) : theme === 'dark' ? (
+            <Moon size={20} className="text-gray-600" />
+          ) : (
+            <Monitor size={20} className="text-gray-600" />
+          )}
           <div>
-            <p className="font-medium">Tema</p>
-            <p className="text-sm text-gray-500 first-letter:uppercase">{theme}</p>
+            <p className="font-medium">{t('settings.theme')}</p>
+            <p className="text-sm text-gray-500 first-letter:uppercase">
+              {t(`settings.${theme}_theme`)}
+            </p>
           </div>
         </div>
         <ChevronRight size={20} className="text-gray-400" />
@@ -202,27 +232,28 @@ function CurrencySettings() {
 
 function ThemeSettings() {
   const { theme, setTheme } = useTheme()
+  const { t } = useTranslation('public-header')
 
   return (
     <div className="p-4">
       <div className="space-y-2">
         <SystemSettingsRadioCard
-          icon="🖥️"
-          title="Sistem Teması"
+          icon={<Monitor size={20} />}
+          title={t('settings.system_theme')}
           isSelected={theme === 'system'}
           onClick={() => setTheme('system')}
         />
 
         <SystemSettingsRadioCard
-          icon="☀️"
-          title="Açık Tema"
+          icon={<Sun size={20} />}
+          title={t('settings.light_theme')}
           isSelected={theme === 'light'}
           onClick={() => setTheme('light')}
         />
 
         <SystemSettingsRadioCard
-          icon="🌙"
-          title="Koyu Tema"
+          icon={<Moon size={20} />}
+          title={t('settings.dark_theme')}
           isSelected={theme === 'dark'}
           onClick={() => setTheme('dark')}
         />
