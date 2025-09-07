@@ -59,7 +59,7 @@ function determinePreferredLanguage({
 }) {
   // 1. Check if requested language is supported
   if (requestedLanguage) {
-    const matchedLanguage = findSupportedLanguage(requestedLanguage)
+    const matchedLanguage = findSupportedLanguageValue(requestedLanguage)
     if (matchedLanguage) return matchedLanguage
   }
 
@@ -84,6 +84,10 @@ function determinePreferredLanguage({
  */
 function findSupportedLanguage(locale: string) {
   return SUPPORTED_LANGUAGES.find(({ supportLocale }) => supportLocale.includes(locale as never))
+}
+
+function findSupportedLanguageValue(locale: string) {
+  return SUPPORTED_LANGUAGES.find(({ value }) => value === locale)
 }
 
 /**
