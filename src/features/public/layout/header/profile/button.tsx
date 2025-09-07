@@ -14,12 +14,13 @@ import Icon from '@/components/icon'
 
 export function ProfileButton() {
   const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const dropdownRef = useClickOutside<HTMLDivElement>(closeDropdown, true, buttonRef)
   const { t } = useTranslation('public-header')
 
   const { openModal: openAuthModal } = useAuthModal()
-  const { setInverted, isInverted, closeCategories } = useHeader()
+  const { closeCategories, setInverted } = useHeader()
   const { sessionStatus, user, logout } = useAuth()
 
   // Portal container'ı client-side'da set et
@@ -28,15 +29,17 @@ export function ProfileButton() {
   }, [])
 
   function toggleDropdown() {
-    if (isInverted) {
+    if (isDropdownOpen) {
       closeDropdown()
     } else {
       closeCategories()
       setInverted(true)
+      setIsDropdownOpen(true)
     }
   }
 
   function closeDropdown() {
+    setIsDropdownOpen(false)
     setInverted(false)
   }
 
@@ -48,7 +51,7 @@ export function ProfileButton() {
         onClick={toggleDropdown}
         className="ml-2 flex items-center gap-x-2 rounded-xs bg-btn-primary px-5 py-2 text-on-btn-primary transition-colors duration-300 ease-in-out hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled"
         aria-label={t('profile.title')}
-        aria-expanded={isInverted}
+        aria-expanded={isDropdownOpen}
       >
         {t('profile.title')}
         <Icon name="user-icon" className="size-5 text-on-btn-primary" />
@@ -58,7 +61,7 @@ export function ProfileButton() {
       {portalContainer &&
         createPortal(
           <div
-            data-visible={isInverted}
+            data-visible={isDropdownOpen}
             id="profile-dropdown-wrapper"
             className="pointer-events-none fixed inset-0 z-33 opacity-0 transition-opacity duration-300 data-[visible=true]:pointer-events-auto data-[visible=true]:opacity-100"
           >
@@ -75,7 +78,7 @@ export function ProfileButton() {
               onClick={(e) => e.stopPropagation()}
             >
               <div
-                data-visible={isInverted}
+                data-visible={isDropdownOpen}
                 className="w-72 border border-gray-200 bg-box-surface shadow-lg data-[visible=true]:pointer-events-auto"
               >
                 {sessionStatus === 'unauthenticated' ? (
