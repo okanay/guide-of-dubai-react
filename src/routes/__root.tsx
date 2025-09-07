@@ -277,7 +277,6 @@ export const Route = createRootRoute({
         crossOrigin: 'anonymous',
         href: `/fonts/custom-sans/bold.woff2`,
       },
-
       {
         rel: 'preload',
         as: 'font',
