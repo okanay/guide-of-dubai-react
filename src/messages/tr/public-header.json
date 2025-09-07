@@ -1,0 +1,41 @@
+{
+  "nav": {
+    "explore": "Keşfet",
+    "tours": "Turlar",
+    "activities": "Aktiviteler",
+    "hotels": "Oteller",
+    "safari_tour": "Safari Turu",
+    "rent_a_car": "Araç Kirala",
+    "transfer": "Transfer",
+    "all": "Tümü",
+    "wishlist": "Beğendiklerim",
+    "reservations": "Rezervasyonlar",
+    "blog": "Blog"
+  },
+  "slides": {
+    "explore": {
+      "title": "Dubai'de Dubai Frame'i keşfet",
+      "placeholder": "Keşif yapmak istediğiniz yer veya aktiviteyi arayın..."
+    },
+    "tours": {
+      "title": "Dubai Turlarını Keşfedin",
+      "placeholder": "Keşfetmek istediğiniz turu veya etkinliği arayın..."
+    },
+    "tickets": {
+      "title": "Dubai Biletlerini Keşfedin",
+      "placeholder": "Bilet almak istediğiniz yer veya etkinliği arayın..."
+    }
+  },
+  "go_ai_assistant": "Go.Ai asistanı",
+  "all_categories_menu": "Tüm kategoriler menüsü",
+  "all_categories": "Tüm Kategoriler",
+  "settings_title": "Ayarlar",
+  "language": "Dil",
+  "currency": "Para Birimi",
+  "theme": "Görünüm",
+  "themes": {
+    "light": "Açık",
+    "dark": "Koyu",
+    "system": "Sistem"
+  }
+}

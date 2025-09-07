@@ -1,1 +1,12 @@
-{}
+{
+  "back": "Geri git",
+  "search": "Ara...",
+  "submit": "Gönder",
+  "sending": "Gönderiliyor...",
+  "ok": "Tamam",
+  "cancel": "İptal",
+  "close": "Kapat",
+  "save": "Kaydet",
+  "error_title": "Bir Hata Oluştu",
+  "success_title": "Başarılı"
+}

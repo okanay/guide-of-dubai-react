@@ -1,0 +1,41 @@
+{
+  "nav": {
+    "explore": "Explore",
+    "tours": "Tours",
+    "activities": "Activities",
+    "hotels": "Hotels",
+    "safari_tour": "Safari Tour",
+    "rent_a_car": "Rent a Car",
+    "transfer": "Transfer",
+    "all": "All",
+    "wishlist": "Wishlist",
+    "reservations": "Reservations",
+    "blog": "Blog"
+  },
+  "slides": {
+    "explore": {
+      "title": "Explore the Dubai Frame in Dubai",
+      "placeholder": "Search for a place or activity you want to explore..."
+    },
+    "tours": {
+      "title": "Discover Dubai Tours",
+      "placeholder": "Search for the tour or event you want to discover..."
+    },
+    "tickets": {
+      "title": "Discover Dubai Tickets",
+      "placeholder": "Search for the place or event you want to buy tickets for..."
+    }
+  },
+  "go_ai_assistant": "Go.Ai assistant",
+  "all_categories_menu": "All categories menu",
+  "all_categories": "All Categories",
+  "settings_title": "Settings",
+  "language": "Language",
+  "currency": "Currency",
+  "theme": "Appearance",
+  "themes": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  }
+}

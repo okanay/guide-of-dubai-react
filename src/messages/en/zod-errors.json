@@ -1,0 +1,7 @@
+{
+  "invalid_email": "Please enter a valid email address.",
+  "required": "This field is required.",
+  "string_min": "This field must be at least {{min}} characters long.",
+  "password_min": "Password must be at least {{min}} characters long.",
+  "password_strength": "Password must contain at least one uppercase letter, one lowercase letter, and one number."
+}

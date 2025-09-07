@@ -1,0 +1,7 @@
+{
+  "invalid_email": "Geçerli bir e-posta adresi girin.",
+  "required": "Bu alan zorunludur.",
+  "string_min": "Bu alan en az {{min}} karakter olmalıdır.",
+  "password_min": "Parola en az {{min}} karakter olmalıdır.",
+  "password_strength": "Parola en az bir büyük harf, bir küçük harf ve bir rakam içermelidir."
+}

@@ -1,1 +1,12 @@
-{}
+{
+  "back": "Go back",
+  "search": "Search...",
+  "submit": "Submit",
+  "sending": "Sending...",
+  "ok": "OK",
+  "cancel": "Cancel",
+  "close": "Close",
+  "save": "Save",
+  "error_title": "An Error Occurred",
+  "success_title": "Success"
+}
