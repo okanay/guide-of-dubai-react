@@ -28,7 +28,7 @@ export const LanguageProvider: React.FC<Props> = ({
   children,
   serverLanguage = DEFAULT_LANGUAGE,
 }) => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const [isReady, setIsReady] = useState(false)
   const [language, setLanguage] = useState<Language>(serverLanguage)
   const i18n = i18nConfig(serverLanguage.value)
@@ -71,10 +71,10 @@ export const LanguageProvider: React.FC<Props> = ({
         const segments = currentPath.split('/').filter(Boolean)
         const [, ...restPath] = segments // Skip current language
 
-        navigate({ to: '/$lang', params: { lang: newLanguage.value } })
+        // navigate({ to: '/$lang', params: { lang: newLanguage.value } })
       })
     },
-    [language, i18n, navigate],
+    [language, i18n],
   )
 
   useEffect(() => {
