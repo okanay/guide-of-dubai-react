@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-router'
 import Cookies from 'js-cookie'
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { I18nextProvider } from 'react-i18next'
@@ -28,25 +27,9 @@ export const LanguageProvider: React.FC<Props> = ({
   children,
   serverLanguage = DEFAULT_LANGUAGE,
 }) => {
-  // const navigate = useNavigate()
   const [isReady, setIsReady] = useState(false)
   const [language, setLanguage] = useState<Language>(serverLanguage)
   const i18n = i18nConfig(serverLanguage.value)
-
-  // Client-side hydration sync
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedLang = localStorage.getItem(I18N_STORAGE_KEY)
-      if (storedLang) {
-        const clientLanguage = SUPPORTED_LANGUAGES.find((l) => l.locale === storedLang)
-        if (clientLanguage && clientLanguage.value !== language.value) {
-          setLanguage(clientLanguage)
-          i18n.changeLanguage(clientLanguage.value)
-          document.documentElement.lang = clientLanguage.locale
-        }
-      }
-    }
-  }, [])
 
   const changeLanguage = useCallback(
     (value: LanguageValue) => {
@@ -69,9 +52,7 @@ export const LanguageProvider: React.FC<Props> = ({
         // Update URL
         const currentPath = window.location.pathname
         const segments = currentPath.split('/').filter(Boolean)
-        const [, ...restPath] = segments // Skip current language
-
-        // navigate({ to: '/$lang', params: { lang: newLanguage.value } })
+        const [, ...restPath] = segments
       })
     },
     [language, i18n],

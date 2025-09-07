@@ -10,7 +10,7 @@
     "build:locale": "NODE_ENV=development vite build --mode development",
     "build:production": "NODE_ENV=production vite build --mode production",
     "deploy": "bunx wrangler deploy .output/server/index.mjs --assets .output/public",
-    "clean": "rm -rf .output && rm -rf .tanstack && rm -rf .nitro && rm -rf dist"
+    "clean": "rm -rf .output && rm -rf .tanstack && rm -rf .nitro && rm -rf dist && rm -rf .vercel"
   },
   "dependencies": {
     "@hookform/resolvers": "5.2.1",
