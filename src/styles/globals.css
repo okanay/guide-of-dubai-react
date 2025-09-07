@@ -48,3 +48,7 @@
 @utility max-w-8xl {
     max-width: 90.12rem /* 90.12rem = 1442px */;
 }
+
+@utility max-w-main {
+    max-width: 70rem /* 70rem = 1120px */;
+}

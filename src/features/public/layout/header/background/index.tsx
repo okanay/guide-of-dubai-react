@@ -139,7 +139,7 @@ export const PublicHeaderBackground = () => {
                 <SearchButton
                   variant="hero"
                   placeholder={activeSlide.searchPlaceholder}
-                  className="line-clamp-1 flex h-11 w-full max-w-[400px] items-center justify-start gap-x-2 rounded-full bg-white px-4 text-size-sm font-normal text-gray-600 shadow-lg md:h-13 md:w-[560px] md:text-size dark:bg-black"
+                  className="line-clamp-1 flex h-11 w-full max-w-[400px] items-center justify-start gap-x-2 rounded-full bg-white px-4 text-size-sm font-normal text-gray-600 shadow-lg sm:max-w-[560px] md:h-13 md:w-[560px] md:text-size dark:bg-black"
                 />
               </>
             )}
@@ -153,7 +153,7 @@ export const PublicHeaderBackground = () => {
 
           {/* Navigation Tabs */}
           <div className="absolute -bottom-px left-0 z-32 w-full">
-            <nav className="mx-auto flex w-full max-w-7xl items-center justify-start overflow-x-auto text-size-sm font-semibold [scrollbar-width:none] sm:px-4 xl:justify-center [&::-webkit-scrollbar]:hidden">
+            <nav className="mx-auto grid w-full max-w-main grid-cols-4 items-center justify-start overflow-x-auto text-size-sm font-semibold [scrollbar-width:none] sm:flex xl:grid xl:grid-cols-8 xl:px-4 [&::-webkit-scrollbar]:hidden">
               <NavigationTab to="/$lang" icon={ExploreIcon} label="Keşfet" className="flex" />
               <NavigationTab to="/$lang/tours" icon={ToursIcon} label="Turlar" className="flex" />
               <NavigationTab
@@ -180,12 +180,7 @@ export const PublicHeaderBackground = () => {
                 label="Araç Kirala"
                 className="hidden sm:flex"
               />
-              <NavigationTab
-                to="/$lang/hotels"
-                icon={AccommodationIcon}
-                label="Konaklama"
-                className="hidden sm:flex"
-              />
+
               <NavigationTab
                 to="/$lang/transfer"
                 icon={TransferIcon}
@@ -216,7 +211,7 @@ function NavigationTab({ to, icon: Icon, label, className }: NavigationTabProps)
       activeOptions={{ exact: true }}
       preload={'render'}
       className={twMerge(
-        'group shrink-0 items-center gap-x-2 px-6 py-3 text-white transition-colors duration-300 ease-in hover:bg-white/20 data-[status=active]:bg-white data-[status=active]:text-btn-primary sm:min-w-[132px] dark:text-black data-[status=active]:dark:bg-black',
+        'group flex w-full shrink-0 items-center justify-center gap-x-2 py-3 text-center font-bold text-white transition-colors duration-300 ease-in hover:bg-white/20 data-[status=active]:bg-white data-[status=active]:text-btn-primary sm:w-1/8 sm:min-w-[120px] xl:w-full dark:text-black data-[status=active]:dark:bg-black',
         className,
       )}
     >

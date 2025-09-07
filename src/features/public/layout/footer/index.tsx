@@ -10,7 +10,7 @@ export const PublicFooter = () => {
       <PublicFooterFAQSection />
       <div className="w-full bg-gray-800 text-white dark:bg-black">
         <div className="px-4">
-          <div className="mx-auto max-w-7xl py-10">
+          <div className="mx-auto max-w-main py-10">
             <SubscriptionSection />
             <div className="my-12 h-px w-full bg-gray-700 dark:bg-white-20" />
             <LinksSection />

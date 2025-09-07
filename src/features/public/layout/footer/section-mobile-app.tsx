@@ -3,7 +3,7 @@ export const PublicFooterMobileAppSection = () => {
     <section>
       <div
         id="app-promo-section"
-        className="relative mx-auto flex h-[180px] w-full max-w-7xl scroll-m-20 flex-row items-center justify-evenly gap-x-0 bg-black text-white sm:gap-x-8 sm:px-4 sm:py-0 md:h-[320px] dark:bg-white dark:text-black"
+        className="relative mx-auto flex h-[180px] w-full max-w-main scroll-m-20 flex-row items-center justify-evenly gap-x-0 bg-black text-white sm:gap-x-8 sm:px-4 sm:py-0 md:h-[320px] dark:bg-white dark:text-black"
       >
         {/* Arka Plan Deseni */}
         <img

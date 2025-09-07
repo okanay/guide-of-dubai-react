@@ -1,9 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { ExampleForm } from 'src/features/public/components/form-ui/example-form'
 
 export const Route = createFileRoute('/$lang/_public/tours/')({
-  component: RouteComponent,
+  component: ExampleForm,
 })
-
-function RouteComponent() {
-  return <div>Hello "/$lang/_public/tours/"!</div>
-}

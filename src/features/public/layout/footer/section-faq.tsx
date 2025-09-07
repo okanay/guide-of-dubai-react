@@ -1,3 +1,4 @@
+import { ChevronDown } from 'lucide-react'
 import { useState } from 'react'
 
 const faqData = [
@@ -24,7 +25,7 @@ const loremIpsum =
 export const PublicFooterFAQSection = () => {
   return (
     <div className="bg-transparent px-4 text-on-box-black">
-      <div className="mx-auto max-w-7xl py-10">
+      <div className="mx-auto max-w-main py-10">
         <h2 className="text-start text-size-lg font-bold">
           Turlar Hakkında Daha Fazla Bilgi Edinin
         </h2>
@@ -72,20 +73,7 @@ export function FaqItem({ question, children }: FaqItemProps) {
       >
         <span className="flex w-full items-center justify-between">
           <span className="text-body text-gray-800">{question}</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="21"
-            height="20"
-            viewBox="0 0 21 20"
-            fill="none"
-            data-open={isOpen}
-            className="transition-transform duration-500 ease-in-out data-[open=true]:rotate-180"
-          >
-            <path
-              d="M10.5 12.8337L5.5 7.83366L6.66667 6.66699L10.5 10.5003L14.3333 6.66699L15.5 7.83366L10.5 12.8337Z"
-              fill="#171717"
-            />
-          </svg>
+          <ChevronDown />
         </span>
 
         <span

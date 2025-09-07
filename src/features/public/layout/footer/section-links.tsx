@@ -72,7 +72,7 @@ const socialLinks = [
 
 // Linkler bölümü
 export const LinksSection = () => (
-  <div className="grid grid-cols-2 gap-8 md:grid-cols-6">
+  <div className="grid grid-cols-2 gap-x-2 gap-y-6 md:grid-cols-6">
     {footerLinks.map((column) => (
       <FooterLinkColumn key={column.title} title={column.title} links={column.links} />
     ))}
@@ -95,7 +95,7 @@ const FooterLinkColumn = ({
   links: { label: string; href: string }[]
 }) => (
   <div>
-    <h5 className="mb-4 font-bold text-white">{title}</h5>
+    <h5 className="mb-4 text-size font-bold text-white">{title}</h5>
     <ul className="flex flex-col gap-y-3">
       {links.map((link) => (
         <li key={link.label}>
@@ -114,7 +114,7 @@ const FooterLinkColumn = ({
 // Telif hakkı ve sosyal medya bölümü
 export const CopyrightSection = () => (
   <div className="bg-card-surface px-4 text-size-xs text-gray-400">
-    <div className="mx-auto flex max-w-7xl flex-col items-center gap-y-4 py-6 md:flex-row md:justify-between">
+    <div className="mx-auto flex max-w-main flex-col items-center gap-y-4 py-6 md:flex-row md:justify-between">
       <div className="flex items-center gap-x-4">
         {socialLinks.map(({ Icon, href, label }) => (
           <a
