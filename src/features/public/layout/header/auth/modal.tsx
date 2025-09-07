@@ -1,18 +1,9 @@
-import React from 'react'
 import { ModalWrapper } from 'src/components/modal-wrapper'
 import { ForgotPasswordForm } from './form-forgot-password'
 import { EmailLoginForm } from './form-login'
 import { RegisterForm } from './form-register'
-import {
-  AppleIcon,
-  CancelIcon,
-  ChevronRight,
-  EmailIcon,
-  FacebookIcon,
-  GoogleIcon,
-  PhoneIcon,
-} from './icons'
 import { useAuthModal } from './store'
+import Icon from '@/components/icon'
 
 // ==================================
 // Main Modal Component
@@ -109,23 +100,26 @@ function LoginOptions({ onClose }: { onClose: () => void }) {
         <div className="w-8">
           <button
             onClick={onClose}
-            className="rounded-full bg-gray-200 p-1 text-on-box-black transition-colors duration-300 hover:text-black-60"
+            className="rounded-full bg-gray-200 p-1.5 text-on-box-black transition-colors duration-300 hover:text-black-60"
             aria-label="Kapat"
           >
-            <CancelIcon />
+            <Icon name="cancel" className="size-4" />
           </button>
         </div>
       </div>
       <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto p-6">
         <div className="space-y-4">
           <div className="space-y-2">
+            {/* YENİ: AuthButton'a string olarak ikon adı veriyoruz */}
             <AuthButton
-              icon={<PhoneIcon />}
+              icon="phone"
+              iconClass="h-5 w-5 text-black"
               label="Telefon ile Devam Et"
               onClick={() => setMode('phone-login')}
             />
             <AuthButton
-              icon={<EmailIcon />}
+              icon="email"
+              iconClass="h-5 w-5"
               label="Mail ile Devam Et"
               onClick={() => setMode('email-login')}
             />
@@ -136,9 +130,24 @@ function LoginOptions({ onClose }: { onClose: () => void }) {
             <div className="h-px flex-1 bg-gray-200" />
           </div>
           <div className="space-y-2">
-            <AuthButton icon={<AppleIcon />} label="Apple ile Devam Et" onClick={() => {}} />
-            <AuthButton icon={<GoogleIcon />} label="Google ile Devam Et" onClick={() => {}} />
-            <AuthButton icon={<FacebookIcon />} label="Facebook ile Devam Et" onClick={() => {}} />
+            <AuthButton
+              icon="socials/apple"
+              iconClass="h-5 w-5 text-black dark:invert"
+              label="Apple ile Devam Et"
+              onClick={() => {}}
+            />
+            <AuthButton
+              icon="socials/google"
+              iconClass="h-5 w-5"
+              label="Google ile Devam Et"
+              onClick={() => {}}
+            />
+            <AuthButton
+              icon="socials/facebook"
+              iconClass="h-5 w-5"
+              label="Facebook ile Devam Et"
+              onClick={() => {}}
+            />
           </div>
         </div>
       </div>
@@ -146,23 +155,27 @@ function LoginOptions({ onClose }: { onClose: () => void }) {
   )
 }
 
+// YENİ: `icon` prop'u artık `string` tipinde
 interface AuthButtonProps {
-  icon: React.ReactNode
+  icon: string
+  iconClass: string
   label: string
   onClick: () => void
 }
 
-function AuthButton({ icon, label, onClick }: AuthButtonProps) {
+function AuthButton({ icon, iconClass, label, onClick }: AuthButtonProps) {
   return (
     <button
       onClick={onClick}
       className="flex w-full items-center justify-between rounded-xs border border-gray-300 p-3 hover:bg-gray-50"
     >
       <div className="flex items-center gap-x-4">
-        {icon}
+        {/* YENİ: Icon component kullanımı */}
+        <Icon name={icon} className={iconClass} />
         <span className="font-semibold">{label}</span>
       </div>
-      <ChevronRight />
+      {/* YENİ: Icon component kullanımı */}
+      <Icon name="chevron-right" className="h-5 w-5 text-gray-400" />
     </button>
   )
 }

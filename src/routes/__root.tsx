@@ -6,7 +6,7 @@ import LanguageProvider from 'src/i18n/prodiver'
 import { AppProviders } from 'src/providers'
 import { AuthProvider, getMeInitial } from 'src/providers/auth'
 import { ThemeStore } from 'src/providers/theme-mode'
-import globals from '../styles/globals.css?url'
+import globals from '../assets/styles/globals.css?url'
 
 const CANONICAL_URL = import.meta.env.VITE_APP_CANONICAL_URL
 
@@ -262,6 +262,28 @@ export const Route = createRootRoute({
       {
         rel: 'privacy-policy',
         href: `${CANONICAL_URL}/terms-privacy`,
+      },
+      {
+        rel: 'preload',
+        as: 'font',
+        type: 'font/woff2',
+        crossOrigin: 'anonymous',
+        href: `/fonts/custom-sans/semibold.woff2`,
+      },
+      {
+        rel: 'preload',
+        as: 'font',
+        type: 'font/woff2',
+        crossOrigin: 'anonymous',
+        href: `/fonts/custom-sans/bold.woff2`,
+      },
+
+      {
+        rel: 'preload',
+        as: 'font',
+        type: 'font/woff2',
+        crossOrigin: 'anonymous',
+        href: `/fonts/custom-sans/regular.woff2`,
       },
     ],
   }),

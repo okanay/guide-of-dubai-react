@@ -8,6 +8,7 @@ import { useAuthModal } from './store'
 import { PhoneInput } from 'src/features/public/components/form-ui/phone-input'
 import { Checkbox } from 'src/features/public/components/form-ui/checkbox'
 import parsePhoneNumberFromString from 'libphonenumber-js/min'
+import Icon from '@/components/icon'
 
 const registerSchema = z.object({
   firstName: z
@@ -119,8 +120,8 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
           <ChevronLeft />
           Geri git
         </button>
-        <img src="/images/brand/brand-full-primary.svg" alt="Logo" className="mt-8 w-36" />
-        <h2 className="mt-4 mb-1 text-size-4xl font-semibold text-on-box-black">Hesap Oluşturun</h2>
+        <Icon name="brand/full-primary" width={144} className="mt-4 inline-block" />
+        <h2 className="mb-1 text-size-4xl font-semibold text-on-box-black">Hesap Oluşturun</h2>
         <p className="text-size-sm text-on-box-black">Hemen kayıt olun ve keşfetmeye başlayın.</p>
       </header>
       <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto px-6 py-4">

@@ -1,3 +1,4 @@
+import Icon from '@/components/icon'
 import { Link } from 'src/i18n/router/link'
 
 export const PublicHeaderLogo = () => {
@@ -5,12 +6,11 @@ export const PublicHeaderLogo = () => {
     <div className="relative z-42 h-[57px] w-[244px] translate-y-[-1px]">
       <Link to="/$lang" aria-label="Guide of Dubai ana sayfası">
         <LogoWrapper />
-        <img
-          src="/images/brand/brand-full-white.svg"
-          alt="Guide of Dubai"
-          className="absolute top-[50%] left-[50%] hidden translate-x-[-50%] translate-y-[-50%] md:block"
+        <Icon
+          name="brand/full-white"
           width={89}
           height={39}
+          className="absolute top-[50%] left-[50%] hidden translate-x-[-50%] translate-y-[-50%] md:block"
         />
       </Link>
     </div>

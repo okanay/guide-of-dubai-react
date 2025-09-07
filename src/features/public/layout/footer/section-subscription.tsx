@@ -47,7 +47,7 @@ const SystemSettingsButton = () => {
       <h4 className="mb-4 text-size-sm font-semibold text-gray-300">Dil & Para Birimi</h4>
       <button
         onClick={() => openModal('main')}
-        className="w-30 rounded-xs bg-white py-2 text-size-sm font-semibold text-gray-800 transition-colors hover:bg-gray-200"
+        className="w-30 rounded-xs bg-white py-2 text-size-sm font-semibold text-black transition-colors hover:bg-gray-200"
       >
         {language.label} - {currency.symbol}
       </button>

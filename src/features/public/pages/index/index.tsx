@@ -10,7 +10,7 @@ import { Activities } from './section-activities'
 
 export const IndexPage = () => {
   return (
-    <main className="flex flex-col gap-y-4">
+    <main className="flex flex-col">
       <IconicPlaces />
       <Otels />
       <Bundles />

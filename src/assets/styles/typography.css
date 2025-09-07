@@ -1,0 +1,113 @@
+/*===========================================
+    HEADING FONT SIZES
+===========================================*/
+
+@utility text-heading-3 {
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: -0.3px;
+}
+
+@utility text-heading-2 {
+  font-size: 36px;
+  line-height: 44px;
+  letter-spacing: -0.3px;
+}
+
+@utility text-heading-1 {
+  font-size: 30px;
+  line-height: 44px;
+  letter-spacing: -0.3px;
+}
+
+/*===========================================
+    BODY FONT SIZES
+===========================================*/
+
+@utility text-body-3xl {
+  font-size: 22px;
+  line-height: 30px;
+  letter-spacing: -0.3px;
+}
+
+@utility text-body-2xl {
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.3px;
+}
+
+@utility text-body-xl {
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: -0.3px;
+}
+
+@utility text-body {
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.3px;
+}
+
+@utility text-body-sm {
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: -0.3px;
+}
+
+@utility text-body-xs {
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: -0.3px;
+}
+
+/*===========================================
+    HELPER FONT SIZES
+===========================================*/
+
+@utility text-size-4xl {
+  font-size: 26px;
+  line-height: 30px;
+  letter-spacing: -0.3px;
+}
+
+@utility text-size-3xl {
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: -0.3px;
+}
+
+@utility text-size-2xl {
+  font-size: 22px;
+  line-height: 26px;
+  letter-spacing: -0.3px;
+}
+
+@utility text-size-xl {
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.3px;
+}
+
+@utility text-size-lg {
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.3px;
+}
+
+@utility text-size {
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.3px;
+}
+
+@utility text-size-sm {
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: -0.3px;
+}
+
+@utility text-size-xs {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -0.3px;
+}

@@ -8,7 +8,7 @@ export const PublicFooter = () => {
     <footer className="pt-20">
       <PublicFooterMobileAppSection />
       <PublicFooterFAQSection />
-      <div className="w-full bg-gray-800 text-white dark:bg-black">
+      <div className="w-full bg-gray-950 text-white dark:bg-black">
         <div className="px-4">
           <div className="mx-auto max-w-main py-10">
             <SubscriptionSection />

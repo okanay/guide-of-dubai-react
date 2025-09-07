@@ -13,7 +13,7 @@ wrangler.toml
 *.log*
 
 # Example Project
-go-github-updater
+public/icons
 
 
 # Dist

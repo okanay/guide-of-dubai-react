@@ -5,6 +5,7 @@ import { toast } from 'sonner'
 import { TextInput } from 'src/features/public/components/form-ui/text-input'
 import z from 'zod'
 import { useAuthModal } from './store'
+import Icon from '@/components/icon'
 
 const loginSchema = z.object({
   email: z.email('Geçerli bir e-posta adresi girin'),
@@ -67,10 +68,8 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
           <ChevronLeft />
           Geri git
         </button>
-        <img src="/images/brand/brand-full-primary.svg" alt="Logo" className="mt-8 w-36" />
-        <h2 className="mt-4 mb-1 text-size-4xl font-semibold text-on-box-black">
-          Tekrar Hoşgeldiniz
-        </h2>
+        <Icon name="brand/full-primary" width={144} className="mt-4 inline-block" />
+        <h2 className="mb-1 text-size-4xl font-semibold text-on-box-black">Tekrar Hoşgeldiniz</h2>
         <p className="text-size-sm text-on-box-black">
           Hemen giriş yapın ve keşfetmeye devam edin.
         </p>

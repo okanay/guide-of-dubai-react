@@ -1,3 +1,4 @@
+import Icon from '@/components/icon'
 import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react'
 import { Link } from 'src/i18n/router/link'
 
@@ -77,11 +78,7 @@ export const LinksSection = () => (
       <FooterLinkColumn key={column.title} title={column.title} links={column.links} />
     ))}
     <div className="flex items-end justify-start sm:col-span-2 sm:items-end sm:justify-start md:col-span-1 md:justify-end dark:invert">
-      <img
-        src="/images/brand/brand-full-white.svg"
-        alt="Guide of Dubai Logo"
-        className="w-30 sm:w-40"
-      />
+      <Icon name="brand/full-white" width={144} className="w-30 pt-8 sm:w-40" />
     </div>
   </div>
 )
