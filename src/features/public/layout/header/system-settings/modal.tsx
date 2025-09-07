@@ -17,65 +17,30 @@ import { useTheme } from 'src/providers/theme-mode'
 import { useSystemSettings } from './store'
 import { RadioIndicator } from 'src/features/public/components/form-ui/radio-input'
 import { useTranslation } from 'react-i18next'
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import Icon from '@/components/icon'
 import { useNavigate } from '@tanstack/react-router'
 
 export function SystemSettingsModal() {
   const { isOpen, closeModal, scopeId, mode, setMode } = useSystemSettings()
-  const { t } = useTranslation('public-header')
   const navigate = useNavigate()
-  const { language } = useLanguage()
-
-  // useRef ile language değişikliği takibi (state değil!)
-  const languageChangedRef = useRef(false)
 
   const handleClose = () => {
     closeModal()
     setTimeout(() => setMode('main'), 300)
-
-    // Sadece dil değiştirilmişse reload yap
-    if (languageChangedRef.current) {
-      languageChangedRef.current = false
-      navigate({
-        to: '.',
-        params: { lang: language.value },
-        resetScroll: true,
-        reloadDocument: true,
-      })
-    }
-  }
-
-  // Language değişikliği için callback
-  const handleLanguageChange = () => {
-    languageChangedRef.current = true
   }
 
   const renderContent = () => {
     switch (mode) {
       case 'language':
-        return <LanguageSettings onLanguageChange={handleLanguageChange} />
+        return <LanguageSection onClose={handleClose} />
       case 'currency':
-        return <CurrencySettings />
+        return <CurrencySection onClose={handleClose} />
       case 'theme':
-        return <ThemeSettings />
+        return <ThemeSection onClose={handleClose} />
       case 'main':
       default:
-        return <MainSettings />
-    }
-  }
-
-  const getTitle = () => {
-    switch (mode) {
-      case 'language':
-        return t('settings.language_selection')
-      case 'currency':
-        return t('settings.currency_selection')
-      case 'theme':
-        return t('settings.theme_selection')
-      case 'main':
-      default:
-        return t('settings.title')
+        return <MainSection onClose={handleClose} />
     }
   }
 
@@ -87,196 +52,390 @@ export function SystemSettingsModal() {
       disableOutsideClick={false}
     >
       <div className="relative flex h-full w-full flex-col overflow-hidden bg-box-surface md:h-auto md:max-h-[90vh] md:w-full md:max-w-md md:shadow-2xl">
-        {/* Header */}
-        <div className="flex shrink-0 items-center justify-between border-b border-gray-200 bg-box-surface p-4">
-          <div className="w-8">
-            {mode !== 'main' && (
-              <button
-                onClick={() => setMode('main')}
-                className="rounded-full p-1 text-on-box-black transition-colors duration-300 hover:text-black-60"
-                aria-label="Geri"
-              >
-                <ArrowLeft className="size-6" />
-              </button>
-            )}
-          </div>
-          <h2
-            id="settings-title"
-            className="flex-1 text-center text-lg font-semibold text-on-box-black"
-          >
-            {getTitle()}
-          </h2>
-          <div className="w-8">
-            <button
-              onClick={handleClose}
-              className="rounded-full p-1 text-on-box-black transition-colors duration-300 hover:text-black-60"
-              aria-label="Ayarları kapat"
-            >
-              <X className="size-6" />
-            </button>
-          </div>
-        </div>
-
-        {/* Content - Kaydırılabilir alan */}
-        <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto">
-          {renderContent()}
-        </div>
-
-        {/* Footer */}
-        <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4">
-          <button
-            onClick={handleClose}
-            className="w-full bg-btn-primary px-4 py-3 font-medium text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled"
-          >
-            {t('settings.ok')}
-          </button>
-        </div>
+        {renderContent()}
       </div>
     </ModalWrapper>
   )
 }
 
-function MainSettings() {
+// Ana Ayarlar Bölümü
+function MainSection({ onClose }: { onClose: () => void }) {
   const { setMode, currency } = useSystemSettings()
   const { language } = useLanguage()
   const { theme } = useTheme()
   const { t } = useTranslation('public-header')
 
   return (
-    <div className="space-y-2 p-4">
-      <button
-        onClick={() => setMode('language')}
-        className="flex w-full items-center justify-between border border-gray-200 p-3 text-left transition-colors hover:bg-gray-50"
-      >
-        <div className="flex items-center gap-3">
-          <Globe size={20} className="text-gray-600" />
-          <div>
-            <p className="font-medium">{t('settings.language')}</p>
-            <p className="text-sm text-gray-500">{language.label}</p>
-          </div>
+    <>
+      {/* Main Header */}
+      <div className="flex shrink-0 items-center justify-between border-b border-gray-200 bg-box-surface p-4">
+        <div className="w-8" />
+        <h2 className="flex-1 text-center text-lg font-semibold text-on-box-black">
+          {t('settings.title')}
+        </h2>
+        <div className="w-8">
+          <button
+            onClick={onClose}
+            className="rounded-full p-1 text-on-box-black transition-colors duration-300 hover:text-black-60"
+            aria-label="Ayarları kapat"
+          >
+            <X className="size-6" />
+          </button>
         </div>
-        <ChevronRight size={20} className="text-gray-400" />
-      </button>
-      <button
-        onClick={() => setMode('currency')}
-        className="flex w-full items-center justify-between border border-gray-200 p-3 text-left transition-colors hover:bg-gray-50"
-      >
-        <div className="flex items-center gap-3">
-          <DollarSign size={20} className="text-gray-600" />
-          <div>
-            <p className="font-medium">{t('settings.currency')}</p>
-            <p className="text-sm text-gray-500">{currency.name}</p>
-          </div>
+      </div>
+
+      {/* Main Content */}
+      <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto">
+        <div className="space-y-2 p-4">
+          <button
+            onClick={() => setMode('language')}
+            className="flex w-full items-center justify-between border border-gray-200 p-3 text-left transition-colors hover:bg-gray-50"
+          >
+            <div className="flex items-center gap-3">
+              <Globe size={20} className="text-gray-600" />
+              <div>
+                <p className="font-medium">{t('settings.language')}</p>
+                <p className="text-sm text-gray-500">{language.label}</p>
+              </div>
+            </div>
+            <ChevronRight size={20} className="text-gray-400" />
+          </button>
+
+          <button
+            onClick={() => setMode('currency')}
+            className="flex w-full items-center justify-between border border-gray-200 p-3 text-left transition-colors hover:bg-gray-50"
+          >
+            <div className="flex items-center gap-3">
+              <DollarSign size={20} className="text-gray-600" />
+              <div>
+                <p className="font-medium">{t('settings.currency')}</p>
+                <p className="text-sm text-gray-500">{currency.name}</p>
+              </div>
+            </div>
+            <ChevronRight size={20} className="text-gray-400" />
+          </button>
+
+          <button
+            onClick={() => setMode('theme')}
+            className="flex w-full items-center justify-between border border-gray-200 p-3 text-left transition-colors hover:bg-gray-50"
+          >
+            <div className="flex items-center gap-3">
+              {theme === 'light' ? (
+                <Sun size={20} className="text-gray-600" />
+              ) : theme === 'dark' ? (
+                <Moon size={20} className="text-gray-600" />
+              ) : (
+                <Monitor size={20} className="text-gray-600" />
+              )}
+              <div>
+                <p className="font-medium">{t('settings.theme')}</p>
+                <p className="text-sm text-gray-500 first-letter:uppercase">
+                  {t(`settings.${theme}_theme`)}
+                </p>
+              </div>
+            </div>
+            <ChevronRight size={20} className="text-gray-400" />
+          </button>
         </div>
-        <ChevronRight size={20} className="text-gray-400" />
-      </button>
-      <button
-        onClick={() => setMode('theme')}
-        className="flex w-full items-center justify-between border border-gray-200 p-3 text-left transition-colors hover:bg-gray-50"
-      >
-        <div className="flex items-center gap-3">
-          {theme === 'light' ? (
-            <Sun size={20} className="text-gray-600" />
-          ) : theme === 'dark' ? (
-            <Moon size={20} className="text-gray-600" />
-          ) : (
-            <Monitor size={20} className="text-gray-600" />
-          )}
-          <div>
-            <p className="font-medium">{t('settings.theme')}</p>
-            <p className="text-sm text-gray-500 first-letter:uppercase">
-              {t(`settings.${theme}_theme`)}
-            </p>
-          </div>
-        </div>
-        <ChevronRight size={20} className="text-gray-400" />
-      </button>
-    </div>
+      </div>
+
+      {/* Main Footer */}
+      <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4">
+        <button
+          onClick={onClose}
+          className="w-full bg-btn-primary px-4 py-3 font-medium text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled"
+        >
+          {t('settings.close')}
+        </button>
+      </div>
+    </>
   )
 }
 
-// Language Settings'e onLanguageChange prop'u eklendi
-function LanguageSettings({ onLanguageChange }: { onLanguageChange: () => void }) {
+// Dil Ayarları Bölümü
+function LanguageSection({ onClose }: { onClose: () => void }) {
+  const { setMode } = useSystemSettings()
   const { language, changeLanguage } = useLanguage()
+  const { t } = useTranslation('public-header')
+  const navigate = useNavigate()
 
-  const handleLanguageChange = (newLanguage: LanguageValue) => {
-    if (newLanguage !== language.value) {
-      onLanguageChange() // Parent'a bildir
-      changeLanguage(newLanguage) // Dili değiştir
+  // Geçici seçim state'i
+  const [selectedLanguage, setSelectedLanguage] = useState(language.value)
+
+  // Değişiklik yapıldı mı kontrolü
+  const hasChanges = selectedLanguage !== language.value
+
+  const handleConfirm = () => {
+    if (hasChanges) {
+      // Dili değiştir
+      changeLanguage(selectedLanguage)
+
+      // Modal'ı kapat
+      onClose()
+
+      // Sayfayı yenile
+      setTimeout(() => {
+        navigate({
+          to: '.',
+          params: { lang: selectedLanguage },
+          resetScroll: true,
+          reloadDocument: true,
+        })
+      }, 100)
+    } else {
+      // Değişiklik yoksa sadece ana menüye dön
+      setMode('main')
     }
   }
 
+  const handleBack = () => {
+    // Geri butonuna basıldığında değişiklikleri geri al
+    setSelectedLanguage(language.value)
+    setMode('main')
+  }
+
   return (
-    <div className="p-4">
-      <div className="space-y-2">
-        {SUPPORTED_LANGUAGES.map((lang) => (
-          <SystemSettingsRadioCard
-            key={lang.value}
-            icon={<Icon name={lang.flag} className="flex h-6 w-6 items-center justify-center" />}
-            title={lang.label}
-            isSelected={language.value === lang.value}
-            onClick={() => handleLanguageChange(lang.value)}
-          />
-        ))}
+    <>
+      {/* Language Header */}
+      <div className="flex shrink-0 items-center justify-between border-b border-gray-200 bg-box-surface p-4">
+        <div className="w-8">
+          <button
+            onClick={handleBack}
+            className="rounded-full p-1 text-on-box-black transition-colors duration-300 hover:text-black-60"
+            aria-label="Geri"
+          >
+            <ArrowLeft className="size-6" />
+          </button>
+        </div>
+        <h2 className="flex-1 text-center text-lg font-semibold text-on-box-black">
+          {t('settings.language_selection')}
+        </h2>
+        <div className="w-8">
+          <button
+            onClick={onClose}
+            className="rounded-full p-1 text-on-box-black transition-colors duration-300 hover:text-black-60"
+            aria-label="Kapat"
+          >
+            <X className="size-6" />
+          </button>
+        </div>
       </div>
-    </div>
+
+      {/* Language Content */}
+      <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto">
+        <div className="p-4">
+          <div className="space-y-2">
+            {SUPPORTED_LANGUAGES.map((lang) => (
+              <SystemSettingsRadioCard
+                key={lang.value}
+                icon={
+                  <Icon name={lang.flag} className="flex h-6 w-6 items-center justify-center" />
+                }
+                title={lang.label}
+                isSelected={selectedLanguage === lang.value}
+                onClick={() => setSelectedLanguage(lang.value)}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Language Footer - Sabit Tamam Butonu */}
+      <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4">
+        <button
+          onClick={handleConfirm}
+          className="w-full bg-btn-primary px-4 py-3 font-medium text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled"
+        >
+          {t(hasChanges ? 'settings.change' : 'settings.ok')}
+        </button>
+      </div>
+    </>
   )
 }
 
-function CurrencySettings() {
-  const { currency, setCurrency } = useSystemSettings()
+// Para Birimi Ayarları Bölümü
+function CurrencySection({ onClose }: { onClose: () => void }) {
+  const { setMode, currency, setCurrency } = useSystemSettings()
+  const { t } = useTranslation('public-header')
+
+  // Geçici seçim state'i
+  const [selectedCurrency, setSelectedCurrency] = useState(currency.code)
+
+  // Değişiklik yapıldı mı kontrolü
+  const hasChanges = selectedCurrency !== currency.code
+
+  const handleConfirm = () => {
+    if (hasChanges) {
+      // Para birimini değiştir
+      setCurrency(selectedCurrency)
+    }
+    // Ana menüye dön
+    setMode('main')
+  }
+
+  const handleBack = () => {
+    // Geri butonuna basıldığında değişiklikleri geri al
+    setSelectedCurrency(currency.code)
+    setMode('main')
+  }
 
   return (
-    <div className="p-4">
-      <div className="space-y-2">
-        {SUPPORTED_CURRENCIES.map((curr) => (
-          <SystemSettingsRadioCard
-            key={curr.code}
-            icon={<Icon name={curr.flag} className="flex h-6 w-6 items-center justify-center" />}
-            title={curr.name}
-            description={`${curr.symbol} - ${curr.code.toUpperCase()}`}
-            isSelected={currency.code === curr.code}
-            onClick={() => setCurrency(curr.code)}
-            className="h-14"
-          />
-        ))}
+    <>
+      {/* Currency Header */}
+      <div className="flex shrink-0 items-center justify-between border-b border-gray-200 bg-box-surface p-4">
+        <div className="w-8">
+          <button
+            onClick={handleBack}
+            className="rounded-full p-1 text-on-box-black transition-colors duration-300 hover:text-black-60"
+            aria-label="Geri"
+          >
+            <ArrowLeft className="size-6" />
+          </button>
+        </div>
+        <h2 className="flex-1 text-center text-lg font-semibold text-on-box-black">
+          {t('settings.currency_selection')}
+        </h2>
+        <div className="w-8">
+          <button
+            onClick={onClose}
+            className="rounded-full p-1 text-on-box-black transition-colors duration-300 hover:text-black-60"
+            aria-label="Kapat"
+          >
+            <X className="size-6" />
+          </button>
+        </div>
       </div>
-    </div>
+
+      {/* Currency Content */}
+      <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto">
+        <div className="p-4">
+          <div className="space-y-2">
+            {SUPPORTED_CURRENCIES.map((curr) => (
+              <SystemSettingsRadioCard
+                key={curr.code}
+                icon={
+                  <Icon name={curr.flag} className="flex h-6 w-6 items-center justify-center" />
+                }
+                title={curr.name}
+                description={`${curr.symbol} - ${curr.code.toUpperCase()}`}
+                isSelected={selectedCurrency === curr.code}
+                onClick={() => setSelectedCurrency(curr.code)}
+                className="h-14"
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Currency Footer - Sabit Tamam Butonu */}
+      <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4">
+        <button
+          onClick={handleConfirm}
+          className="w-full bg-btn-primary px-4 py-3 font-medium text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled"
+        >
+          {t(hasChanges ? 'settings.change' : 'settings.ok')}
+        </button>
+      </div>
+    </>
   )
 }
 
-function ThemeSettings() {
+// Tema Ayarları Bölümü
+function ThemeSection({ onClose }: { onClose: () => void }) {
+  const { setMode } = useSystemSettings()
   const { theme, setTheme } = useTheme()
   const { t } = useTranslation('public-header')
 
+  // Geçici seçim state'i
+  const [selectedTheme, setSelectedTheme] = useState(theme)
+
+  // Değişiklik yapıldı mı kontrolü
+  const hasChanges = selectedTheme !== theme
+
+  const handleConfirm = () => {
+    if (hasChanges) {
+      // Temayı değiştir
+      setTheme(selectedTheme)
+    }
+    // Ana menüye dön
+    setMode('main')
+  }
+
+  const handleBack = () => {
+    // Geri butonuna basıldığında değişiklikleri geri al
+    setSelectedTheme(theme)
+    setMode('main')
+  }
+
   return (
-    <div className="p-4">
-      <div className="space-y-2">
-        <SystemSettingsRadioCard
-          icon={<Monitor size={20} />}
-          title={t('settings.system_theme')}
-          isSelected={theme === 'system'}
-          onClick={() => setTheme('system')}
-        />
-
-        <SystemSettingsRadioCard
-          icon={<Sun size={20} />}
-          title={t('settings.light_theme')}
-          isSelected={theme === 'light'}
-          onClick={() => setTheme('light')}
-        />
-
-        <SystemSettingsRadioCard
-          icon={<Moon size={20} />}
-          title={t('settings.dark_theme')}
-          isSelected={theme === 'dark'}
-          onClick={() => setTheme('dark')}
-        />
+    <>
+      {/* Theme Header */}
+      <div className="flex shrink-0 items-center justify-between border-b border-gray-200 bg-box-surface p-4">
+        <div className="w-8">
+          <button
+            onClick={handleBack}
+            className="rounded-full p-1 text-on-box-black transition-colors duration-300 hover:text-black-60"
+            aria-label="Geri"
+          >
+            <ArrowLeft className="size-6" />
+          </button>
+        </div>
+        <h2 className="flex-1 text-center text-lg font-semibold text-on-box-black">
+          {t('settings.theme_selection')}
+        </h2>
+        <div className="w-8">
+          <button
+            onClick={onClose}
+            className="rounded-full p-1 text-on-box-black transition-colors duration-300 hover:text-black-60"
+            aria-label="Kapat"
+          >
+            <X className="size-6" />
+          </button>
+        </div>
       </div>
-    </div>
+
+      {/* Theme Content */}
+      <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto">
+        <div className="p-4">
+          <div className="space-y-2">
+            <SystemSettingsRadioCard
+              icon={<Monitor size={20} />}
+              title={t('settings.system_theme')}
+              isSelected={selectedTheme === 'system'}
+              onClick={() => setSelectedTheme('system')}
+            />
+
+            <SystemSettingsRadioCard
+              icon={<Sun size={20} />}
+              title={t('settings.light_theme')}
+              isSelected={selectedTheme === 'light'}
+              onClick={() => setSelectedTheme('light')}
+            />
+
+            <SystemSettingsRadioCard
+              icon={<Moon size={20} />}
+              title={t('settings.dark_theme')}
+              isSelected={selectedTheme === 'dark'}
+              onClick={() => setSelectedTheme('dark')}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Theme Footer - Sabit Tamam Butonu */}
+      <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4">
+        <button
+          onClick={handleConfirm}
+          className="w-full bg-btn-primary px-4 py-3 font-medium text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled"
+        >
+          {t(hasChanges ? 'settings.change' : 'settings.ok')}
+        </button>
+      </div>
+    </>
   )
 }
 
+// Radio Card Bileşeni
 interface RadioCard {
   icon?: React.ReactNode
   title: string
@@ -298,7 +457,7 @@ const SystemSettingsRadioCard = ({
     <button
       onClick={onClick}
       data-checked={isSelected}
-      className={`group/ri flex h-12 w-full items-center justify-between gap-x-4 border border-gray-200 px-4 font-medium text-on-box-black transition-all duration-200 group-data-[checked=true]/ri:border-primary-500 group-data-[checked=true]/ri:bg-primary-50 hover:border-primary-200 hover:bg-gray-50 ${className || ''}`}
+      className={`group/ri flex h-12 w-full items-center justify-between gap-x-4 border border-gray-200 px-4 font-medium text-on-box-black transition-all duration-200 hover:border-primary-200 hover:bg-gray-50 data-[checked=true]:border-primary-500 data-[checked=true]:bg-primary-50 ${className || ''}`}
     >
       <div className="flex items-center gap-3">
         {icon && <span>{icon}</span>}

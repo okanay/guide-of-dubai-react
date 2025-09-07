@@ -158,6 +158,8 @@
     "system_theme": "Sistem Teması",
     "light_theme": "Açık Tema",
     "dark_theme": "Koyu Tema",
-    "ok": "Tamam"
+    "ok": "Tamam",
+    "change": "Değiştir",
+    "close": "Kapat"
   }
 }

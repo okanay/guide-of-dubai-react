@@ -158,6 +158,8 @@
     "system_theme": "System Theme",
     "light_theme": "Light Theme",
     "dark_theme": "Dark Theme",
-    "ok": "OK"
+    "ok": "OK",
+    "change": "Change",
+    "close": "Close"
   }
 }
