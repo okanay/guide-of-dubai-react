@@ -8,7 +8,6 @@ import enModalAuth from './en/modal-auth.json'
 import enPageErrors from './en/page-errors.json'
 import enPageIndex from './en/page-index.json'
 import enSeo from './en/seo.json'
-import enTranslation from './en/translation.json'
 
 import trCommon from './tr/common.json'
 import trComponents from './tr/components.json'
@@ -20,11 +19,11 @@ import trModalAuth from './tr/modal-auth.json'
 import trPageErrors from './tr/page-errors.json'
 import trPageIndex from './tr/page-index.json'
 import trSeo from './tr/seo.json'
-import trTranslation from './tr/translation.json'
 
 export type TranslationNS = (typeof ns)[number]
 
-export const defaultNS = 'translation'
+export const defaultNS = 'common'
+
 export const ns = [
   'common',
   'components',
@@ -39,7 +38,6 @@ export const ns = [
 
 const resource = {
   en: {
-    translation: enTranslation,
     common: enCommon,
     'page-errors': enPageErrors,
     components: enComponents,
@@ -52,7 +50,6 @@ const resource = {
     'modal-auth': enModalAuth,
   },
   tr: {
-    translation: trTranslation,
     common: trCommon,
     'page-errors': trPageErrors,
     components: trComponents,

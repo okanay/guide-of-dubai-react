@@ -5,7 +5,7 @@ import { useLanguage } from 'src/i18n/prodiver'
 import { Link } from 'src/i18n/router/link'
 
 export const CustomNotFoundPage = () => {
-  const { t } = useTranslation('error-pages')
+  const { t } = useTranslation('page-errors')
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-box-surface text-on-box-black">
