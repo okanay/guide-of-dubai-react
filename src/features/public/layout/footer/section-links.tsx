@@ -1,87 +1,97 @@
 import Icon from '@/components/icon'
 import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'src/i18n/router/link'
 
-// Linkleri ve başlıkları içeren veri yapıları
-const footerLinks = [
+// Linkler ve başlıkları için dinamik veri yapıları
+const getFooterLinksStructure = (t: (key: string) => string) => [
   {
-    title: 'Guide of Dubai',
+    title: t('links.guide_of_dubai'),
     links: [
-      { label: 'Hakkımızda', href: '/about' },
-      { label: 'İletişim', href: '/contact' },
-      { label: 'Blog', href: '/blog' },
-      { label: 'S.S.S', href: '/faq' },
+      { label: t('links.about'), href: '/about' },
+      { label: t('links.contact'), href: '/contact' },
+      { label: t('links.blog'), href: '/blog' },
+      { label: t('links.faq'), href: '/faq' },
     ],
   },
   {
-    title: 'Sözleşmeler & Politikalar',
+    title: t('links.contracts_policies'),
     links: [
-      { label: 'Kullanım Sözleşmesi', href: '/terms' },
-      { label: 'KVKK Sözleşmesi', href: '/kvkk' },
-      { label: 'Gizlilik Politikası', href: '/privacy' },
-      { label: 'Satış Sözleşmesi', href: '/sales' },
+      { label: t('links.terms'), href: '/terms' },
+      { label: t('links.kvkk'), href: '/kvkk' },
+      { label: t('links.privacy'), href: '/privacy' },
+      { label: t('links.sales'), href: '/sales' },
     ],
   },
   {
-    title: 'Diğer Hizmetler',
+    title: t('links.other_services'),
     links: [
-      { label: 'Otel Konaklama', href: '/hotels' },
-      { label: 'Araç Kiralama', href: '/rent-a-car' },
-      { label: 'Dubai Vizesi', href: '/visa' },
-      { label: 'Yat Kiralama', href: '/yacht-rental' },
+      { label: t('links.hotels'), href: '/hotels' },
+      { label: t('links.rent_a_car'), href: '/rent-a-car' },
+      { label: t('links.visa'), href: '/visa' },
+      { label: t('links.yacht_rental'), href: '/yacht-rental' },
     ],
   },
   {
-    title: 'Popüler Aktiviteler',
+    title: t('links.popular_activities'),
     links: [
-      { label: 'Dubai Safari Turu', href: '/safari-tour' },
-      { label: 'Dubai Şehir Turu', href: '/city-tour' },
-      { label: 'Abu Dhabi Şehir Turu', href: '/abu-dhabi-tour' },
-      { label: 'Dubai Helikopter Turu', href: '/helicopter-tour' },
+      { label: t('links.safari_tour'), href: '/safari-tour' },
+      { label: t('links.city_tour'), href: '/city-tour' },
+      { label: t('links.abu_dhabi_tour'), href: '/abu-dhabi-tour' },
+      { label: t('links.helicopter_tour'), href: '/helicopter-tour' },
     ],
   },
   {
-    title: 'Popüler Mekanlar',
+    title: t('links.popular_places'),
     links: [
-      { label: 'Museum of the Future', href: '/museum-of-future' },
-      { label: 'Burj Khalifa', href: '/burj-khalifa' },
-      { label: 'Miracle Garden', href: '/miracle-garden' },
-      { label: 'Dubai Jet Ski', href: '/jet-ski' },
+      { label: t('links.museum_of_future'), href: '/museum-of-future' },
+      { label: t('links.burj_khalifa'), href: '/burj-khalifa' },
+      { label: t('links.miracle_garden'), href: '/miracle-garden' },
+      { label: t('links.jet_ski'), href: '/jet-ski' },
     ],
   },
 ]
 
-// Alt bölümdeki sosyal medya ikonları
-const socialLinks = [
+// Sosyal medya ikonları
+const getSocialLinks = (t: (key: string) => string) => [
   {
     Icon: Instagram,
     href: 'https://instagram.com',
-    label: 'Instagram',
+    label: t('copyright.social_labels.instagram'),
   },
-  { Icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
+  {
+    Icon: Twitter,
+    href: 'https://twitter.com',
+    label: t('copyright.social_labels.twitter'),
+  },
   {
     Icon: Linkedin,
     href: 'https://linkedin.com',
-    label: 'LinkedIn',
+    label: t('copyright.social_labels.linkedin'),
   },
   {
     Icon: Facebook,
     href: 'https://facebook.com',
-    label: 'Facebook',
+    label: t('copyright.social_labels.facebook'),
   },
 ]
 
 // Linkler bölümü
-export const LinksSection = () => (
-  <div className="grid grid-cols-2 gap-x-2 gap-y-6 md:grid-cols-6">
-    {footerLinks.map((column) => (
-      <FooterLinkColumn key={column.title} title={column.title} links={column.links} />
-    ))}
-    <div className="flex items-end justify-start sm:col-span-2 sm:items-end sm:justify-start md:col-span-1 md:justify-end dark:invert">
-      <Icon name="brand/full-white" width={144} className="w-30 pt-8 sm:w-40" />
+export const LinksSection = () => {
+  const { t } = useTranslation('public-footer')
+  const footerLinks = getFooterLinksStructure(t)
+
+  return (
+    <div className="grid grid-cols-2 gap-x-2 gap-y-6 md:grid-cols-6">
+      {footerLinks.map((column) => (
+        <FooterLinkColumn key={column.title} title={column.title} links={column.links} />
+      ))}
+      <div className="flex items-end justify-start sm:col-span-2 sm:items-end sm:justify-start md:col-span-1 md:justify-end dark:invert">
+        <Icon name="brand/full-white" width={144} className="w-30 pt-8 sm:w-40" />
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 // Tek bir link sütunu için bileşen
 const FooterLinkColumn = ({
@@ -109,30 +119,32 @@ const FooterLinkColumn = ({
 )
 
 // Telif hakkı ve sosyal medya bölümü
-export const CopyrightSection = () => (
-  <div className="bg-card-surface px-4 text-size-xs text-gray-400">
-    <div className="mx-auto flex max-w-main flex-col items-center gap-y-4 py-6 md:flex-row md:justify-between">
-      <div className="flex items-center gap-x-4">
-        {socialLinks.map(({ Icon, href, label }) => (
-          <a
-            key={label}
-            href={href}
-            aria-label={label}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-colors"
-          >
-            <Icon className="h-5 w-5" />
-          </a>
-        ))}
+export const CopyrightSection = () => {
+  const { t } = useTranslation('public-footer')
+  const socialLinks = getSocialLinks(t)
+
+  return (
+    <div className="bg-card-surface px-4 text-size-xs text-gray-400">
+      <div className="mx-auto flex max-w-main flex-col items-center gap-y-4 py-6 md:flex-row md:justify-between">
+        <div className="flex items-center gap-x-4">
+          {socialLinks.map(({ Icon, href, label }) => (
+            <a
+              key={label}
+              href={href}
+              aria-label={label}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors"
+            >
+              <Icon className="h-5 w-5" />
+            </a>
+          ))}
+        </div>
+        <a href={`mailto:${t('copyright.email')}`} className="">
+          {t('copyright.email')}
+        </a>
+        <p className="text-center md:text-right">{t('copyright.rights')}</p>
       </div>
-      <a href="mailto:email.info@guidedfdubai.com" className="">
-        email.info@guidedfdubai.com
-      </a>
-      <p className="text-center md:text-right">
-        HOI Holding, H O I Tourism LLC DED License No:1502598. All rights reserved © 2025 - We are
-        here for a reliable travel experience
-      </p>
     </div>
-  </div>
-)
+  )
+}

@@ -1,4 +1,8 @@
+import { useTranslation } from 'react-i18next'
+
 export const PublicFooterMobileAppSection = () => {
+  const { t } = useTranslation('public-footer')
+
   return (
     <section>
       <div
@@ -18,7 +22,7 @@ export const PublicFooterMobileAppSection = () => {
           {/* Telefon Görseli */}
           <img
             src="/images/public/footer/phone.png"
-            alt="Guide of Dubai mobil uygulaması"
+            alt={t('mobile_app.phone_alt')}
             className="absolute bottom-full z-10 h-[180px] w-full translate-y-[50%] object-contain sm:left-4 md:h-[362px] md:translate-y-[44.25%]"
           />
         </div>
@@ -26,16 +30,16 @@ export const PublicFooterMobileAppSection = () => {
         {/* Orta Kısım: Metin ve İndirme Butonları */}
         <div className="z-10 flex h-full flex-col items-start justify-center py-2 text-start sm:justify-center">
           <h2 className="items-start text-lg leading-[22px] font-bold sm:max-w-[460px] md:text-heading-2 md:text-balance">
-            Dubai seyahatleri için üyelere özel indirimlerin kilidini açın
+            {t('mobile_app.title')}
           </h2>
           <p className="mt-1 mb-2 text-xs sm:mt-6 sm:mb-8 sm:max-w-[240px] md:text-size-lg md:text-balance">
-            Dubai seyahatleri için üyelere özel indirimlerin kilidini açın
+            {t('mobile_app.description')}
           </p>
           <div className="flex items-center gap-1 sm:gap-x-4">
             <a href="#" target="_blank" rel="noopener noreferrer">
               <img
                 src="/images/public/footer/app-store.png"
-                alt="Apple logo"
+                alt={t('mobile_app.app_store_alt')}
                 className="h-8 w-24 md:h-10 md:w-32"
               />
             </a>
@@ -43,7 +47,7 @@ export const PublicFooterMobileAppSection = () => {
             <a href="#" target="_blank" rel="noopener noreferrer">
               <img
                 src="/images/public/footer/google-play.png"
-                alt="Google Play logo"
+                alt={t('mobile_app.google_play_alt')}
                 className="h-8 w-24 md:h-10 md:w-32"
               />
             </a>
@@ -54,10 +58,12 @@ export const PublicFooterMobileAppSection = () => {
         <div className="z-10 mt-8 hidden flex-col items-center gap-y-4 sm:mt-0 md:flex">
           <img
             src="/images/public/footer/qr-code.png"
-            alt="Uygulamayı indirmek için QR kodu"
+            alt={t('mobile_app.qr_code_alt')}
             className="size-[130px] object-contain"
           />
-          <span className="text-body-sm text-gray-200 dark:text-black">QR kodu tarat</span>
+          <span className="text-body-sm text-gray-200 dark:text-black">
+            {t('mobile_app.scan_qr')}
+          </span>
         </div>
       </div>
     </section>

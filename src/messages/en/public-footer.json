@@ -1,1 +1,124 @@
-{}
+{
+  "mobile_app": {
+    "title": "Unlock exclusive member discounts for Dubai travel",
+    "description": "Unlock exclusive member discounts for Dubai travel",
+    "qr_code_alt": "QR code to download the app",
+    "phone_alt": "Guide of Dubai mobile app",
+    "scan_qr": "Scan QR code",
+    "app_store_alt": "Apple logo",
+    "google_play_alt": "Google Play logo"
+  },
+  "faq": {
+    "title": "Learn More About Tours",
+    "items": [
+      {
+        "question": "What is Guide of Dubai?",
+        "answer": "Guide of Dubai is a comprehensive travel guide designed to help you discover the best experiences in Dubai. You can find tours, activities, hotel reservations, and more on a single platform."
+      },
+      {
+        "question": "Can I customize the tour?",
+        "answer": "Yes! We can create customized tour packages for you. Once you specify your interests, budget, and preferences, we prepare the most suitable tour for you."
+      },
+      {
+        "question": "What is included in a Desert Safari?",
+        "answer": "Our desert safari includes camel riding, sandboarding, traditional costume photos, BBQ dinner, belly dance show, and round-trip transfer services."
+      },
+      {
+        "question": "Are Burj Khalifa tickets included in the tour?",
+        "answer": "Burj Khalifa tickets vary by tour package. They are included in some city tours, while in others, they can be added for an additional fee."
+      },
+      {
+        "question": "Can I book private tours?",
+        "answer": "Of course! We organize private group tours. You can have a completely personal experience with your own guide, vehicle, and itinerary."
+      },
+      {
+        "question": "Is the Museum of the Future included in your city tours?",
+        "answer": "Museum of the Future is included in our premium city tour packages. It can be added to standard tours for an extra fee."
+      },
+      {
+        "question": "What are the safety measures for Desert Safari?",
+        "answer": "All our vehicles are licensed, our drivers are experienced, and safety equipment is fully equipped. We conduct all our activities within the scope of insurance coverage."
+      },
+      {
+        "question": "How can I book a tour with Guide of Dubai?",
+        "answer": "You can book online from our website, contact us via our WhatsApp line, or call our customer service. You can securely make the payment with a credit card."
+      },
+      {
+        "question": "Is transportation included in the tours?",
+        "answer": "Most of our tours include hotel transfers. We provide free transfers from central areas such as Dubai Marina, JBR, and Downtown Dubai."
+      },
+      {
+        "question": "How can I contact customer service for my inquiries?",
+        "answer": "You can reach us via our 24/7 WhatsApp line (+971 xx xxx xxxx), email (info@guideofdubai.com), or phone. Our live support on our website is also active."
+      },
+      {
+        "question": "How long does the Dubai City Tour take?",
+        "answer": "The Dubai City Tour lasts approximately 8-10 hours. It starts at 9:00 AM and ends between 6:00-7:00 PM."
+      },
+      {
+        "question": "Can I get a refund if I cancel my tour?",
+        "answer": "You have the right to cancel for free up to 24 hours in advance. After 24 hours, a 50% deduction is applied. Cancellations due to weather conditions are refunded 100%."
+      },
+      {
+        "question": "Do I need a visa to visit Dubai?",
+        "answer": "Turkish citizens can stay up to 90 days without a visa. For other countries, we offer visa consultancy services."
+      },
+      {
+        "question": "Can I visit Miracle Garden year-round?",
+        "answer": "Miracle Garden is only open during the winter months (November-April). It is closed during the summer months (May-October) for maintenance."
+      }
+    ]
+  },
+  "subscription": {
+    "title": "Subscribe to Guide of Dubai to stay informed about discounts, campaigns and travel tips!",
+    "description": "By clicking Subscribe, you accept our Terms and Conditions and Privacy Policy.",
+    "newsletter_email_label": "Your Email Address",
+    "newsletter_button": "Subscribe",
+    "newsletter_button_mobile": "Subscribe",
+    "payment_channels": "Payment Channels",
+    "language_currency": "Language & Currency",
+    "app_download": {
+      "title": "Unlock exclusive member discounts for Dubai travel",
+      "description": "Unlock exclusive member discounts for Dubai travel",
+      "qr_alt": "Scan QR Code",
+      "scan_text": "Scan QR code"
+    }
+  },
+  "links": {
+    "guide_of_dubai": "Guide of Dubai",
+    "about": "About",
+    "contact": "Contact",
+    "blog": "Blog",
+    "faq": "F.A.Q",
+    "contracts_policies": "Contracts & Policies",
+    "terms": "Terms of Use",
+    "kvkk": "KVKK Agreement",
+    "privacy": "Privacy Policy",
+    "sales": "Sales Agreement",
+    "other_services": "Other Services",
+    "hotels": "Hotel Accommodation",
+    "rent_a_car": "Car Rental",
+    "visa": "Dubai Visa",
+    "yacht_rental": "Yacht Rental",
+    "popular_activities": "Popular Activities",
+    "safari_tour": "Dubai Safari Tour",
+    "city_tour": "Dubai City Tour",
+    "abu_dhabi_tour": "Abu Dhabi City Tour",
+    "helicopter_tour": "Dubai Helicopter Tour",
+    "popular_places": "Popular Places",
+    "museum_of_future": "Museum of the Future",
+    "burj_khalifa": "Burj Khalifa",
+    "miracle_garden": "Miracle Garden",
+    "jet_ski": "Dubai Jet Ski"
+  },
+  "copyright": {
+    "email": "email.info@guidedfdubai.com",
+    "rights": "HOI Holding, H O I Tourism LLC DED License No:1502598. All rights reserved © 2025 - We are here for a reliable travel experience",
+    "social_labels": {
+      "instagram": "Instagram",
+      "twitter": "Twitter",
+      "linkedin": "LinkedIn",
+      "facebook": "Facebook"
+    }
+  }
+}

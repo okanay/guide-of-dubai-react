@@ -1,1 +1,124 @@
-{}
+{
+  "mobile_app": {
+    "title": "Dubai seyahatleri için üyelere özel indirimlerin kilidini açın",
+    "description": "Dubai seyahatleri için üyelere özel indirimlerin kilidini açın",
+    "qr_code_alt": "Uygulamayı indirmek için QR kodu",
+    "phone_alt": "Guide of Dubai mobil uygulaması",
+    "scan_qr": "QR kodu tarat",
+    "app_store_alt": "Apple logo",
+    "google_play_alt": "Google Play logo"
+  },
+  "faq": {
+    "title": "Turlar Hakkında Daha Fazla Bilgi Edinin",
+    "items": [
+      {
+        "question": "Guide of Dubai nedir?",
+        "answer": "Guide of Dubai, Dubai'deki en iyi deneyimleri keşfetmeniz için tasarlanmış kapsamlı bir seyahat rehberidir. Turlar, aktiviteler, otel rezervasyonları ve daha fazlasını tek bir platformda bulabilirsiniz."
+      },
+      {
+        "question": "Turu özelleştirebilir miyim?",
+        "answer": "Evet! Size özel tur paketleri oluşturabiliyoruz. İlgi alanlarınızı, bütçenizi ve tercihlerinizi belirttiğinizde, size en uygun turu hazırlıyoruz."
+      },
+      {
+        "question": "Bir Çöl Safarisi'nde neler var?",
+        "answer": "Çöl safarimiz deve binme, sandboarding, geleneksel kıyafet fotoğrafları, BBQ akşam yemeği, belly dance gösterisi ve iki yönlü transfer hizmetlerini içerir."
+      },
+      {
+        "question": "Burj Khalifa biletleri tura dahil mi?",
+        "answer": "Burj Khalifa biletleri tur paketine göre değişiklik gösterir. Bazı şehir turlarında dahil olurken, bazılarında ekstra ücret karşılığı eklenebilir."
+      },
+      {
+        "question": "Özel turlar rezervasyonu yapabilir miyim?",
+        "answer": "Tabii ki! Özel grup turları organize ediyoruz. Kendi rehberiniz, aracınız ve programınızla tamamen kişisel bir deneyim yaşayabilirsiniz."
+      },
+      {
+        "question": "Şehir turlarınıza Geleceğin Müzesi dahil mi?",
+        "answer": "Museum of the Future, premium şehir turu paketlerimizde yer almaktadır. Standart turlarda ekstra ücret karşılığı eklenebilir."
+      },
+      {
+        "question": "Çöl Safarisi için güvenlik önlemleri nelerdir?",
+        "answer": "Tüm araçlarımız lisanslı, sürücülerimiz deneyimli ve güvenlik ekipmanları tam donanımlıdır. Ayrıca sigorta kapsamında tüm aktivitelerimizi gerçekleştiriyoruz."
+      },
+      {
+        "question": "Guide of Dubai ile turu nasıl rezerve ederim?",
+        "answer": "Web sitemizden online rezervasyon yapabilir, WhatsApp hattımızdan iletişime geçebilir veya müşteri hizmetlerimizi arayabilirsiniz. Ödemeyi kredi kartı ile güvenle yapabilirsiniz."
+      },
+      {
+        "question": "Turlarda ulaşım dahil mi?",
+        "answer": "Çoğu turumuzda otel transferi dahildir. Dubai Marina, JBR, Downtown Dubai gibi merkezi bölgelerden ücretsiz transfer sağlıyoruz."
+      },
+      {
+        "question": "Sorularım için müşteri hizmetleriyle nasıl iletişim kurabilirim?",
+        "answer": "7/24 WhatsApp hattımız (+971 xx xxx xxxx), e-posta (info@guideofdubai.com) veya telefondan ulaşabilirsiniz. Ayrıca web sitemizdeki canlı destek de aktiftir."
+      },
+      {
+        "question": "Dubai Şehir Turu ne kadar sürer?",
+        "answer": "Dubai Şehir Turu yaklaşık 8-10 saat sürmektedir. Sabah 9:00'da başlayıp akşam 18:00-19:00 arası sona erer."
+      },
+      {
+        "question": "Turumu iptal edersem geri ödeme alabilir miyim?",
+        "answer": "24 saat öncesine kadar ücretsiz iptal hakkınız vardır. 24 saatten sonra iptallerde %50 kesinti uygulanır. Hava koşulları nedeniyle iptallerde %100 iade yapılır."
+      },
+      {
+        "question": "Dubai'yi ziyaret etmek için vizeye ihtiyacım var mı?",
+        "answer": "Türk vatandaşları 90 güne kadar vizesiz kalabilir. Diğer ülke vatandaşları için vize danışmanlığı hizmetimiz mevcuttur."
+      },
+      {
+        "question": "Miracle Garden'ı yıl boyunca ziyaret edebilir miyim?",
+        "answer": "Miracle Garden sadece kış aylarında (Kasım-Nisan) açıktır. Yaz aylarında (Mayıs-Ekim) bakım nedeniyle kapalıdır."
+      }
+    ]
+  },
+  "subscription": {
+    "title": "Guide of Dubai'ye abone olarak indirimlerden, kampanyalardan ve seyahat ipuçlarından haberdar olabilirsin!",
+    "description": "Abone Ol'a tıkladığınızda Şartlar ve Koşullarımızı ve Gizlilik Politikamızı kabul etmiş olursunuz.",
+    "newsletter_email_label": "Mail Adresiniz",
+    "newsletter_button": "Abone Ol",
+    "newsletter_button_mobile": "Abone Ol",
+    "payment_channels": "Ödeme Kanalları",
+    "language_currency": "Dil & Para Birimi",
+    "app_download": {
+      "title": "Dubai seyahatleri için üyelere özel indirimlerin kilidini açın",
+      "description": "Dubai seyahatleri için üyelere özel indirimlerin kilidini açın",
+      "qr_alt": "QR Kodu Tara",
+      "scan_text": "QR kodu tarat"
+    }
+  },
+  "links": {
+    "guide_of_dubai": "Guide of Dubai",
+    "about": "Hakkımızda",
+    "contact": "İletişim",
+    "blog": "Blog",
+    "faq": "S.S.S",
+    "contracts_policies": "Sözleşmeler & Politikalar",
+    "terms": "Kullanım Sözleşmesi",
+    "kvkk": "KVKK Sözleşmesi",
+    "privacy": "Gizlilik Politikası",
+    "sales": "Satış Sözleşmesi",
+    "other_services": "Diğer Hizmetler",
+    "hotels": "Otel Konaklama",
+    "rent_a_car": "Araç Kiralama",
+    "visa": "Dubai Vizesi",
+    "yacht_rental": "Yat Kiralama",
+    "popular_activities": "Popüler Aktiviteler",
+    "safari_tour": "Dubai Safari Turu",
+    "city_tour": "Dubai Şehir Turu",
+    "abu_dhabi_tour": "Abu Dhabi Şehir Turu",
+    "helicopter_tour": "Dubai Helikopter Turu",
+    "popular_places": "Popüler Mekanlar",
+    "museum_of_future": "Museum of the Future",
+    "burj_khalifa": "Burj Khalifa",
+    "miracle_garden": "Miracle Garden",
+    "jet_ski": "Dubai Jet Ski"
+  },
+  "copyright": {
+    "email": "email.info@guidedfdubai.com",
+    "rights": "HOI Holding, H O I Tourism LLC DED License No:1502598. All rights reserved © 2025 - We are here for a reliable travel experience",
+    "social_labels": {
+      "instagram": "Instagram",
+      "twitter": "Twitter",
+      "linkedin": "LinkedIn",
+      "facebook": "Facebook"
+    }
+  }
+}
