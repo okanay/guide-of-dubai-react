@@ -25,12 +25,12 @@ interface UseSnapScrollOptions {
 }
 
 interface UseSnapScrollReturn {
-  containerRef: RefObject<HTMLElement | null> | null
+  containerRef: RefObject<HTMLElement>
   cardRefs: {
     current: (HTMLElement | null)[]
   }
-  btnLeftRef: RefObject<HTMLButtonElement | null> | null
-  btnRightRef: RefObject<HTMLButtonElement | null> | null
+  btnLeftRef: RefObject<HTMLButtonElement>
+  btnRightRef: RefObject<HTMLButtonElement>
   handleScrollLeft: () => void
   handleScrollRight: () => void
   updateButtonState: () => void
@@ -49,10 +49,10 @@ export function useSnapScroll({
   updateOnMount = true,
   dependencies = [],
 }: UseSnapScrollOptions = {}): UseSnapScrollReturn {
-  const containerRef = useRef<HTMLElement>(null)
+  const containerRef = useRef<HTMLElement>(null!)
   const cardRefs = useRef<(HTMLElement | null)[]>([])
-  const btnLeftRef = useRef<HTMLButtonElement>(null)
-  const btnRightRef = useRef<HTMLButtonElement>(null)
+  const btnLeftRef = useRef<HTMLButtonElement>(null!)
+  const btnRightRef = useRef<HTMLButtonElement>(null!)
   const isAtStartRef = useRef(true)
   const isAtEndRef = useRef(false)
 

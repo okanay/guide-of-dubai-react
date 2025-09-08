@@ -1,1 +1,13 @@
-{}
+{
+  "iconic-places": {
+    "title": "Dubai'de En Çok Beğenilen 10 İkonik Yer",
+    "button": {
+      "book": "Rezervasyon Yap",
+      "view-all": "Tümünü Gör"
+    }
+  },
+  "common": {
+    "purchased": "Satın Alındı",
+    "per-person": "kişi başı"
+  }
+}

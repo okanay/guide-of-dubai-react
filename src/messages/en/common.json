@@ -8,5 +8,7 @@
   "close": "Close",
   "save": "Save",
   "error_title": "An Error Occurred",
-  "success_title": "Success"
+  "success_title": "Success",
+  "purchased": "Purchased",
+  "per-person": "per person"
 }

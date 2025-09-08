@@ -1,1 +1,9 @@
-{}
+{
+  "iconic-places": {
+    "title": "Top 10 Iconic Places in Dubai",
+    "button": {
+      "book": "Book Now",
+      "view-all": "View All"
+    }
+  }
+}

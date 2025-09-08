@@ -8,5 +8,7 @@
   "close": "Kapat",
   "save": "Kaydet",
   "error_title": "Bir Hata Oluştu",
-  "success_title": "Başarılı"
+  "success_title": "Başarılı",
+  "purchased": "Satın Alındı",
+  "per-person": "kişi başı"
 }
