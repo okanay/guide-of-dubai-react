@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 export function CategoriesButton() {
   const { toggleCategories, isCategoriesOpen } = useHeader()
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
 
   return (
     <button

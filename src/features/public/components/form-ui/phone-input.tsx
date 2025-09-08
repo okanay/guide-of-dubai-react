@@ -1,42 +1,15 @@
 import {
   CountryCode,
   formatIncompletePhoneNumber,
-  getCountryCallingCode,
-  getExampleNumber,
   parsePhoneNumberFromString,
 } from 'libphonenumber-js/min'
-import examples from 'libphonenumber-js/mobile/examples'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { CircleFlag } from 'react-circle-flags'
+import { useTranslation } from 'react-i18next'
 import { BaseInput } from './base-input'
-
-// +1 242 555 0123  → 🇧🇸 Bahamas
-// +1 246 555 0123  → 🇧🇧 Barbados
-// +1 264 555 0123  → 🇦🇮 Anguilla
-// +1 268 555 0123  → 🇦🇬 Antigua ve Barbuda
-// +1 284 555 0123  → 🇻🇬 British Virgin Islands
-// +1 340 555 0123  → 🇻🇮 US Virgin Islands
-// +1 345 555 0123  → 🇰🇾 Cayman Islands
-// +1 441 555 0123  → 🇧🇲 Bermuda
-// +1 473 555 0123  → 🇬🇩 Grenada
-// +1 649 555 0123  → 🇹🇨 Turks ve Caicos
-// +1 664 555 0123  → 🇲🇸 Montserrat
-// +1 670 555 0123  → 🇲🇵 Northern Mariana Islands
-// +1 671 555 0123  → 🇬🇺 Guam
-// +1 684 555 0123  → 🇦🇸 American Samoa
-// +1 721 555 0123  → 🇸🇽 Sint Maarten
-// +1 758 555 0123  → 🇱🇨 Saint Lucia
-// +1 767 555 0123  → 🇩🇲 Dominica
-// +1 784 555 0123  → 🇻🇨 Saint Vincent ve Grenadines
-// +1 787 555 0123  → 🇵🇷 Puerto Rico
-// +1 809 555 0123  → 🇩🇴 Dominican Republic
-// +1 829 555 0123  → 🇩🇴 Dominican Republic (ikinci kod)
-// +1 849 555 0123  → 🇩🇴 Dominican Republic (üçüncü kod)
-// +1 868 555 0123  → 🇹🇹 Trinidad ve Tobago
-// +1 869 555 0123  → 🇰🇳 Saint Kitts ve Nevis
-// +1 876 555 0123  → 🇯🇲 Jamaica
-// +1 939 555 0123  → 🇵🇷 Puerto Rico (ikinci kod)
+import { useLanguage } from 'src/i18n/prodiver'
+import { getCountries } from 'src/utils/countries'
 
 // ============================================================================
 // 1. REACT KOMPONENTİ (UI)
@@ -65,15 +38,20 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, Props>(
       className,
       description,
       defaultCountry = DEFAULT_ISO,
+      placeholder,
       ...props
     },
     ref,
   ) => {
-    const { inputValue, handleChange, placeholder, activeCountry } = usePhoneInput(
-      value,
-      defaultCountry,
-      onChange,
-    )
+    const { t } = useTranslation('components')
+    const defaultPlaceholder = placeholder || t('form.phone_input.placeholder')
+
+    const {
+      inputValue,
+      handleChange,
+      placeholder: computedPlaceholder,
+      activeCountry,
+    } = usePhoneInput(value, defaultCountry, onChange)
 
     const handleBlur = () => {
       if (inputValue === '+') {
@@ -109,7 +87,7 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, Props>(
             type="tel"
             value={inputValue}
             onChange={handleChange}
-            placeholder={placeholder}
+            placeholder={computedPlaceholder}
             onBlur={handleBlur}
             className={twMerge(
               'w-full rounded-xs border px-3 py-2 pl-14 text-size transition-colors',
@@ -140,12 +118,12 @@ interface Country {
 
 // Sadece kısa kodlar için öncelik haritası (tam numara girilmediğinde)
 const INITIAL_PRIORITY_MAP: Record<string, CountryCode> = {
-  '1': 'US', // +1 yazınca ABD gelsin
-  '44': 'GB', // +44 yazınca İngiltere gelsin
-  '7': 'RU', // +7 yazınca Rusya gelsin
-  '39': 'IT', // +39 yazınca İtalya gelsin (Vatikan değil)
-  '47': 'NO', // +47 yazınca Norveç gelsin
-  '61': 'AU', // +61 yazınca Avustralya gelsin
+  '1': 'US',
+  '44': 'GB',
+  '7': 'RU',
+  '39': 'IT',
+  '47': 'NO',
+  '61': 'AU',
 }
 
 const usePhoneInput = (
@@ -154,6 +132,9 @@ const usePhoneInput = (
   onChange?: (value: string) => void,
 ) => {
   const [inputValue, setInputValue] = useState(initialValue)
+  const { language } = useLanguage() // Aktif dili al
+
+  const countries = useMemo(() => getCountries(language.locale), [language.locale])
 
   const detectedCountry = useMemo((): CountryCode => {
     const potentialNumber = inputValue.startsWith('+') ? inputValue : `+${inputValue}`
@@ -161,33 +142,31 @@ const usePhoneInput = (
 
     if (!digitsOnly) return defaultCountry
 
-    // ÖNCELİKLE libphonenumber-js ile tam parse et (ORİJİNAL KODUNDAKI GİBİ)
     const phoneNumber = parsePhoneNumberFromString(potentialNumber)
     if (phoneNumber && phoneNumber.country) {
       return phoneNumber.country
     }
 
-    // Eğer tam parse edilemiyorsa (kısa kod), öncelik haritasını kullan
     for (const [dialCode, priorityCountry] of Object.entries(INITIAL_PRIORITY_MAP)) {
       if (digitsOnly.startsWith(dialCode)) {
         return priorityCountry
       }
     }
 
-    // Fallback: Diğer ülkeler için normal arama (ORİJİNAL KODUNDAKI GİBİ)
+    // Ülke listesi artık hook içinde olduğu için direkt kullanabiliriz.
     const sortedCountries = [...countries].sort((a, b) => b.dialCode.length - a.dialCode.length)
     const matchedCountry = sortedCountries.find((c) => digitsOnly.startsWith(c.dialCode))
 
     if (matchedCountry) return matchedCountry.iso2
 
     return defaultCountry
-  }, [inputValue, defaultCountry])
+  }, [inputValue, defaultCountry, countries])
 
   const activeCountry = useMemo(
     () =>
       countries.find((c) => c.iso2 === detectedCountry) ||
       countries.find((c) => c.iso2 === defaultCountry)!,
-    [detectedCountry, defaultCountry],
+    [detectedCountry, defaultCountry, countries],
   )
 
   const placeholder = useMemo(
@@ -210,271 +189,36 @@ const usePhoneInput = (
 
   useEffect(() => {
     if (initialValue !== inputValue) setInputValue(initialValue)
-  }, [initialValue, inputValue])
+  }, [initialValue])
 
   return { inputValue, handleChange, placeholder, activeCountry }
 }
 
-const PRESET_COUNTRIES: CountryCode[] = [
-  'AF',
-  'AL',
-  'DZ',
-  'AS',
-  'AD',
-  'AO',
-  'AI',
-  'AG',
-  'AR',
-  'AM',
-  'AW',
-  'AU',
-  'AT',
-  'AZ',
-  'BS',
-  'BH',
-  'BD',
-  'BB',
-  'BY',
-  'BE',
-  'BZ',
-  'BJ',
-  'BM',
-  'BT',
-  'BO',
-  'BA',
-  'BW',
-  'BR',
-  'IO',
-  'BN',
-  'BG',
-  'BF',
-  'BI',
-  'CV',
-  'KH',
-  'CM',
-  'CA',
-  'KY',
-  'CF',
-  'TD',
-  'CL',
-  'CN',
-  'CX',
-  'CC',
-  'CO',
-  'KM',
-  'CG',
-  'CD',
-  'CK',
-  'CR',
-  'HR',
-  'CU',
-  'CY',
-  'CZ',
-  'DK',
-  'DJ',
-  'DM',
-  'DO',
-  'EC',
-  'EG',
-  'SV',
-  'GQ',
-  'ER',
-  'EE',
-  'ET',
-  'FK',
-  'FO',
-  'FJ',
-  'FI',
-  'FR',
-  'GF',
-  'PF',
-  'GA',
-  'GM',
-  'GE',
-  'DE',
-  'GH',
-  'GI',
-  'GR',
-  'GL',
-  'GD',
-  'GP',
-  'GU',
-  'GT',
-  'GG',
-  'GN',
-  'GW',
-  'GY',
-  'HT',
-  'VA',
-  'HN',
-  'HK',
-  'HU',
-  'IS',
-  'IN',
-  'ID',
-  'IR',
-  'IQ',
-  'IE',
-  'IM',
-  'IL',
-  'IT',
-  'JM',
-  'JP',
-  'JE',
-  'JO',
-  'KZ',
-  'KE',
-  'KI',
-  'KP',
-  'KR',
-  'KW',
-  'KG',
-  'LA',
-  'LV',
-  'LB',
-  'LS',
-  'LR',
-  'LY',
-  'LI',
-  'LT',
-  'LU',
-  'MO',
-  'MG',
-  'MW',
-  'MY',
-  'MV',
-  'ML',
-  'MT',
-  'MH',
-  'MQ',
-  'MR',
-  'MU',
-  'YT',
-  'MX',
-  'FM',
-  'MD',
-  'MC',
-  'MN',
-  'ME',
-  'MS',
-  'MA',
-  'MZ',
-  'MM',
-  'NA',
-  'NR',
-  'NP',
-  'NL',
-  'NC',
-  'NZ',
-  'NI',
-  'NE',
-  'NG',
-  'NU',
-  'NF',
-  'MP',
-  'NO',
-  'OM',
-  'PK',
-  'PW',
-  'PS',
-  'PA',
-  'PG',
-  'PY',
-  'PE',
-  'PH',
-  'PL',
-  'PT',
-  'PR',
-  'QA',
-  'RE',
-  'RO',
-  'RU',
-  'RW',
-  'BL',
-  'SH',
-  'KN',
-  'LC',
-  'MF',
-  'PM',
-  'VC',
-  'WS',
-  'SM',
-  'ST',
-  'SA',
-  'SN',
-  'RS',
-  'SC',
-  'SL',
-  'SG',
-  'SX',
-  'SK',
-  'SI',
-  'SB',
-  'SO',
-  'ZA',
-  'SS',
-  'ES',
-  'LK',
-  'SD',
-  'SR',
-  'SJ',
-  'SZ',
-  'SE',
-  'CH',
-  'SY',
-  'TW',
-  'TJ',
-  'TZ',
-  'TH',
-  'TL',
-  'TG',
-  'TK',
-  'TO',
-  'TT',
-  'TN',
-  'TR',
-  'TM',
-  'TC',
-  'TV',
-  'UG',
-  'UA',
-  'AE',
-  'GB',
-  'US',
-  'UY',
-  'UZ',
-  'VU',
-  'VE',
-  'VN',
-  'VG',
-  'VI',
-  'WF',
-  'EH',
-  'YE',
-  'ZM',
-  'ZW',
-]
-
-const getCountryData = (): Country[] => {
-  // Intl.DisplayNames API'ı, ISO kodlarından ülke isimlerini doğru bir şekilde alır.
-  const countryNames = new Intl.DisplayNames(['en'], { type: 'region' })
-  return PRESET_COUNTRIES.map((iso2) => {
-    let format = '... ... .. ..'
-    try {
-      const example = getExampleNumber(iso2, examples)
-      if (example) format = example.formatNational()
-    } catch (error) {
-      console.warn(`[PhoneInput] Could not get example for ${iso2}:`, error)
-    }
-    return {
-      iso2,
-      name: countryNames.of(iso2) || iso2,
-      dialCode: getCountryCallingCode(iso2),
-      format,
-    }
-  })
-}
-
-const countries: Country[] = getCountryData()
-
 PhoneInput.displayName = 'PhoneInput'
+
+// +1 242 555 0123  → 🇧🇸 Bahamas
+// +1 246 555 0123  → 🇧🇧 Barbados
+// +1 264 555 0123  → 🇦🇮 Anguilla
+// +1 268 555 0123  → 🇦🇬 Antigua ve Barbuda
+// +1 284 555 0123  → 🇻🇬 British Virgin Islands
+// +1 340 555 0123  → 🇻🇮 US Virgin Islands
+// +1 345 555 0123  → 🇰🇾 Cayman Islands
+// +1 441 555 0123  → 🇧🇲 Bermuda
+// +1 473 555 0123  → 🇬🇩 Grenada
+// +1 649 555 0123  → 🇹🇨 Turks ve Caicos
+// +1 664 555 0123  → 🇲🇸 Montserrat
+// +1 670 555 0123  → 🇲🇵 Northern Mariana Islands
+// +1 671 555 0123  → 🇬🇺 Guam
+// +1 684 555 0123  → 🇦🇸 American Samoa
+// +1 721 555 0123  → 🇸🇽 Sint Maarten
+// +1 758 555 0123  → 🇱🇨 Saint Lucia
+// +1 767 555 0123  → 🇩🇲 Dominica
+// +1 784 555 0123  → 🇻🇨 Saint Vincent ve Grenadines
+// +1 787 555 0123  → 🇵🇷 Puerto Rico
+// +1 809 555 0123  → 🇩🇴 Dominican Republic
+// +1 829 555 0123  → 🇩🇴 Dominican Republic (ikinci kod)
+// +1 849 555 0123  → 🇩🇴 Dominican Republic (üçüncü kod)
+// +1 868 555 0123  → 🇹🇹 Trinidad ve Tobago
+// +1 869 555 0123  → 🇰🇳 Saint Kitts ve Nevis
+// +1 876 555 0123  → 🇯🇲 Jamaica
+// +1 939 555 0123  → 🇵🇷 Puerto Rico (ikinci kod)

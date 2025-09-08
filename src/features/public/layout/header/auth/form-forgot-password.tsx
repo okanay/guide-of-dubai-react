@@ -10,10 +10,10 @@ import { useTranslation } from 'react-i18next'
 
 export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
   const { setMode } = useAuthModal()
-  const { t } = useTranslation(['auth', 'zod-errors', 'common'])
+  const { t } = useTranslation(['modal-auth', 'errors-zod', 'common'])
 
   const forgotPasswordSchema = z.object({
-    email: z.string().email(t('zod-errors:invalid_email')),
+    email: z.email(t('zod-errors:invalid_email')),
   })
 
   type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>

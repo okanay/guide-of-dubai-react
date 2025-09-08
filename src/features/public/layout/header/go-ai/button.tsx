@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 export function GoAiButton() {
   const { openModal } = useGoAiModal()
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
 
   return (
     <button

@@ -21,6 +21,7 @@ import {
 import { BaseInput } from './base-input'
 import useClickOutside from 'src/hooks/use-click-outside'
 import { useLanguage } from 'src/i18n/prodiver'
+import { useTranslation } from 'react-i18next'
 
 // ============================================================================
 // 1. BETWEEN DATE PICKER - Ana kullanım componenti
@@ -53,13 +54,18 @@ export const BetweenDatePicker = ({
   id,
   required,
   disabled = false,
-  startPlaceholder = 'Başlangıç tarihi',
-  endPlaceholder = 'Bitiş tarihi',
+  startPlaceholder,
+  endPlaceholder,
   minDate,
   maxDate,
 }: BetweenDatePickerProps) => {
   const { language } = useLanguage()
+  const { t } = useTranslation('components')
   const triggerRef = useRef<HTMLDivElement>(null)
+
+  const defaultStartPlaceholder =
+    startPlaceholder || t('form.date_picker_between.start_placeholder')
+  const defaultEndPlaceholder = endPlaceholder || t('form.date_picker_between.end_placeholder')
 
   const formattedDateRange = useMemo(() => {
     const formatDate = (date: Date | null) => {
@@ -74,11 +80,11 @@ export const BetweenDatePicker = ({
     const start = formatDate(startDate)
     const end = formatDate(endDate)
 
-    if (!start && !end) return `${startPlaceholder} - ${endPlaceholder}`
-    if (start && !end) return `${start} - ${endPlaceholder}`
-    if (!start && end) return `${startPlaceholder} - ${end}`
+    if (!start && !end) return `${defaultStartPlaceholder} - ${defaultEndPlaceholder}`
+    if (start && !end) return `${start} - ${defaultEndPlaceholder}`
+    if (!start && end) return `${defaultStartPlaceholder} - ${end}`
     return `${start} - ${end}`
-  }, [startDate, endDate, startPlaceholder, endPlaceholder, language.locale])
+  }, [startDate, endDate, defaultStartPlaceholder, defaultEndPlaceholder, language.locale])
 
   return (
     <BetweenDatePickerRaw
@@ -260,6 +266,7 @@ function BetweenCalendarPanel({
   maxDate,
   className,
 }: BetweenCalendarPanelProps) {
+  const { t } = useTranslation('components')
   const panelRef = useClickOutside<HTMLDivElement>(onClose, true, triggerRef)
   const [position, setPosition] = useState({ top: 0, left: 0 })
 
@@ -320,7 +327,7 @@ function BetweenCalendarPanel({
           type="button"
           onClick={hook.goToPrevMonth}
           className="rounded-full p-1.5 hover:bg-gray-100"
-          aria-label="Önceki ay"
+          aria-label={t('form.date_picker.previous_month')}
         >
           <ChevronLeft className="size-5" />
         </button>
@@ -329,7 +336,7 @@ function BetweenCalendarPanel({
           type="button"
           onClick={hook.goToNextMonth}
           className="rounded-full p-1.5 hover:bg-gray-100"
-          aria-label="Sonraki ay"
+          aria-label={t('form.date_picker.next_month')}
         >
           <ChevronRight className="size-5" />
         </button>
@@ -337,7 +344,9 @@ function BetweenCalendarPanel({
 
       {/* Selection Info */}
       <div className="mb-4 text-center text-sm text-gray-600">
-        {hook.selectionMode === 'start' ? 'Başlangıç tarihi seçin' : 'Bitiş tarihi seçin'}
+        {hook.selectionMode === 'start'
+          ? t('form.date_picker_between.select_start')
+          : t('form.date_picker_between.select_end')}
       </div>
 
       {/* Grid */}
@@ -392,7 +401,7 @@ function BetweenCalendarPanel({
           }}
           className="w-full rounded-xs px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-800"
         >
-          Temizle
+          {t('form.date_picker_between.clear')}
         </button>
       </div>
     </div>,

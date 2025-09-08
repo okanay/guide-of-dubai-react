@@ -1,1 +1,41 @@
-{}
+{
+  "form": {
+    "date_picker": {
+      "placeholder": "Tarih seçin",
+      "previous_month": "Önceki ay",
+      "next_month": "Sonraki ay",
+      "clear": "Temizle"
+    },
+    "date_picker_between": {
+      "start_placeholder": "Başlangıç tarihi",
+      "end_placeholder": "Bitiş tarihi",
+      "select_start": "Başlangıç tarihi seçin",
+      "select_end": "Bitiş tarihi seçin",
+      "clear": "Temizle"
+    },
+    "time_picker": {
+      "placeholder": "SS:DD",
+      "hours": "Saat",
+      "minutes": "Dakika"
+    },
+    "phone_input": {
+      "placeholder": "+90 (5XX) XXX XX XX"
+    },
+    "numeric_stepper": {
+      "increment": "Artır",
+      "decrement": "Azalt"
+    },
+    "slider": {
+      "value": "Değer"
+    },
+    "password": {
+      "show": "Şifreyi göster",
+      "hide": "Şifreyi gizle"
+    },
+    "validation": {
+      "required": "Bu alan zorunludur",
+      "invalid_email": "Geçerli bir e-posta adresi girin",
+      "invalid_phone": "Geçerli bir telefon numarası girin"
+    }
+  }
+}

@@ -10,10 +10,10 @@ import { useTranslation } from 'react-i18next'
 
 export function EmailLoginForm({ onClose }: { onClose: () => void }) {
   const { setMode } = useAuthModal()
-  const { t } = useTranslation(['auth', 'zod-errors', 'common'])
+  const { t } = useTranslation(['modal-auth', 'errors-zod', 'common'])
 
   const loginSchema = z.object({
-    email: z.string().email(t('zod-errors:invalid_email')),
+    email: z.email(t('zod-errors:invalid_email')),
     password: z
       .string()
       .min(1, t('zod-errors:required'))

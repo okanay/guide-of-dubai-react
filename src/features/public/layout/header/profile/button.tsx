@@ -17,7 +17,7 @@ export function ProfileButton() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const dropdownRef = useClickOutside<HTMLDivElement>(closeDropdown, true, buttonRef)
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
 
   const { openModal: openAuthModal } = useAuthModal()
   const { closeCategories, setInverted } = useHeader()
@@ -106,7 +106,7 @@ function UnauthorizeDropdownContent({ openAuthModal, closeDropdown }: any) {
   const { openModal: openSystemSettingsModal, currency } = useSystemSettings()
   const { language } = useLanguage()
   const { theme } = useTheme()
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
 
   return (
     <>
@@ -159,7 +159,7 @@ function AuthorizeDropdownContent({ user, logout, closeDropdown }: any) {
   const { openModal: openSystemSettingsModal, currency } = useSystemSettings()
   const { language } = useLanguage()
   const { theme } = useTheme()
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
 
   return (
     <>
@@ -236,7 +236,7 @@ function MenuItem({ label, description, value, onClick, showChevron, control }: 
 }
 
 function MobileAppDownload({ closeDropdown }: any) {
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
 
   return (
     <button

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 
 // Abonelik ve ödeme yöntemleri bölümü
 export const SubscriptionSection = () => {
-  const { t } = useTranslation('public-footer')
+  const { t } = useTranslation('layout-footer')
 
   return (
     <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
@@ -39,7 +39,7 @@ export const SubscriptionSection = () => {
 const SystemSettingsButton = () => {
   const { openModal, currency } = useSystemSettings()
   const { language } = useLanguage()
-  const { t } = useTranslation('public-footer')
+  const { t } = useTranslation('layout-footer')
 
   return (
     <div>
@@ -58,7 +58,7 @@ const SystemSettingsButton = () => {
 
 // Uygulama indirme kartı
 const AppDownloadCard = () => {
-  const { t } = useTranslation('public-footer')
+  const { t } = useTranslation('layout-footer')
 
   return (
     <div className="flex h-full flex-col items-start gap-10 rounded-xs sm:flex-row sm:items-center sm:justify-between sm:bg-card-surface sm:p-6">

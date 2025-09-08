@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 export function BasketButton() {
   const { openModal } = useBasketModal()
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
 
   return (
     <button

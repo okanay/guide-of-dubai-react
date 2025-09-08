@@ -16,7 +16,6 @@ interface CategoryItem {
 
 export function CategoriesDropdown() {
   const { isCategoriesOpen, closeCategories } = useHeader()
-  const { t } = useTranslation('public-header')
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   // Categories data - i18n keys ile
@@ -187,7 +186,7 @@ interface CategoryCardProps {
 }
 
 function CategoryCard({ category, index, isOpen, onClose }: CategoryCardProps) {
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
 
   return (
     <Link

@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next'
 
 export function PublicHeader() {
   const { isInverted } = useHeader()
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
 
   return (
     <header>

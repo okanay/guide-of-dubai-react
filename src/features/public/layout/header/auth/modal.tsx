@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 
 export function AuthModal() {
   const { isOpen, closeModal, scopeId, mode, setMode } = useAuthModal()
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
 
   const handleClose = () => {
     closeModal()

@@ -42,7 +42,7 @@ const ResponsivePicture = ({ slide, priority = false }: ResponsivePictureProps) 
 
 export const PublicHeaderBackground = () => {
   const { href } = Route.useLoaderData()
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
 
   // Slide konfigürasyonları i18n ile
   const slideConfigs: SlideConfig[] = useMemo(
@@ -252,7 +252,7 @@ interface NavigationTabProps {
 }
 
 function NavigationTab({ to, icon, labelKey, className }: NavigationTabProps) {
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
 
   return (
     <Link

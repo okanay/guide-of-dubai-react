@@ -1,1 +1,41 @@
-{}
+{
+  "form": {
+    "date_picker": {
+      "placeholder": "Select date",
+      "previous_month": "Previous month",
+      "next_month": "Next month",
+      "clear": "Clear"
+    },
+    "date_picker_between": {
+      "start_placeholder": "Start date",
+      "end_placeholder": "End date",
+      "select_start": "Select start date",
+      "select_end": "Select end date",
+      "clear": "Clear"
+    },
+    "time_picker": {
+      "placeholder": "HH:MM",
+      "hours": "Hours",
+      "minutes": "Minutes"
+    },
+    "phone_input": {
+      "placeholder": "+90 (5XX) XXX XX XX"
+    },
+    "numeric_stepper": {
+      "increment": "Increment",
+      "decrement": "Decrement"
+    },
+    "slider": {
+      "value": "Value"
+    },
+    "password": {
+      "show": "Show password",
+      "hide": "Hide password"
+    },
+    "validation": {
+      "required": "This field is required",
+      "invalid_email": "Please enter a valid email address",
+      "invalid_phone": "Please enter a valid phone number"
+    }
+  }
+}

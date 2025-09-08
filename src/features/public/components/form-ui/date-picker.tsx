@@ -18,6 +18,7 @@ import {
 import { BaseInput } from './base-input'
 import useClickOutside from 'src/hooks/use-click-outside'
 import { useLanguage } from 'src/i18n/prodiver'
+import { useTranslation } from 'react-i18next'
 
 // ============================================================================
 // 1. COMPLETE DATE PICKER - Ana kullanım componenti (BaseInput ile)
@@ -46,11 +47,14 @@ export const DatePicker = ({
   id,
   required,
   disabled = false,
-  placeholder = 'Tarih seçin',
+  placeholder,
   minDate,
 }: DatePickerProps) => {
   const { language } = useLanguage()
+  const { t } = useTranslation('components')
   const triggerRef = useRef<HTMLButtonElement>(null)
+
+  const defaultPlaceholder = placeholder || t('form.date_picker.placeholder')
 
   return (
     <DatePickerRaw
@@ -84,7 +88,7 @@ export const DatePicker = ({
           >
             <DatePickerIndicator
               value={value}
-              placeholder={placeholder}
+              placeholder={defaultPlaceholder}
               locale={language.locale}
               className={twMerge(!value && 'text-gray-500')}
             />
@@ -201,20 +205,23 @@ interface DatePickerIndicatorProps {
 
 export const DatePickerIndicator = ({
   value,
-  placeholder = 'Tarih seçin',
+  placeholder,
   locale = 'tr-TR',
   className,
   onClick,
   children,
 }: DatePickerIndicatorProps) => {
+  const { t } = useTranslation('components')
+  const defaultPlaceholder = placeholder || t('form.date_picker.placeholder')
+
   const formattedDate = useMemo(() => {
-    if (!value) return placeholder
+    if (!value) return defaultPlaceholder
     return new Intl.DateTimeFormat(locale, {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',
     }).format(value)
-  }, [value, locale, placeholder])
+  }, [value, locale, defaultPlaceholder])
 
   // Eğer children function varsa onu kullan
   if (children) {
@@ -255,6 +262,7 @@ function CalendarPanel({
   minDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24),
   className,
 }: CalendarPanelProps) {
+  const { t } = useTranslation('components')
   const panelRef = useClickOutside<HTMLDivElement>(onClose, true, triggerRef)
   const [position, setPosition] = useState({ top: 0, left: 0 })
 
@@ -290,7 +298,7 @@ function CalendarPanel({
           type="button"
           onClick={hook.goToPrevMonth}
           className="rounded-full p-1.5 hover:bg-gray-100"
-          aria-label="Önceki ay"
+          aria-label={t('form.date_picker.previous_month')}
         >
           <ChevronLeft className="size-5" />
         </button>
@@ -299,7 +307,7 @@ function CalendarPanel({
           type="button"
           onClick={hook.goToNextMonth}
           className="rounded-full p-1.5 hover:bg-gray-100"
-          aria-label="Sonraki ay"
+          aria-label={t('form.date_picker.next_month')}
         >
           <ChevronRight className="size-5" />
         </button>
@@ -337,6 +345,20 @@ function CalendarPanel({
             </button>
           )
         })}
+      </div>
+
+      {/* Clear Button */}
+      <div className="mt-4 border-t border-gray-200 pt-4">
+        <button
+          type="button"
+          onClick={() => {
+            onChange(null)
+            onClose()
+          }}
+          className="w-full rounded-xs px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-800"
+        >
+          {t('form.date_picker.clear')}
+        </button>
       </div>
     </div>,
     document.body,

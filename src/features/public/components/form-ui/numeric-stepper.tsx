@@ -1,6 +1,7 @@
 import { twMerge } from 'tailwind-merge'
 import { Minus, Plus } from 'lucide-react'
 import { BaseInput } from './base-input'
+import { useTranslation } from 'react-i18next'
 
 // ============================================================================
 // PROPS INTERFACE
@@ -39,6 +40,8 @@ export const NumericStepper = ({
   required,
   disabled = false,
 }: NumericStepperProps) => {
+  const { t } = useTranslation('components')
+
   const handleDecrement = () => {
     if (disabled) return
     const newValue = Math.max(min, value - step)
@@ -75,7 +78,7 @@ export const NumericStepper = ({
           onClick={handleDecrement}
           disabled={isMinDisabled}
           className="rounded-full p-1 text-on-box-black transition-colors duration-200 hover:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-400 disabled:hover:bg-transparent"
-          aria-label="Azalt"
+          aria-label={t('form.numeric_stepper.decrement')}
         >
           <Minus className="size-5" />
         </button>
@@ -94,7 +97,7 @@ export const NumericStepper = ({
           onClick={handleIncrement}
           disabled={isMaxDisabled}
           className="rounded-full p-1 text-on-box-black transition-colors duration-200 hover:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-400 disabled:hover:bg-transparent"
-          aria-label="Artır"
+          aria-label={t('form.numeric_stepper.increment')}
         >
           <Plus className="size-5" />
         </button>

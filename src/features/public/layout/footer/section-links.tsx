@@ -78,7 +78,7 @@ const getSocialLinks = (t: (key: string) => string) => [
 
 // Linkler bölümü
 export const LinksSection = () => {
-  const { t } = useTranslation('public-footer')
+  const { t } = useTranslation('layout-footer')
   const footerLinks = getFooterLinksStructure(t)
 
   return (
@@ -120,7 +120,7 @@ const FooterLinkColumn = ({
 
 // Telif hakkı ve sosyal medya bölümü
 export const CopyrightSection = () => {
-  const { t } = useTranslation('public-footer')
+  const { t } = useTranslation('layout-footer')
   const socialLinks = getSocialLinks(t)
 
   return (

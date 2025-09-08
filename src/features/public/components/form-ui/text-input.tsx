@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { BaseInput } from './base-input'
 import { twMerge } from 'tailwind-merge'
 import { Eye, EyeOff } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 interface Props extends Omit<React.ComponentProps<'input'>, 'onChange'> {
   label?: string
@@ -27,6 +28,7 @@ export const TextInput = ({
   ...props
 }: Props) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+  const { t } = useTranslation('components')
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev)
@@ -67,7 +69,7 @@ export const TextInput = ({
             type="button"
             onClick={togglePasswordVisibility}
             className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-700 dark:text-black dark:hover:text-black-80"
-            aria-label={isPasswordVisible ? 'Şifreyi gizle' : 'Şifreyi göster'}
+            aria-label={isPasswordVisible ? t('form.password.hide') : t('form.password.show')}
           >
             {isPasswordVisible ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
           </button>

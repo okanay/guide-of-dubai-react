@@ -11,6 +11,7 @@ import { TextInput } from './text-input'
 import { TimePicker, TimePickerRaw } from './time-picker'
 import { ToggleSwitch } from './toggle-switch'
 import { BetweenDatePicker, BetweenDatePickerText } from './date-picker-between'
+import { CountrySelect } from './country-select'
 
 export function ExampleForm() {
   // State'ler
@@ -98,6 +99,8 @@ export function ExampleForm() {
           </div>
         )}
       </TimePickerRaw>
+
+      <CountrySelect label="Uyruk" value={selectedCountry} onChange={setSelectedCountry} required />
 
       {/* Slider */}
       <Slider

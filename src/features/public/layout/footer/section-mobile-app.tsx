@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 export const PublicFooterMobileAppSection = () => {
-  const { t } = useTranslation('public-footer')
+  const { t } = useTranslation('layout-footer')
 
   return (
     <section>

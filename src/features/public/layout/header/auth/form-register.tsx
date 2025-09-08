@@ -10,10 +10,11 @@ import { Checkbox } from 'src/features/public/components/form-ui/checkbox'
 import parsePhoneNumberFromString from 'libphonenumber-js/min'
 import Icon from '@/components/icon'
 import { useTranslation } from 'react-i18next'
+import { CountrySelect } from '@/features/public/components/form-ui/country-select'
 
 export function RegisterForm({ onClose }: { onClose: () => void }) {
   const { setMode } = useAuthModal()
-  const { t } = useTranslation(['auth', 'zod-errors', 'common'])
+  const { t } = useTranslation(['modal-auth', 'errors-zod', 'common'])
 
   // Zod Schema with i18n
   const registerSchema = z
@@ -132,14 +133,14 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
           <ChevronLeft />
           {t('common:back')}
         </button>
-        <Icon name="brand/full-primary" width={144} className="mt-4 inline-block" />
-        <h2 className="mb-1 text-size-4xl font-semibold text-on-box-black">
-          {t('auth:register_title')}
-        </h2>
-        <p className="text-size-sm text-on-box-black">{t('auth:register_description')}</p>
+        <Icon name="brand/full-primary" width={144} className="mt-2 -mb-5 inline-block" />
       </header>
 
-      <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto px-6 py-4">
+      <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto px-6 pb-4">
+        <h2 className="text-size-4xl font-semibold text-on-box-black">
+          {t('auth:register_title')}
+        </h2>
+        <p className="mb-6 text-size-sm text-on-box-black">{t('auth:register_description')}</p>
         <form onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)} className="space-y-4">
           {/* Ad ve Soyad */}
           <div className="grid grid-cols-2 gap-2">
@@ -183,14 +184,14 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
             name="nationality"
             control={control}
             render={({ field }) => (
-              <TextInput
+              <CountrySelect
                 {...field}
                 id="nationality"
                 label={t('auth:nationality_label')}
                 placeholder={t('auth:nationality_label')}
                 required
-                value={field.value || ''}
                 error={errors.nationality?.message}
+                value={field.value || ''}
               />
             )}
           />
@@ -242,7 +243,6 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                 value={field.value || ''}
                 error={errors.referralCode?.message}
                 maxLength={12}
-                style={{ textTransform: 'uppercase' }}
                 onChange={(e) => field.onChange(e.target.value.toUpperCase())}
               />
             )}

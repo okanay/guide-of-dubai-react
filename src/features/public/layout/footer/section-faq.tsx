@@ -8,7 +8,7 @@ interface FaqItem {
 }
 
 export const PublicFooterFAQSection = () => {
-  const { t } = useTranslation('public-footer')
+  const { t } = useTranslation('layout-footer')
 
   // FAQ verilerini array olarak al
   const faqItems: FaqItem[] = t('faq.items', { returnObjects: true }) as FaqItem[]

@@ -11,7 +11,7 @@ interface SearchButtonProps {
 
 export function SearchButton({ variant = 'icon', placeholder, className = '' }: SearchButtonProps) {
   const { openModal } = useSearchModal()
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
 
   const defaultPlaceholder = placeholder || t('buttons.search')
 

@@ -2,7 +2,7 @@ import { Send } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 export const NewsletterForm = () => {
-  const { t } = useTranslation('public-footer')
+  const { t } = useTranslation('layout-footer')
 
   return (
     <form className="flex w-full max-w-[472px] items-center gap-x-0">

@@ -1,4 +1,5 @@
 import { BaseInput } from './base-input'
+import { useTranslation } from 'react-i18next'
 
 interface Props extends Omit<React.ComponentProps<'input'>, 'type' | 'onChange'> {
   label?: string
@@ -38,6 +39,8 @@ export const Slider = ({
   showProgress = true,
   ...props
 }: Props) => {
+  const { t } = useTranslation('components')
+
   const defaultFormatValue = (val: number) => {
     if (formatValue) return formatValue(val)
     return val.toString()
@@ -51,7 +54,7 @@ export const Slider = ({
       <div className="space-y-2">
         {showValue && (
           <div className="flex justify-between text-body-sm">
-            <span className="text-gray-500">Değer:</span>
+            <span className="text-gray-500">{t('form.slider.value')}:</span>
             <span className="font-medium text-on-box-black">{defaultFormatValue(value)}</span>
           </div>
         )}

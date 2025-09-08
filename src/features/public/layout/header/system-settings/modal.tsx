@@ -63,7 +63,7 @@ function MainSection({ onClose }: { onClose: () => void }) {
   const { setMode, currency } = useSystemSettings()
   const { language } = useLanguage()
   const { theme } = useTheme()
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
 
   return (
     <>
@@ -156,7 +156,7 @@ function MainSection({ onClose }: { onClose: () => void }) {
 function LanguageSection({ onClose }: { onClose: () => void }) {
   const { setMode } = useSystemSettings()
   const { language, changeLanguage } = useLanguage()
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
   const navigate = useNavigate()
 
   // Geçici seçim state'i
@@ -256,7 +256,7 @@ function LanguageSection({ onClose }: { onClose: () => void }) {
 // Para Birimi Ayarları Bölümü
 function CurrencySection({ onClose }: { onClose: () => void }) {
   const { setMode, currency, setCurrency } = useSystemSettings()
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
 
   // Geçici seçim state'i
   const [selectedCurrency, setSelectedCurrency] = useState(currency.code)
@@ -344,7 +344,7 @@ function CurrencySection({ onClose }: { onClose: () => void }) {
 function ThemeSection({ onClose }: { onClose: () => void }) {
   const { setMode } = useSystemSettings()
   const { theme, setTheme } = useTheme()
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
 
   // Geçici seçim state'i
   const [selectedTheme, setSelectedTheme] = useState(theme)

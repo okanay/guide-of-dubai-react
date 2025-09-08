@@ -2,6 +2,7 @@ import { Clock } from 'lucide-react'
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { BaseInput } from './base-input'
+import { useTranslation } from 'react-i18next'
 
 // ============================================================================
 // 1. TIME PICKER - Ana kullanım componenti (BaseInput ile)
@@ -31,10 +32,13 @@ export const TimePicker = ({
   id,
   required,
   disabled = false,
-  placeholder = 'SS:DD',
+  placeholder,
   rounding,
   allowedTimes,
 }: TimePickerProps) => {
+  const { t } = useTranslation('components')
+  const defaultPlaceholder = placeholder || t('form.time_picker.placeholder')
+
   return (
     <TimePickerRaw
       value={value}
@@ -56,7 +60,7 @@ export const TimePicker = ({
             <input
               {...inputProps}
               id={id}
-              placeholder={placeholder}
+              placeholder={defaultPlaceholder}
               className={twMerge(
                 'w-full rounded-xs border px-3 py-2 pl-10 text-size transition-colors',
                 'border-gray-300 bg-box-surface text-on-box-black',
@@ -184,14 +188,17 @@ interface TimePickerIndicatorProps {
 
 export const TimePickerIndicator = ({
   value,
-  placeholder = 'Saat seçin',
+  placeholder,
   format = '24',
   className,
   onClick,
   children,
 }: TimePickerIndicatorProps) => {
+  const { t } = useTranslation('components')
+  const defaultPlaceholder = placeholder || t('form.time_picker.placeholder')
+
   const formattedTime = useMemo(() => {
-    if (!value) return placeholder
+    if (!value) return defaultPlaceholder
 
     if (format === '12') {
       const [hours, minutes] = value.split(':').map(Number)
@@ -201,7 +208,7 @@ export const TimePickerIndicator = ({
     }
 
     return value // 24 saat formatı
-  }, [value, format, placeholder])
+  }, [value, format, defaultPlaceholder])
 
   if (children) {
     return (
