@@ -21,19 +21,19 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
     .object({
       firstName: z
         .string()
-        .min(1, t('zod-errors:required'))
-        .min(2, t('zod-errors:string_min', { min: 2 }))
-        .max(50, t('zod-errors:string_max', { max: 50 })),
+        .min(1, t('errors-zod:required'))
+        .min(2, t('errors-zod:string_min', { min: 2 }))
+        .max(50, t('errors-zod:string_max', { max: 50 })),
       lastName: z
         .string()
-        .min(1, t('zod-errors:required'))
-        .min(2, t('zod-errors:string_min', { min: 2 }))
-        .max(50, t('zod-errors:string_max', { max: 50 })),
-      nationality: z.string().min(1, t('zod-errors:nationality_required')),
-      email: z.string().min(1, t('zod-errors:required')).email(t('zod-errors:invalid_email')),
+        .min(1, t('errors-zod:required'))
+        .min(2, t('errors-zod:string_min', { min: 2 }))
+        .max(50, t('errors-zod:string_max', { max: 50 })),
+      nationality: z.string().min(1, t('errors-zod:nationality_required')),
+      email: z.email(t('errors-zod:invalid_email')),
       phone: z
         .string()
-        .min(1, t('zod-errors:required'))
+        .min(1, t('errors-zod:required'))
         .refine((phone) => {
           try {
             const phoneNumber = parsePhoneNumberFromString(phone, 'TR')
@@ -41,7 +41,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
           } catch {
             return false
           }
-        }, t('zod-errors:phone_invalid'))
+        }, t('errors-zod:phone_invalid'))
         .transform((phone) => {
           const phoneNumber = parsePhoneNumberFromString(phone, 'TR')
           return phoneNumber!.format('E.164')
@@ -50,23 +50,23 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
         .string()
         .optional()
         .refine((val) => !val || /^[A-Z0-9]{6,12}$/.test(val), {
-          message: t('zod-errors:referral_code_format', { min: 6, max: 12 }),
+          message: t('errors-zod:referral_code_format', { min: 6, max: 12 }),
         }),
       password: z
         .string()
-        .min(1, t('zod-errors:required'))
-        .min(6, t('zod-errors:password_min', { min: 6 }))
-        .regex(/[A-Z]/, t('zod-errors:password_uppercase'))
-        .regex(/[a-z]/, t('zod-errors:password_lowercase'))
-        .regex(/\d/, t('zod-errors:password_number')),
-      confirmPassword: z.string().min(1, t('zod-errors:required')),
+        .min(1, t('errors-zod:required'))
+        .min(6, t('errors-zod:password_min', { min: 6 }))
+        .regex(/[A-Z]/, t('errors-zod:password_uppercase'))
+        .regex(/[a-z]/, t('errors-zod:password_lowercase'))
+        .regex(/\d/, t('errors-zod:password_number')),
+      confirmPassword: z.string().min(1, t('errors-zod:required')),
       privacyPolicy: z.boolean().refine((val) => val === true, {
-        message: t('zod-errors:privacy_acceptance'),
+        message: t('errors-zod:privacy_acceptance'),
       }),
       marketingConsent: z.boolean().optional(),
     })
     .refine((data) => data.password === data.confirmPassword, {
-      message: t('zod-errors:confirm_password'),
+      message: t('errors-zod:confirm_password'),
       path: ['confirmPassword'],
     })
 
@@ -138,9 +138,11 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
 
       <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto px-6 pb-4">
         <h2 className="text-size-4xl font-semibold text-on-box-black">
-          {t('auth:register_title')}
+          {t('modal-auth:register_title')}
         </h2>
-        <p className="mb-6 text-size-sm text-on-box-black">{t('auth:register_description')}</p>
+        <p className="mb-6 text-size-sm text-on-box-black">
+          {t('modal-auth:register_description')}
+        </p>
         <form onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)} className="space-y-4">
           {/* Ad ve Soyad */}
           <div className="grid grid-cols-2 gap-2">
@@ -151,8 +153,8 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                 <TextInput
                   {...field}
                   id="firstName"
-                  label={t('auth:first_name_label')}
-                  placeholder={t('auth:first_name_label')}
+                  label={t('modal-auth:first_name_label')}
+                  placeholder={t('modal-auth:first_name_label')}
                   required
                   value={field.value || ''}
                   error={errors.firstName?.message}
@@ -168,8 +170,8 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                 <TextInput
                   {...field}
                   id="lastName"
-                  label={t('auth:last_name_label')}
-                  placeholder={t('auth:last_name_label')}
+                  label={t('modal-auth:last_name_label')}
+                  placeholder={t('modal-auth:last_name_label')}
                   required
                   value={field.value || ''}
                   error={errors.lastName?.message}
@@ -187,8 +189,8 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
               <CountrySelect
                 {...field}
                 id="nationality"
-                label={t('auth:nationality_label')}
-                placeholder={t('auth:nationality_label')}
+                label={t('modal-auth:nationality_label')}
+                placeholder={t('modal-auth:nationality_label')}
                 required
                 error={errors.nationality?.message}
                 value={field.value || ''}
@@ -205,8 +207,8 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                 {...field}
                 id="email"
                 type="email"
-                label={t('auth:email_label')}
-                placeholder={t('auth:email_label')}
+                label={t('modal-auth:email_label')}
+                placeholder={t('modal-auth:email_label')}
                 required
                 value={field.value || ''}
                 error={errors.email?.message}
@@ -220,7 +222,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
             control={control}
             render={({ field }) => (
               <PhoneInput
-                label={t('auth:phone_label')}
+                label={t('modal-auth:phone_label')}
                 placeholder="+90 532 546 8228"
                 value={field.value || ''}
                 onChange={field.onChange}
@@ -238,8 +240,8 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
               <TextInput
                 {...field}
                 id="referralCode"
-                label={t('auth:referral_code_label')}
-                placeholder={t('auth:referral_code_placeholder')}
+                label={t('modal-auth:referral_code_label')}
+                placeholder={t('modal-auth:referral_code_placeholder')}
                 value={field.value || ''}
                 error={errors.referralCode?.message}
                 maxLength={12}
@@ -257,12 +259,12 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                 {...field}
                 id="password"
                 type="password"
-                label={t('auth:password_label')}
-                placeholder={t('auth:password_label')}
+                label={t('modal-auth:password_label')}
+                placeholder={t('modal-auth:password_label')}
                 required
                 value={field.value || ''}
                 error={errors.password?.message}
-                description={t('auth:password_description')}
+                description={t('modal-auth:password_description')}
               />
             )}
           />
@@ -276,8 +278,8 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                 {...field}
                 id="confirmPassword"
                 type="password"
-                label={t('auth:confirm_password_label')}
-                placeholder={t('auth:confirm_password_label')}
+                label={t('modal-auth:confirm_password_label')}
+                placeholder={t('modal-auth:confirm_password_label')}
                 required
                 value={field.value || ''}
                 error={errors.confirmPassword?.message}
@@ -298,7 +300,9 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                   error={errors.privacyPolicy?.message}
                   onChange={field.onChange}
                   label={
-                    (<span className="text-size-sm">{t('auth:privacy_policy_label')}</span>) as any
+                    (
+                      <span className="text-size-sm">{t('modal-auth:privacy_policy_label')}</span>
+                    ) as any
                   }
                 />
               )}
@@ -316,7 +320,9 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                   onChange={field.onChange}
                   label={
                     (
-                      <span className="text-size-sm">{t('auth:marketing_consent_label')}</span>
+                      <span className="text-size-sm">
+                        {t('modal-auth:marketing_consent_label')}
+                      </span>
                     ) as any
                   }
                 />
@@ -330,7 +336,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
             disabled={isSubmitting}
             className="w-full rounded-xs bg-btn-primary py-2.5 font-semibold text-on-btn-primary hover:bg-btn-primary-hover disabled:opacity-50"
           >
-            {isSubmitting ? t('common:sending') : t('auth:register_button')}
+            {isSubmitting ? t('common:sending') : t('modal-auth:register_button')}
           </button>
         </form>
 

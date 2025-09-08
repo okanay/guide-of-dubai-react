@@ -82,7 +82,7 @@ export function AuthModal() {
 
 function LoginOptions({ onClose }: { onClose: () => void }) {
   const { setMode } = useAuthModal()
-  const { t } = useTranslation('public-header')
+  const { t } = useTranslation('layout-header')
 
   return (
     <>

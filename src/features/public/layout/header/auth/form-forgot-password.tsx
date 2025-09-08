@@ -13,7 +13,7 @@ export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation(['modal-auth', 'errors-zod', 'common'])
 
   const forgotPasswordSchema = z.object({
-    email: z.email(t('zod-errors:invalid_email')),
+    email: z.email(t('errors-zod:invalid_email')),
   })
 
   type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>
@@ -70,9 +70,11 @@ export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
         </button>
         <Icon name="brand/full-primary" width={144} className="mt-4 inline-block" />
         <h2 className="mb-1 text-size-4xl font-semibold text-on-box-black">
-          {t('auth:forgot_password_title')}
+          {t('modal-auth:forgot_password_title')}
         </h2>
-        <p className="text-size-sm text-on-box-black">{t('auth:forgot_password_description')}</p>
+        <p className="text-size-sm text-on-box-black">
+          {t('modal-auth:forgot_password_description')}
+        </p>
       </header>
       <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto px-6 py-4">
         <form onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)} className="space-y-4">
@@ -83,8 +85,8 @@ export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
               <TextInput
                 {...field}
                 id="email"
-                label={t('auth:email_label')}
-                placeholder={t('auth:email_label')}
+                label={t('modal-auth:email_label')}
+                placeholder={t('modal-auth:email_label')}
                 required
                 value={field.value || ''}
                 error={errors.email?.message}
@@ -97,7 +99,7 @@ export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
             disabled={isSubmitting}
             className="w-full rounded-xs bg-btn-primary py-2.5 font-semibold text-on-btn-primary hover:bg-btn-primary-hover disabled:opacity-50"
           >
-            {isSubmitting ? t('common:sending') : t('auth:forgot_password_button')}
+            {isSubmitting ? t('common:sending') : t('modal-auth:forgot_password_button')}
           </button>
         </form>
       </div>
