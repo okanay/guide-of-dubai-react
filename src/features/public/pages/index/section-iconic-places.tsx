@@ -16,8 +16,6 @@ export const IconicPlaces = () => {
     handleScrollLeft,
     handleScrollRight,
     updateButtonState,
-    isAtStart,
-    isAtEnd,
   } = useSnapScroll({
     gap: 16,
     behavior: 'smooth',
@@ -41,9 +39,9 @@ export const IconicPlaces = () => {
 
   return (
     <section className="bg-box-surface text-on-box-black">
-      <div className="mx-auto max-w-main px-4 py-8">
+      <div className="mx-auto max-w-main px-4 pt-8">
         {/* Header */}
-        <h2 className="mb-4 text-size-2xl font-bold text-on-box-black md:text-size-3xl">
+        <h2 className="mb-6 text-size-2xl font-bold text-on-box-black md:text-size-3xl">
           {t('iconic-places.title')}
         </h2>
 

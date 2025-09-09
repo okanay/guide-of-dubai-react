@@ -6,8 +6,17 @@
       "view-all": "Tümünü Gör"
     }
   },
-  "common": {
-    "purchased": "Satın Alındı",
-    "per-person": "kişi başı"
+  "interests": {
+    "title": "İlgi Alanına Göre Keşfet",
+    "items": {
+      "luxury_lovers": "Lüks Sevenler",
+      "couples": "Çiftler",
+      "first_timers": "İlk Kez Gelenler",
+      "music_art_lovers": "Müzik ve Sanat Severler",
+      "foodies": "Gurmeler",
+      "adventure_seekers": "Macera Arayanlar",
+      "shopping_lovers": "Alışveriş Tutkunları",
+      "family_fun": "Aile Eğlencesi"
+    }
   }
 }

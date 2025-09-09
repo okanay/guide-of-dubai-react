@@ -1,9 +1,22 @@
 {
   "iconic-places": {
-    "title": "Top 10 Iconic Places in Dubai",
+    "title": "Top 10 Most Liked Iconic Places in Dubai",
     "button": {
       "book": "Book Now",
       "view-all": "View All"
+    }
+  },
+  "interests": {
+    "title": "Discover by Interest",
+    "items": {
+      "luxury_lovers": "Luxury Lovers",
+      "couples": "Couples",
+      "first_timers": "First-Timers",
+      "music_art_lovers": "Music & Art Lovers",
+      "foodies": "Foodies",
+      "adventure_seekers": "Adventure Seekers",
+      "shopping_lovers": "Shopping Lovers",
+      "family_fun": "Family Fun"
     }
   }
 }

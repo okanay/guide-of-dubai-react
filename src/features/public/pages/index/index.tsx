@@ -7,13 +7,13 @@ import { Restaurants } from './section-restaurants'
 import { Tours } from './section-tours'
 import { Yachts } from './section-yachts'
 import { Activities } from './section-activities'
-import { YouLiked } from './section-you-liked'
+import { Interests } from './section-interests'
 
 export const IndexPage = () => {
   return (
     <main className="flex flex-col">
       <IconicPlaces />
-      <YouLiked />
+      <Interests />
       <Otels />
       <Bundles />
       <RentACar />
