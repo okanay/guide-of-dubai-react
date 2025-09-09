@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { twMerge } from 'tailwind-merge'
 import Icon from '@/components/icon'
 import { ButtonFavorite } from './button-favorite'
+import { Link } from '@/i18n/router/link'
 
 // Activity Card Interface
 interface ActivityCard {
@@ -68,10 +69,25 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
     onLikeToggle?.(activityId, isLiked)
   }
 
+  // Navigation handlers
+  const handlePrevImage = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    const prevIndex = currentImageIndex === 0 ? activity.images.length - 1 : currentImageIndex - 1
+    setCurrentImageIndex(prevIndex)
+    scrollToImage(prevIndex)
+  }
+
+  const handleNextImage = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    const nextIndex = currentImageIndex === activity.images.length - 1 ? 0 : currentImageIndex + 1
+    setCurrentImageIndex(nextIndex)
+    scrollToImage(nextIndex)
+  }
+
   return (
     <div
       className={twMerge(
-        'group relative flex h-[540px] w-full flex-col overflow-hidden rounded-xs border border-gray-200 bg-box-surface transition-all duration-300 hover:shadow-lg',
+        'group relative flex h-[540px] w-full flex-col overflow-hidden rounded-xs border border-gray-200 bg-box-surface',
         className,
       )}
     >
@@ -99,6 +115,29 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
           ))}
         </div>
 
+        {/* Navigation Buttons - Show on hover when multiple images */}
+        {activity.images.length > 1 && (
+          <>
+            {/* Previous Button */}
+            <button
+              onClick={handlePrevImage}
+              className="transiton-opacity absolute top-1/2 left-3 z-50 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-btn-white text-on-btn-white opacity-0 duration-300 group-hover:opacity-100"
+              aria-label="Previous image"
+            >
+              <Icon name="chevron-left" className="size-5" />
+            </button>
+
+            {/* Next Button */}
+            <button
+              onClick={handleNextImage}
+              className="transiton-opacity absolute top-1/2 right-3 z-50 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-btn-white text-on-btn-white opacity-0 duration-300 group-hover:opacity-100"
+              aria-label="Next image"
+            >
+              <Icon name="chevron-right" className="size-5" />
+            </button>
+          </>
+        )}
+
         {/* Image Indicators */}
         {activity.images.length > 1 && (
           <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1">
@@ -121,7 +160,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
       </section>
 
       {/* Content Section */}
-      <section className="flex flex-1 flex-col p-4">
+      <Link to={`/$lang/not-found`} className="flex flex-1 flex-col p-4">
         {/* Rank Badge */}
         <div className="mb-2 flex items-center gap-1">
           <Icon name="trophy-primary" className="size-4" />
@@ -144,16 +183,14 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
         </div>
 
         {/* Description */}
-        <div className="mb-3 flex flex-wrap gap-1">
+        <ul className="flex flex-wrap items-center justify-start gap-1.5">
           {activity.description.map((item, descIndex) => (
-            <React.Fragment key={`desc-${descIndex}`}>
+            <li key={`desc-${descIndex}`} className="inline-flex items-center gap-1.5 text-nowrap">
+              <span className="inline-block size-1 rounded-full bg-gray-600" />
               <span className="text-size-sm text-gray-600">{item}</span>
-              {descIndex < activity.description.length - 1 && (
-                <span className="text-gray-400">•</span>
-              )}
-            </React.Fragment>
+            </li>
           ))}
-        </div>
+        </ul>
 
         {/* Price and Booking */}
         <footer className="mt-auto space-y-2">
@@ -174,13 +211,13 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
 
           {/* Book Button */}
           <button
-            className="btn-default h-10 w-full rounded-xs bg-btn-primary text-body-sm font-medium text-on-btn-primary transition-all duration-200 hover:bg-btn-primary-hover active:scale-[0.98]"
+            className="btn-default h-10 w-full rounded-xs border bg-btn-primary text-body-sm font-bold text-on-btn-primary transition-colors sm:border-btn-primary sm:bg-transparent sm:text-btn-primary"
             onClick={() => console.log(`Booking activity: ${activity.id}`)}
           >
             {t('iconic-places.button.book')}
           </button>
         </footer>
-      </section>
+      </Link>
     </div>
   )
 }

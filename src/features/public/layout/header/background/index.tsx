@@ -191,7 +191,7 @@ export const PublicHeaderBackground = () => {
 
           {/* Navigation Tabs */}
           <div className="absolute -bottom-px left-0 z-32 w-full">
-            <nav className="mx-auto grid w-full max-w-main grid-cols-4 items-center justify-start overflow-x-auto text-size-sm font-semibold [scrollbar-width:none] sm:flex xl:grid xl:grid-cols-8 xl:px-4 [&::-webkit-scrollbar]:hidden">
+            <nav className="mx-auto grid w-full max-w-main grid-cols-4 items-center justify-start overflow-x-auto px-4 text-size-sm font-semibold [scrollbar-width:none] sm:flex xl:grid xl:grid-cols-8 xl:px-4 [&::-webkit-scrollbar]:hidden">
               <NavigationTab
                 to="/$lang"
                 icon="app/explore"
