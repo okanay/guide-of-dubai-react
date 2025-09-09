@@ -8,15 +8,37 @@
   },
   "interests": {
     "title": "Discover by Interest",
-    "items": {
-      "luxury_lovers": "Luxury Lovers",
-      "couples": "Couples",
-      "first_timers": "First-Timers",
-      "music_art_lovers": "Music & Art Lovers",
-      "foodies": "Foodies",
-      "adventure_seekers": "Adventure Seekers",
-      "shopping_lovers": "Shopping Lovers",
-      "family_fun": "Family Fun"
+    "items": [
+      { "title": "Luxury Enthusiasts", "image": "https://picsum.photos/400/300?random=1" },
+      { "title": "Couples", "image": "https://picsum.photos/400/300?random=2" },
+      { "title": "First Timers", "image": "https://picsum.photos/400/300?random=3" },
+      { "title": "Music & Art Lovers", "image": "https://picsum.photos/400/300?random=4" },
+      { "title": "Food Enthusiasts", "image": "https://picsum.photos/400/300?random=5" },
+      { "title": "Adventure Seekers", "image": "https://picsum.photos/400/300?random=6" },
+      { "title": "Shopping Enthusiasts", "image": "https://picsum.photos/400/300?random=7" },
+      { "title": "Family Fun", "image": "https://picsum.photos/400/300?random=8" }
+    ]
+  },
+  "hotels": {
+    "title": "Your Dream Hotel is Here",
+    "view_all": "View All",
+    "book_now": "Book Now",
+    "map_view": "View on Map",
+    "distance_to_center": "Distance to center",
+    "per_night": "{{count}} Night, {{adults}} Adults",
+    "features": {
+      "breakfast": {
+        "label": "Breakfast",
+        "value": "Included"
+      },
+      "freeCancellation": {
+        "label": "Cancellation",
+        "value": "Free"
+      },
+      "forTwoPeople": {
+        "label": "Capacity",
+        "value": "For Two People"
+      }
     }
   }
 }

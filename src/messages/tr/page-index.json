@@ -8,15 +8,37 @@
   },
   "interests": {
     "title": "İlgi Alanına Göre Keşfet",
-    "items": {
-      "luxury_lovers": "Lüks Sevenler",
-      "couples": "Çiftler",
-      "first_timers": "İlk Kez Gelenler",
-      "music_art_lovers": "Müzik ve Sanat Severler",
-      "foodies": "Gurmeler",
-      "adventure_seekers": "Macera Arayanlar",
-      "shopping_lovers": "Alışveriş Tutkunları",
-      "family_fun": "Aile Eğlencesi"
+    "items": [
+      { "title": "Lüks Tutkunları", "image": "https://picsum.photos/400/300?random=1" },
+      { "title": "Çiftler", "image": "https://picsum.photos/400/300?random=2" },
+      { "title": "İlk Kez Gelenler", "image": "https://picsum.photos/400/300?random=3" },
+      { "title": "Müzik & Sanat Severler", "image": "https://picsum.photos/400/300?random=4" },
+      { "title": "Yemek Tutkunları", "image": "https://picsum.photos/400/300?random=5" },
+      { "title": "Macera Arayanlar", "image": "https://picsum.photos/400/300?random=6" },
+      { "title": "Alışveriş Tutkunları", "image": "https://picsum.photos/400/300?random=7" },
+      { "title": "Aile Eğlencesi", "image": "https://picsum.photos/400/300?random=8" }
+    ]
+  },
+  "hotels": {
+    "title": "Hayalindeki Otel Burada",
+    "view_all": "Tümüne Bakın",
+    "book_now": "Rezervasyon Yap",
+    "map_view": "Haritada Gör",
+    "distance_to_center": "Merkeze uzaklık",
+    "per_night": "{{count}} Gece, {{adults}} Yetişkin",
+    "features": {
+      "breakfast": {
+        "label": "Kahvaltı",
+        "value": "Dahil"
+      },
+      "freeCancellation": {
+        "label": "İptal",
+        "value": "Ücretsiz"
+      },
+      "forTwoPeople": {
+        "label": "Kapasite",
+        "value": "İki Kişilik"
+      }
     }
   }
 }
