@@ -23,7 +23,7 @@ export const Otels = () => {
           <h2 className="text-size-2xl font-bold md:text-size-3xl">{t('hotels.title')}</h2>
           <Link
             to="/$lang/not-found"
-            className="flex items-center gap-2 text-size-sm font-semibold text-primary-400"
+            className="btn-default flex items-center gap-2 rounded-full px-2 py-2 text-size-sm font-semibold text-primary-500"
           >
             {t('hotels.view_all')}
             <Icon name="chevron-right" className="size-4" />

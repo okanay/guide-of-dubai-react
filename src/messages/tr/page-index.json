@@ -40,5 +40,24 @@
         "value": "İki Kişilik"
       }
     }
+  },
+  "bundles": {
+    "title": "Günlük Hazır Rotalar",
+    "view_all": "Tümüne Bakın",
+    "book_now": "Rezervasyon Yap",
+    "items": [
+      {
+        "super_title": "2 Günlük",
+        "title": "Evlilik Teklifi Paketi"
+      },
+      {
+        "super_title": "3 Günlük",
+        "title": "Balayı Paketi"
+      },
+      {
+        "super_title": "3 Günlük",
+        "title": "Aile Paketi"
+      }
+    ]
   }
 }
