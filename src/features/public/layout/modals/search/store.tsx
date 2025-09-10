@@ -1,25 +1,24 @@
-// src/features/public/layout/header/basket/store.tsx
 import { createContext, PropsWithChildren, useContext, useState } from 'react'
 import { createStore, StoreApi, useStore } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
-interface BasketModalState {
+interface SearchModalState {
   isOpen: boolean
   scopeId: string | null
 }
 
-interface BasketModalActions {
+interface SearchModalActions {
   openModal: (scopeId?: string) => void
   closeModal: () => void
   toggleModal: (scopeId?: string) => void
   setScopeId: (scopeId: string | null) => void
 }
 
-type BasketModalStore = BasketModalState & BasketModalActions
+type SearchModalStore = SearchModalState & SearchModalActions
 
-export function BasketModalStore({ children }: PropsWithChildren) {
+export function SearchModalStore({ children }: PropsWithChildren) {
   const [store] = useState(() =>
-    createStore<BasketModalStore>()(
+    createStore<SearchModalStore>()(
       immer((set, get) => ({
         isOpen: false,
         scopeId: null,
@@ -57,16 +56,16 @@ export function BasketModalStore({ children }: PropsWithChildren) {
   )
 
   return (
-    <BasketModalStoreContext.Provider value={store}>{children}</BasketModalStoreContext.Provider>
+    <SearchModalStoreContext.Provider value={store}>{children}</SearchModalStoreContext.Provider>
   )
 }
 
-const BasketModalStoreContext = createContext<StoreApi<BasketModalStore> | undefined>(undefined)
+const SearchModalStoreContext = createContext<StoreApi<SearchModalStore> | undefined>(undefined)
 
-export function useBasketModal() {
-  const context = useContext(BasketModalStoreContext)
+export function useSearchModal() {
+  const context = useContext(SearchModalStoreContext)
   if (!context) {
-    throw new Error('useBasketModal must be used within BasketModalStore')
+    throw new Error('useSearchModal must be used within SearchModalStore')
   }
   return useStore(context, (state) => state)
 }

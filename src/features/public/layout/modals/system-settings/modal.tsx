@@ -1,17 +1,5 @@
-import {
-  ArrowLeft,
-  Check,
-  ChevronRight,
-  DollarSign,
-  Globe,
-  Monitor,
-  Moon,
-  Sun,
-  X,
-} from 'lucide-react'
+import { ArrowLeft, ChevronRight, DollarSign, Globe, Monitor, Moon, Sun, X } from 'lucide-react'
 import { ModalWrapper } from 'src/components/modal-wrapper'
-import { SUPPORTED_LANGUAGES } from 'src/i18n/config'
-import { SUPPORTED_CURRENCIES } from 'src/i18n/currency-config'
 import { useLanguage } from 'src/i18n/prodiver'
 import { useTheme } from 'src/providers/theme-mode'
 import { useSystemSettings } from './store'
@@ -20,6 +8,8 @@ import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 import Icon from '@/components/icon'
 import { useNavigate } from '@tanstack/react-router'
+import { SUPPORTED_LANGUAGES } from '@/i18n/config-language'
+import { SUPPORTED_CURRENCIES } from '@/i18n/config-currency'
 
 export function SystemSettingsModal() {
   const { isOpen, closeModal, scopeId, mode, setMode } = useSystemSettings()
@@ -63,7 +53,7 @@ function MainSection({ onClose }: { onClose: () => void }) {
   const { setMode, currency } = useSystemSettings()
   const { language } = useLanguage()
   const { theme } = useTheme()
-  const { t } = useTranslation('layout-header')
+  const { t } = useTranslation('modal-global')
 
   return (
     <>
@@ -156,7 +146,7 @@ function MainSection({ onClose }: { onClose: () => void }) {
 function LanguageSection({ onClose }: { onClose: () => void }) {
   const { setMode } = useSystemSettings()
   const { language, changeLanguage } = useLanguage()
-  const { t } = useTranslation('layout-header')
+  const { t } = useTranslation('modal-global')
   const navigate = useNavigate()
 
   // Geçici seçim state'i
@@ -256,7 +246,7 @@ function LanguageSection({ onClose }: { onClose: () => void }) {
 // Para Birimi Ayarları Bölümü
 function CurrencySection({ onClose }: { onClose: () => void }) {
   const { setMode, currency, setCurrency } = useSystemSettings()
-  const { t } = useTranslation('layout-header')
+  const { t } = useTranslation('modal-global')
 
   // Geçici seçim state'i
   const [selectedCurrency, setSelectedCurrency] = useState(currency.code)
@@ -344,7 +334,7 @@ function CurrencySection({ onClose }: { onClose: () => void }) {
 function ThemeSection({ onClose }: { onClose: () => void }) {
   const { setMode } = useSystemSettings()
   const { theme, setTheme } = useTheme()
-  const { t } = useTranslation('layout-header')
+  const { t } = useTranslation('modal-global')
 
   // Geçici seçim state'i
   const [selectedTheme, setSelectedTheme] = useState(theme)

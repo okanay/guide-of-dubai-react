@@ -7,7 +7,7 @@ import {
   I18N_COOKIE_OPTIONS,
   I18N_STORAGE_KEY,
   SUPPORTED_LANGUAGES,
-} from './config'
+} from './config-language'
 import i18nConfig from './index'
 
 interface Context {

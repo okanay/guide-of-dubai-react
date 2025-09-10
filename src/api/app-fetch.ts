@@ -1,6 +1,6 @@
-import { getHeaders, setCookie, getCookie } from '@tanstack/react-start/server'
-import { DEFAULT_LANGUAGE } from 'src/i18n/config'
-import { DEFAULT_CURRENCY } from 'src/i18n/currency-config'
+import { DEFAULT_CURRENCY } from '@/i18n/config-currency'
+import { DEFAULT_LANGUAGE } from '@/i18n/config-language'
+import { getCookie, getHeaders, setCookie } from '@tanstack/react-start/server'
 
 interface AppFetchOptions extends RequestInit {
   overrideLanguage?: string

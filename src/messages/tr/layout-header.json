@@ -113,23 +113,11 @@
       "description": "50'den fazla etkinlik seni bekliyor."
     }
   },
-  "auth": {
-    "welcome_title": "Guide of Dubai'ye Hoşgeldiniz",
-    "welcome_description": "Üyelere özel fırsatlar, kişiselleştirilmiş öneriler ve çok daha fazlası için oturum açın veya üye olun.",
-    "continue_with_phone": "Telefon ile Devam Et",
-    "continue_with_email": "Mail ile Devam Et",
-    "continue_with_apple": "Apple ile Devam Et",
-    "continue_with_google": "Google ile Devam Et",
-    "continue_with_facebook": "Facebook ile Devam Et",
-    "or_divider": "veya",
-    "terms_text": "Oturum açarak veya bir hesap oluşturarak,",
-    "terms_link": "Hizmet Şartlarımızı",
-    "privacy_link": "Gizlilik Politikamızı",
-    "terms_accept": "kabul etmiş olursunuz.",
-    "no_account": "Hesabınız yok mu?",
-    "create_account": "Hesap oluşturun",
-    "have_account": "Zaten hesabınız var mı?",
-    "login_link": "Giriş yapın"
+  "buttons": {
+    "all_categories": "Tüm Kategoriler",
+    "basket": "Sepetim",
+    "search": "Ara...",
+    "go_ai": "Go.Ai"
   },
   "profile": {
     "title": "Profil",
@@ -140,26 +128,5 @@
     "logout": "Çıkış Yap",
     "download_app": "Uygulamayı İndir",
     "download_app_description": "Avantajlardan faydalanmak için uygulamayı stordan indir!"
-  },
-  "buttons": {
-    "all_categories": "Tüm Kategoriler",
-    "basket": "Sepetim",
-    "search": "Ara...",
-    "go_ai": "Go.Ai"
-  },
-  "settings": {
-    "title": "Ayarlar",
-    "language": "Dil",
-    "currency": "Para Birimi",
-    "theme": "Görünüm",
-    "language_selection": "Dil Seçimi",
-    "currency_selection": "Para Birimi Seçimi",
-    "theme_selection": "Tema Seçimi",
-    "system_theme": "Sistem Teması",
-    "light_theme": "Açık Tema",
-    "dark_theme": "Koyu Tema",
-    "ok": "Tamam",
-    "change": "Değiştir",
-    "close": "Kapat"
   }
 }

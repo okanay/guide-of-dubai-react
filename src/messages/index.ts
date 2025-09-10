@@ -4,7 +4,7 @@ import enApiErrors from './en/errors-api.json'
 import enZodErrors from './en/errors-zod.json'
 import enLayoutFooter from './en/layout-footer.json'
 import enLayoutHeader from './en/layout-header.json'
-import enModalAuth from './en/modal-auth.json'
+import enModalGlobal from './en/modal-global.json'
 import enPageErrors from './en/page-errors.json'
 import enPageIndex from './en/page-index.json'
 import enSeo from './en/seo.json'
@@ -15,7 +15,7 @@ import trApiErrors from './tr/errors-api.json'
 import trZodErrors from './tr/errors-zod.json'
 import trLayoutFooter from './tr/layout-footer.json'
 import trLayoutHeader from './tr/layout-header.json'
-import trModalAuth from './tr/modal-auth.json'
+import trModalGlobal from './tr/modal-global.json'
 import trPageErrors from './tr/page-errors.json'
 import trPageIndex from './tr/page-index.json'
 import trSeo from './tr/seo.json'
@@ -47,7 +47,7 @@ const resource = {
     'errors-zod': enZodErrors,
     'errors-api': enApiErrors,
     seo: enSeo,
-    'modal-auth': enModalAuth,
+    'modal-global': enModalGlobal,
   },
   tr: {
     common: trCommon,
@@ -59,7 +59,7 @@ const resource = {
     'errors-zod': trZodErrors,
     'errors-api': trApiErrors,
     seo: trSeo,
-    'modal-auth': trModalAuth,
+    'modal-global': trModalGlobal,
   },
 }
 

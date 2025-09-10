@@ -113,23 +113,11 @@
       "description": "More than 50 activities are waiting for you."
     }
   },
-  "auth": {
-    "welcome_title": "Welcome to Guide of Dubai",
-    "welcome_description": "Log in or sign up for exclusive member offers, personalized recommendations and much more.",
-    "continue_with_phone": "Continue with Phone",
-    "continue_with_email": "Continue with Email",
-    "continue_with_apple": "Continue with Apple",
-    "continue_with_google": "Continue with Google",
-    "continue_with_facebook": "Continue with Facebook",
-    "or_divider": "or",
-    "terms_text": "By logging in or creating an account, you agree to our",
-    "terms_link": "Terms of Service",
-    "privacy_link": "Privacy Policy",
-    "terms_accept": ".",
-    "no_account": "Don't have an account?",
-    "create_account": "Create account",
-    "have_account": "Already have an account?",
-    "login_link": "Log in"
+  "buttons": {
+    "all_categories": "All Categories",
+    "basket": "My Basket",
+    "search": "Search...",
+    "go_ai": "Go.Ai"
   },
   "profile": {
     "title": "Profile",
@@ -140,26 +128,5 @@
     "logout": "Log Out",
     "download_app": "Download App",
     "download_app_description": "Download the app from the store to take advantage of the benefits!"
-  },
-  "buttons": {
-    "all_categories": "All Categories",
-    "basket": "My Basket",
-    "search": "Search...",
-    "go_ai": "Go.Ai"
-  },
-  "settings": {
-    "title": "Settings",
-    "language": "Language",
-    "currency": "Currency",
-    "theme": "Appearance",
-    "language_selection": "Language Selection",
-    "currency_selection": "Currency Selection",
-    "theme_selection": "Theme Selection",
-    "system_theme": "System Theme",
-    "light_theme": "Light Theme",
-    "dark_theme": "Dark Theme",
-    "ok": "OK",
-    "change": "Change",
-    "close": "Close"
   }
 }

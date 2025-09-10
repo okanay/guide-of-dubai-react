@@ -1,18 +1,17 @@
 import ComposeProviders from 'src/components/compose-providers'
-
-import { BasketModal } from './header/basket/modal'
-import { BasketModalStore } from './header/basket/store'
-import { GoAiModalStore } from './header/go-ai/store'
-import { SearchModal } from './header/search/modal'
-import { SearchModalStore } from './header/search/store'
-import { SystemSettingsModal } from './header/system-settings/modal'
-import { GoAiModal } from './header/go-ai/modal'
 import { HeaderStore } from './header/store'
-import { AuthModalStore } from './header/auth/store'
-import { AuthModal } from './header/auth/modal'
 import { LeafletModal } from '@/components/leaflet-map/modal'
+import { AuthModal } from './modals/auth/modal'
+import { AuthModalStore } from './modals/auth/store'
+import { BasketModal } from './modals/basket/modal'
+import { BasketModalStore } from './modals/basket/store'
+import { GoAiModal } from './modals/go-ai/modal'
+import { GoAiModalStore } from './modals/go-ai/store'
+import { SearchModal } from './modals/search/modal'
+import { SearchModalStore } from './modals/search/store'
+import { SystemSettingsModal } from './modals/system-settings/modal'
 
-export const LayoutStores = ({ children }: { children: React.ReactNode }) => {
+export const PublicLayoutConfig = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <ComposeProviders

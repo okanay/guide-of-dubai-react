@@ -13,7 +13,7 @@ export const SUPPORTED_LANGUAGES = [
     locale: 'en-US',
     supportLocale: ['en-US', 'en-GB', 'en-CA', 'en-AU', 'en-IE'],
     direction: 'ltr',
-    flag: 'flags/united-states',
+    flag: 'flags/united-kingdom',
   },
   {
     label: 'Türkçe',

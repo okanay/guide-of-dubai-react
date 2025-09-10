@@ -1,11 +1,11 @@
 import { Link } from 'src/i18n/router/link'
-import { SearchButton } from '../search/button'
 import { LinkProps } from '@tanstack/react-router'
 import { Route } from 'src/routes/$lang/_public/route'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import Icon from 'src/components/icon'
 import { useTranslation } from 'react-i18next'
+import { SearchButton } from '../../modals/search/button'
 
 interface SlideConfig {
   path: string

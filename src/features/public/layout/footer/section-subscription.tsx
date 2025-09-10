@@ -1,8 +1,8 @@
 import { useLanguage } from 'src/i18n/prodiver'
-import { useSystemSettings } from '../header/system-settings/store'
 import { NewsletterForm } from './form-newsletter'
 import Icon from '@/components/icon'
 import { useTranslation } from 'react-i18next'
+import { useSystemSettings } from '../modals/system-settings/store'
 
 // Abonelik ve ödeme yöntemleri bölümü
 export const SubscriptionSection = () => {

@@ -1,13 +1,13 @@
-import { createContext, PropsWithChildren, useContext, useState } from 'react'
-import { createStore, StoreApi, useStore } from 'zustand'
-import { immer } from 'zustand/middleware/immer'
-import Cookies from 'js-cookie'
 import {
   CURRENCY_COOKIE_NAME,
   CURRENCY_COOKIE_OPTIONS,
   DEFAULT_CURRENCY,
   SUPPORTED_CURRENCIES,
-} from 'src/i18n/currency-config'
+} from '@/i18n/config-currency'
+import Cookies from 'js-cookie'
+import { createContext, PropsWithChildren, useContext, useState } from 'react'
+import { createStore, StoreApi, useStore } from 'zustand'
+import { immer } from 'zustand/middleware/immer'
 
 type ModalMode = 'main' | 'language' | 'currency' | 'theme'
 

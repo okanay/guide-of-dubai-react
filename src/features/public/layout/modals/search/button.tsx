@@ -1,4 +1,3 @@
-import { Search } from 'lucide-react'
 import { useSearchModal } from './store'
 import Icon from 'src/components/icon'
 import { useTranslation } from 'react-i18next'

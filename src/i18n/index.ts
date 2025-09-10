@@ -1,14 +1,13 @@
+import i18n from 'i18next'
+import { initReactI18next } from 'react-i18next'
+import resource, { defaultNS, ns } from 'src/messages'
 import {
   DEFAULT_LANGUAGE,
   FALLBACK_LANGUAGE,
   I18N_COOKIE_NAME,
   I18N_STORAGE_KEY,
   LANGUAGES_VALUES,
-} from './config'
-import i18n from 'i18next'
-
-import { initReactI18next } from 'react-i18next'
-import resource, { defaultNS, ns } from 'src/messages'
+} from './config-language'
 
 const i18nConfig = (initialLanguage: LanguageValue = DEFAULT_LANGUAGE.value) => {
   if (!i18n.isInitialized) {

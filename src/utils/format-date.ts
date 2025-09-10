@@ -1,4 +1,4 @@
-import { SUPPORTED_LANGUAGES } from 'src/i18n/config'
+import { SUPPORTED_LANGUAGES } from 'src/i18n/config-language'
 
 export const formatDate = (date: string | Date, language: LanguageValue) => {
   // Temel validasyon

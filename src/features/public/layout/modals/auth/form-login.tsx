@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next'
 
 export function EmailLoginForm({ onClose }: { onClose: () => void }) {
   const { setMode } = useAuthModal()
-  const { t } = useTranslation(['modal-auth', 'errors-zod', 'common'])
+  const { t } = useTranslation(['modal-global', 'errors-zod', 'common'])
 
   const loginSchema = z.object({
     email: z.email(t('errors-zod:invalid_email')),
@@ -75,7 +75,7 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
         </button>
         <Icon name="brand/full-primary" width={144} className="mt-4 inline-block" />
         <h2 className="mb-1 text-size-4xl font-semibold text-on-box-black">
-          {t('modal-auth:login_title')}
+          {t('modal-global:login_title')}
         </h2>
         <p className="text-size-sm text-on-box-black">
           Hemen giriş yapın ve keşfetmeye devam edin.
@@ -90,8 +90,8 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
               <TextInput
                 {...field}
                 id="email"
-                label={t('modal-auth:email_label')}
-                placeholder={t('modal-auth:email_label')}
+                label={t('modal-global:email_label')}
+                placeholder={t('modal-global:email_label')}
                 required
                 value={field.value || ''}
                 error={errors.email?.message}
@@ -107,8 +107,8 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
                 {...field}
                 id="password"
                 type="password"
-                label={t('modal-auth:password_label')}
-                placeholder={t('modal-auth:password_label')}
+                label={t('modal-global:password_label')}
+                placeholder={t('modal-global:password_label')}
                 required
                 value={field.value || ''}
                 error={errors.password?.message}
@@ -121,13 +121,13 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
             disabled={isSubmitting}
             className="w-full rounded-xs bg-btn-primary py-2.5 font-semibold text-on-btn-primary hover:bg-btn-primary-hover disabled:opacity-50"
           >
-            {isSubmitting ? t('common:sending') : t('modal-auth:login_button')}
+            {isSubmitting ? t('common:sending') : t('modal-global:login_button')}
           </button>
         </form>
 
         <div className="mt-4 text-center font-semibold">
           <button onClick={() => setMode('forgot-password')} className="text-sm text-btn-primary">
-            {t('modal-auth:forgot_password_title')}
+            {t('modal-global:forgot_password_title')}
           </button>
         </div>
       </div>

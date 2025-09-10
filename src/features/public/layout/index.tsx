@@ -1,15 +1,13 @@
 import { PublicHeader } from './header'
 import { PublicFooter } from './footer'
-import { LayoutStores } from './stores'
+import { PublicLayoutConfig } from './config'
 
 export const PublicLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
-      <LayoutStores>
-        <PublicHeader />
-        {children}
-        <PublicFooter />
-      </LayoutStores>
-    </>
+    <PublicLayoutConfig>
+      <PublicHeader />
+      {children}
+      <PublicFooter />
+    </PublicLayoutConfig>
   )
 }

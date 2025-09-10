@@ -1,23 +1,23 @@
+import Icon from '@/components/icon'
 import { ChevronRight } from 'lucide-react'
-import { useState, useEffect, useRef, ReactNode } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { useTranslation } from 'react-i18next'
 import { AvatarImageRender } from 'src/components/avatar-image-renderer'
+import useClickOutside from 'src/hooks/use-click-outside'
 import { useLanguage } from 'src/i18n/prodiver'
 import { useAuth } from 'src/providers/auth'
 import { useTheme } from 'src/providers/theme-mode'
-import { useAuthModal } from '../auth/store'
+import { useAuthModal } from '../../modals/auth/store'
+import { useSystemSettings } from '../../modals/system-settings/store'
 import { useHeader } from '../store'
-import { useSystemSettings } from '../system-settings/store'
-import useClickOutside from 'src/hooks/use-click-outside'
-import { useTranslation } from 'react-i18next'
-import Icon from '@/components/icon'
 
 export function ProfileButton() {
   const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const dropdownRef = useClickOutside<HTMLDivElement>(closeDropdown, true, buttonRef)
-  const { t } = useTranslation('layout-header')
+  const { t } = useTranslation()
 
   const { openModal: openAuthModal } = useAuthModal()
   const { closeCategories, setInverted } = useHeader()
@@ -50,10 +50,10 @@ export function ProfileButton() {
         ref={buttonRef}
         onClick={toggleDropdown}
         className="ml-2 flex items-center gap-x-2 rounded-xs bg-btn-primary px-5 py-2 text-on-btn-primary transition-colors duration-300 ease-in-out hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled"
-        aria-label={t('profile.title')}
+        aria-label={t('layout-header:profile.title')}
         aria-expanded={isDropdownOpen}
       >
-        {t('profile.title')}
+        {t('layout-header:profile.title')}
         <Icon name="user-icon" className="size-5 text-on-btn-primary" />
       </button>
 
@@ -106,12 +106,12 @@ function UnauthorizeDropdownContent({ openAuthModal, closeDropdown }: any) {
   const { openModal: openSystemSettingsModal, currency } = useSystemSettings()
   const { language } = useLanguage()
   const { theme } = useTheme()
-  const { t } = useTranslation('layout-header')
+  const { t } = useTranslation()
 
   return (
     <>
       <MenuItem
-        label={t('profile.login_register')}
+        label={t('layout-header:profile.login_register')}
         onClick={() => {
           openAuthModal('login')
           closeDropdown()
@@ -120,7 +120,7 @@ function UnauthorizeDropdownContent({ openAuthModal, closeDropdown }: any) {
       />
       <Separator />
       <MenuItem
-        label={t('settings.language')}
+        label={t('modal-global:settings.language')}
         value={language.label}
         onClick={() => {
           openSystemSettingsModal('language')
@@ -131,7 +131,7 @@ function UnauthorizeDropdownContent({ openAuthModal, closeDropdown }: any) {
       <Separator />
 
       <MenuItem
-        label={t('settings.currency')}
+        label={t('modal-global:settings.currency')}
         value={currency.name}
         onClick={() => {
           openSystemSettingsModal('currency')
@@ -141,8 +141,8 @@ function UnauthorizeDropdownContent({ openAuthModal, closeDropdown }: any) {
       />
       <Separator />
       <MenuItem
-        label={t('settings.theme')}
-        value={t(`settings.${theme}_theme`)}
+        label={t('modal-global:settings.theme')}
+        value={t(`modal-global:settings.${theme}_theme`)}
         onClick={() => {
           openSystemSettingsModal('theme')
           closeDropdown()
@@ -159,7 +159,7 @@ function AuthorizeDropdownContent({ user, logout, closeDropdown }: any) {
   const { openModal: openSystemSettingsModal, currency } = useSystemSettings()
   const { language } = useLanguage()
   const { theme } = useTheme()
-  const { t } = useTranslation('layout-header')
+  const { t } = useTranslation()
 
   return (
     <>
@@ -175,12 +175,12 @@ function AuthorizeDropdownContent({ user, logout, closeDropdown }: any) {
         </div>
       </div>
       <Separator />
-      <MenuItem label={t('profile.my_profile')} onClick={() => {}} showChevron />
-      <MenuItem label={t('profile.my_reservations')} onClick={() => {}} showChevron />
-      <MenuItem label={t('profile.my_favorites')} onClick={() => {}} showChevron />
+      <MenuItem label={t('layout-header:profile.my_profile')} onClick={() => {}} showChevron />
+      <MenuItem label={t('layout-header:profile.my_reservations')} onClick={() => {}} showChevron />
+      <MenuItem label={t('layout-header:profile.my_favorites')} onClick={() => {}} showChevron />
       <Separator />
       <MenuItem
-        label={t('settings.language')}
+        label={t('modal-global:settings.language')}
         value={language.label}
         onClick={() => {
           openSystemSettingsModal('language')
@@ -189,7 +189,7 @@ function AuthorizeDropdownContent({ user, logout, closeDropdown }: any) {
         showChevron
       />
       <MenuItem
-        label={t('settings.currency')}
+        label={t('modal-global:settings.currency')}
         value={currency.name}
         onClick={() => {
           openSystemSettingsModal('currency')
@@ -198,8 +198,8 @@ function AuthorizeDropdownContent({ user, logout, closeDropdown }: any) {
         showChevron
       />
       <MenuItem
-        label={t('settings.theme')}
-        value={t(`settings.${theme}_theme`)}
+        label={t('modal-global:settings.theme')}
+        value={t(`modal-global:settings.${theme}_theme`)}
         onClick={() => {
           openSystemSettingsModal('theme')
           closeDropdown()
@@ -207,7 +207,7 @@ function AuthorizeDropdownContent({ user, logout, closeDropdown }: any) {
         showChevron
       />
       <Separator />
-      <MenuItem label={t('profile.logout')} onClick={logout} />
+      <MenuItem label={t('layout-header:profile.logout')} onClick={logout} />
     </>
   )
 }
@@ -236,7 +236,7 @@ function MenuItem({ label, description, value, onClick, showChevron, control }: 
 }
 
 function MobileAppDownload({ closeDropdown }: any) {
-  const { t } = useTranslation('layout-header')
+  const { t } = useTranslation('modal-global')
 
   return (
     <button
@@ -251,8 +251,12 @@ function MobileAppDownload({ closeDropdown }: any) {
       }}
     >
       <div className="flex flex-col gap-y-1">
-        <h6 className="font-semibold text-primary-500">{t('profile.download_app')}</h6>
-        <p className="text-size-sm text-gray-600">{t('profile.download_app_description')}</p>
+        <h6 className="font-semibold text-primary-500">
+          {t('layout-header:profile.download_app')}
+        </h6>
+        <p className="text-size-sm text-gray-600">
+          {t('layout-header:profile.download_app_description')}
+        </p>
       </div>
       <ChevronRight size={18} className="shrink-0 text-black" />
     </button>

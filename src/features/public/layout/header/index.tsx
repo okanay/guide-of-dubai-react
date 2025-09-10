@@ -1,14 +1,14 @@
 import { Link } from 'src/i18n/router/link'
 import { ProfileButton } from './profile/button'
-import { BasketButton } from './basket/button'
 import { CategoriesButton } from './categories/button'
 import { CategoriesDropdown } from './categories/dropdown'
 import { PublicHeaderLogo } from './components/logo'
-import { GoAiButton } from './go-ai/button'
-import { SearchButton } from './search/button'
 import { useHeader } from './store'
 import { PublicHeaderBackground } from './background'
 import { useTranslation } from 'react-i18next'
+import { SearchButton } from '../modals/search/button'
+import { BasketButton } from '../modals/basket/button'
+import { GoAiButton } from '../modals/go-ai/button'
 
 export function PublicHeader() {
   const { isInverted } = useHeader()
