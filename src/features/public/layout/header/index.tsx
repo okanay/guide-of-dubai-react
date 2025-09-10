@@ -6,9 +6,9 @@ import { PublicHeaderLogo } from './components/logo'
 import { useHeader } from './store'
 import { PublicHeaderBackground } from './background'
 import { useTranslation } from 'react-i18next'
-import { SearchButton } from '../modals/search/button'
-import { BasketButton } from '../modals/basket/button'
-import { GoAiButton } from '../modals/go-ai/button'
+import { BasketButton } from '@/features/modals/basket/button'
+import { GoAiButton } from '@/features/modals/go-ai/button'
+import { SearchButton } from '@/features/modals/search/button'
 
 export function PublicHeader() {
   const { isInverted } = useHeader()

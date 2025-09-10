@@ -1,10 +1,10 @@
 import Icon from '@/components/icon'
+import { useLeafletModalStore } from '@/features/modals/leaflet-map/store'
 import { Link } from '@/i18n/router/link'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { twMerge } from 'tailwind-merge'
 import { ButtonFavorite } from './button-favorite'
-import { useLeafletModalStore } from '@/components/leaflet-map/store'
 
 interface HotelCardProps {
   hotel: Hotel

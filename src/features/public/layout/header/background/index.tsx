@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import Icon from 'src/components/icon'
 import { useTranslation } from 'react-i18next'
-import { SearchButton } from '../../modals/search/button'
+import { SearchButton } from '@/features/modals/search/button'
 
 interface SlideConfig {
   path: string

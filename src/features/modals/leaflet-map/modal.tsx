@@ -1,9 +1,8 @@
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
-import 'leaflet/dist/leaflet.css'
-import L, { LatLngBoundsExpression } from 'leaflet'
 import { ModalWrapper } from '@/components/modal-wrapper'
-import Icon from '../icon'
-import { useEffect, useState, useMemo, useCallback } from 'react'
+import L, { LatLngBoundsExpression } from 'leaflet'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
+import Icon from '../../../components/icon'
 import { useLeafletModalStore } from './store'
 
 // ============= TYPES =============

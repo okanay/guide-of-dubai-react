@@ -8,9 +8,10 @@ import useClickOutside from 'src/hooks/use-click-outside'
 import { useLanguage } from 'src/i18n/prodiver'
 import { useAuth } from 'src/providers/auth'
 import { useTheme } from 'src/providers/theme-mode'
-import { useAuthModal } from '../../modals/auth/store'
-import { useSystemSettings } from '../../modals/system-settings/store'
+
 import { useHeader } from '../store'
+import { useAuthModal } from '@/features/modals/auth/store'
+import { useSystemSettings } from '@/features/modals/system-settings/store'
 
 export function ProfileButton() {
   const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null)

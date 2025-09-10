@@ -1,3 +1,4 @@
+import { SystemSettingsModalStore } from '@/features/modals/system-settings/store'
 import { createRootRoute, HeadContent, Outlet, redirect, Scripts } from '@tanstack/react-router'
 import { type ReactNode } from 'react'
 import { getPreferedSettings } from 'src/i18n/get-prefered-settings'
@@ -6,7 +7,6 @@ import { AppProviders } from 'src/providers'
 import { AuthProvider, getMeInitial } from 'src/providers/auth'
 import { ThemeStore } from 'src/providers/theme-mode'
 import globals from '../assets/styles/globals.css?url'
-import { SystemSettingsModalStore } from '@/features/public/layout/modals/system-settings/store'
 
 const CANONICAL_URL = import.meta.env.VITE_APP_CANONICAL_URL
 
