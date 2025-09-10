@@ -132,7 +132,7 @@ function MainSection({ onClose }: { onClose: () => void }) {
       <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4">
         <button
           onClick={onClose}
-          className="w-full bg-btn-primary px-4 py-3 font-medium text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled"
+          className="dark:text-dark w-full bg-btn-primary px-4 py-3 font-semibold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled dark:bg-primary-500"
         >
           {t('settings.close')}
         </button>
@@ -233,7 +233,7 @@ function LanguageSection({ onClose }: { onClose: () => void }) {
       <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4">
         <button
           onClick={handleConfirm}
-          className="w-full bg-btn-primary px-4 py-3 font-medium text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled"
+          className="dark:text-dark w-full bg-btn-primary px-4 py-3 font-semibold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled dark:bg-primary-500"
         >
           {t(hasChanges ? 'settings.change' : 'settings.ok')}
         </button>
@@ -320,7 +320,7 @@ function CurrencySection({ onClose }: { onClose: () => void }) {
       <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4">
         <button
           onClick={handleConfirm}
-          className="w-full bg-btn-primary px-4 py-3 font-medium text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled"
+          className="dark:text-dark w-full bg-btn-primary px-4 py-3 font-semibold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled dark:bg-primary-500"
         >
           {t(hasChanges ? 'settings.change' : 'settings.ok')}
         </button>
@@ -415,7 +415,7 @@ function ThemeSection({ onClose }: { onClose: () => void }) {
       <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4">
         <button
           onClick={handleConfirm}
-          className="w-full bg-btn-primary px-4 py-3 font-medium text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled"
+          className="dark:text-dark w-full bg-btn-primary px-4 py-3 font-semibold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus disabled:bg-btn-primary-disabled dark:bg-primary-500"
         >
           {t(hasChanges ? 'settings.change' : 'settings.ok')}
         </button>

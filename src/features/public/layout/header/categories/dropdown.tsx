@@ -141,6 +141,7 @@ export function CategoriesDropdown() {
         onClick={closeCategories}
         aria-hidden="true"
         data-status={isCategoriesOpen ? 'active' : 'closed'}
+        data-theme="force-main"
         className="fixed inset-0 z-30 bg-black/50 transition-all duration-300 ease-in-out data-[status=active]:pointer-events-auto data-[status=active]:opacity-100 data-[status=closed]:pointer-events-none data-[status=closed]:opacity-0"
       />
 
