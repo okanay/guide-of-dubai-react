@@ -1,4 +1,3 @@
-import { SystemSettingsModalStore } from '@/features/modals/system-settings/store'
 import { createRootRoute, HeadContent, Outlet, redirect, Scripts } from '@tanstack/react-router'
 import { type ReactNode } from 'react'
 import { getPreferedSettings } from 'src/i18n/get-prefered-settings'
@@ -321,11 +320,9 @@ function RootComponent() {
       <AuthProvider initialUser={data.me.user}>
         <ThemeStore initialTheme={data.settings.theme}>
           <LanguageProvider serverLanguage={data.settings.language}>
-            <SystemSettingsModalStore initialCurrency={data.settings.currency}>
-              <AppProviders>
-                <Outlet />
-              </AppProviders>
-            </SystemSettingsModalStore>
+            <AppProviders>
+              <Outlet />
+            </AppProviders>
           </LanguageProvider>
         </ThemeStore>
       </AuthProvider>

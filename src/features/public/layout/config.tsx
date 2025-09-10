@@ -10,10 +10,14 @@ import { SearchModal } from '@/features/modals/search/modal'
 import { SearchModalStore } from '@/features/modals/search/store'
 import { SystemSettingsModal } from '@/features/modals/system-settings/modal'
 import { LeafletModal } from '@/features/modals/leaflet-map/modal'
+import { Route } from '@/routes/__root'
+import { SystemSettingsModalStore } from '@/features/modals/system-settings/store'
 
 export const PublicLayoutConfig = ({ children }: { children: React.ReactNode }) => {
+  const data = Route.useLoaderData()
+
   return (
-    <>
+    <SystemSettingsModalStore initialCurrency={data.settings.currency}>
       <ComposeProviders
         components={[
           HeaderStore,
@@ -31,6 +35,6 @@ export const PublicLayoutConfig = ({ children }: { children: React.ReactNode }) 
         <SearchModal />
         <LeafletModal />
       </ComposeProviders>
-    </>
+    </SystemSettingsModalStore>
   )
 }
