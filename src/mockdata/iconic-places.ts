@@ -1,4 +1,4 @@
-export const MOCK_ACTIVITIES: ActivityCard[] = [
+export const ICONIC_PLACES: IconicPlaces[] = [
   {
     id: '1',
     rank: 1,

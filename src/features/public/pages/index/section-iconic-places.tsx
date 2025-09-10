@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSnapScroll } from '@/hooks/use-snap-scroll'
 import Icon from '@/components/icon'
-import { ActivityCard } from '../components/card-activity'
-import { MOCK_ACTIVITIES } from '@/mockdata/activity'
+import { IconicPlacesCard } from '../components/card-iconic-places'
+import { ICONIC_PLACES } from '@/mockdata/iconic-places'
 
 export const IconicPlaces = () => {
   const { t } = useTranslation('page-index')
@@ -76,13 +76,13 @@ export const IconicPlaces = () => {
               msOverflowStyle: 'none',
             }}
           >
-            {MOCK_ACTIVITIES.map((activity, index) => (
+            {ICONIC_PLACES.map((activity, index) => (
               <div
                 key={activity.id}
                 ref={setCardRef(index)}
                 className="w-[calc(25%_-_1rem)] min-w-[260px] shrink-0 snap-start"
               >
-                <ActivityCard activity={activity} index={index} />
+                <IconicPlacesCard activity={activity} index={index} />
               </div>
             ))}
           </div>

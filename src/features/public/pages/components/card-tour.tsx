@@ -5,22 +5,22 @@ import { useTranslation } from 'react-i18next'
 import { twMerge } from 'tailwind-merge'
 import { ButtonFavorite } from './button-favorite'
 
-interface Props {
-  activity: ActivityCard
+interface TourCardProps {
+  tour: Tour
   className?: string
-  onLikeToggle?: (activityId: string, isLiked: boolean) => void
+  onLikeToggle?: (tourId: string, isLiked: boolean) => void
 }
 
-export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggle }) => {
+export const TourCard: React.FC<TourCardProps> = ({ tour, className, onLikeToggle }) => {
   const { t } = useTranslation('page-index')
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const imageContainerRef = useRef<HTMLDivElement>(null)
 
   const formatPrice = useCallback(
     (price: number): string => {
-      return `${activity.currency}${price.toFixed(2)}`
+      return `${tour.currency}${price.toFixed(2)}`
     },
-    [activity.currency],
+    [tour.currency],
   )
 
   const scrollToImage = useCallback((imageIndex: number) => {
@@ -38,16 +38,16 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
       const imageWidth = e.currentTarget.clientWidth
       const newIndex = Math.round(scrollLeft / imageWidth)
 
-      if (newIndex !== currentImageIndex && newIndex >= 0 && newIndex < activity.images.length) {
+      if (newIndex !== currentImageIndex && newIndex >= 0 && newIndex < tour.images.length) {
         setCurrentImageIndex(newIndex)
       }
     },
-    [currentImageIndex, activity.images.length],
+    [currentImageIndex, tour.images.length],
   )
 
   const handleLikeToggle = useCallback(
-    (activityId: string, isLiked: boolean) => {
-      onLikeToggle?.(activityId, isLiked)
+    (tourId: string, isLiked: boolean) => {
+      onLikeToggle?.(tourId, isLiked)
     },
     [onLikeToggle],
   )
@@ -56,31 +56,31 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
     (e: React.MouseEvent) => {
       e.preventDefault()
       e.stopPropagation()
-      const prevIndex = currentImageIndex === 0 ? activity.images.length - 1 : currentImageIndex - 1
+      const prevIndex = currentImageIndex === 0 ? tour.images.length - 1 : currentImageIndex - 1
       setCurrentImageIndex(prevIndex)
       scrollToImage(prevIndex)
     },
-    [currentImageIndex, activity.images.length, scrollToImage],
+    [currentImageIndex, tour.images.length, scrollToImage],
   )
 
   const handleNextImage = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault()
       e.stopPropagation()
-      const nextIndex = currentImageIndex === activity.images.length - 1 ? 0 : currentImageIndex + 1
+      const nextIndex = currentImageIndex === tour.images.length - 1 ? 0 : currentImageIndex + 1
       setCurrentImageIndex(nextIndex)
       scrollToImage(nextIndex)
     },
-    [currentImageIndex, activity.images.length, scrollToImage],
+    [currentImageIndex, tour.images.length, scrollToImage],
   )
 
   const handleBookingClick = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault()
       e.stopPropagation()
-      console.log(`Booking activity: ${activity.id}`)
+      console.log(`Booking tour: ${tour.id}`)
     },
-    [activity.id],
+    [tour.id],
   )
 
   return (
@@ -89,14 +89,14 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
         'group relative flex w-full overflow-hidden rounded-xs border border-gray-200 bg-box-surface transition-all duration-300 hover:shadow-lg',
         className,
       )}
-      aria-labelledby={`popular-activity-${activity.id}-title`}
+      aria-labelledby={`tour-${tour.id}-title`}
     >
       {/* Image Gallery - Left Side */}
-      <div className="relative w-[140px] shrink-0">
+      <div className="relative w-[140px] shrink-0 sm:w-[190px]">
         {/* Image Container */}
         <div
           ref={imageContainerRef}
-          className="scrollbar-hide flex h-[210px] snap-x snap-mandatory overflow-x-auto"
+          className="scrollbar-hide flex h-full max-h-[180px] min-h-[160px] w-full snap-x snap-mandatory overflow-x-auto"
           onScroll={handleImageScroll}
           style={{
             scrollbarWidth: 'none',
@@ -104,13 +104,13 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
             aspectRatio: '2/3',
           }}
           role="region"
-          aria-label="Activity images"
+          aria-label="Tour images"
         >
-          {activity.images.map((image, imgIndex) => (
+          {tour.images.map((image, imgIndex) => (
             <div key={`image-${imgIndex}`} className="w-full flex-shrink-0 snap-start">
               <img
                 src={image}
-                alt={`${activity.title} - View ${imgIndex + 1}`}
+                alt={`${tour.title} - View ${imgIndex + 1}`}
                 className="h-full w-full object-cover"
                 loading={imgIndex === 0 ? 'eager' : 'lazy'}
               />
@@ -119,7 +119,7 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
         </div>
 
         {/* Navigation Buttons - Only show on hover when multiple images */}
-        {activity.images.length > 1 && (
+        {tour.images.length > 1 && (
           <>
             <button
               type="button"
@@ -142,12 +142,12 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
         )}
 
         {/* Image Indicators */}
-        {activity.images.length > 1 && (
+        {tour.images.length > 1 && (
           <nav
             className="absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 gap-1"
             aria-label="Image navigation"
           >
-            {activity.images.map((_, imgIndex) => (
+            {tour.images.map((_, imgIndex) => (
               <button
                 key={`indicator-${imgIndex}`}
                 type="button"
@@ -165,7 +165,7 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
 
         {/* Favorite Button */}
         <ButtonFavorite
-          contentId={activity.id}
+          contentId={tour.id}
           onToggle={handleLikeToggle}
           className="absolute top-2 right-2"
         />
@@ -178,55 +178,41 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
       >
         {/* Top Content */}
         <div className="flex flex-col gap-y-2">
-          {/* Discount Badge */}
-          {activity.hasDiscount && activity.discountPercentage && (
-            <div className="w-fit rounded-xs bg-primary-500 px-2 py-1 text-size-xs font-bold text-white">
-              Save {activity.discountPercentage}%
-            </div>
-          )}
           {/* Title */}
           <h2
-            id={`popular-activity-${activity.id}-title`}
+            id={`tour-${tour.id}-title`}
             className="line-clamp-2 text-size font-bold text-on-box-black"
           >
-            {activity.title}
+            {tour.title}
           </h2>
 
           {/* Rating and Reviews */}
           <div className="flex items-center gap-1 text-size-xs">
             <Icon name="star" className="size-3 text-primary-500" aria-hidden="true" />
-            <span className="font-medium text-on-box-black">{activity.rating.toFixed(1)}</span>
-            <span className="text-gray-600">({activity.reviewCount})</span>
+            <span className="font-medium text-on-box-black">{tour.rating.toFixed(1)}</span>
+            <span className="text-gray-600">({tour.reviewCount})</span>
           </div>
 
           {/* Description */}
-          <p className="text-size-sm text-gray-600">{activity.description}</p>
+          <p className="text-size-sm text-gray-600">{tour.description}</p>
         </div>
 
         {/* Bottom Content */}
-        <div className="mt-auto flex w-full flex-wrap items-center justify-between gap-2">
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-2">
           {/* Pricing */}
-          <div className="flex shrink-0 flex-col">
-            {activity.originalPrice && (
-              <span className="text-size-xs text-gray-500 line-through">
-                {formatPrice(activity.originalPrice)}
-              </span>
-            )}
-            <div className="flex items-baseline gap-1">
-              <span className="text-size-lg font-bold text-on-box-black">
-                {formatPrice(activity.price)}
-              </span>
-              <span className="text-size-xs text-gray-500">/ kişi başı</span>
-            </div>
+          <div className="flex items-baseline gap-1">
+            <span className="text-size-lg font-bold text-on-box-black">
+              {formatPrice(tour.price)}
+            </span>
+            <span className="text-size-xs text-gray-500">{tour.priceNote}</span>
           </div>
-
           {/* Book Button */}
           <button
             type="button"
             onClick={handleBookingClick}
             className="h-8 w-fit rounded-xs bg-btn-primary px-2 text-size-xs font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus sm:px-6 sm:text-size-sm"
           >
-            {t('activities.button.book')}
+            {t('tours.button.book')}
           </button>
         </div>
       </Link>

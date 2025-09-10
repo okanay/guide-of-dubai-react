@@ -1,4 +1,4 @@
-interface ActivityCard {
+interface Tour {
   id: string
   title: string
   description: string
@@ -8,6 +8,5 @@ interface ActivityCard {
   price: number
   originalPrice?: number
   currency: string
-  hasDiscount?: boolean
-  discountPercentage?: number
+  priceNote: string
 }

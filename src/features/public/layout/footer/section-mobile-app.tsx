@@ -23,7 +23,7 @@ export const PublicFooterMobileAppSection = () => {
           <img
             src="/images/public/footer/phone.png"
             alt={t('mobile_app.phone_alt')}
-            className="absolute bottom-full z-10 h-[180px] w-full translate-y-[50%] object-contain sm:left-4 md:h-[362px] md:translate-y-[44.25%]"
+            className="absolute bottom-full z-10 h-[192px] w-full translate-y-[47%] object-contain sm:left-4 md:h-[362px] md:translate-y-[44.25%]"
           />
         </div>
 

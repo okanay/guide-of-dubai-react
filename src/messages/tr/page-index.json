@@ -59,5 +59,47 @@
         "title": "Aile Paketi"
       }
     ]
+  },
+  "rent-a-car": {
+    "title": "Kolay ve Hızlı Araç Kiralama",
+    "view_all": "Tümüne Bakın",
+    "button": {
+      "book": "Rezervasyon Yap"
+    },
+    "features": {
+      "passengers": "1-4",
+      "air_conditioning": "Klima",
+      "transmission": {
+        "automatic": "Otomatik",
+        "manual": "Manuel"
+      }
+    },
+    "distance_to_center": "Şehir merkezine",
+    "important_info": "Önemli Bilgiler",
+    "price_per_days": "{{days}} Günlük Fiyat"
+  },
+  "activities": {
+    "title": "En Popüler Etkinlikler Seni Bekliyor",
+    "view_all": "Tümü",
+    "button": {
+      "book": "Satın Al"
+    }
+  },
+  "tours": {
+    "title": "Seni Bekleyen Eşsiz Turlar",
+    "view_all": "Tümü",
+    "button": {
+      "book": "Satın Al"
+    }
+  },
+  "yachts": {
+    "title": "Lüks Yat Seçenekleri",
+    "view_all": "Tümü",
+    "button": {
+      "book": "Yat Kirala"
+    },
+    "location": "Konum",
+    "min_rental": "Min Kiralama Süresi",
+    "capacity": "Kişilik"
   }
 }

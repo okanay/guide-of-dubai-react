@@ -5,7 +5,7 @@ import { SubscriptionSection } from './section-subscription'
 
 export const PublicFooter = () => {
   return (
-    <footer className="pt-20">
+    <footer className="pt-8 sm:pt-20">
       <PublicFooterMobileAppSection />
       <PublicFooterFAQSection />
       <div className="w-full bg-gray-950 text-white dark:bg-black">

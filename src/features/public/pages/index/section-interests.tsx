@@ -13,7 +13,7 @@ export const Interests = () => {
   const interests: Interest[] = t('interests.items', { returnObjects: true }) as Interest[]
 
   return (
-    <section className="bg-box-surface py-10 text-on-box-black">
+    <section className="bg-box-surface pt-6 pb-10 text-on-box-black">
       <div className="mx-auto max-w-main px-4">
         <h2 className="mb-6 text-size-2xl font-bold md:text-size-3xl">{t('interests.title')}</h2>
         <div

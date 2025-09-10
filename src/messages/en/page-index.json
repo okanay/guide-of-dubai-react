@@ -59,5 +59,47 @@
         "title": "Family Package"
       }
     ]
+  },
+  "rent-a-car": {
+    "title": "Easy and Fast Car Rental",
+    "view_all": "View All",
+    "button": {
+      "book": "Book Now"
+    },
+    "features": {
+      "passengers": "1-4",
+      "air_conditioning": "Climate",
+      "transmission": {
+        "automatic": "Automatic",
+        "manual": "Manual"
+      }
+    },
+    "distance_to_center": "Distance to city center",
+    "important_info": "Important Information",
+    "price_per_days": "{{days}} Day Price"
+  },
+  "activities": {
+    "title": "Most Popular Activities Await You",
+    "view_all": "View All",
+    "button": {
+      "book": "Buy Now"
+    }
+  },
+  "tours": {
+    "title": "Unique Tours Awaiting You",
+    "view_all": "View All",
+    "button": {
+      "book": "Buy Now"
+    }
+  },
+  "yachts": {
+    "title": "Luxury Yacht Options",
+    "view_all": "View All",
+    "button": {
+      "book": "Rent Yacht"
+    },
+    "location": "Location",
+    "min_rental": "Min Rental Duration",
+    "capacity": "People"
   }
 }

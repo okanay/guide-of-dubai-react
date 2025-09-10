@@ -1,30 +1,29 @@
-import Icon from '@/components/icon'
-import { Link } from '@/i18n/router/link'
-import { useRef, useState, useCallback } from 'react'
+import React, { useState, useRef, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { twMerge } from 'tailwind-merge'
+import { Link } from '@/i18n/router/link'
+import Icon from '@/components/icon'
 import { ButtonFavorite } from './button-favorite'
 
 interface Props {
-  activity: ActivityCard
+  activity: IconicPlaces
+  index: number
   className?: string
   onLikeToggle?: (activityId: string, isLiked: boolean) => void
 }
 
-export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggle }) => {
+export const IconicPlacesCard: React.FC<Props> = ({ activity, index, className, onLikeToggle }) => {
   const { t } = useTranslation('page-index')
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const imageContainerRef = useRef<HTMLDivElement>(null)
 
-  const formatPrice = useCallback(
-    (price: number): string => {
-      return `${activity.currency}${price.toFixed(2)}`
-    },
-    [activity.currency],
-  )
+  const formatPrice = useCallback((price: number): string => {
+    return `$${price.toFixed(2)}`
+  }, [])
 
   const scrollToImage = useCallback((imageIndex: number) => {
     if (!imageContainerRef.current) return
+
     const imageWidth = imageContainerRef.current.clientWidth
     imageContainerRef.current.scrollTo({
       left: imageIndex * imageWidth,
@@ -86,22 +85,20 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
   return (
     <article
       className={twMerge(
-        'group relative flex w-full overflow-hidden rounded-xs border border-gray-200 bg-box-surface transition-all duration-300 hover:shadow-lg',
+        'group relative flex h-[540px] w-full flex-col overflow-hidden rounded-xs border border-gray-200 bg-box-surface transition-all duration-300 hover:shadow-lg',
         className,
       )}
-      aria-labelledby={`popular-activity-${activity.id}-title`}
+      aria-labelledby={`activity-${activity.id}-title`}
     >
-      {/* Image Gallery - Left Side */}
-      <div className="relative w-[140px] shrink-0">
-        {/* Image Container */}
+      {/* Image Gallery */}
+      <header className="relative overflow-hidden">
         <div
           ref={imageContainerRef}
-          className="scrollbar-hide flex h-[210px] snap-x snap-mandatory overflow-x-auto"
+          className="flex snap-x snap-mandatory overflow-x-auto"
           onScroll={handleImageScroll}
           style={{
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
-            aspectRatio: '2/3',
           }}
           role="region"
           aria-label="Activity images"
@@ -111,32 +108,32 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
               <img
                 src={image}
                 alt={`${activity.title} - View ${imgIndex + 1}`}
-                className="h-full w-full object-cover"
+                className="h-[220px] w-full object-cover"
                 loading={imgIndex === 0 ? 'eager' : 'lazy'}
               />
             </div>
           ))}
         </div>
 
-        {/* Navigation Buttons - Only show on hover when multiple images */}
+        {/* Navigation Buttons */}
         {activity.images.length > 1 && (
           <>
             <button
               type="button"
               onClick={handlePrevImage}
-              className="absolute top-1/2 left-1 z-20 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-white/50 opacity-0 transition-opacity duration-300 group-hover:opacity-75 hover:opacity-100"
+              className="absolute top-1/2 left-3 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-btn-white text-on-btn-white opacity-0 transition-opacity duration-300 group-hover:opacity-75 hover:opacity-100"
               aria-label="Previous image"
             >
-              <Icon name="chevron-left" className="size-3" />
+              <Icon name="chevron-left" className="size-5" />
             </button>
 
             <button
               type="button"
               onClick={handleNextImage}
-              className="absolute top-1/2 right-1 z-20 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-white/50 opacity-0 transition-opacity duration-300 group-hover:opacity-75 hover:opacity-100"
+              className="absolute top-1/2 right-3 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-btn-white text-on-btn-white opacity-0 transition-opacity duration-300 group-hover:opacity-75 hover:opacity-100"
               aria-label="Next image"
             >
-              <Icon name="chevron-right" className="size-3" />
+              <Icon name="chevron-right" className="size-5" />
             </button>
           </>
         )}
@@ -144,7 +141,7 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
         {/* Image Indicators */}
         {activity.images.length > 1 && (
           <nav
-            className="absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 gap-1"
+            className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1"
             aria-label="Image navigation"
           >
             {activity.images.map((_, imgIndex) => (
@@ -156,77 +153,77 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
                 aria-current={imgIndex === currentImageIndex ? 'true' : 'false'}
                 className={twMerge(
                   'h-1 rounded-full transition-all duration-300 hover:bg-white/80',
-                  imgIndex === currentImageIndex ? 'w-4 bg-white' : 'w-2 bg-white/50',
+                  imgIndex === currentImageIndex ? 'w-6 bg-white' : 'w-3 bg-white/50',
                 )}
               />
             ))}
           </nav>
         )}
 
-        {/* Favorite Button */}
-        <ButtonFavorite
-          contentId={activity.id}
-          onToggle={handleLikeToggle}
-          className="absolute top-2 right-2"
-        />
-      </div>
+        <ButtonFavorite contentId={activity.id} onToggle={handleLikeToggle} />
+      </header>
 
-      {/* Content - Right Side */}
+      {/* Content */}
       <Link
         to="/$lang/not-found"
-        className="flex flex-1 flex-col justify-between p-3 transition-colors hover:bg-gray-50/50"
+        className="flex flex-1 flex-col p-4 transition-colors hover:bg-gray-50/50"
       >
-        {/* Top Content */}
-        <div className="flex flex-col gap-y-2">
-          {/* Discount Badge */}
-          {activity.hasDiscount && activity.discountPercentage && (
-            <div className="w-fit rounded-xs bg-primary-500 px-2 py-1 text-size-xs font-bold text-white">
-              Save {activity.discountPercentage}%
-            </div>
-          )}
-          {/* Title */}
-          <h2
-            id={`popular-activity-${activity.id}-title`}
-            className="line-clamp-2 text-size font-bold text-on-box-black"
-          >
-            {activity.title}
-          </h2>
-
-          {/* Rating and Reviews */}
-          <div className="flex items-center gap-1 text-size-xs">
-            <Icon name="star" className="size-3 text-primary-500" aria-hidden="true" />
-            <span className="font-medium text-on-box-black">{activity.rating.toFixed(1)}</span>
-            <span className="text-gray-600">({activity.reviewCount})</span>
-          </div>
-
-          {/* Description */}
-          <p className="text-size-sm text-gray-600">{activity.description}</p>
+        {/* Rank Badge */}
+        <div className="mb-2 flex items-center gap-1">
+          <Icon name="trophy-primary" className="size-4" aria-hidden="true" />
+          <span className="text-size-sm font-bold text-primary-500">{index + 1} Numara</span>
         </div>
 
-        {/* Bottom Content */}
-        <div className="mt-auto flex w-full flex-wrap items-center justify-between gap-2">
-          {/* Pricing */}
-          <div className="flex shrink-0 flex-col">
+        {/* Title */}
+        <h2
+          id={`activity-${activity.id}-title`}
+          className="mb-2 line-clamp-2 text-size font-bold text-on-box-black"
+        >
+          {activity.title}
+        </h2>
+
+        {/* Rating and Reviews */}
+        <div className="mb-2 flex items-center gap-2 text-size-xs">
+          <Icon name="star" className="size-4 text-primary-500" aria-hidden="true" />
+          <span className="font-medium text-on-box-black">{activity.rating.toFixed(1)}</span>
+          <span className="text-gray-600">({activity.reviewCount})</span>
+          <div className="rounded-xs bg-gray-100 px-2 py-1 text-body-xs text-gray-700">
+            {activity.purchaseCount}+ satın alındı
+          </div>
+        </div>
+
+        {/* Description */}
+        <ul className="mb-3 flex flex-wrap items-center gap-1.5">
+          {activity.description.map((item, descIndex) => (
+            <li key={descIndex} className="inline-flex items-center gap-1.5">
+              <span className="inline-block size-1 rounded-full bg-gray-600" aria-hidden="true" />
+              <span className="text-size-sm whitespace-nowrap text-gray-600">{item}</span>
+            </li>
+          ))}
+        </ul>
+
+        {/* Pricing */}
+        <div className="mt-auto space-y-2">
+          <div className="flex flex-col">
             {activity.originalPrice && (
-              <span className="text-size-xs text-gray-500 line-through">
+              <span className="text-body-xs text-gray-500 line-through">
                 {formatPrice(activity.originalPrice)}
               </span>
             )}
             <div className="flex items-baseline gap-1">
-              <span className="text-size-lg font-bold text-on-box-black">
+              <span className="text-body-xl font-bold text-on-box-black">
                 {formatPrice(activity.price)}
               </span>
-              <span className="text-size-xs text-gray-500">/ kişi başı</span>
+              <span className="text-body-xs text-gray-500">/ kişi başı</span>
             </div>
           </div>
 
-          {/* Book Button */}
           <button
             type="button"
             onClick={handleBookingClick}
-            className="h-8 w-fit rounded-xs bg-btn-primary px-2 text-size-xs font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus sm:px-6 sm:text-size-sm"
+            className="h-10 w-full rounded-xs border border-btn-primary bg-btn-primary text-body-sm font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus sm:bg-transparent sm:text-btn-primary"
           >
-            {t('activities.button.book')}
+            {t('iconic-places.button.book')}
           </button>
         </div>
       </Link>
