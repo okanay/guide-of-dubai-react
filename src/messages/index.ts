@@ -1,70 +1,70 @@
-import enCommon from './en/common.json'
-import enComponents from './en/components.json'
-import enApiErrors from './en/errors-api.json'
-import enZodErrors from './en/errors-zod.json'
-import enLayoutFooter from './en/layout-footer.json'
-import enLayoutHeader from './en/layout-header.json'
-import enModalGlobal from './en/modal-global.json'
-import enCardGlobal from './en/card-global.json'
-import enPageErrors from './en/page-errors.json'
-import enPageIndex from './en/page-index.json'
+import enCommon from './en/global-common.json'
+import enComponents from './en/global-components.json'
+import enModal from './en/global-modal.json'
+import enCard from './en/global-card.json'
+import enHeader from './en/layout-header.json'
+import enFooter from './en/layout-footer.json'
+import enIndex from './en/page-index.json'
+import enErrors from './en/page-errors.json'
+import enZod from './en/errors-zod.json'
+import enApi from './en/errors-api.json'
 import enSeo from './en/seo.json'
 
-import trCommon from './tr/common.json'
-import trComponents from './tr/components.json'
-import trApiErrors from './tr/errors-api.json'
-import trZodErrors from './tr/errors-zod.json'
-import trLayoutFooter from './tr/layout-footer.json'
-import trLayoutHeader from './tr/layout-header.json'
-import trModalGlobal from './tr/modal-global.json'
-import trCardGlobal from './tr/card-global.json'
-import trPageErrors from './tr/page-errors.json'
-import trPageIndex from './tr/page-index.json'
+import trCommon from './tr/global-common.json'
+import trComponents from './tr/global-components.json'
+import trModal from './tr/global-modal.json'
+import trCard from './tr/global-card.json'
+import trHeader from './tr/layout-header.json'
+import trFooter from './tr/layout-footer.json'
+import trIndex from './tr/page-index.json'
+import trErrors from './tr/page-errors.json'
+import trZod from './tr/errors-zod.json'
+import trApi from './tr/errors-api.json'
 import trSeo from './tr/seo.json'
 
-export type TranslationNS = (typeof ns)[number]
+export type TranslationNS = (typeof namespaces)[number]
 
-export const defaultNS = 'common'
+export const defaultNS = 'global-common'
 
-export const ns = [
-  'common',
-  'components',
+export const namespaces = [
+  'global-common',
+  'global-components',
+  'global-modal',
+  'global-card',
   'layout-header',
   'layout-footer',
   'page-index',
   'page-errors',
   'errors-zod',
   'errors-api',
-  'modal-global',
-  'card-global',
 ] as const
 
 const resource = {
   en: {
-    common: enCommon,
-    'page-errors': enPageErrors,
-    components: enComponents,
-    'layout-header': enLayoutHeader,
-    'layout-footer': enLayoutFooter,
-    'page-index': enPageIndex,
-    'errors-zod': enZodErrors,
-    'errors-api': enApiErrors,
+    'global-common': enCommon,
+    'global-components': enComponents,
+    'global-modal': enModal,
+    'global-card': enCard,
+    'layout-header': enHeader,
+    'layout-footer': enFooter,
+    'page-index': enIndex,
+    'page-errors': enErrors,
+    'errors-zod': enZod,
+    'errors-api': enApi,
     seo: enSeo,
-    'modal-global': enModalGlobal,
-    'card-global': enCardGlobal,
   },
   tr: {
-    common: trCommon,
-    'page-errors': trPageErrors,
-    components: trComponents,
-    'layout-header': trLayoutHeader,
-    'layout-footer': trLayoutFooter,
-    'page-index': trPageIndex,
-    'errors-zod': trZodErrors,
-    'errors-api': trApiErrors,
+    'global-common': trCommon,
+    'global-components': trComponents,
+    'global-modal': trModal,
+    'global-card': trCard,
+    'layout-header': trHeader,
+    'layout-footer': trFooter,
+    'page-index': trIndex,
+    'page-errors': trErrors,
+    'errors-zod': trZod,
+    'errors-api': trApi,
     seo: trSeo,
-    'modal-global': trModalGlobal,
-    'card-global': trCardGlobal,
   },
 }
 

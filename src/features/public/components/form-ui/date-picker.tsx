@@ -51,7 +51,7 @@ export const DatePicker = ({
   minDate,
 }: DatePickerProps) => {
   const { language } = useLanguage()
-  const { t } = useTranslation('components')
+  const { t } = useTranslation('global-components')
   const triggerRef = useRef<HTMLButtonElement>(null)
 
   const defaultPlaceholder = placeholder || t('form.date_picker.placeholder')
@@ -211,7 +211,7 @@ export const DatePickerIndicator = ({
   onClick,
   children,
 }: DatePickerIndicatorProps) => {
-  const { t } = useTranslation('components')
+  const { t } = useTranslation('global-components')
   const defaultPlaceholder = placeholder || t('form.date_picker.placeholder')
 
   const formattedDate = useMemo(() => {
@@ -262,7 +262,7 @@ function CalendarPanel({
   minDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24),
   className,
 }: CalendarPanelProps) {
-  const { t } = useTranslation('components')
+  const { t } = useTranslation('global-components')
   const panelRef = useClickOutside<HTMLDivElement>(onClose, true, triggerRef)
   const [position, setPosition] = useState({ top: 0, left: 0 })
 

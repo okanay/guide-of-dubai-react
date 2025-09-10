@@ -1,12 +1,6 @@
 {
   "iconic-places": {
-    "title": "Dubai'de En Çok Beğenilen 10 İkonik Yer",
-    "rank": "{{rank}} Numara",
-    "per_person": "/ kişi başı",
-    "purchased_count": "{{count}}+ satın alındı",
-    "button": {
-      "book": "Rezervasyon Yap"
-    }
+    "title": "Dubai'de En Çok Beğenilen 10 İkonik Yer"
   },
   "interests": {
     "title": "İlgi Alanına Göre Keşfet",
@@ -23,25 +17,7 @@
   },
   "hotels": {
     "title": "Hayalindeki Otel Burada",
-    "view_all": "Tümüne Bakın",
-    "book_now": "Rezervasyon Yap",
-    "map_view": "Haritada Gör",
-    "distance_to_center": "Merkeze uzaklık",
-    "per_night": "{{count}} Gece, {{adults}} Yetişkin",
-    "features": {
-      "breakfast": {
-        "label": "Kahvaltı",
-        "value": "Dahil"
-      },
-      "freeCancellation": {
-        "label": "İptal",
-        "value": "Ücretsiz"
-      },
-      "forTwoPeople": {
-        "label": "Kapasite",
-        "value": "İki Kişilik"
-      }
-    }
+    "view_all": "Tümüne Bakın"
   },
   "bundles": {
     "title": "Günlük Hazır Rotalar",
@@ -64,44 +40,18 @@
   },
   "rent-a-car": {
     "title": "Kolay ve Hızlı Araç Kiralama",
-    "view_all": "Tümüne Bakın",
-    "button": {
-      "book": "Rezervasyon Yap"
-    },
-    "features": {
-      "passengers": "1-4",
-      "air_conditioning": "Klima",
-      "transmission": {
-        "automatic": "Otomatik",
-        "manual": "Manuel"
-      }
-    },
-    "distance_to_center": "Şehir merkezine",
-    "important_info": "Önemli Bilgiler",
-    "price_per_days": "{{days}} Günlük Fiyat"
+    "view_all": "Tümüne Bakın"
   },
   "activities": {
     "title": "En Popüler Etkinlikler Seni Bekliyor",
-    "view_all": "Tümü",
-    "button": {
-      "book": "Satın Al"
-    }
+    "view_all": "Tümü"
   },
   "tours": {
     "title": "Seni Bekleyen Eşsiz Turlar",
-    "view_all": "Tümü",
-    "button": {
-      "book": "Satın Al"
-    }
+    "view_all": "Tümü"
   },
   "yachts": {
     "title": "Lüks Yat Seçenekleri",
-    "view_all": "Tümü",
-    "button": {
-      "book": "Yat Kirala"
-    },
-    "location": "Konum",
-    "min_rental": "Min Kiralama Süresi",
-    "capacity": "Kişilik"
+    "view_all": "Tümü"
   }
 }

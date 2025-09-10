@@ -36,7 +36,7 @@ export const TimePicker = ({
   rounding,
   allowedTimes,
 }: TimePickerProps) => {
-  const { t } = useTranslation('components')
+  const { t } = useTranslation('global-components')
   const defaultPlaceholder = placeholder || t('form.time_picker.placeholder')
 
   return (
@@ -194,7 +194,7 @@ export const TimePickerIndicator = ({
   onClick,
   children,
 }: TimePickerIndicatorProps) => {
-  const { t } = useTranslation('components')
+  const { t } = useTranslation('global-components')
   const defaultPlaceholder = placeholder || t('form.time_picker.placeholder')
 
   const formattedTime = useMemo(() => {

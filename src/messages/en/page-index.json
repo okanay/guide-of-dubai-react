@@ -1,12 +1,6 @@
 {
   "iconic-places": {
-    "title": "Top 10 Most Liked Iconic Places in Dubai",
-    "rank": "Number {{rank}}",
-    "per_person": "/ per person",
-    "purchased_count": "{{count}}+ purchased",
-    "button": {
-      "book": "Book Now"
-    }
+    "title": "Top 10 Most Liked Iconic Places in Dubai"
   },
   "interests": {
     "title": "Discover by Interest",
@@ -23,25 +17,7 @@
   },
   "hotels": {
     "title": "Your Dream Hotel is Here",
-    "view_all": "View All",
-    "book_now": "Book Now",
-    "map_view": "View on Map",
-    "distance_to_center": "Distance to center",
-    "per_night": "{{count}} Night, {{adults}} Adults",
-    "features": {
-      "breakfast": {
-        "label": "Breakfast",
-        "value": "Included"
-      },
-      "freeCancellation": {
-        "label": "Cancellation",
-        "value": "Free"
-      },
-      "forTwoPeople": {
-        "label": "Capacity",
-        "value": "For Two People"
-      }
-    }
+    "view_all": "View All"
   },
   "bundles": {
     "title": "Daily Ready Routes",
@@ -64,44 +40,18 @@
   },
   "rent-a-car": {
     "title": "Easy and Fast Car Rental",
-    "view_all": "View All",
-    "button": {
-      "book": "Book Now"
-    },
-    "features": {
-      "passengers": "1-4",
-      "air_conditioning": "Climate",
-      "transmission": {
-        "automatic": "Automatic",
-        "manual": "Manual"
-      }
-    },
-    "distance_to_center": "Distance to city center",
-    "important_info": "Important Information",
-    "price_per_days": "{{days}} Day Price"
+    "view_all": "View All"
   },
   "activities": {
     "title": "Most Popular Activities Await You",
-    "view_all": "View All",
-    "button": {
-      "book": "Buy Now"
-    }
+    "view_all": "View All"
   },
   "tours": {
     "title": "Unique Tours Awaiting You",
-    "view_all": "View All",
-    "button": {
-      "book": "Buy Now"
-    }
+    "view_all": "View All"
   },
   "yachts": {
     "title": "Luxury Yacht Options",
-    "view_all": "View All",
-    "button": {
-      "book": "Rent Yacht"
-    },
-    "location": "Location",
-    "min_rental": "Min Rental Duration",
-    "capacity": "People"
+    "view_all": "View All"
   }
 }

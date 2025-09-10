@@ -1,0 +1,113 @@
+{
+  "common": {
+    "buttons": {
+      "book_now": "Book Now",
+      "buy_now": "Buy Now",
+      "rent_now": "Rent Now",
+      "view_all": "View All",
+      "view_details": "View Details",
+      "reserve": "Reserve"
+    },
+    "actions": {
+      "like": "Like",
+      "unlike": "Unlike",
+      "share": "Share",
+      "save": "Save"
+    },
+    "labels": {
+      "per_person": "/ per person",
+      "per_night": "/ per night",
+      "per_day": "/ per day",
+      "from": "From",
+      "starting_at": "Starting at",
+      "rating": "Rating",
+      "reviews": "reviews",
+      "review": "review"
+    }
+  },
+  "hotel": {
+    "features": {
+      "breakfast": {
+        "label": "Breakfast",
+        "value": "Included"
+      },
+      "freeCancellation": {
+        "label": "Cancellation",
+        "value": "Free"
+      },
+      "forTwoPeople": {
+        "label": "Capacity",
+        "value": "For Two People"
+      }
+    },
+    "labels": {
+      "distance_to_center": "Distance to center",
+      "per_night_guests": "{{count}} Night, {{adults}} Adults",
+      "map_view": "View on Map",
+      "star_rating": "{{count}} Star Hotel"
+    }
+  },
+  "activity": {
+    "labels": {
+      "duration": "Duration",
+      "group_size": "Group Size",
+      "included": "Included",
+      "difficulty": "Difficulty",
+      "age_limit": "Age Limit"
+    },
+    "discount": {
+      "save_percent": "Save {{percent}}%",
+      "original_price": "Original Price",
+      "discounted_price": "Discounted Price"
+    }
+  },
+  "tour": {
+    "labels": {
+      "duration": "Duration",
+      "departure": "Departure",
+      "language": "Language",
+      "group_type": "Group Type",
+      "pickup_included": "Pickup Included"
+    }
+  },
+  "rent_a_car": {
+    "features": {
+      "passengers": "1-4 Passengers",
+      "air_conditioning": "Air Conditioning",
+      "transmission": {
+        "automatic": "Automatic",
+        "manual": "Manual"
+      },
+      "fuel_type": {
+        "petrol": "Petrol",
+        "diesel": "Diesel",
+        "electric": "Electric",
+        "hybrid": "Hybrid"
+      }
+    },
+    "labels": {
+      "distance_to_center": "Distance to city center",
+      "important_info": "Important Information",
+      "price_per_days": "{{days}} Day Price",
+      "pickup_locations": "Pickup Locations",
+      "fuel_policy": "Fuel Policy"
+    }
+  },
+  "yacht": {
+    "labels": {
+      "location": "Location",
+      "min_rental": "Min Rental Duration",
+      "capacity": "People",
+      "amenities": "Amenities",
+      "size": "Yacht Size"
+    }
+  },
+  "popular": {
+    "labels": {
+      "rank": "Number {{rank}}",
+      "purchased_count": "{{count}}+ purchased",
+      "iconic_place": "Iconic Place",
+      "most_popular": "Most Popular"
+    }
+  }
+}

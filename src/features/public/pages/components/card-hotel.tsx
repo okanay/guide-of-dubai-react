@@ -13,7 +13,7 @@ interface HotelCardProps {
 }
 
 export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeToggle }) => {
-  const { t } = useTranslation('page-index')
+  const { t } = useTranslation('global-card')
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const imageContainerRef = useRef<HTMLDivElement>(null)
   const { openModal } = useLeafletModalStore()
@@ -93,19 +93,6 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
         amenities: ['WiFi', 'Kahvaltı', 'Fitness', 'Toplantı Salonu'],
       },
     ]
-
-    // openModal({
-    //   mode: 'pin',
-    //   data: {
-    //     coords: [41.0082, 28.9784],
-    //     name: 'İstanbul',
-    //   },
-    // })
-
-    // openModal({
-    //   mode: 'price',
-    //   data: exampleHotels,
-    // })
 
     openModal({
       mode: 'card',
@@ -220,17 +207,17 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
         <div className="-mt-0.5 flex items-center gap-2 text-size-sm">
           <Icon name="thumbs-up" className="size-4 text-badge-green" aria-hidden="true" />
           <span>
-            <span className="sr-only">Rating:</span>
+            <span className="sr-only">{t('common.labels.rating')}:</span>
             {hotel.reviewRating.toFixed(1)}
             <span className="sr-only">out of 5, based on</span>({hotel.reviewCount}{' '}
-            <span className="sr-only">reviews</span>)
+            <span className="sr-only">{t('common.labels.reviews')}</span>)
           </span>
           <button
             type="button"
             onClick={handleMapViewClick}
             className="font-semibold text-primary-500 underline transition-colors hover:text-primary-400 focus:outline-none"
           >
-            {t('hotels.map_view')}
+            {t('hotel.labels.map_view')}
           </button>
         </div>
 
@@ -247,7 +234,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
             <li className="flex items-center gap-2">
               <Icon name="location-pin" className="size-3" aria-hidden="true" />
               <span>
-                <strong>{t('hotels.distance_to_center')}:</strong>{' '}
+                <strong>{t('hotel.labels.distance_to_center')}:</strong>{' '}
                 <span className="font-medium">{hotel.distanceToCenter}</span>
               </span>
             </li>
@@ -257,8 +244,8 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
               <li className="flex items-center gap-2">
                 <Icon name="hotel/breakfast" className="size-3" aria-hidden="true" />
                 <span>
-                  <strong>{t(`hotels.features.breakfast.label`)}:</strong>{' '}
-                  <span className="font-medium">{t(`hotels.features.breakfast.value`)}</span>
+                  <strong>{t('hotel.features.breakfast.label')}:</strong>{' '}
+                  <span className="font-medium">{t('hotel.features.breakfast.value')}</span>
                 </span>
               </li>
             )}
@@ -268,8 +255,8 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
               <li className="flex items-center gap-2">
                 <Icon name="person" className="size-3" aria-hidden="true" />
                 <span>
-                  <strong>{t(`hotels.features.forTwoPeople.label`)}:</strong>{' '}
-                  <span className="font-medium">{t(`hotels.features.forTwoPeople.value`)}</span>
+                  <strong>{t('hotel.features.forTwoPeople.label')}:</strong>{' '}
+                  <span className="font-medium">{t('hotel.features.forTwoPeople.value')}</span>
                 </span>
               </li>
             )}
@@ -279,8 +266,8 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
               <li className="flex items-center gap-2">
                 <Icon name="check" className="size-3 text-badge-green" aria-hidden="true" />
                 <span>
-                  <strong>{t(`hotels.features.freeCancellation.label`)}:</strong>{' '}
-                  <span className="font-medium">{t(`hotels.features.freeCancellation.value`)}</span>
+                  <strong>{t('hotel.features.freeCancellation.label')}:</strong>{' '}
+                  <span className="font-medium">{t('hotel.features.freeCancellation.value')}</span>
                 </span>
               </li>
             )}
@@ -293,7 +280,10 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
         {/* Pricing and Booking */}
         <footer className="flex flex-col gap-y-1.5">
           <p className="text-size-xs">
-            {t('hotels.per_night', { count: hotel.nightCount, adults: hotel.adultCount })}
+            {t('hotel.labels.per_night_guests', {
+              count: hotel.nightCount,
+              adults: hotel.adultCount,
+            })}
           </p>
           <div
             className="text-size-xl font-bold"
@@ -307,7 +297,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
             className="w-full rounded-xs bg-btn-primary px-4 py-2 text-center text-size-sm font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus active:scale-[0.98]"
             role="button"
           >
-            {t('hotels.book_now')}
+            {t('common.buttons.book_now')}
           </Link>
         </footer>
       </section>

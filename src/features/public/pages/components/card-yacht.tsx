@@ -12,7 +12,7 @@ interface YachtCardProps {
 }
 
 export const YachtCard: React.FC<YachtCardProps> = ({ yacht, className, onLikeToggle }) => {
-  const { t } = useTranslation('page-index')
+  const { t } = useTranslation('global-card') // global-card namespace kullan
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const imageContainerRef = useRef<HTMLDivElement>(null)
 
@@ -191,7 +191,7 @@ export const YachtCard: React.FC<YachtCardProps> = ({ yacht, className, onLikeTo
           <div className="flex items-start gap-2">
             <Icon name="location-pin" className="mt-0.5 size-4" aria-hidden="true" />
             <span className="">
-              {t('yachts.location')}: {yacht.location}
+              {t('yacht.labels.location')}: {yacht.location}
             </span>
           </div>
 
@@ -199,7 +199,7 @@ export const YachtCard: React.FC<YachtCardProps> = ({ yacht, className, onLikeTo
           <div className="flex items-start gap-2">
             <Icon name="duration" className="mt-0.5 size-4" aria-hidden="true" />
             <span className="">
-              {t('yachts.min_rental')}: {yacht.rentalDuration}
+              {t('yacht.labels.min_rental')}: {yacht.rentalDuration}
             </span>
           </div>
 
@@ -207,7 +207,7 @@ export const YachtCard: React.FC<YachtCardProps> = ({ yacht, className, onLikeTo
           <div className="ml-0.5 flex items-start gap-2">
             <Icon name="person" className="mt-0.5 mr-0.5 size-3" aria-hidden="true" />
             <span className="">
-              {yacht.capacity} {t('yachts.capacity')}
+              {yacht.capacity} {t('yacht.labels.capacity')}
             </span>
           </div>
         </div>
@@ -226,7 +226,7 @@ export const YachtCard: React.FC<YachtCardProps> = ({ yacht, className, onLikeTo
             onClick={handleBookingClick}
             className="h-10 w-full rounded-xs bg-btn-primary text-size-sm font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus"
           >
-            {t('yachts.button.book')}
+            {t('common.buttons.rent_now')}
           </button>
         </div>
       </Link>

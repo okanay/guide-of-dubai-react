@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 
 export function AuthModal() {
   const { isOpen, closeModal, scopeId, mode, setMode } = useAuthModal()
-  const { t } = useTranslation('modal-global')
+  const { t } = useTranslation('global-modal')
 
   const handleClose = () => {
     closeModal()
@@ -82,7 +82,7 @@ export function AuthModal() {
 
 function LoginOptions({ onClose }: { onClose: () => void }) {
   const { setMode } = useAuthModal()
-  const { t } = useTranslation('modal-global')
+  const { t } = useTranslation('global-modal')
 
   return (
     <>

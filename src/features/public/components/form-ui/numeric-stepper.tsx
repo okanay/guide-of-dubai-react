@@ -40,7 +40,7 @@ export const NumericStepper = ({
   required,
   disabled = false,
 }: NumericStepperProps) => {
-  const { t } = useTranslation('components')
+  const { t } = useTranslation('global-components')
 
   const handleDecrement = () => {
     if (disabled) return

@@ -39,7 +39,7 @@ export const Slider = ({
   showProgress = true,
   ...props
 }: Props) => {
-  const { t } = useTranslation('components')
+  const { t } = useTranslation('global-components')
 
   const defaultFormatValue = (val: number) => {
     if (formatValue) return formatValue(val)

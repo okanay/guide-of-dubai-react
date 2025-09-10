@@ -60,7 +60,7 @@ export const BetweenDatePicker = ({
   maxDate,
 }: BetweenDatePickerProps) => {
   const { language } = useLanguage()
-  const { t } = useTranslation('components')
+  const { t } = useTranslation('global-components')
   const triggerRef = useRef<HTMLDivElement>(null)
 
   const defaultStartPlaceholder =
@@ -266,7 +266,7 @@ function BetweenCalendarPanel({
   maxDate,
   className,
 }: BetweenCalendarPanelProps) {
-  const { t } = useTranslation('components')
+  const { t } = useTranslation('global-components')
   const panelRef = useClickOutside<HTMLDivElement>(onClose, true, triggerRef)
   const [position, setPosition] = useState({ top: 0, left: 0 })
 

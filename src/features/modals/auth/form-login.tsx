@@ -10,10 +10,10 @@ import { useTranslation } from 'react-i18next'
 
 export function EmailLoginForm({ onClose }: { onClose: () => void }) {
   const { setMode } = useAuthModal()
-  const { t } = useTranslation(['modal-global', 'errors-zod', 'common'])
+  const { t } = useTranslation(['global-modal', 'errors-zod', 'global-common'])
 
   const loginSchema = z.object({
-    email: z.string().email(t('errors-zod:invalid_email')),
+    email: z.email(t('errors-zod:invalid_email')),
     password: z
       .string()
       .min(1, t('errors-zod:required'))
@@ -43,10 +43,10 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
     try {
       console.log('Login data:', data)
       await new Promise((resolve) => setTimeout(resolve, 1000))
-      toast.success(t('common:success_title'))
+      toast.success(t('global-common:success_title'))
       onClose()
     } catch (error) {
-      toast.error(t('common:error_title'))
+      toast.error(t('global-common:error_title'))
       console.error('Login error:', error)
     }
   }
@@ -56,7 +56,7 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
       .map((error) => error?.message)
       .filter(Boolean)
     if (errorMessages.length > 0) {
-      toast.error(t('common:error_title'), {
+      toast.error(t('global-common:error_title'), {
         description: errorMessages.join(', '),
       })
     }
@@ -70,13 +70,13 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
           className="flex items-center gap-x-1 text-size font-semibold"
         >
           <ChevronLeft />
-          {t('common:back')}
+          {t('global-common:back')}
         </button>
         <Icon name="brand/full-primary" width={144} className="mt-4 inline-block" />
         <h2 className="mb-1 text-size-4xl font-semibold text-on-box-black">
-          {t('modal-global:auth.login_title')}
+          {t('global-modal:auth.login_title')}
         </h2>
-        <p className="text-size-sm text-on-box-black">{t('modal-global:auth.login_description')}</p>
+        <p className="text-size-sm text-on-box-black">{t('global-modal:auth.login_description')}</p>
       </header>
       <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto px-6 py-4">
         <form onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)} className="space-y-4">
@@ -87,8 +87,8 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
               <TextInput
                 {...field}
                 id="email"
-                label={t('modal-global:auth.form.email')}
-                placeholder={t('modal-global:auth.form.email')}
+                label={t('global-modal:auth.form.email')}
+                placeholder={t('global-modal:auth.form.email')}
                 required
                 value={field.value || ''}
                 error={errors.email?.message}
@@ -104,8 +104,8 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
                 {...field}
                 id="password"
                 type="password"
-                label={t('modal-global:auth.form.password')}
-                placeholder={t('modal-global:auth.form.password')}
+                label={t('global-modal:auth.form.password')}
+                placeholder={t('global-modal:auth.form.password')}
                 required
                 value={field.value || ''}
                 error={errors.password?.message}
@@ -118,13 +118,13 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
             disabled={isSubmitting}
             className="w-full rounded-xs bg-btn-primary py-2.5 font-semibold text-on-btn-primary hover:bg-btn-primary-hover disabled:opacity-50"
           >
-            {isSubmitting ? t('common:sending') : t('modal-global:auth.login_button')}
+            {isSubmitting ? t('global-common:sending') : t('global-modal:auth.login_button')}
           </button>
         </form>
 
         <div className="mt-4 text-center font-semibold">
           <button onClick={() => setMode('forgot-password')} className="text-sm text-btn-primary">
-            {t('modal-global:auth.forgot_password_link')}
+            {t('global-modal:auth.forgot_password_link')}
           </button>
         </div>
       </div>

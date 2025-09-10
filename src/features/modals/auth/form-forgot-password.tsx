@@ -10,10 +10,10 @@ import { useTranslation } from 'react-i18next'
 
 export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
   const { setMode } = useAuthModal()
-  const { t } = useTranslation(['modal-global', 'errors-zod', 'common'])
+  const { t } = useTranslation(['global-modal', 'errors-zod', 'global-common'])
 
   const forgotPasswordSchema = z.object({
-    email: z.string().email(t('errors-zod:invalid_email')),
+    email: z.email(t('errors-zod:invalid_email')),
   })
 
   type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>
@@ -38,19 +38,19 @@ export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
     try {
       console.log('Forgot password data:', data)
       await new Promise((resolve) => setTimeout(resolve, 1000))
-      toast.success(t('common:success_title'), {
-        description: t('common:success_message'),
+      toast.success(t('global-common:success_title'), {
+        description: t('global-common:success_message'),
       })
       onClose()
     } catch (error) {
-      toast.error(t('common:error_title'))
+      toast.error(t('global-common:error_title'))
       console.error('Forgot password error:', error)
     }
   }
 
   const onInvalidSubmit = () => {
     if (errors.email?.message) {
-      toast.error(t('common:error_title'), {
+      toast.error(t('global-common:error_title'), {
         description: errors.email.message,
       })
     }
@@ -64,14 +64,14 @@ export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
           className="flex items-center gap-x-1 text-size font-semibold"
         >
           <ChevronLeft />
-          {t('modal-global:auth.back_to_login')}
+          {t('global-modal:auth.back_to_login')}
         </button>
         <Icon name="brand/full-primary" width={144} className="mt-4 inline-block" />
         <h2 className="mb-1 text-size-4xl font-semibold text-on-box-black">
-          {t('modal-global:auth.forgot_password_title')}
+          {t('global-modal:auth.forgot_password_title')}
         </h2>
         <p className="text-size-sm text-on-box-black">
-          {t('modal-global:auth.forgot_password_description')}
+          {t('global-modal:auth.forgot_password_description')}
         </p>
       </header>
       <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto px-6 py-4">
@@ -83,8 +83,8 @@ export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
               <TextInput
                 {...field}
                 id="email"
-                label={t('modal-global:auth.form.email')}
-                placeholder={t('modal-global:auth.form.email')}
+                label={t('global-modal:auth.form.email')}
+                placeholder={t('global-modal:auth.form.email')}
                 required
                 value={field.value || ''}
                 error={errors.email?.message}
@@ -97,7 +97,9 @@ export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
             disabled={isSubmitting}
             className="w-full rounded-xs bg-btn-primary py-2.5 font-semibold text-on-btn-primary hover:bg-btn-primary-hover disabled:opacity-50"
           >
-            {isSubmitting ? t('common:sending') : t('modal-global:auth.forgot_password_button')}
+            {isSubmitting
+              ? t('global-common:sending')
+              : t('global-modal:auth.forgot_password_button')}
           </button>
         </form>
       </div>

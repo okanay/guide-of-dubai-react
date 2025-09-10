@@ -13,7 +13,6 @@ import { SUPPORTED_CURRENCIES } from '@/i18n/config-currency'
 
 export function SystemSettingsModal() {
   const { isOpen, closeModal, scopeId, mode, setMode } = useSystemSettings()
-  const navigate = useNavigate()
 
   const handleClose = () => {
     closeModal()
@@ -53,7 +52,7 @@ function MainSection({ onClose }: { onClose: () => void }) {
   const { setMode, currency } = useSystemSettings()
   const { language } = useLanguage()
   const { theme } = useTheme()
-  const { t } = useTranslation('modal-global')
+  const { t } = useTranslation('global-modal')
 
   return (
     <>
@@ -146,7 +145,7 @@ function MainSection({ onClose }: { onClose: () => void }) {
 function LanguageSection({ onClose }: { onClose: () => void }) {
   const { setMode } = useSystemSettings()
   const { language, changeLanguage } = useLanguage()
-  const { t } = useTranslation('modal-global')
+  const { t } = useTranslation('global-modal')
   const navigate = useNavigate()
 
   // Geçici seçim state'i
@@ -246,7 +245,7 @@ function LanguageSection({ onClose }: { onClose: () => void }) {
 // Para Birimi Ayarları Bölümü
 function CurrencySection({ onClose }: { onClose: () => void }) {
   const { setMode, currency, setCurrency } = useSystemSettings()
-  const { t } = useTranslation('modal-global')
+  const { t } = useTranslation('global-modal')
 
   // Geçici seçim state'i
   const [selectedCurrency, setSelectedCurrency] = useState(currency.code)
@@ -334,7 +333,7 @@ function CurrencySection({ onClose }: { onClose: () => void }) {
 function ThemeSection({ onClose }: { onClose: () => void }) {
   const { setMode } = useSystemSettings()
   const { theme, setTheme } = useTheme()
-  const { t } = useTranslation('modal-global')
+  const { t } = useTranslation('global-modal')
 
   // Geçici seçim state'i
   const [selectedTheme, setSelectedTheme] = useState(theme)

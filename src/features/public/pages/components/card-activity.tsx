@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggle }) => {
-  const { t } = useTranslation('page-index')
+  const { t } = useTranslation('global-card') // global-card namespace kullan
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const imageContainerRef = useRef<HTMLDivElement>(null)
 
@@ -182,7 +182,7 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
           {/* Discount Badge */}
           {activity.hasDiscount && activity.discountPercentage && (
             <div className="w-fit rounded-xs bg-primary-500 px-2 py-1 text-size-xs font-bold text-white">
-              Save {activity.discountPercentage}%
+              {t('activity.discount.save_percent', { percent: activity.discountPercentage })}
             </div>
           )}
           {/* Title */}
@@ -217,7 +217,7 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
               <span className="text-size-lg font-bold text-on-box-black">
                 {formatPrice(activity.price)}
               </span>
-              <span className="text-size-xs text-gray-500">/ kişi başı</span>
+              <span className="text-size-xs text-gray-500">{t('common.labels.per_person')}</span>
             </div>
           </div>
 
@@ -227,7 +227,7 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
             onClick={handleBookingClick}
             className="h-8 w-fit rounded-xs bg-btn-primary px-2 text-size-xs font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus sm:px-6 sm:text-size-sm"
           >
-            {t('activities.button.book')}
+            {t('common.buttons.buy_now')}
           </button>
         </div>
       </Link>

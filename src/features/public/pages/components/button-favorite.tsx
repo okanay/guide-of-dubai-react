@@ -1,6 +1,7 @@
 import Icon from '@/components/icon'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   contentId?: string
@@ -15,15 +16,22 @@ export const ButtonFavorite: React.FC<Props> = ({
   initialLiked = false,
   onToggle,
 }) => {
+  const { t } = useTranslation('global-card')
   const [isLiked, setIsLiked] = useState(initialLiked)
 
-  const handleToggle = () => {}
+  const handleToggle = () => {
+    if (!contentId) return
+
+    const newLikedState = !isLiked
+    setIsLiked(newLikedState)
+    onToggle?.(contentId, newLikedState)
+  }
 
   return (
     <div className={twMerge('absolute top-2 right-2', className)}>
       <button
         onClick={handleToggle}
-        aria-label={isLiked ? 'Unlike' : 'Like'}
+        aria-label={isLiked ? t('common.actions.unlike') : t('common.actions.like')}
         className="flex items-center justify-center transition-opacity duration-300 hover:opacity-80 focus:opacity-80 active:opacity-70"
       >
         <Icon

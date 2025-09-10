@@ -43,7 +43,7 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, Props>(
     },
     ref,
   ) => {
-    const { t } = useTranslation('components')
+    const { t } = useTranslation('global-components')
     const defaultPlaceholder = placeholder || t('form.phone_input.placeholder')
 
     const {

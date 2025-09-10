@@ -1,5 +1,3 @@
-// src/features/public/components/form-ui/country-select.tsx
-
 import React, { useMemo } from 'react'
 import { useLanguage } from 'src/i18n/prodiver'
 import { getCountries } from 'src/utils/countries'

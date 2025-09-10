@@ -12,7 +12,7 @@ interface TourCardProps {
 }
 
 export const TourCard: React.FC<TourCardProps> = ({ tour, className, onLikeToggle }) => {
-  const { t } = useTranslation('page-index')
+  const { t } = useTranslation('global-card') // global-card namespace kullan
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const imageContainerRef = useRef<HTMLDivElement>(null)
 
@@ -213,7 +213,7 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, className, onLikeToggl
             onClick={handleBookingClick}
             className="h-8 w-fit rounded-xs bg-btn-primary px-2 text-size-xs font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus sm:px-6 sm:text-size-sm"
           >
-            {t('tours.button.book')}
+            {t('common.buttons.buy_now')}
           </button>
         </div>
       </Link>

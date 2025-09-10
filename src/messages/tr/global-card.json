@@ -1,0 +1,113 @@
+{
+  "common": {
+    "buttons": {
+      "book_now": "Rezervasyon Yap",
+      "buy_now": "Satın Al",
+      "rent_now": "Kirala",
+      "view_all": "Tümünü Gör",
+      "view_details": "Detayları Gör",
+      "reserve": "Rezerve Et"
+    },
+    "actions": {
+      "like": "Beğen",
+      "unlike": "Beğenme",
+      "share": "Paylaş",
+      "save": "Kaydet"
+    },
+    "labels": {
+      "per_person": "/ kişi başı",
+      "per_night": "/ gece",
+      "per_day": "/ gün",
+      "from": "İtibaren",
+      "starting_at": "Başlangıç",
+      "rating": "Puan",
+      "reviews": "değerlendirme",
+      "review": "değerlendirme"
+    }
+  },
+  "hotel": {
+    "features": {
+      "breakfast": {
+        "label": "Kahvaltı",
+        "value": "Dahil"
+      },
+      "freeCancellation": {
+        "label": "İptal",
+        "value": "Ücretsiz"
+      },
+      "forTwoPeople": {
+        "label": "Kapasite",
+        "value": "İki Kişilik"
+      }
+    },
+    "labels": {
+      "distance_to_center": "Merkeze uzaklık",
+      "per_night_guests": "{{count}} Gece, {{adults}} Yetişkin",
+      "map_view": "Haritada Gör",
+      "star_rating": "{{count}} Yıldızlı Otel"
+    }
+  },
+  "activity": {
+    "labels": {
+      "duration": "Süre",
+      "group_size": "Grup Büyüklüğü",
+      "included": "Dahil",
+      "difficulty": "Zorluk",
+      "age_limit": "Yaş Sınırı"
+    },
+    "discount": {
+      "save_percent": "%{{percent}} Tasarruf",
+      "original_price": "Orijinal Fiyat",
+      "discounted_price": "İndirimli Fiyat"
+    }
+  },
+  "tour": {
+    "labels": {
+      "duration": "Süre",
+      "departure": "Kalkış",
+      "language": "Dil",
+      "group_type": "Grup Tipi",
+      "pickup_included": "Transfer Dahil"
+    }
+  },
+  "rent_a_car": {
+    "features": {
+      "passengers": "1-4 Yolcu",
+      "air_conditioning": "Klima",
+      "transmission": {
+        "automatic": "Otomatik",
+        "manual": "Manuel"
+      },
+      "fuel_type": {
+        "petrol": "Benzin",
+        "diesel": "Dizel",
+        "electric": "Elektrik",
+        "hybrid": "Hibrit"
+      }
+    },
+    "labels": {
+      "distance_to_center": "Şehir merkezine uzaklık",
+      "important_info": "Önemli Bilgiler",
+      "price_per_days": "{{days}} Günlük Fiyat",
+      "pickup_locations": "Teslim Noktaları",
+      "fuel_policy": "Yakıt Politikası"
+    }
+  },
+  "yacht": {
+    "labels": {
+      "location": "Konum",
+      "min_rental": "Min Kiralama Süresi",
+      "capacity": "Kişilik",
+      "amenities": "Olanaklar",
+      "size": "Yat Boyutu"
+    }
+  },
+  "popular": {
+    "labels": {
+      "rank": "{{rank}} Numara",
+      "purchased_count": "{{count}}+ satın alındı",
+      "iconic_place": "İkonik Yer",
+      "most_popular": "En Popüler"
+    }
+  }
+}

@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const PopularCard: React.FC<Props> = ({ activity, index, className, onLikeToggle }) => {
-  const { t } = useTranslation('page-index')
+  const { t } = useTranslation('global-card') // global-card namespace kullan
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const imageContainerRef = useRef<HTMLDivElement>(null)
 
@@ -172,7 +172,7 @@ export const PopularCard: React.FC<Props> = ({ activity, index, className, onLik
         <div className="mb-2 flex items-center gap-1">
           <Icon name="trophy-primary" className="size-4" aria-hidden="true" />
           <span className="text-size-sm font-bold text-primary-500">
-            {t('iconic-places.rank', { rank: index + 1 })}
+            {t('popular.labels.rank', { rank: index + 1 })}
           </span>
         </div>
 
@@ -190,7 +190,7 @@ export const PopularCard: React.FC<Props> = ({ activity, index, className, onLik
           <span className="font-medium text-on-box-black">{activity.rating.toFixed(1)}</span>
           <span className="text-gray-600">({activity.reviewCount})</span>
           <div className="rounded-xs bg-gray-100 px-2 py-1 text-body-xs text-gray-700">
-            {t('iconic-places.purchased_count', { count: activity.purchaseCount })}
+            {t('popular.labels.purchased_count', { count: activity.purchaseCount })}
           </div>
         </div>
 
@@ -216,7 +216,7 @@ export const PopularCard: React.FC<Props> = ({ activity, index, className, onLik
               <span className="text-body-xl font-bold text-on-box-black">
                 {formatPrice(activity.price)}
               </span>
-              <span className="text-body-xs text-gray-500">{t('iconic-places.per_person')}</span>
+              <span className="text-body-xs text-gray-500">{t('common.labels.per_person')}</span>
             </div>
           </div>
 
@@ -225,7 +225,7 @@ export const PopularCard: React.FC<Props> = ({ activity, index, className, onLik
             onClick={handleBookingClick}
             className="h-10 w-full rounded-xs border border-btn-primary bg-btn-primary text-body-sm font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus sm:bg-transparent sm:text-btn-primary sm:hover:bg-primary-50 sm:focus:bg-primary-50"
           >
-            {t('iconic-places.button.book')}
+            {t('common.buttons.book_now')}
           </button>
         </div>
       </Link>

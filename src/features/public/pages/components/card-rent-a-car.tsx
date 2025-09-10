@@ -12,7 +12,7 @@ interface RentACarCardProps {
 }
 
 export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLikeToggle }) => {
-  const { t } = useTranslation('page-index')
+  const { t } = useTranslation('global-card') // global-card namespace kullan
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const imageContainerRef = useRef<HTMLDivElement>(null)
 
@@ -190,7 +190,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
           {/* Passenger Count */}
           <div className="flex items-center gap-1">
             <Icon name="person" className="size-3" aria-hidden="true" />
-            <span className="text-size-sm">{t('rent-a-car.features.passengers')}</span>
+            <span className="text-size-sm">{t('rent_a_car.features.passengers')}</span>
           </div>
 
           {/* Seats */}
@@ -207,7 +207,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
               <Icon name="rent-a-car/gear" className="size-4" aria-hidden="true" />
               <span className="text-size-sm">
                 {t(
-                  `rent-a-car.features.transmission.${car.features.automaticTransmission ? 'automatic' : 'manual'}`,
+                  `rent_a_car.features.transmission.${car.features.automaticTransmission ? 'automatic' : 'manual'}`,
                 )}
               </span>
             </div>
@@ -217,7 +217,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
           {car.features.airConditioning && (
             <div className="flex items-center gap-1">
               <Icon name="rent-a-car/air-conditioning" className="size-4" aria-hidden="true" />
-              <span className="text-size-sm">{t('rent-a-car.features.air_conditioning')}</span>
+              <span className="text-size-sm">{t('rent_a_car.features.air_conditioning')}</span>
             </div>
           )}
         </div>
@@ -228,7 +228,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
           <div className="flex flex-col gap-y-1.5">
             <span className="text-size-sm text-on-box-black">{car.location}</span>
             <span className="text-size-xs">
-              {t('rent-a-car.distance_to_center')} {car.distanceFromCenter}
+              {t('rent_a_car.labels.distance_to_center')} {car.distanceFromCenter}
             </span>
           </div>
         </div>
@@ -237,7 +237,9 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
 
         {/* Important Info */}
         <div className="mb-3 flex items-center gap-1.5">
-          <span className="text-size-xs text-gray-600">{t('rent-a-car.important_info')}</span>
+          <span className="text-size-xs text-gray-600">
+            {t('rent_a_car.labels.important_info')}
+          </span>
           <Icon name="info-bg" className="mt-0.5 size-4 text-gray-900" aria-hidden="true" />
         </div>
 
@@ -245,7 +247,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
         <div className="mt-auto space-y-2">
           <div className="flex flex-col">
             <span className="text-body-xs text-gray-500">
-              {t('rent-a-car.price_per_days', { days: 3 })}
+              {t('rent_a_car.labels.price_per_days', { days: 3 })}
             </span>
 
             <div className="flex items-baseline gap-1">
@@ -260,7 +262,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
             onClick={handleBookingClick}
             className="h-10 w-full rounded-xs border border-btn-primary bg-btn-primary text-body-sm font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus"
           >
-            {t('rent-a-car.button.book')}
+            {t('common.buttons.book_now')}
           </button>
         </div>
       </Link>

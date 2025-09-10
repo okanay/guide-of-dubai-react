@@ -121,7 +121,7 @@ function UnauthorizeDropdownContent({ openAuthModal, closeDropdown }: any) {
       />
       <Separator />
       <MenuItem
-        label={t('modal-global:settings.language')}
+        label={t('global-modal:settings.language')}
         value={language.label}
         onClick={() => {
           openSystemSettingsModal('language')
@@ -132,7 +132,7 @@ function UnauthorizeDropdownContent({ openAuthModal, closeDropdown }: any) {
       <Separator />
 
       <MenuItem
-        label={t('modal-global:settings.currency')}
+        label={t('global-modal:settings.currency')}
         value={currency.name}
         onClick={() => {
           openSystemSettingsModal('currency')
@@ -142,8 +142,8 @@ function UnauthorizeDropdownContent({ openAuthModal, closeDropdown }: any) {
       />
       <Separator />
       <MenuItem
-        label={t('modal-global:settings.theme')}
-        value={t(`modal-global:settings.${theme}_theme`)}
+        label={t('global-modal:settings.theme')}
+        value={t(`global-modal:settings.${theme}_theme`)}
         onClick={() => {
           openSystemSettingsModal('theme')
           closeDropdown()
@@ -181,7 +181,7 @@ function AuthorizeDropdownContent({ user, logout, closeDropdown }: any) {
       <MenuItem label={t('layout-header:profile.my_favorites')} onClick={() => {}} showChevron />
       <Separator />
       <MenuItem
-        label={t('modal-global:settings.language')}
+        label={t('global-modal:settings.language')}
         value={language.label}
         onClick={() => {
           openSystemSettingsModal('language')
@@ -190,7 +190,7 @@ function AuthorizeDropdownContent({ user, logout, closeDropdown }: any) {
         showChevron
       />
       <MenuItem
-        label={t('modal-global:settings.currency')}
+        label={t('global-modal:settings.currency')}
         value={currency.name}
         onClick={() => {
           openSystemSettingsModal('currency')
@@ -199,8 +199,8 @@ function AuthorizeDropdownContent({ user, logout, closeDropdown }: any) {
         showChevron
       />
       <MenuItem
-        label={t('modal-global:settings.theme')}
-        value={t(`modal-global:settings.${theme}_theme`)}
+        label={t('global-modal:settings.theme')}
+        value={t(`global-modal:settings.${theme}_theme`)}
         onClick={() => {
           openSystemSettingsModal('theme')
           closeDropdown()
@@ -237,7 +237,7 @@ function MenuItem({ label, description, value, onClick, showChevron, control }: 
 }
 
 function MobileAppDownload({ closeDropdown }: any) {
-  const { t } = useTranslation('modal-global')
+  const { t } = useTranslation('global-modal')
 
   return (
     <button
