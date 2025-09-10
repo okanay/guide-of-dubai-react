@@ -1,8 +1,12 @@
 import { getCookie, getHeader } from '@tanstack/react-start/server'
 import { createServerFn } from '@tanstack/react-start'
-import { DEFAULT_LANGUAGE, I18N_COOKIE_NAME, SUPPORTED_LANGUAGES } from './config-language'
-import { DEFAULT_CURRENCY, CURRENCY_COOKIE_NAME, SUPPORTED_CURRENCIES } from './config-currency'
 import { THEME_COOKIE_NAME, THEME_DEFAULT, THEME_SET } from 'src/providers/theme-mode'
+import {
+  DEFAULT_CURRENCY,
+  CURRENCY_COOKIE_NAME,
+  SUPPORTED_CURRENCIES,
+} from '@/i18n/config-currency'
+import { DEFAULT_LANGUAGE, I18N_COOKIE_NAME, SUPPORTED_LANGUAGES } from '@/i18n/config-language'
 
 interface PreferredSettingsData {
   lang: string

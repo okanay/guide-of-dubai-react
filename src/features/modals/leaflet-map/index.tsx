@@ -1,4 +1,3 @@
-// src/features/modals/leaflet-map/index.tsx
 import React from 'react'
 import { ClientOnly } from '@tanstack/react-router'
 

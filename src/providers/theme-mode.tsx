@@ -54,35 +54,6 @@ export function ThemeStore({ children, initialTheme }: Props) {
     ),
   )
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-
-    const updateTheme = () => {
-      const currentTheme = store.getState().theme
-      const rootElement = document.documentElement
-
-      rootElement.removeAttribute('data-theme')
-      rootElement.removeAttribute('class')
-
-      if (currentTheme === 'system') {
-        const systemTheme = mediaQuery.matches ? 'dark' : 'light'
-        rootElement.setAttribute('data-theme', systemTheme)
-        rootElement.className = systemTheme
-      } else {
-        rootElement.setAttribute('data-theme', currentTheme)
-        rootElement.className = currentTheme
-      }
-    }
-
-    // Apply the theme on initial load and whenever the theme state changes
-    updateTheme()
-
-    mediaQuery.addEventListener('change', updateTheme)
-    return () => {
-      mediaQuery.removeEventListener('change', updateTheme)
-    }
-  }, [])
-
   return <ThemeContext.Provider value={store}>{children}</ThemeContext.Provider>
 }
 
@@ -107,4 +78,84 @@ export function useTheme() {
     throw new Error('useTheme must be used within a ThemeProvider')
   }
   return useStore(context, (state) => state)
+}
+
+export const CreateThemeScript = () => {
+  return (
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+    (function() {
+      try {
+        function getCookieValue(name) {
+          const regex = new RegExp('(^| )' + name + '=([^;]+)')
+          const match = document.cookie.match(regex)
+          return match ? match[2] : null
+        }
+
+        function getLocalStorageTheme() {
+          try {
+            return localStorage.getItem('theme')
+          } catch (e) {
+            return null
+          }
+        }
+
+        function getSystemTheme() {
+          return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+
+        const cookieTheme = getCookieValue('${THEME_COOKIE_NAME}')
+        const localTheme = getLocalStorageTheme()
+        const savedTheme = cookieTheme || localTheme
+
+        let resolvedTheme
+        if (!savedTheme || savedTheme === 'system') {
+          resolvedTheme = getSystemTheme()
+        } else if (['light', 'dark'].includes(savedTheme)) {
+          resolvedTheme = savedTheme
+        } else {
+          resolvedTheme = getSystemTheme()
+        }
+
+        const root = document.documentElement
+
+        root.removeAttribute('data-theme')
+        root.className = root.className.replace(/\b(light|dark|system)\b/g, '').trim()
+
+        root.setAttribute('data-theme', resolvedTheme)
+        root.className = (root.className + ' ' + resolvedTheme).trim()
+
+        if (window.matchMedia) {
+          const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+
+          function handleThemeChange(e) {
+            const currentSavedTheme = getCookieValue('${THEME_COOKIE_NAME}') || getLocalStorageTheme()
+            if (!currentSavedTheme || currentSavedTheme === 'system') {
+              const newTheme = e.matches ? 'dark' : 'light'
+              root.setAttribute('data-theme', newTheme)
+              root.className = root.className.replace(/\b(light|dark|system)\b/g, '').trim()
+              root.className = (root.className + ' ' + newTheme).trim()
+            }
+          }
+
+          if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener('change', handleThemeChange)
+          } else if (mediaQuery.addListener) {
+            mediaQuery.addListener(handleThemeChange)
+          }
+        }
+
+      } catch (error) {
+        console.warn('Theme script error:', error)
+        const root = document.documentElement
+        root.setAttribute('data-theme', 'light')
+        root.className = root.className.replace(/\b(light|dark|system)\b/g, '').trim()
+        root.className = (root.className + ' light').trim()
+      }
+      })()
+      `,
+      }}
+    />
+  )
 }

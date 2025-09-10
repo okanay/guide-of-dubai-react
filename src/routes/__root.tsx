@@ -1,10 +1,10 @@
+import { getPreferedSettings } from '@/api/get-prefered-settings'
 import { createRootRoute, HeadContent, Outlet, redirect, Scripts } from '@tanstack/react-router'
 import { type ReactNode } from 'react'
-import { getPreferedSettings } from 'src/i18n/get-prefered-settings'
 import LanguageProvider from 'src/i18n/prodiver'
 import { AppProviders } from 'src/providers'
 import { AuthProvider, getMeInitial } from 'src/providers/auth'
-import { ThemeStore } from 'src/providers/theme-mode'
+import { CreateThemeScript, ThemeStore } from 'src/providers/theme-mode'
 import globals from '../assets/styles/globals.css?url'
 
 const CANONICAL_URL = import.meta.env.VITE_APP_CANONICAL_URL
@@ -284,6 +284,7 @@ export const Route = createRootRoute({
         href: `/fonts/custom-sans/regular.woff2`,
       },
     ],
+    scripts: [],
   }),
   staleTime: 4 * 60 * 1000,
   gcTime: 5 * 60 * 1000,
@@ -298,11 +299,11 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       lang={data.settings.language.locale}
       dir={data.settings.language.direction}
       data-currency={data.settings.currency.code}
-      data-theme={data.settings.theme}
-      className={data.settings.theme}
+      suppressHydrationWarning
     >
       <head>
         <HeadContent />
+        <CreateThemeScript />
       </head>
       <body>
         {children}

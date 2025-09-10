@@ -24,14 +24,6 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  ssr: {
-    external: ['leaflet', 'react-leaflet'],
-    noExternal: [],
-  },
-  optimizeDeps: {
-    include: ['leaflet', 'react-leaflet'],
-    exclude: ['leaflet', 'react-leaflet'],
-  },
   plugins: [
     tailwindcss(),
     tsConfigPaths(),
