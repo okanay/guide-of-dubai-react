@@ -1,9 +1,11 @@
 {
   "iconic-places": {
     "title": "Top 10 Most Liked Iconic Places in Dubai",
+    "rank": "Number {{rank}}",
+    "per_person": "/ per person",
+    "purchased_count": "{{count}}+ purchased",
     "button": {
-      "book": "Book Now",
-      "view-all": "View All"
+      "book": "Book Now"
     }
   },
   "interests": {

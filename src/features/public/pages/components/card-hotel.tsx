@@ -91,7 +91,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
             {/* Previous Button */}
             <button
               onClick={handlePrevImage}
-              className="absolute top-1/2 left-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100 hover:bg-black/70"
+              className="absolute top-1/2 left-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-70 hover:opacity-100"
               aria-label="Previous hotel image"
             >
               <Icon name="chevron-left" className="h-4 w-4 text-white" />
@@ -100,7 +100,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
             {/* Next Button */}
             <button
               onClick={handleNextImage}
-              className="absolute top-1/2 right-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100 hover:bg-black/70"
+              className="absolute top-1/2 right-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-70 hover:opacity-100"
               aria-label="Next hotel image"
             >
               <Icon name="chevron-right" className="h-4 w-4 text-white" />

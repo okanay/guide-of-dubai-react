@@ -17,8 +17,8 @@ export const Otels = () => {
   }
 
   return (
-    <section className="bg-card-surface text-on-box-white">
-      <div className="mx-auto max-w-main px-4 py-10">
+    <section className="bg-card-surface px-4 text-on-box-white">
+      <div className="mx-auto max-w-main py-10">
         <header className="mb-4 flex items-center justify-between">
           <h2 className="text-size-2xl font-bold md:text-size-3xl">{t('hotels.title')}</h2>
           <Link

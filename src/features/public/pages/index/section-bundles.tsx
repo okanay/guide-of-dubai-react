@@ -36,8 +36,8 @@ export const Bundles = () => {
   const bundleItems: BundleItem[] = t('bundles.items', { returnObjects: true }) as BundleItem[]
 
   return (
-    <section className="bg-box-surface py-10 text-on-box-black">
-      <div className="mx-auto max-w-main px-4">
+    <section className="bg-box-surface px-4 py-10 text-on-box-black">
+      <div className="mx-auto max-w-main">
         {/* Başlık ve Tümü Linki */}
         <header className="mb-6 flex items-center justify-between">
           <h2 className="text-size-2xl font-bold md:text-size-3xl">{t('bundles.title')}</h2>

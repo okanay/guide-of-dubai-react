@@ -121,7 +121,7 @@ export const IconicPlacesCard: React.FC<Props> = ({ activity, index, className, 
             <button
               type="button"
               onClick={handlePrevImage}
-              className="absolute top-1/2 left-3 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-btn-white text-on-btn-white opacity-0 transition-opacity duration-300 group-hover:opacity-75 hover:opacity-100"
+              className="absolute top-1/2 left-3 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-btn-white text-on-btn-white opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-70 hover:opacity-100"
               aria-label="Previous image"
             >
               <Icon name="chevron-left" className="size-5" />
@@ -130,7 +130,7 @@ export const IconicPlacesCard: React.FC<Props> = ({ activity, index, className, 
             <button
               type="button"
               onClick={handleNextImage}
-              className="absolute top-1/2 right-3 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-btn-white text-on-btn-white opacity-0 transition-opacity duration-300 group-hover:opacity-75 hover:opacity-100"
+              className="absolute top-1/2 right-3 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-btn-white text-on-btn-white opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-70 hover:opacity-100"
               aria-label="Next image"
             >
               <Icon name="chevron-right" className="size-5" />
@@ -171,7 +171,9 @@ export const IconicPlacesCard: React.FC<Props> = ({ activity, index, className, 
         {/* Rank Badge */}
         <div className="mb-2 flex items-center gap-1">
           <Icon name="trophy-primary" className="size-4" aria-hidden="true" />
-          <span className="text-size-sm font-bold text-primary-500">{index + 1} Numara</span>
+          <span className="text-size-sm font-bold text-primary-500">
+            {t('iconic-places.rank', { rank: index + 1 })}
+          </span>
         </div>
 
         {/* Title */}
@@ -188,7 +190,7 @@ export const IconicPlacesCard: React.FC<Props> = ({ activity, index, className, 
           <span className="font-medium text-on-box-black">{activity.rating.toFixed(1)}</span>
           <span className="text-gray-600">({activity.reviewCount})</span>
           <div className="rounded-xs bg-gray-100 px-2 py-1 text-body-xs text-gray-700">
-            {activity.purchaseCount}+ satın alındı
+            {t('iconic-places.purchased_count', { count: activity.purchaseCount })}
           </div>
         </div>
 
@@ -214,7 +216,7 @@ export const IconicPlacesCard: React.FC<Props> = ({ activity, index, className, 
               <span className="text-body-xl font-bold text-on-box-black">
                 {formatPrice(activity.price)}
               </span>
-              <span className="text-body-xs text-gray-500">/ kişi başı</span>
+              <span className="text-body-xs text-gray-500">{t('iconic-places.per_person')}</span>
             </div>
           </div>
 

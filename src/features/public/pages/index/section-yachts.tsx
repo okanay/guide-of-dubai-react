@@ -21,8 +21,8 @@ export const Yachts = () => {
   }
 
   return (
-    <section className="bg-box-surface text-on-box-black">
-      <div className="mx-auto max-w-main px-4 pt-10">
+    <section className="bg-box-surface px-4 text-on-box-black">
+      <div className="mx-auto max-w-main pt-10">
         <header className="mb-4 flex items-center justify-between">
           <h2 className="text-size-2xl font-bold md:text-size-3xl">{t('yachts.title')}</h2>
           <Link

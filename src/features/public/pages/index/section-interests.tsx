@@ -13,8 +13,8 @@ export const Interests = () => {
   const interests: Interest[] = t('interests.items', { returnObjects: true }) as Interest[]
 
   return (
-    <section className="bg-box-surface pt-6 pb-10 text-on-box-black">
-      <div className="mx-auto max-w-main px-4">
+    <section className="bg-box-surface px-4 pt-6 pb-10 text-on-box-black">
+      <div className="mx-auto max-w-main">
         <h2 className="mb-6 text-size-2xl font-bold md:text-size-3xl">{t('interests.title')}</h2>
         <div
           className="scrollbar-hide flex gap-x-4 overflow-x-auto sm:gap-x-1"
@@ -27,7 +27,7 @@ export const Interests = () => {
             <Link
               to="/$lang/not-found"
               key={index}
-              className="group/interest relative h-[80px] w-[calc(12.5%_-0.25rem)] min-w-[120px] shrink-0 snap-start overflow-hidden rounded-xs"
+              className="group/interest relative h-[80px] w-[calc((100%_/_8)_-_0.3rem)] min-w-[100px] shrink-0 snap-start overflow-hidden rounded-xs"
             >
               <img
                 src={interest.image}

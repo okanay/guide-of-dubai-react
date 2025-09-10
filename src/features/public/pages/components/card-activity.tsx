@@ -124,7 +124,7 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
             <button
               type="button"
               onClick={handlePrevImage}
-              className="absolute top-1/2 left-1 z-20 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-white/50 opacity-0 transition-opacity duration-300 group-hover:opacity-75 hover:opacity-100"
+              className="absolute top-1/2 left-1 z-20 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-75 hover:opacity-100"
               aria-label="Previous image"
             >
               <Icon name="chevron-left" className="size-3" />
@@ -133,7 +133,7 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
             <button
               type="button"
               onClick={handleNextImage}
-              className="absolute top-1/2 right-1 z-20 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-white/50 opacity-0 transition-opacity duration-300 group-hover:opacity-75 hover:opacity-100"
+              className="absolute top-1/2 right-1 z-20 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-75 hover:opacity-100"
               aria-label="Next image"
             >
               <Icon name="chevron-right" className="size-3" />
