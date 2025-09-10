@@ -112,7 +112,8 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, className, onLikeToggl
                 src={image}
                 alt={`${tour.title} - View ${imgIndex + 1}`}
                 className="h-full w-full object-cover"
-                loading={imgIndex === 0 ? 'eager' : 'lazy'}
+                loading={'lazy'}
+                fetchPriority="low"
               />
             </div>
           ))}

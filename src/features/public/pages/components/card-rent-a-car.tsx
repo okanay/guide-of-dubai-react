@@ -111,7 +111,8 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
               src={image}
               alt={`${car.brand} ${car.model} - View ${idx + 1} of ${car.images.length}`}
               className="h-full w-full shrink-0 snap-start object-cover"
-              loading={idx === 0 ? 'eager' : 'lazy'}
+              loading={'lazy'}
+              fetchPriority="low"
             />
           ))}
         </div>

@@ -19,11 +19,11 @@ export function SearchButton({ variant = 'icon', placeholder, className = '' }: 
     return (
       <button
         onClick={() => openModal()}
-        className={`flex items-center gap-x-2 ${className}`}
+        className={`line-clamp-1 flex items-center gap-x-2 text-start ${className}`}
         aria-label={t('buttons.search')}
       >
         <Icon name="search" className="size-6" />
-        <span>{defaultPlaceholder}</span>
+        <span className="line-clamp-1">{defaultPlaceholder}</span>
       </button>
     )
   }

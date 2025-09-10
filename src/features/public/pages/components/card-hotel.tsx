@@ -80,7 +80,8 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
               src={image}
               alt={`${hotel.name} - View ${idx + 1} of ${hotel.images.length}`}
               className="h-full w-full shrink-0 snap-start object-cover"
-              loading={idx === 0 ? 'eager' : 'lazy'}
+              loading={'lazy'}
+              fetchPriority="low"
             />
           ))}
         </div>

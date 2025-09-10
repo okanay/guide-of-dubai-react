@@ -112,7 +112,8 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
                 src={image}
                 alt={`${activity.title} - View ${imgIndex + 1}`}
                 className="h-full w-full object-cover"
-                loading={imgIndex === 0 ? 'eager' : 'lazy'}
+                loading={'lazy'}
+                fetchPriority="low"
               />
             </div>
           ))}

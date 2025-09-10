@@ -111,7 +111,8 @@ export const YachtCard: React.FC<YachtCardProps> = ({ yacht, className, onLikeTo
               src={image}
               alt={`${yacht.name} - View ${idx + 1} of ${yacht.images.length}`}
               className="h-full w-full shrink-0 snap-start object-cover"
-              loading={idx === 0 ? 'eager' : 'lazy'}
+              loading={'lazy'}
+              fetchPriority="low"
             />
           ))}
         </div>
