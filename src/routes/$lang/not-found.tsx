@@ -9,7 +9,7 @@ export const CustomNotFoundPage = () => {
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-box-surface text-on-box-black">
-      <div className="mx-auto flex max-w-7xl flex-col items-center rounded-2xl bg-gray-surface p-6 text-center shadow-lg">
+      <div className="mx-auto flex max-w-7xl flex-col items-center bg-gray-surface p-6 text-center">
         <h1 className="mb-4 text-7xl font-extrabold text-primary-500">404</h1>
         <p className="text-3xl font-semibold text-on-box-black">{t('not-found.title')}</p>
         <p className="mt-2 mb-6 max-w-2xl text-xl font-semibold text-balance text-gray-600">
@@ -22,12 +22,12 @@ export const CustomNotFoundPage = () => {
           {t('not-found.return-link')}
         </Link>
       </div>
-      <NavigateNotFound />
+      <NavigateNotFoundPath />
     </main>
   )
 }
 
-const NavigateNotFound = () => {
+const NavigateNotFoundPath = () => {
   const { language } = useLanguage()
   const location = useLocation()
   const router = useRouter()
@@ -42,9 +42,6 @@ const NavigateNotFound = () => {
 }
 
 export const Route = createFileRoute('/$lang/not-found')({
-  staleTime: 0,
-  gcTime: 0,
-  component: CustomNotFoundPage,
   head: () => {
     return {
       links: [
@@ -74,4 +71,5 @@ export const Route = createFileRoute('/$lang/not-found')({
       ],
     }
   },
+  component: CustomNotFoundPage,
 })

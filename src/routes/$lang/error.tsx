@@ -9,7 +9,7 @@ export const CustomErrorPage = () => {
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-box-surface text-on-box-black">
-      <div className="mx-auto flex max-w-7xl flex-col items-center rounded-2xl bg-gray-surface p-6 text-center shadow-lg">
+      <div className="mx-auto flex max-w-7xl flex-col items-center bg-gray-surface p-6 text-center">
         <h1 className="mb-4 text-7xl font-extrabold text-error-500">500</h1>
         <p className="text-3xl font-semibold text-on-box-black">{t('error.title')}</p>
         <p className="mt-2 mb-6 max-w-2xl text-xl font-semibold text-balance text-gray-600">
@@ -22,12 +22,12 @@ export const CustomErrorPage = () => {
           {t('error.return-link')}
         </Link>
       </div>
-      <NavigateNotError />
+      <NavigateErrorPath />
     </main>
   )
 }
 
-const NavigateNotError = () => {
+const NavigateErrorPath = () => {
   const { language } = useLanguage()
   const location = useLocation()
   const router = useRouter()
@@ -42,8 +42,6 @@ const NavigateNotError = () => {
 }
 
 export const Route = createFileRoute('/$lang/error')({
-  staleTime: 0,
-  gcTime: 0,
   component: CustomErrorPage,
   head: () => {
     return {

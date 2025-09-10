@@ -3,11 +3,11 @@ import { ClientOnly } from '@tanstack/react-router'
 
 // Tamamen dinamik import'lar - hiç top-level import yok
 const LazyLocationMap = React.lazy(() =>
-  import('./dynamic-lazy').then((module) => ({ default: module.default })),
+  import('./map-embeded').then((module) => ({ default: module.default })),
 )
 
 const LazyLeafletModal = React.lazy(() =>
-  import('./dynamic-modal').then((module) => ({ default: module.LeafletModal })),
+  import('./map-modal').then((module) => ({ default: module.LeafletModal })),
 )
 
 // Loading component

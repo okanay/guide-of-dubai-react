@@ -12,6 +12,7 @@ import { TimePicker, TimePickerRaw } from './time-picker'
 import { ToggleSwitch } from './toggle-switch'
 import { BetweenDatePicker, BetweenDatePickerText } from './date-picker-between'
 import { CountrySelect } from './country-select'
+import InlineMap from '@/features/modals/leaflet-map/map-embeded'
 
 export function ExampleForm() {
   // State'ler
@@ -62,6 +63,15 @@ export function ExampleForm() {
         label="Şartları kabul ediyorum"
         required
       />
+
+      <InlineMap
+        mode="price"
+        data={[
+          { coords: [25.276, 55.296], price: 150 },
+          { coords: [25.28, 55.3], price: 200 },
+        ]}
+      />
+
       <DatePicker label="Alış Tarihi" value={alisTarihi} onChange={setAlisTarihi} required />
       <DatePickerText />
       <BetweenDatePicker
