@@ -5,6 +5,7 @@ import enZodErrors from './en/errors-zod.json'
 import enLayoutFooter from './en/layout-footer.json'
 import enLayoutHeader from './en/layout-header.json'
 import enModalGlobal from './en/modal-global.json'
+import enCardGlobal from './en/card-global.json'
 import enPageErrors from './en/page-errors.json'
 import enPageIndex from './en/page-index.json'
 import enSeo from './en/seo.json'
@@ -16,6 +17,7 @@ import trZodErrors from './tr/errors-zod.json'
 import trLayoutFooter from './tr/layout-footer.json'
 import trLayoutHeader from './tr/layout-header.json'
 import trModalGlobal from './tr/modal-global.json'
+import trCardGlobal from './tr/card-global.json'
 import trPageErrors from './tr/page-errors.json'
 import trPageIndex from './tr/page-index.json'
 import trSeo from './tr/seo.json'
@@ -33,7 +35,8 @@ export const ns = [
   'page-errors',
   'errors-zod',
   'errors-api',
-  'modal-auth',
+  'modal-global',
+  'card-global',
 ] as const
 
 const resource = {
@@ -48,6 +51,7 @@ const resource = {
     'errors-api': enApiErrors,
     seo: enSeo,
     'modal-global': enModalGlobal,
+    'card-global': enCardGlobal,
   },
   tr: {
     common: trCommon,
@@ -60,6 +64,7 @@ const resource = {
     'errors-api': trApiErrors,
     seo: trSeo,
     'modal-global': trModalGlobal,
+    'card-global': trCardGlobal,
   },
 }
 
