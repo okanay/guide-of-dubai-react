@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSnapScroll } from '@/hooks/use-snap-scroll'
 import Icon from '@/components/icon'
-import { IconicPlacesCard } from '../components/card-iconic-places'
+import { PopularCard } from '../components/card-popular'
 import { ICONIC_PLACES } from '@/mockdata/iconic-places'
 
 export const IconicPlaces = () => {
@@ -82,7 +82,7 @@ export const IconicPlaces = () => {
                 ref={setCardRef(index)}
                 className="w-[calc(25%_-_1rem)] min-w-[260px] shrink-0 snap-start"
               >
-                <IconicPlacesCard activity={activity} index={index} />
+                <PopularCard activity={activity} index={index} />
               </div>
             ))}
           </div>

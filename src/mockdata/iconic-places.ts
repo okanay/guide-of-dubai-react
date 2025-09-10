@@ -1,4 +1,4 @@
-export const ICONIC_PLACES: IconicPlaces[] = [
+export const ICONIC_PLACES: PopularCard[] = [
   {
     id: '1',
     rank: 1,

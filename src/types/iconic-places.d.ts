@@ -1,4 +1,4 @@
-interface IconicPlaces {
+interface PopularCard {
   id: string
   rank: number
   title: string
