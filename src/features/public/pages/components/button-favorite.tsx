@@ -24,7 +24,7 @@ export const ButtonFavorite: React.FC<Props> = ({
       <button
         onClick={handleToggle}
         aria-label={isLiked ? 'Unlike' : 'Like'}
-        className="btn-default flex items-center justify-center"
+        className="flex items-center justify-center transition-opacity duration-300 hover:opacity-80 focus:opacity-80 active:opacity-70"
       >
         <Icon
           name={isLiked ? 'like-button-filled' : 'like-button'}
