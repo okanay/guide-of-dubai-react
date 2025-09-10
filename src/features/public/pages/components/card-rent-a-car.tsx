@@ -179,7 +179,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
         </h2>
 
         {/* Rating and Reviews */}
-        <div className="mb-2 flex items-center gap-2 text-size-xs">
+        <div className="mb-2 flex items-center gap-1 text-size-sm">
           <Icon name="star" className="size-4 text-primary-500" aria-hidden="true" />
           <span className="font-medium text-on-box-black">{car.rating.toFixed(1)}</span>
           <span className="text-gray-600">({car.reviewCount})</span>

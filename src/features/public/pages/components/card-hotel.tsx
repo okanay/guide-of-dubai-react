@@ -208,9 +208,10 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
           <Icon name="thumbs-up" className="size-4 text-badge-green" aria-hidden="true" />
           <span>
             <span className="sr-only">{t('common.labels.rating')}:</span>
-            {hotel.reviewRating.toFixed(1)}
-            <span className="sr-only">out of 5, based on</span>({hotel.reviewCount}{' '}
-            <span className="sr-only">{t('common.labels.reviews')}</span>)
+            <span>{hotel.reviewRating.toFixed(1)}</span>
+            <span className="sr-only">out of 5, based on</span>
+            <span className="ml-2">({hotel.reviewCount})</span>
+            <span className="sr-only">{t('common.labels.reviews')}</span>
           </span>
           <button
             type="button"
@@ -231,8 +232,8 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
           </h3>
           <ul className="space-y-2 text-size-sm">
             {/* Distance to Center */}
-            <li className="flex items-center gap-2">
-              <Icon name="location-pin" className="size-3" aria-hidden="true" />
+            <li className="flex items-center gap-1">
+              <Icon name="location-pin" className="size-4 -translate-x-0.5" aria-hidden="true" />
               <span>
                 <strong>{t('hotel.labels.distance_to_center')}:</strong>{' '}
                 <span className="font-medium">{hotel.distanceToCenter}</span>
@@ -241,8 +242,12 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
 
             {/* Breakfast Feature */}
             {hotel.features.breakfast && (
-              <li className="flex items-center gap-2">
-                <Icon name="hotel/breakfast" className="size-3" aria-hidden="true" />
+              <li className="flex items-center gap-1">
+                <Icon
+                  name="hotel/breakfast"
+                  className="size-4 -translate-x-0.5"
+                  aria-hidden="true"
+                />
                 <span>
                   <strong>{t('hotel.features.breakfast.label')}:</strong>{' '}
                   <span className="font-medium">{t('hotel.features.breakfast.value')}</span>
@@ -263,8 +268,12 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
 
             {/* Free Cancellation Feature */}
             {hotel.features.freeCancellation && (
-              <li className="flex items-center gap-2">
-                <Icon name="check" className="size-3 text-badge-green" aria-hidden="true" />
+              <li className="flex items-center gap-0.5">
+                <Icon
+                  name="check"
+                  className="size-4.5 -translate-x-0.75 text-badge-green"
+                  aria-hidden="true"
+                />
                 <span>
                   <strong>{t('hotel.features.freeCancellation.label')}:</strong>{' '}
                   <span className="font-medium">{t('hotel.features.freeCancellation.value')}</span>

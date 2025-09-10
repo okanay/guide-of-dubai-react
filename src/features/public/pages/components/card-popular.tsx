@@ -185,11 +185,11 @@ export const PopularCard: React.FC<Props> = ({ activity, index, className, onLik
         </h2>
 
         {/* Rating and Reviews */}
-        <div className="mb-2 flex items-center gap-2 text-size-xs">
+        <div className="mb-2 flex items-center gap-1 text-size-sm">
           <Icon name="star" className="size-4 text-primary-500" aria-hidden="true" />
           <span className="font-medium text-on-box-black">{activity.rating.toFixed(1)}</span>
           <span className="text-gray-600">({activity.reviewCount})</span>
-          <div className="rounded-xs bg-gray-100 px-2 py-1 text-body-xs text-gray-700">
+          <div className="ml-1 rounded-xs bg-gray-100 px-2 py-1 text-body-xs text-gray-700">
             {t('popular.labels.purchased_count', { count: activity.purchaseCount })}
           </div>
         </div>
