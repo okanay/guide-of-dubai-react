@@ -15,7 +15,32 @@
     "no_account": "Don't have an account?",
     "create_account": "Create account",
     "have_account": "Already have an account?",
-    "login_link": "Log in"
+    "login_link": "Log in",
+    "login_title": "Log in to your account",
+    "login_description": "Log in now and continue exploring.",
+    "login_button": "Log in",
+    "register_title": "Create your account",
+    "register_description": "Fill out the form below to create your new account.",
+    "register_button": "Create account",
+    "forgot_password_title": "Forgot Password",
+    "forgot_password_description": "Enter your email address and we'll send you a link to reset your password.",
+    "forgot_password_button": "Send Reset Link",
+    "forgot_password_link": "Forgot password?",
+    "back_to_login": "Back to Log in",
+    "privacy_policy": "I have read and accept the Privacy Policy.",
+    "marketing_consent": "I would like to be informed about campaigns and announcements.",
+    "form": {
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "email": "Email",
+      "password": "Password",
+      "password_description": "Must contain at least 6 characters, one uppercase, one lowercase, and one number.",
+      "confirm_password": "Confirm Password",
+      "phone": "Phone Number",
+      "nationality": "Nationality",
+      "referral_code": "Referral Code (Optional)",
+      "referral_code_placeholder": "Enter your referral code"
+    }
   },
   "settings": {
     "title": "Settings",

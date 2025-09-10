@@ -15,7 +15,32 @@
     "no_account": "Hesabınız yok mu?",
     "create_account": "Hesap oluşturun",
     "have_account": "Zaten hesabınız var mı?",
-    "login_link": "Giriş yapın"
+    "login_link": "Giriş yapın",
+    "login_title": "Hesabınıza giriş yapın",
+    "login_description": "Hemen giriş yapın ve keşfetmeye devam edin.",
+    "login_button": "Giriş Yap",
+    "register_title": "Hesabınızı oluşturun",
+    "register_description": "Yeni hesabınızı oluşturmak için aşağıdaki formu doldurun.",
+    "register_button": "Hesap Oluştur",
+    "forgot_password_title": "Şifremi Unuttum",
+    "forgot_password_description": "E-posta adresinizi girin, şifrenizi sıfırlamanız için size bir bağlantı gönderelim.",
+    "forgot_password_button": "Sıfırlama Bağlantısı Gönder",
+    "forgot_password_link": "Şifreni mi unuttun?",
+    "back_to_login": "Giriş Yap'a Geri Dön",
+    "privacy_policy": "Gizlilik Politikasını okudum, kabul ediyorum.",
+    "marketing_consent": "Kampanya ve duyurulardan haberdar olmak istiyorum.",
+    "form": {
+      "first_name": "Ad",
+      "last_name": "Soyad",
+      "email": "E-posta",
+      "password": "Şifre",
+      "password_description": "En az 6 karakter, bir büyük, bir küçük harf ve bir rakam içermelidir.",
+      "confirm_password": "Şifreyi Onayla",
+      "phone": "Telefon Numarası",
+      "nationality": "Uyruk",
+      "referral_code": "Referans Kodu (İsteğe Bağlı)",
+      "referral_code_placeholder": "Referans kodunuzu girin"
+    }
   },
   "settings": {
     "title": "Ayarlar",

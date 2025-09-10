@@ -13,7 +13,7 @@ export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation(['modal-global', 'errors-zod', 'common'])
 
   const forgotPasswordSchema = z.object({
-    email: z.email(t('errors-zod:invalid_email')),
+    email: z.string().email(t('errors-zod:invalid_email')),
   })
 
   type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>
@@ -37,10 +37,11 @@ export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
   const onValidSubmit = async (data: ForgotPasswordFormData) => {
     try {
       console.log('Forgot password data:', data)
-      // API çağrısı yapılacak
-      await new Promise((resolve) => setTimeout(resolve, 1000)) // Simülasyon
-      toast.success('Şifre sıfırlama bağlantısı e-postanıza gönderildi!')
-      setMode('email-login')
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      toast.success(t('common:success_title'), {
+        description: t('common:success_message'),
+      })
+      onClose()
     } catch (error) {
       toast.error(t('common:error_title'))
       console.error('Forgot password error:', error)
@@ -48,12 +49,9 @@ export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
   }
 
   const onInvalidSubmit = () => {
-    const errorMessages = Object.values(errors)
-      .map((error) => error?.message)
-      .filter(Boolean)
-    if (errorMessages.length > 0) {
+    if (errors.email?.message) {
       toast.error(t('common:error_title'), {
-        description: errorMessages.join(', '),
+        description: errors.email.message,
       })
     }
   }
@@ -62,18 +60,18 @@ export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
     <>
       <header className="flex flex-col px-6 py-4">
         <button
-          onClick={() => setMode('email-login')}
+          onClick={() => setMode('login')}
           className="flex items-center gap-x-1 text-size font-semibold"
         >
           <ChevronLeft />
-          {t('common:back')}
+          {t('modal-global:auth.back_to_login')}
         </button>
         <Icon name="brand/full-primary" width={144} className="mt-4 inline-block" />
         <h2 className="mb-1 text-size-4xl font-semibold text-on-box-black">
-          {t('modal-global:forgot_password_title')}
+          {t('modal-global:auth.forgot_password_title')}
         </h2>
         <p className="text-size-sm text-on-box-black">
-          {t('modal-global:forgot_password_description')}
+          {t('modal-global:auth.forgot_password_description')}
         </p>
       </header>
       <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto px-6 py-4">
@@ -85,8 +83,8 @@ export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
               <TextInput
                 {...field}
                 id="email"
-                label={t('modal-global:email_label')}
-                placeholder={t('modal-global:email_label')}
+                label={t('modal-global:auth.form.email')}
+                placeholder={t('modal-global:auth.form.email')}
                 required
                 value={field.value || ''}
                 error={errors.email?.message}
@@ -99,7 +97,7 @@ export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
             disabled={isSubmitting}
             className="w-full rounded-xs bg-btn-primary py-2.5 font-semibold text-on-btn-primary hover:bg-btn-primary-hover disabled:opacity-50"
           >
-            {isSubmitting ? t('common:sending') : t('modal-global:forgot_password_button')}
+            {isSubmitting ? t('common:sending') : t('modal-global:auth.forgot_password_button')}
           </button>
         </form>
       </div>

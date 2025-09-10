@@ -30,20 +30,20 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
         .min(2, t('errors-zod:string_min', { min: 2 }))
         .max(50, t('errors-zod:string_max', { max: 50 })),
       nationality: z.string().min(1, t('errors-zod:nationality_required')),
-      email: z.email(t('errors-zod:invalid_email')),
+      email: z.string().email(t('errors-zod:invalid_email')),
       phone: z
         .string()
         .min(1, t('errors-zod:required'))
         .refine((phone) => {
           try {
-            const phoneNumber = parsePhoneNumberFromString(phone, 'TR')
+            const phoneNumber = parsePhoneNumberFromString(phone)
             return phoneNumber?.isValid() ?? false
           } catch {
             return false
           }
         }, t('errors-zod:phone_invalid'))
         .transform((phone) => {
-          const phoneNumber = parsePhoneNumberFromString(phone, 'TR')
+          const phoneNumber = parsePhoneNumberFromString(phone)
           return phoneNumber!.format('E.164')
         }),
       referralCode: z
@@ -95,14 +95,12 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-    watch,
   } = form
 
   const onValidSubmit = async (data: RegisterFormData) => {
     try {
       console.log('Register data:', data)
-      // API çağrısı yapılacak
-      await new Promise((resolve) => setTimeout(resolve, 1000)) // Simülasyon
+      await new Promise((resolve) => setTimeout(resolve, 1000))
       toast.success(t('common:success_title'))
       onClose()
     } catch (error) {
@@ -138,10 +136,10 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
 
       <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto px-6 pb-4">
         <h2 className="text-size-4xl font-semibold text-on-box-black">
-          {t('modal-global:register_title')}
+          {t('modal-global:auth.register_title')}
         </h2>
         <p className="mb-6 text-size-sm text-on-box-black">
-          {t('modal-global:register_description')}
+          {t('modal-global:auth.register_description')}
         </p>
         <form onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)} className="space-y-4">
           {/* Ad ve Soyad */}
@@ -153,8 +151,8 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                 <TextInput
                   {...field}
                   id="firstName"
-                  label={t('modal-global:first_name_label')}
-                  placeholder={t('modal-global:first_name_label')}
+                  label={t('modal-global:auth.form.first_name')}
+                  placeholder={t('modal-global:auth.form.first_name')}
                   required
                   value={field.value || ''}
                   error={errors.firstName?.message}
@@ -162,7 +160,6 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                 />
               )}
             />
-
             <Controller
               name="lastName"
               control={control}
@@ -170,8 +167,8 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                 <TextInput
                   {...field}
                   id="lastName"
-                  label={t('modal-global:last_name_label')}
-                  placeholder={t('modal-global:last_name_label')}
+                  label={t('modal-global:auth.form.last_name')}
+                  placeholder={t('modal-global:auth.form.last_name')}
                   required
                   value={field.value || ''}
                   error={errors.lastName?.message}
@@ -189,8 +186,8 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
               <CountrySelect
                 {...field}
                 id="nationality"
-                label={t('modal-global:nationality_label')}
-                placeholder={t('modal-global:nationality_label')}
+                label={t('modal-global:auth.form.nationality')}
+                placeholder={t('modal-global:auth.form.nationality')}
                 required
                 error={errors.nationality?.message}
                 value={field.value || ''}
@@ -207,8 +204,8 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                 {...field}
                 id="email"
                 type="email"
-                label={t('modal-global:email_label')}
-                placeholder={t('modal-global:email_label')}
+                label={t('modal-global:auth.form.email')}
+                placeholder={t('modal-global:auth.form.email')}
                 required
                 value={field.value || ''}
                 error={errors.email?.message}
@@ -222,7 +219,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
             control={control}
             render={({ field }) => (
               <PhoneInput
-                label={t('modal-global:phone_label')}
+                label={t('modal-global:auth.form.phone')}
                 placeholder="+90 532 546 8228"
                 value={field.value || ''}
                 onChange={field.onChange}
@@ -240,8 +237,8 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
               <TextInput
                 {...field}
                 id="referralCode"
-                label={t('modal-global:referral_code_label')}
-                placeholder={t('modal-global:referral_code_placeholder')}
+                label={t('modal-global:auth.form.referral_code')}
+                placeholder={t('modal-global:auth.form.referral_code_placeholder')}
                 value={field.value || ''}
                 error={errors.referralCode?.message}
                 maxLength={12}
@@ -259,12 +256,12 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                 {...field}
                 id="password"
                 type="password"
-                label={t('modal-global:password_label')}
-                placeholder={t('modal-global:password_label')}
+                label={t('modal-global:auth.form.password')}
+                placeholder={t('modal-global:auth.form.password')}
                 required
                 value={field.value || ''}
                 error={errors.password?.message}
-                description={t('modal-global:password_description')}
+                description={t('modal-global:auth.form.password_description')}
               />
             )}
           />
@@ -278,8 +275,8 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                 {...field}
                 id="confirmPassword"
                 type="password"
-                label={t('modal-global:confirm_password_label')}
-                placeholder={t('modal-global:confirm_password_label')}
+                label={t('modal-global:auth.form.confirm_password')}
+                placeholder={t('modal-global:auth.form.confirm_password')}
                 required
                 value={field.value || ''}
                 error={errors.confirmPassword?.message}
@@ -301,13 +298,12 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                   onChange={field.onChange}
                   label={
                     (
-                      <span className="text-size-sm">{t('modal-global:privacy_policy_label')}</span>
+                      <span className="text-size-sm">{t('modal-global:auth.privacy_policy')}</span>
                     ) as any
                   }
                 />
               )}
             />
-
             <Controller
               name="marketingConsent"
               control={control}
@@ -321,7 +317,7 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
                   label={
                     (
                       <span className="text-size-sm">
-                        {t('modal-global:marketing_consent_label')}
+                        {t('modal-global:auth.marketing_consent')}
                       </span>
                     ) as any
                   }
@@ -336,11 +332,10 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
             disabled={isSubmitting}
             className="w-full rounded-xs bg-btn-primary py-2.5 font-semibold text-on-btn-primary hover:bg-btn-primary-hover disabled:opacity-50"
           >
-            {isSubmitting ? t('common:sending') : t('modal-global:register_button')}
+            {isSubmitting ? t('common:sending') : t('modal-global:auth.register_button')}
           </button>
         </form>
 
-        {/* Mobil için extra spacing */}
         <div className="h-20 md:hidden" />
       </div>
     </>

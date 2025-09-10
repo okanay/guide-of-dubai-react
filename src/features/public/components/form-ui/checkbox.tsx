@@ -52,7 +52,7 @@ export function Checkbox({
   ...props
 }: CheckboxProps) {
   return (
-    <div data-checked={checked} className={twMerge('group/cb flex items-end gap-3', className)}>
+    <div data-checked={checked} className={twMerge('group/cb flex items-start gap-3', className)}>
       <div className="relative">
         <input
           {...props}
@@ -69,12 +69,12 @@ export function Checkbox({
       </div>
 
       {label && (
-        <div className="flex-1">
+        <div className="-mt-1 flex-1">
           <label htmlFor={id} className="cursor-pointer text-size-sm font-medium text-on-box-black">
             {label}
             {required && <span className="ml-1 text-error-500">*</span>}
           </label>
-          {error && <p className="mt-1 text-size-xs text-error-500">{error}</p>}
+          {error && <p className="text-size-xs text-error-500">{error}</p>}
         </div>
       )}
     </div>
