@@ -86,7 +86,7 @@ export const YachtCard: React.FC<YachtCardProps> = ({ yacht, className, onLikeTo
   return (
     <article
       className={twMerge(
-        'group relative flex h-full min-h-[480px] w-full flex-col overflow-hidden rounded-xs border border-gray-200 bg-box-surface transition-all duration-300 hover:shadow-lg',
+        'group relative flex h-full min-h-[480px] w-full flex-col overflow-hidden rounded-xs border border-gray-200 bg-box-surface',
         className,
       )}
       aria-labelledby={`yacht-${yacht.id}-title`}

@@ -23,14 +23,14 @@ export const RentACar = () => {
   return (
     <section className="bg-primary-500 px-4 text-on-box-white">
       <div className="mx-auto max-w-main py-10">
-        <header className="mb-4 flex items-center justify-between">
+        <header className="mb-4 flex items-start justify-between sm:items-center">
           <h2 className="text-size-2xl font-bold md:text-size-3xl">{t('rent-a-car.title')}</h2>
           <Link
             to="/$lang/not-found"
-            className="btn-default flex items-center gap-2 rounded-full px-2 py-2 text-size-sm font-semibold text-white hover:text-white/80"
+            className="btn-default flex items-center gap-2 rounded-full py-1 text-size-sm font-semibold text-nowrap text-white hover:text-white/80 sm:px-2 sm:py-2"
           >
             {t('rent-a-car.view_all')}
-            <Icon name="chevron-right" className="size-4" />
+            <Icon name="chevron-right" className="size-4 shrink-0" />
           </Link>
         </header>
 

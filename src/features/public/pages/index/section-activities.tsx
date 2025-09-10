@@ -15,7 +15,7 @@ export const Activities = () => {
     <section className="bg-box-surface px-4 text-on-box-black">
       <div className="mx-auto max-w-main py-10">
         {/* Header */}
-        <header className="mb-6 flex items-start justify-between sm:items-center">
+        <header className="mb-4 flex items-start justify-between sm:items-center">
           <h2 className="text-size-2xl font-bold md:text-size-3xl">{t('activities.title')}</h2>
           <Link
             to="/$lang/not-found"

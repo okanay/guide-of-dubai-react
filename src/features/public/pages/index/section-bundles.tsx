@@ -39,14 +39,15 @@ export const Bundles = () => {
     <section className="bg-box-surface px-4 py-10 text-on-box-black">
       <div className="mx-auto max-w-main">
         {/* Başlık ve Tümü Linki */}
-        <header className="mb-6 flex items-center justify-between">
+        <header className="mb-4 flex items-start justify-between sm:items-center">
           <h2 className="text-size-2xl font-bold md:text-size-3xl">{t('bundles.title')}</h2>
           <Link
             to="/$lang/not-found"
-            className="btn-default flex items-center gap-2 rounded-full px-2 py-2 text-size-sm font-semibold text-primary-500"
+            className="btn-default flex items-center gap-2 rounded-full py-1 text-size-sm font-semibold text-nowrap text-primary-500 hover:text-primary-500/80 sm:px-2 sm:py-2"
           >
             {t('bundles.view_all')}
-            <Icon name="chevron-right" className="size-4" />
+
+            <Icon name="chevron-right" className="size-4 shrink-0" />
           </Link>
         </header>
 

@@ -85,7 +85,7 @@ export const IconicPlacesCard: React.FC<Props> = ({ activity, index, className, 
   return (
     <article
       className={twMerge(
-        'group relative flex h-[540px] w-full flex-col overflow-hidden rounded-xs border border-gray-200 bg-box-surface transition-all duration-300 hover:shadow-lg',
+        'group relative flex h-[540px] w-full flex-col overflow-hidden rounded-xs border border-gray-200 bg-box-surface',
         className,
       )}
       aria-labelledby={`activity-${activity.id}-title`}
@@ -223,7 +223,7 @@ export const IconicPlacesCard: React.FC<Props> = ({ activity, index, className, 
           <button
             type="button"
             onClick={handleBookingClick}
-            className="h-10 w-full rounded-xs border border-btn-primary bg-btn-primary text-body-sm font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus sm:bg-transparent sm:text-btn-primary"
+            className="h-10 w-full rounded-xs border border-btn-primary bg-btn-primary text-body-sm font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus sm:bg-transparent sm:text-btn-primary sm:hover:bg-primary-50 sm:focus:bg-primary-50"
           >
             {t('iconic-places.button.book')}
           </button>

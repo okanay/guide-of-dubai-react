@@ -57,7 +57,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
 
   return (
     <article
-      className="group relative flex h-full w-full flex-col overflow-hidden rounded-xs bg-on-box-black transition-all duration-300 hover:shadow-lg"
+      className="group relative flex h-full w-full flex-col overflow-hidden rounded-xs bg-on-box-black"
       aria-labelledby={`hotel-${hotel.id}-title`}
     >
       {/* Hotel Image Gallery */}

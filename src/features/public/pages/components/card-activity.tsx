@@ -86,7 +86,7 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
   return (
     <article
       className={twMerge(
-        'group relative flex w-full overflow-hidden rounded-xs border border-gray-200 bg-box-surface transition-all duration-300 hover:shadow-lg',
+        'group relative flex w-full overflow-hidden rounded-xs border border-gray-200 bg-box-surface',
         className,
       )}
       aria-labelledby={`popular-activity-${activity.id}-title`}

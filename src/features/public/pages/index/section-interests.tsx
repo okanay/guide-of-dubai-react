@@ -27,7 +27,7 @@ export const Interests = () => {
             <Link
               to="/$lang/not-found"
               key={index}
-              className="group/interest relative h-[80px] w-[calc((100%_/_8)_-_0.3rem)] min-w-[100px] shrink-0 snap-start overflow-hidden rounded-xs"
+              className="group/interest relative h-[80px] w-[calc((100%_/_8)_-_0.3rem)] min-w-[140px] shrink-0 snap-start overflow-hidden rounded-xs"
             >
               <img
                 src={interest.image}
