@@ -58,8 +58,59 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
   }
 
   const handleMapViewClick = () => {
-    const hotelCoords: [number, number] = [25.2048, 55.2708]
-    openModal(hotelCoords, hotel.name)
+    const exampleHotels = [
+      {
+        coords: [41.0082, 28.9784] as [number, number], // İstanbul
+        name: 'Luxury Istanbul Hotel',
+        price: 450,
+        currency: '₺',
+        rating: 4.8,
+        image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400',
+        address: 'Sultanahmet, Fatih, İstanbul',
+        description: 'Boğaz manzaralı lüks otel. Tarihi yarımadada konumlanmış.',
+        amenities: ['WiFi', 'Kahvaltı', 'Havuz', 'Spa', 'Valet'],
+      },
+      {
+        coords: [41.0105, 28.9758] as [number, number],
+        name: 'Boutique Galata Hotel',
+        price: 320,
+        currency: '₺',
+        rating: 4.5,
+        image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400',
+        address: 'Galata, Beyoğlu, İstanbul',
+        description: 'Modern tasarım butik otel. Galata Kulesi yakınında.',
+        amenities: ['WiFi', 'Restoran', 'Bar', 'Concierge'],
+      },
+      {
+        coords: [41.0136, 28.9869] as [number, number],
+        name: 'Business Taksim Hotel',
+        price: 280,
+        currency: '₺',
+        rating: 4.2,
+        image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400',
+        address: 'Taksim, Beyoğlu, İstanbul',
+        description: 'İş seyahatleri için ideal konum. Metro istasyonuna yakın.',
+        amenities: ['WiFi', 'Kahvaltı', 'Fitness', 'Toplantı Salonu'],
+      },
+    ]
+
+    // openModal({
+    //   mode: 'pin',
+    //   data: {
+    //     coords: [41.0082, 28.9784],
+    //     name: 'İstanbul',
+    //   },
+    // })
+
+    // openModal({
+    //   mode: 'price',
+    //   data: exampleHotels,
+    // })
+
+    openModal({
+      mode: 'card',
+      data: exampleHotels,
+    })
   }
 
   return (
