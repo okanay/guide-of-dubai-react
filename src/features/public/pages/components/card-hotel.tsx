@@ -4,6 +4,7 @@ import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { twMerge } from 'tailwind-merge'
 import { ButtonFavorite } from './button-favorite'
+import { useLeafletModalStore } from '@/components/leaflet-map/store'
 
 interface HotelCardProps {
   hotel: Hotel
@@ -15,6 +16,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
   const { t } = useTranslation('page-index')
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const imageContainerRef = useRef<HTMLDivElement>(null)
+  const { openModal } = useLeafletModalStore()
 
   const scrollToImage = (imageIndex: number) => {
     if (!imageContainerRef.current) return
@@ -53,6 +55,11 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
     const nextIndex = currentImageIndex === hotel.images.length - 1 ? 0 : currentImageIndex + 1
     setCurrentImageIndex(nextIndex)
     scrollToImage(nextIndex)
+  }
+
+  const handleMapViewClick = () => {
+    const hotelCoords: [number, number] = [25.2048, 55.2708]
+    openModal(hotelCoords, hotel.name)
   }
 
   return (
@@ -167,12 +174,13 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
             <span className="sr-only">out of 5, based on</span>({hotel.reviewCount}{' '}
             <span className="sr-only">reviews</span>)
           </span>
-          <Link
-            to="/$lang/not-found"
-            className="font-semibold text-primary-500 underline transition-colors hover:text-primary-400"
+          <button
+            type="button"
+            onClick={handleMapViewClick}
+            className="font-semibold text-primary-500 underline transition-colors hover:text-primary-400 focus:outline-none"
           >
             {t('hotels.map_view')}
-          </Link>
+          </button>
         </div>
 
         {/* Divider */}

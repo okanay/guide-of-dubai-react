@@ -10,6 +10,7 @@ import { GoAiModal } from './header/go-ai/modal'
 import { HeaderStore } from './header/store'
 import { AuthModalStore } from './header/auth/store'
 import { AuthModal } from './header/auth/modal'
+import { LeafletModal } from '@/components/leaflet-map/modal'
 
 export const LayoutStores = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -29,6 +30,7 @@ export const LayoutStores = ({ children }: { children: React.ReactNode }) => {
         <AuthModal />
         <BasketModal />
         <SearchModal />
+        <LeafletModal />
       </ComposeProviders>
     </>
   )
