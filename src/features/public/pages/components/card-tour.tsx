@@ -86,7 +86,7 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, className, onLikeToggl
   return (
     <article
       className={twMerge(
-        'group relative flex w-full overflow-hidden rounded-xs border border-gray-200 bg-box-surface',
+        'group relative flex w-full overflow-hidden rounded-xs border border-gray-200 bg-box-surface dark:bg-gray-950',
         className,
       )}
       aria-labelledby={`tour-${tour.id}-title`}

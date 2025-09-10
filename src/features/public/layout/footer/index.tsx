@@ -5,14 +5,14 @@ import { SubscriptionSection } from './section-subscription'
 
 export const PublicFooter = () => {
   return (
-    <footer className="pt-8 sm:pt-20">
+    <footer data-theme="force-main" className="pt-8 sm:pt-20 dark:bg-gray-950">
       <PublicFooterMobileAppSection />
       <PublicFooterFAQSection />
-      <div className="w-full bg-gray-950 text-white dark:bg-black">
+      <div className="w-full bg-gray-950 text-white">
         <div className="px-4">
           <div className="mx-auto max-w-main py-10">
             <SubscriptionSection />
-            <div className="my-12 h-px w-full bg-gray-700 dark:bg-white-20" />
+            <div className="my-12 h-px w-full bg-gray-700" />
             <LinksSection />
           </div>
         </div>

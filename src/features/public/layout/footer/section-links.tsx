@@ -86,7 +86,7 @@ export const LinksSection = () => {
       {footerLinks.map((column) => (
         <FooterLinkColumn key={column.title} title={column.title} links={column.links} />
       ))}
-      <div className="flex items-end justify-start sm:col-span-2 sm:items-end sm:justify-start md:col-span-1 md:justify-end dark:invert">
+      <div className="flex items-end justify-start sm:col-span-2 sm:items-end sm:justify-start md:col-span-1 md:justify-end">
         <Icon name="brand/full-white" width={144} className="w-30 pt-8 sm:w-40" />
       </div>
     </div>

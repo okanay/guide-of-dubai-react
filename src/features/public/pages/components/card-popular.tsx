@@ -85,7 +85,7 @@ export const PopularCard: React.FC<Props> = ({ activity, index, className, onLik
   return (
     <article
       className={twMerge(
-        'group relative flex h-[540px] w-full flex-col overflow-hidden rounded-xs border border-gray-200 bg-box-surface',
+        'group relative flex h-[540px] w-full flex-col overflow-hidden rounded-xs border border-gray-200 bg-box-surface dark:bg-gray-950',
         className,
       )}
       aria-labelledby={`activity-${activity.id}-title`}

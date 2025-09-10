@@ -67,7 +67,10 @@ export function ProfileButton() {
             className="pointer-events-none fixed inset-0 z-33 opacity-0 transition-opacity duration-300 data-[visible=true]:pointer-events-auto data-[visible=true]:opacity-100"
           >
             {/* Arka Plan Overlay */}
-            <div onClick={closeDropdown} className="absolute inset-0 z-33 bg-black/40" />
+            <div
+              onClick={closeDropdown}
+              className="absolute inset-0 z-33 bg-black/50 dark:bg-white/50"
+            />
 
             {/* Header Boşluğu */}
             <div className="absolute top-0 left-0 z-33 h-16 w-full bg-box-surface" />

@@ -7,7 +7,7 @@ export const PublicFooterMobileAppSection = () => {
     <section>
       <div
         id="app-promo-section"
-        className="relative mx-auto flex h-[180px] w-full max-w-main scroll-m-20 flex-row items-center justify-evenly gap-x-0 bg-gray-950 text-white sm:gap-x-8 sm:px-4 sm:py-0 md:h-[320px] dark:bg-white dark:text-black"
+        className="relative mx-auto flex h-[180px] w-full max-w-main scroll-m-20 flex-row items-center justify-evenly gap-x-0 bg-gray-950 text-white sm:gap-x-8 sm:px-4 sm:py-0 md:h-[320px]"
       >
         {/* Arka Plan Deseni */}
         <img
@@ -61,9 +61,7 @@ export const PublicFooterMobileAppSection = () => {
             alt={t('mobile_app.qr_code_alt')}
             className="size-[130px] object-contain"
           />
-          <span className="text-body-sm text-gray-200 dark:text-black">
-            {t('mobile_app.scan_qr')}
-          </span>
+          <span className="text-body-sm text-gray-200">{t('mobile_app.scan_qr')}</span>
         </div>
       </div>
     </section>

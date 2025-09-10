@@ -18,7 +18,7 @@ export const PublicFooterFAQSection = () => {
   const rightColumnItems = faqItems.slice(Math.ceil(faqItems.length / 2))
 
   return (
-    <div className="bg-transparent px-4 text-on-box-black">
+    <div className="bg-transparent px-4 text-on-box-black dark:text-on-box-white">
       <div className="mx-auto max-w-main py-10">
         <h2 className="text-start text-size-lg font-bold">{t('faq.title')}</h2>
 
@@ -59,12 +59,12 @@ export function FaqItemComponent({ question, answer }: FaqItemComponentProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="border-b border-white/20 py-4">
+    <div className="border-b border-gray-100 py-4 dark:border-gray-900">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         data-open={isOpen}
-        className="flex w-full flex-col items-start justify-start border-b border-gray-100 pb-1 text-left transition-[padding] duration-100 data-[open=true]:pb-3"
+        className="flex w-full flex-col items-start justify-start pb-1 text-left transition-[padding] duration-100 data-[open=true]:pb-3"
         aria-expanded={isOpen}
       >
         <span className="flex w-full items-center justify-between">

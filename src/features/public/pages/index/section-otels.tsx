@@ -17,7 +17,10 @@ export const Otels = () => {
   }
 
   return (
-    <section className="bg-card-surface px-4 text-on-box-white">
+    <section
+      data-theme="force-main"
+      className="bg-card-surface px-4 text-on-box-white dark:bg-gray-950"
+    >
       <div className="mx-auto max-w-main py-10">
         <header className="mb-4 flex items-start justify-between sm:items-center">
           <h2 className="text-size-2xl font-bold md:text-size-3xl">{t('hotels.title')}</h2>

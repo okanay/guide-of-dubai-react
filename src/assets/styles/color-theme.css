@@ -368,3 +368,174 @@ body {
   --color-badge-teal: #32B1CD;
   }
 }
+
+[data-theme='force-main'] {
+    /* ===========================================
+    BASE COLORS
+    =========================================== */
+
+    --color-box-surface: #ffffff;
+    --color-gray-surface: #f3f3f3;
+    --color-on-box-black: #171717;
+    --color-on-box-white: #f7f7f7;
+    --color-card-surface: #1e1e1e;
+
+    /* ===========================================
+    GRAY SCALE
+    =========================================== */
+
+    --color-gray-50: #F5F5F5;
+    --color-gray-100: #E5E5E5;
+    --color-gray-200: #D6D6D6;
+    --color-gray-300: #C7C7C7;
+    --color-gray-400: #B8B8B8;
+    --color-gray-500: #A8A8A8;
+    --color-gray-600: #999999;
+    --color-gray-700: #808080;
+    --color-gray-800: #666666;
+    --color-gray-900: #4D4D4D;
+
+
+    /* ===========================================
+    PRIMARY COLORS (RED/BRAND)
+    =========================================== */
+
+    --color-primary-50: #FBE8E9;
+    --color-primary-100: #F3B8BB;
+    --color-primary-200: #ED959A;
+    --color-primary-300: #E4656C;
+    --color-primary-400: #DF474F;
+    --color-primary-500: #D71923;
+    --color-primary-600: #C41720;
+    --color-primary-700: #991219;
+    --color-primary-800: #760E13;
+    --color-primary-900: #5A0B0F;
+
+    /* ===========================================
+    SUCCESS COLORS (GREEN)
+    =========================================== */
+
+    --color-success-50: #E6F9ED;
+    --color-success-100: #B0ECC8;
+    --color-success-200: #8AE2AD;
+    --color-success-300: #54D587;
+    --color-success-400: #33CD70;
+    --color-success-500: #00C14C;
+    --color-success-600: #00B045;
+    --color-success-700: #008936;
+    --color-success-800: #006A2A;
+    --color-success-900: #005120;
+
+    /* ===========================================
+    ERROR COLORS (RED - SEMANTIC)
+    =========================================== */
+
+    --color-error-50: #FDE6E8;
+    --color-error-100: #F9B2B7;
+    --color-error-200: #F68C94;
+    --color-error-300: #F25864;
+    --color-error-400: #F03845;
+    --color-error-500: #EC0617;
+    --color-error-600: #D70515;
+    --color-error-700: #A80410;
+    --color-error-800: #82030D;
+    --color-error-900: #63030A;
+
+    /* ===========================================
+    BLACK SCALE WITH OPACITY
+    =========================================== */
+
+    --color-black: rgba(0, 0, 0, 1);
+    --color-black-80: rgba(0, 0, 0, 0.80);
+    --color-black-60: rgba(0, 0, 0, 0.60);
+    --color-black-40: rgba(0, 0, 0, 0.40);
+    --color-black-20: rgba(0, 0, 0, 0.20);
+    --color-black-16: rgba(0, 0, 0, 0.16);
+    --color-black-12: rgba(0, 0, 0, 0.12);
+    --color-black-8: rgba(0, 0, 0, 0.08);
+    --color-black-0: rgba(0, 0, 0, 0.05);
+
+    /* ===========================================
+    WHITE SCALE WITH OPACITY
+    =========================================== */
+
+    --color-white: rgba(255, 255, 255, 1);
+    --color-white-80: rgba(255, 255, 255, 0.80);
+    --color-white-60: rgba(255, 255, 255, 0.60);
+    --color-white-40: rgba(255, 255, 255, 0.40);
+    --color-white-20: rgba(255, 255, 255, 0.20);
+    --color-white-16: rgba(255, 255, 255, 0.16);
+    --color-white-12: rgba(255, 255, 255, 0.12);
+    --color-white-8: rgba(255, 255, 255, 0.08);
+    --color-white-0: rgba(255, 255, 255, 0.05);
+
+    /*===========================================
+    BUTTON PRIMARY COLORS
+    ===========================================*/
+
+    --color-btn-primary: #D71923;
+    --color-on-btn-primary: #FFFFFF;
+    --color-outline-border: #BD161F;
+    --color-btn-primary-hover: #BD161F;
+    --color-btn-primary-focus: #C91721;
+    --color-btn-primary-disabled: #E58A90;
+
+    /*===========================================
+    BUTTON DARK COLORS
+    ===========================================*/
+
+    --color-btn-dark: #171717;
+    --color-on-btn-dark: #F7F7F7;
+    --color-outline-border: #171717;
+    --color-btn-dark-hover: #2A2A2A;
+    --color-btn-dark-focus: #222222;
+    --color-btn-dark-disabled: #8C8C8C;
+
+    /*===========================================
+    BUTTON WHITE COLORS
+    ===========================================*/
+
+    --color-btn-white: #F3F3F3;
+    --color-on-btn-white: #1E1E1E;
+    --color-outline-border: #F3F3F3;
+    --color-btn-white-hover: #E5E5E5;
+    --color-btn-white-focus: #DDDDDD;
+    --color-btn-white-disabled: #F9F9F9;
+
+    /*===========================================
+    BADGE COLORS
+    ===========================================*/
+
+    /* Badge 2 - Purple */
+    --color-badge-purple: #8400FF;
+    --color-on-badge-purple: #DDCCFF;
+
+    /* Badge 2 - Blue */
+    --color-badge-blue: #0076FF;
+    --color-on-badge-blue: #CCE4FF;
+
+    /* Badge 3 - Yellow */
+    --color-badge-yellow: #FFBB00;
+    --color-on-badge-yellow: #FFF7E0;
+
+    /* Badge 4 - Green */
+    --color-badge-green: #1EA378;
+    --color-on-badge-green: #DBF0E9;
+
+    /* Badge 5 - Pink */
+    --color-badge-pink: #FA388B;
+    --color-on-badge-pink: #FEDFEC;
+
+    /* Badge 6 - Red */
+    --color-badge-red: #D32C48;
+    --color-on-badge-red: #FAE6E9;
+
+    /* Badge 7 - Navy */
+    --color-badge-navy: #0038FF;
+    --color-on-badge-navy: #D0D9FB;
+
+    /* Badge 8 - Teal */
+    --color-badge-teal: #32B1CD;
+    --color-on-badge-teal: #D6EFF5;
+
+}
