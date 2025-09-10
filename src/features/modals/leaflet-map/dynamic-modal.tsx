@@ -1,7 +1,5 @@
 import { ModalWrapper } from '@/components/modal-wrapper'
-import L, { LatLngBoundsExpression } from 'leaflet'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
 import Icon from '@/components/icon'
 import { useLeafletModalStore } from './store'
 
@@ -19,7 +17,8 @@ interface Hotel {
 }
 
 interface MapBoundsFitterProps {
-  bounds: LatLngBoundsExpression
+  bounds: any // L.LatLngBoundsExpression yerine any
+  mapModules: any
 }
 
 interface HotelCardProps {
@@ -35,6 +34,7 @@ interface MapMarkerProps {
   isSelected: boolean
   mode: 'pin' | 'price' | 'card'
   onSelect: (index: number) => void
+  mapModules: any
 }
 
 interface HotelListProps {
@@ -44,7 +44,7 @@ interface HotelListProps {
 }
 
 // ============= UTILS & HELPERS =============
-const createPriceIcon = (price: number, currency: string, isSelected: boolean = false) => {
+const createPriceIcon = (L: any, price: number, currency: string, isSelected: boolean = false) => {
   const baseClasses = isSelected
     ? 'bg-primary-500 text-white border-2 border-primary-600 animate-pulse'
     : 'bg-box-surface text-on-box-black border border-gray-300'
@@ -61,7 +61,7 @@ const createPriceIcon = (price: number, currency: string, isSelected: boolean = 
   })
 }
 
-const createDefaultIcon = () => {
+const createDefaultIcon = (L: any) => {
   return new L.Icon({
     iconUrl:
       'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
@@ -76,7 +76,8 @@ const createDefaultIcon = () => {
 const calculateMapBounds = (
   data: any,
   mode: string,
-): { center?: [number, number]; bounds?: LatLngBoundsExpression } => {
+  L: any,
+): { center?: [number, number]; bounds?: any } => {
   if (mode === 'pin') {
     return { center: data.coords }
   }
@@ -95,11 +96,11 @@ const calculateMapBounds = (
 }
 
 // ============= SUB COMPONENTS =============
-const MapBoundsFitter: React.FC<MapBoundsFitterProps> = ({ bounds }) => {
-  const map = useMap()
+const MapBoundsFitter: React.FC<MapBoundsFitterProps> = ({ bounds, mapModules }) => {
+  const map = mapModules.useMap()
 
   useEffect(() => {
-    if (bounds) {
+    if (bounds && map) {
       map.fitBounds(bounds, { padding: [50, 50] })
     }
   }, [bounds, map])
@@ -199,21 +200,32 @@ const HotelCard: React.FC<HotelCardProps> = ({ hotel, isSelected, onClick }) => 
   )
 }
 
-const MapMarker: React.FC<MapMarkerProps> = ({ hotel, index, isSelected, mode, onSelect }) => {
+const MapMarker: React.FC<MapMarkerProps> = ({
+  hotel,
+  index,
+  isSelected,
+  mode,
+  onSelect,
+  mapModules,
+}) => {
   const icon = useMemo(() => {
-    if (mode === 'pin') return createDefaultIcon()
-    return createPriceIcon(hotel.price, hotel.currency, isSelected)
-  }, [mode, hotel.price, hotel.currency, isSelected])
+    if (!mapModules.L) return null
+
+    if (mode === 'pin') return createDefaultIcon(mapModules.L)
+    return createPriceIcon(mapModules.L, hotel.price, hotel.currency, isSelected)
+  }, [mode, hotel.price, hotel.currency, isSelected, mapModules.L])
+
+  if (!mapModules.Marker || !icon) return null
 
   return (
-    <Marker
+    <mapModules.Marker
       position={hotel.coords}
       icon={icon}
       eventHandlers={{
         click: () => onSelect(index),
       }}
     >
-      <Popup>
+      <mapModules.Popup>
         <div className="min-w-48 p-2">
           <h3 className="mb-2 font-semibold text-gray-900">{hotel.name}</h3>
           <div className="mb-2 flex items-start justify-between">
@@ -231,8 +243,8 @@ const MapMarker: React.FC<MapMarkerProps> = ({ hotel, index, isSelected, mode, o
           {hotel.address && <p className="mb-2 text-sm text-gray-700">{hotel.address}</p>}
           {hotel.description && <p className="text-sm text-gray-700">{hotel.description}</p>}
         </div>
-      </Popup>
-    </Marker>
+      </mapModules.Popup>
+    </mapModules.Marker>
   )
 }
 
@@ -293,12 +305,43 @@ export const LeafletModal: React.FC = () => {
   const { isOpen, payload, closeModal, selectedHotelIndex, selectHotel, clearSelection } =
     useLeafletModalStore()
   const [mapKey, setMapKey] = useState(0)
+  const [mapModules, setMapModules] = useState<any>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Leaflet modüllerini dinamik olarak yükle
+  useEffect(() => {
+    if (isOpen && !mapModules) {
+      const loadMapModules = async () => {
+        try {
+          const [leafletModule, reactLeafletModule] = await Promise.all([
+            import('leaflet'),
+            import('react-leaflet'),
+          ])
+
+          setMapModules({
+            L: leafletModule.default,
+            MapContainer: reactLeafletModule.MapContainer,
+            Marker: reactLeafletModule.Marker,
+            TileLayer: reactLeafletModule.TileLayer,
+            useMap: reactLeafletModule.useMap,
+            Popup: reactLeafletModule.Popup,
+          })
+        } catch (error) {
+          console.error('Failed to load map modules:', error)
+        } finally {
+          setIsLoading(false)
+        }
+      }
+
+      loadMapModules()
+    }
+  }, [isOpen, mapModules])
 
   // Harita merkezi ve sınırları hesaplama
   const { center, bounds } = useMemo(() => {
-    if (!payload) return {}
-    return calculateMapBounds(payload.data, payload.mode)
-  }, [payload])
+    if (!payload || !mapModules?.L) return {}
+    return calculateMapBounds(payload.data, payload.mode, mapModules.L)
+  }, [payload, mapModules?.L])
 
   // Otel seçim handler
   const handleHotelSelect = useCallback(
@@ -313,8 +356,21 @@ export const LeafletModal: React.FC = () => {
     [selectedHotelIndex, selectHotel, clearSelection],
   )
 
-  if (!isOpen || !payload || !center) {
+  if (!isOpen || !payload) {
     return null
+  }
+
+  if (isLoading || !mapModules || !center) {
+    return (
+      <ModalWrapper isOpen={isOpen} onClose={closeModal}>
+        <div className="relative flex h-full w-full max-w-main items-center justify-center rounded-xs bg-white">
+          <div className="flex flex-col items-center justify-center text-gray-600">
+            <div className="border-primary mb-2 h-8 w-8 animate-spin rounded-full border-b-2"></div>
+            <span>Loading map...</span>
+          </div>
+        </div>
+      </ModalWrapper>
+    )
   }
 
   const { mode, data } = payload
@@ -331,38 +387,34 @@ export const LeafletModal: React.FC = () => {
           <Icon name="cancel" className="h-5 w-5 text-white" />
         </button>
 
-        {/* ================================================================ */}
-        {/* PIN MODE - Sadece tek bir pin gösterir                          */}
-        {/* ================================================================ */}
+        {/* PIN MODE */}
         {mode === 'pin' && (
           <div className="h-full w-full">
-            <MapContainer
+            <mapModules.MapContainer
               center={center}
               zoom={15}
               style={{ height: '100%', width: '100%', borderRadius: '0.375rem' }}
             >
-              <TileLayer
+              <mapModules.TileLayer
                 attribution='&copy; <a href="https://carto.com/">Carto</a> contributors'
                 url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
               />
-              <Marker position={data.coords} icon={createDefaultIcon()}>
-                <Popup>{data.name || 'Seçilen Konum'}</Popup>
-              </Marker>
-            </MapContainer>
+              <mapModules.Marker position={data.coords} icon={createDefaultIcon(mapModules.L)}>
+                <mapModules.Popup>{data.name || 'Seçilen Konum'}</mapModules.Popup>
+              </mapModules.Marker>
+            </mapModules.MapContainer>
           </div>
         )}
 
-        {/* ================================================================ */}
-        {/* PRICE MODE - Fiyat etiketli birden çok oteli gösterir           */}
-        {/* ================================================================ */}
+        {/* PRICE MODE */}
         {mode === 'price' && (
           <div className="h-full w-full">
-            <MapContainer
+            <mapModules.MapContainer
               center={center}
               zoom={13}
               style={{ height: '100%', width: '100%', borderRadius: '0.375rem' }}
             >
-              <TileLayer
+              <mapModules.TileLayer
                 attribution='&copy; <a href="https://carto.com/">Carto</a> contributors'
                 url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
               />
@@ -374,16 +426,15 @@ export const LeafletModal: React.FC = () => {
                   isSelected={false}
                   mode={mode}
                   onSelect={() => {}}
+                  mapModules={mapModules}
                 />
               ))}
-              {bounds && <MapBoundsFitter bounds={bounds} />}
-            </MapContainer>
+              {bounds && <MapBoundsFitter bounds={bounds} mapModules={mapModules} />}
+            </mapModules.MapContainer>
           </div>
         )}
 
-        {/* ================================================================ */}
-        {/* CARD MODE - Harita + Otel listesi kombinasyonu                  */}
-        {/* ================================================================ */}
+        {/* CARD MODE */}
         {mode === 'card' && (
           <div className="flex h-full flex-col overflow-hidden rounded-md md:flex-row">
             <HotelList
@@ -392,16 +443,15 @@ export const LeafletModal: React.FC = () => {
               onSelectHotel={handleHotelSelect}
             />
 
-            {/* Harita */}
             <div className="relative flex-1">
-              <MapContainer
+              <mapModules.MapContainer
                 key={mapKey}
                 center={selectedHotelIndex !== null ? data[selectedHotelIndex].coords : center}
                 zoom={selectedHotelIndex !== null ? 16 : 13}
                 style={{ height: '100%', width: '100%' }}
                 className="rounded-xs md:rounded-l-none md:rounded-r-xs"
               >
-                <TileLayer
+                <mapModules.TileLayer
                   attribution='&copy; <a href="https://carto.com/">Carto</a> contributors'
                   url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
                 />
@@ -414,11 +464,14 @@ export const LeafletModal: React.FC = () => {
                     isSelected={selectedHotelIndex === index}
                     mode={mode}
                     onSelect={handleHotelSelect}
+                    mapModules={mapModules}
                   />
                 ))}
 
-                {!selectedHotelIndex && bounds && <MapBoundsFitter bounds={bounds} />}
-              </MapContainer>
+                {!selectedHotelIndex && bounds && (
+                  <MapBoundsFitter bounds={bounds} mapModules={mapModules} />
+                )}
+              </mapModules.MapContainer>
             </div>
           </div>
         )}

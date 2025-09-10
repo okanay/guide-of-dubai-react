@@ -1,3 +1,4 @@
+import { ClientOnly } from '@tanstack/react-router'
 import React, { useEffect, useRef, ReactNode, cloneElement, isValidElement } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -111,13 +112,15 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
     : document.body
 
   return createPortal(
-    <div ref={overlayRef} className={containerClassName} role="dialog" aria-modal="true">
-      {/* Overlay */}
-      <div className={overlayClassName} />
+    <ClientOnly fallback={<div />}>
+      <div ref={overlayRef} className={containerClassName} role="dialog" aria-modal="true">
+        {/* Overlay */}
+        <div className={overlayClassName} />
 
-      {/* Modal Content - Ref ile sarmalanmış */}
-      {cloneChildrenWithRef(children)}
-    </div>,
+        {/* Modal Content - Ref ile sarmalanmış */}
+        {cloneChildrenWithRef(children)}
+      </div>
+    </ClientOnly>,
     scopeElement!,
   )
 }

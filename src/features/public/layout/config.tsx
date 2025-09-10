@@ -9,7 +9,7 @@ import { GoAiModalStore } from '@/features/modals/go-ai/store'
 import { SearchModal } from '@/features/modals/search/modal'
 import { SearchModalStore } from '@/features/modals/search/store'
 import { SystemSettingsModal } from '@/features/modals/system-settings/modal'
-import { LeafletModal } from '@/features/modals/leaflet-map/modal'
+import { LeafletModal } from '@/features/modals/leaflet-map/index'
 import { Route } from '@/routes/__root'
 import { SystemSettingsModalStore } from '@/features/modals/system-settings/store'
 
