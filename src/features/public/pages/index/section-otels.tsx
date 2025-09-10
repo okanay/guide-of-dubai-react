@@ -26,7 +26,7 @@ export const Otels = () => {
           <h2 className="text-size-2xl font-bold md:text-size-3xl">{t('hotels.title')}</h2>
           <Link
             to="/$lang/not-found"
-            className="btn-default flex items-center gap-2 rounded-full py-1 text-size-sm font-semibold text-nowrap text-white hover:text-white/80 sm:px-2 sm:py-2"
+            className="btn-default flex items-center gap-2 rounded-full py-1 text-size-sm font-semibold text-nowrap text-white hover:text-white/80 sm:px-2 sm:py-2 dark:text-primary-500"
           >
             {t('hotels.view_all')}
 

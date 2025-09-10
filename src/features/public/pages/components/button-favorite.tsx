@@ -28,7 +28,7 @@ export const ButtonFavorite: React.FC<Props> = ({
   }
 
   return (
-    <div className={twMerge('absolute top-2 right-2', className)}>
+    <div data-theme="force-main" className={twMerge('absolute top-2 right-2', className)}>
       <button
         onClick={handleToggle}
         aria-label={isLiked ? t('common.actions.unlike') : t('common.actions.like')}
@@ -37,7 +37,7 @@ export const ButtonFavorite: React.FC<Props> = ({
         <Icon
           name={isLiked ? 'like-button-filled' : 'like-button'}
           data-liked={isLiked}
-          className="size-10 text-gray-100 data-[liked=true]:text-badge-pink"
+          className="size-9 text-white data-[liked=true]:text-badge-pink"
         />
       </button>
     </div>
