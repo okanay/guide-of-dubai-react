@@ -2,7 +2,7 @@ import { ModalWrapper } from '@/components/modal-wrapper'
 import L, { LatLngBoundsExpression } from 'leaflet'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
-import Icon from '../../../components/icon'
+import Icon from '@/components/icon'
 import { useLeafletModalStore } from './store'
 
 // ============= TYPES =============
@@ -318,7 +318,6 @@ export const LeafletModal: React.FC = () => {
   }
 
   const { mode, data } = payload
-  const isCardMode = mode === 'card'
 
   return (
     <ModalWrapper isOpen={isOpen} onClose={closeModal}>

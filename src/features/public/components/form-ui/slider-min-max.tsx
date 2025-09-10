@@ -1,4 +1,4 @@
-import { useSystemSettings } from '../../layout/header/system-settings/store'
+import { useSystemSettings } from '@/features/modals/system-settings/store'
 import { BaseInput } from './base-input'
 import { useCallback } from 'react'
 
