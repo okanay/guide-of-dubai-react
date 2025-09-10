@@ -1,6 +1,6 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import resource, { defaultNS, ns } from 'src/messages'
+import resource, { defaultNS, namespaces } from 'src/messages'
 import {
   DEFAULT_LANGUAGE,
   FALLBACK_LANGUAGE,
@@ -14,7 +14,7 @@ const i18nConfig = (initialLanguage: LanguageValue = DEFAULT_LANGUAGE.value) => 
     i18n.use(initReactI18next).init({
       lng: initialLanguage,
       defaultNS: defaultNS,
-      ns: ns,
+      ns: namespaces,
       resources: resource,
       fallbackLng: FALLBACK_LANGUAGE.value,
       supportedLngs: LANGUAGES_VALUES,
