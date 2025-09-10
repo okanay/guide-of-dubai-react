@@ -175,11 +175,11 @@ export const Route = createRootRoute({
       // News siteler için teknik SEO
       {
         name: 'theme-color',
-        content: '#ffffff',
+        content: '#D71923',
       },
       {
         name: 'msapplication-TileColor',
-        content: '#ffffff',
+        content: '#D71923',
       },
       {
         name: 'application-name',

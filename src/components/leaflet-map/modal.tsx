@@ -249,7 +249,14 @@ const HotelList: React.FC<HotelListProps> = ({ hotels, selectedIndex, onSelectHo
       </div>
 
       {/* Otel listesi container */}
-      <div className="relative md:flex-1 md:overflow-y-auto md:p-4">
+      <div
+        style={{
+          scrollbarWidth: 'none',
+          WebkitOverflowScrolling: 'touch',
+          msOverflowStyle: 'none',
+        }}
+        className="relative md:flex-1 md:overflow-y-auto md:p-4"
+      >
         {/* Mobile: Kaydırma göstergesi */}
         <div className="absolute -top-8 left-1/2 -translate-x-1/2 rounded-full bg-black/50 px-3 py-1 text-xs text-white md:hidden">
           ← Kaydır →
