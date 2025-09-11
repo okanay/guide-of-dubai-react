@@ -53,7 +53,7 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   scopeId = 'body',
   disableOutsideClick = false,
   lockBodyScroll = true,
-  containerClassName = 'fixed inset-0 z-50 flex h-[100dvh] w-screen items-start justify-start p-0 md:items-center md:justify-center md:p-4',
+  containerClassName = 'fixed inset-0 z-50 flex h-[110dvh] w-screen items-start justify-start p-0 md:items-center md:justify-center md:p-4',
   overlayClassName = 'absolute inset-0 hidden bg-black/50 dark:bg-white/50 md:block',
 }) => {
   const overlayRef = useRef<HTMLDivElement>(null)
@@ -90,31 +90,6 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
     }
   }, [isOpen, disableOutsideClick, onClose])
 
-  useEffect(() => {
-    if (!isOpen) return
-
-    const setViewportHeight = () => {
-      if (window.visualViewport) {
-        const viewportHeight = `${window.visualViewport.height}px`
-        // overlayRef'e doğrudan stil uygulayarak yüksekliği ayarlıyoruz.
-        if (overlayRef.current) {
-          overlayRef.current.style.height = viewportHeight
-        }
-      }
-    }
-
-    // Modal ilk açıldığında ve viewport her değiştiğinde (scroll, resize, klavye açılması vb.)
-    // yüksekliği yeniden ayarla.
-    setViewportHeight()
-    window.visualViewport?.addEventListener('resize', setViewportHeight)
-    window.visualViewport?.addEventListener('scroll', setViewportHeight)
-
-    return () => {
-      window.visualViewport?.removeEventListener('resize', setViewportHeight)
-      window.visualViewport?.removeEventListener('scroll', setViewportHeight)
-    }
-  }, [isOpen])
-
   // Children'a ref ekleme fonksiyonu
   const cloneChildrenWithRef = (children: ReactNode) => {
     if (isValidElement(children)) {
@@ -139,7 +114,10 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   return createPortal(
     <ClientOnly fallback={<div />}>
       <div ref={overlayRef} className={containerClassName} role="dialog" aria-modal="true">
+        {/* Overlay */}
         <div className={overlayClassName} />
+
+        {/* Modal Content - Ref ile sarmalanmış */}
         {cloneChildrenWithRef(children)}
       </div>
     </ClientOnly>,
