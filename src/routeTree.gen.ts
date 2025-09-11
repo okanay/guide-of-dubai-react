@@ -23,6 +23,7 @@ import { Route as LangPublicTicketsIndexRouteImport } from './routes/$lang/_publ
 import { Route as LangPublicSafariTourIndexRouteImport } from './routes/$lang/_public/safari-tour.index'
 import { Route as LangPublicRentACarIndexRouteImport } from './routes/$lang/_public/rent-a-car.index'
 import { Route as LangPublicHotelsIndexRouteImport } from './routes/$lang/_public/hotels.index'
+import { Route as LangPublicFlightIndexRouteImport } from './routes/$lang/_public/flight.index'
 import { Route as LangPublicAllIndexRouteImport } from './routes/$lang/_public/all.index'
 import { ServerRoute as SitemapDotxmlServerRouteImport } from './routes/sitemap[.]xml'
 import { ServerRoute as RssDotxmlServerRouteImport } from './routes/rss[.]xml'
@@ -91,6 +92,11 @@ const LangPublicHotelsIndexRoute = LangPublicHotelsIndexRouteImport.update({
   path: '/hotels/',
   getParentRoute: () => LangPublicRouteRoute,
 } as any)
+const LangPublicFlightIndexRoute = LangPublicFlightIndexRouteImport.update({
+  id: '/flight/',
+  path: '/flight/',
+  getParentRoute: () => LangPublicRouteRoute,
+} as any)
 const LangPublicAllIndexRoute = LangPublicAllIndexRouteImport.update({
   id: '/all/',
   path: '/all/',
@@ -119,6 +125,7 @@ export interface FileRoutesByFullPath {
   '/$lang/not-found': typeof LangNotFoundRoute
   '/$lang/': typeof LangPublicIndexRoute
   '/$lang/all': typeof LangPublicAllIndexRoute
+  '/$lang/flight': typeof LangPublicFlightIndexRoute
   '/$lang/hotels': typeof LangPublicHotelsIndexRoute
   '/$lang/rent-a-car': typeof LangPublicRentACarIndexRoute
   '/$lang/safari-tour': typeof LangPublicSafariTourIndexRoute
@@ -132,6 +139,7 @@ export interface FileRoutesByTo {
   '/$lang/error': typeof LangErrorRoute
   '/$lang/not-found': typeof LangNotFoundRoute
   '/$lang/all': typeof LangPublicAllIndexRoute
+  '/$lang/flight': typeof LangPublicFlightIndexRoute
   '/$lang/hotels': typeof LangPublicHotelsIndexRoute
   '/$lang/rent-a-car': typeof LangPublicRentACarIndexRoute
   '/$lang/safari-tour': typeof LangPublicSafariTourIndexRoute
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/$lang/not-found': typeof LangNotFoundRoute
   '/$lang/_public/': typeof LangPublicIndexRoute
   '/$lang/_public/all/': typeof LangPublicAllIndexRoute
+  '/$lang/_public/flight/': typeof LangPublicFlightIndexRoute
   '/$lang/_public/hotels/': typeof LangPublicHotelsIndexRoute
   '/$lang/_public/rent-a-car/': typeof LangPublicRentACarIndexRoute
   '/$lang/_public/safari-tour/': typeof LangPublicSafariTourIndexRoute
@@ -164,6 +173,7 @@ export interface FileRouteTypes {
     | '/$lang/not-found'
     | '/$lang/'
     | '/$lang/all'
+    | '/$lang/flight'
     | '/$lang/hotels'
     | '/$lang/rent-a-car'
     | '/$lang/safari-tour'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/$lang/error'
     | '/$lang/not-found'
     | '/$lang/all'
+    | '/$lang/flight'
     | '/$lang/hotels'
     | '/$lang/rent-a-car'
     | '/$lang/safari-tour'
@@ -192,6 +203,7 @@ export interface FileRouteTypes {
     | '/$lang/not-found'
     | '/$lang/_public/'
     | '/$lang/_public/all/'
+    | '/$lang/_public/flight/'
     | '/$lang/_public/hotels/'
     | '/$lang/_public/rent-a-car/'
     | '/$lang/_public/safari-tour/'
@@ -320,6 +332,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangPublicHotelsIndexRouteImport
       parentRoute: typeof LangPublicRouteRoute
     }
+    '/$lang/_public/flight/': {
+      id: '/$lang/_public/flight/'
+      path: '/flight'
+      fullPath: '/$lang/flight'
+      preLoaderRoute: typeof LangPublicFlightIndexRouteImport
+      parentRoute: typeof LangPublicRouteRoute
+    }
     '/$lang/_public/all/': {
       id: '/$lang/_public/all/'
       path: '/all'
@@ -358,6 +377,7 @@ declare module '@tanstack/react-start/server' {
 interface LangPublicRouteRouteChildren {
   LangPublicIndexRoute: typeof LangPublicIndexRoute
   LangPublicAllIndexRoute: typeof LangPublicAllIndexRoute
+  LangPublicFlightIndexRoute: typeof LangPublicFlightIndexRoute
   LangPublicHotelsIndexRoute: typeof LangPublicHotelsIndexRoute
   LangPublicRentACarIndexRoute: typeof LangPublicRentACarIndexRoute
   LangPublicSafariTourIndexRoute: typeof LangPublicSafariTourIndexRoute
@@ -369,6 +389,7 @@ interface LangPublicRouteRouteChildren {
 const LangPublicRouteRouteChildren: LangPublicRouteRouteChildren = {
   LangPublicIndexRoute: LangPublicIndexRoute,
   LangPublicAllIndexRoute: LangPublicAllIndexRoute,
+  LangPublicFlightIndexRoute: LangPublicFlightIndexRoute,
   LangPublicHotelsIndexRoute: LangPublicHotelsIndexRoute,
   LangPublicRentACarIndexRoute: LangPublicRentACarIndexRoute,
   LangPublicSafariTourIndexRoute: LangPublicSafariTourIndexRoute,

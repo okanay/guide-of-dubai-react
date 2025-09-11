@@ -5,6 +5,8 @@ import enCard from './en/global-card.json'
 import enHeader from './en/layout-header.json'
 import enFooter from './en/layout-footer.json'
 import enIndex from './en/page-index.json'
+import enTours from './en/page-tours.json'
+import enActivities from './en/page-activities.json'
 import enErrors from './en/page-errors.json'
 import enZod from './en/errors-zod.json'
 import enApi from './en/errors-api.json'
@@ -17,6 +19,8 @@ import trCard from './tr/global-card.json'
 import trHeader from './tr/layout-header.json'
 import trFooter from './tr/layout-footer.json'
 import trIndex from './tr/page-index.json'
+import trTours from './tr/page-tours.json'
+import trActivities from './tr/page-activities.json'
 import trErrors from './tr/page-errors.json'
 import trZod from './tr/errors-zod.json'
 import trApi from './tr/errors-api.json'
@@ -34,6 +38,8 @@ export const namespaces = [
   'layout-header',
   'layout-footer',
   'page-index',
+  'page-tours',
+  'page-activities',
   'page-errors',
   'errors-zod',
   'errors-api',
@@ -48,6 +54,8 @@ const resource = {
     'layout-header': enHeader,
     'layout-footer': enFooter,
     'page-index': enIndex,
+    'page-tours': enTours,
+    'page-activities': enActivities,
     'page-errors': enErrors,
     'errors-zod': enZod,
     'errors-api': enApi,
@@ -61,6 +69,8 @@ const resource = {
     'layout-header': trHeader,
     'layout-footer': trFooter,
     'page-index': trIndex,
+    'page-tours': trTours,
+    'page-activities': trActivities,
     'page-errors': trErrors,
     'errors-zod': trZod,
     'errors-api': trApi,

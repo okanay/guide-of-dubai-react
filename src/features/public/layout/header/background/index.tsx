@@ -145,6 +145,15 @@ export const PublicHeaderBackground = () => {
       },
       {
         index: 7,
+        path: 'flight',
+        imageSrc: '/images/public/header/explore.jpg',
+        imageSrcMobile: '/images/public/header/explore-mobile.jpg',
+        imageAlt: t('slides.all.alt'),
+        titleKey: 'slides.all.title',
+        searchPlaceholderKey: 'slides.all.placeholder',
+      },
+      {
+        index: 8,
         path: 'all',
         imageSrc: '/images/public/header/explore.jpg',
         imageSrcMobile: '/images/public/header/explore-mobile.jpg',
@@ -288,7 +297,7 @@ export const PublicHeaderBackground = () => {
           />
 
           <div className="absolute -bottom-px left-0 z-32 w-full px-4">
-            <nav className="mx-auto grid w-full max-w-main grid-cols-4 items-center justify-start overflow-x-auto text-size-sm font-semibold [scrollbar-width:none] sm:flex xl:grid xl:grid-cols-8 [&::-webkit-scrollbar]:hidden">
+            <nav className="mx-auto grid w-full max-w-main grid-cols-4 items-center justify-start overflow-x-auto text-size-sm font-semibold [scrollbar-width:none] sm:flex xl:grid xl:grid-cols-9 [&::-webkit-scrollbar]:hidden">
               <NavigationTab
                 to="/$lang"
                 icon="app/explore"
@@ -323,6 +332,12 @@ export const PublicHeaderBackground = () => {
                 to="/$lang/rent-a-car"
                 icon="app/car-rental"
                 labelKey="nav.rent_a_car"
+                className="hidden sm:flex"
+              />
+              <NavigationTab
+                to="/$lang/flight"
+                icon="app/flight"
+                labelKey="nav.flight"
                 className="hidden sm:flex"
               />
               <NavigationTab

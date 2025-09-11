@@ -6,6 +6,7 @@
     "hotels": "Oteller",
     "safari_tour": "Safari Turu",
     "rent_a_car": "Araç Kirala",
+    "flight": "Uçak Bileti",
     "transfer": "Transfer",
     "all": "Tümü",
     "wishlist": "Beğendiklerim",
@@ -47,6 +48,11 @@
       "title": "Dubai Transferlerini Keşfedin",
       "placeholder": "Transfer seçeneklerini arayın...",
       "alt": "Dubai Transfer Hizmetleri manzarası"
+    },
+    "flight": {
+      "title": "Dubai Biletlerini Keşfedin",
+      "placeholder": "Bilet almak istediğiniz yer veya etkinliği arayın...",
+      "alt": "Dubai Biletleri manzarası"
     },
     "all": {
       "title": "Dubai'de Her Şeyi Keşfedin",

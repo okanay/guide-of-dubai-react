@@ -108,7 +108,7 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
     <ClientOnly fallback={<div />}>
       <div ref={overlayRef} className={containerClassName} role="dialog" aria-modal="true">
         {/* Overlay */}
-        <div className={overlayClassName} />
+        <div data-theme="force-main" className={overlayClassName} />
 
         {/* Modal Content - Orijinal boyutlarıyla */}
         {cloneChildrenWithRef(children)}

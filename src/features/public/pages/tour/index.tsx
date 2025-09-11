@@ -9,12 +9,7 @@ import { LuxuryOffers } from './section-luxury'
 export const ToursIndexPage = () => {
   return (
     <main className="flex flex-col">
-      <SearchForm />
       <MostPopular />
-      <LuxuryOffers />
-      <WaterActivities />
-      <FastPlanner />
-      <Information />
     </main>
   )
 }

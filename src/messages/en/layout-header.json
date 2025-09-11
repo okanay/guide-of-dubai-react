@@ -7,6 +7,7 @@
     "safari_tour": "Safari Tour",
     "rent_a_car": "Rent a Car",
     "transfer": "Transfer",
+    "flight": "Flight Ticket",
     "all": "All",
     "wishlist": "Wishlist",
     "reservations": "Reservations",
@@ -47,6 +48,11 @@
       "title": "Discover Dubai Transfers",
       "placeholder": "Search for transfer options...",
       "alt": "Dubai Transfer Services view"
+    },
+    "flight": {
+      "title": "Discover Dubai Flights",
+      "placeholder": "Search for flight options...",
+      "alt": "Dubai Flight view"
     },
     "all": {
       "title": "Discover Everything in Dubai",
