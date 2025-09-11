@@ -12,6 +12,8 @@ import { SystemSettingsModal } from '@/features/modals/system-settings/modal'
 import { LeafletModal } from '@/features/modals/leaflet-map/index'
 import { Route } from '@/routes/__root'
 import { SystemSettingsModalStore } from '@/features/modals/system-settings/store'
+import { MobileMenuStore } from './header/mobile-menu/store'
+import { MobileMenu } from './header/mobile-menu'
 
 export const PublicLayoutConfig = ({ children }: { children: React.ReactNode }) => {
   const data = Route.useLoaderData()
@@ -25,6 +27,7 @@ export const PublicLayoutConfig = ({ children }: { children: React.ReactNode }) 
           BasketModalStore,
           AuthModalStore,
           GoAiModalStore,
+          MobileMenuStore,
         ]}
       >
         {children}
@@ -34,6 +37,7 @@ export const PublicLayoutConfig = ({ children }: { children: React.ReactNode }) 
         <BasketModal />
         <SearchModal />
         <LeafletModal />
+        <MobileMenu />
       </ComposeProviders>
     </SystemSettingsModalStore>
   )

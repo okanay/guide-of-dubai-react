@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { BasketButton } from '@/features/modals/basket/button'
 import { GoAiButton } from '@/features/modals/go-ai/button'
 import { SearchButton } from '@/features/modals/search/button'
+import { MobileMenuButton } from './mobile-menu/button'
 
 export function PublicHeader() {
   const { isInverted } = useHeader()
@@ -61,6 +62,8 @@ export function PublicHeader() {
             {/* Auth */}
             <ProfileButton />
           </div>
+
+          <MobileMenuButton />
         </nav>
 
         <CategoriesDropdown />
