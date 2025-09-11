@@ -1,5 +1,5 @@
 import { ArrowLeft, ChevronRight, DollarSign, Globe, Monitor, Moon, Sun, X } from 'lucide-react'
-import { ModalWrapper } from 'src/components/modal-wrapper'
+import { ModalWrapper } from '@/features/modals/components/wrapper'
 import { useLanguage } from 'src/i18n/prodiver'
 import { useTheme } from 'src/providers/theme-mode'
 import { useSystemSettings } from './store'

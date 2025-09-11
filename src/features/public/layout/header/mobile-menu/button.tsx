@@ -10,7 +10,7 @@ export function MobileMenuButton() {
     <button
       onClick={toggleMenu}
       data-theme="force-main"
-      className="mr-4 flex items-center justify-center gap-x-2 rounded-lg p-2 text-size text-white transition-colors hover:bg-white/10 focus:bg-white/10 lg:hidden"
+      className="mr-4 flex items-center justify-center gap-x-2 rounded-xs p-2 text-size font-bold text-white transition-colors hover:bg-white/10 focus:bg-white/10 lg:hidden"
       aria-label={t('buttons.menu')}
     >
       MENU

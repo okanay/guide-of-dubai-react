@@ -1,6 +1,6 @@
 import { X } from 'lucide-react'
 import { useBasketModal } from './store'
-import { ModalWrapper } from 'src/components/modal-wrapper'
+import { ModalWrapper } from '@/features/modals/components/wrapper'
 
 export function BasketModal() {
   const { isOpen, closeModal, scopeId } = useBasketModal()

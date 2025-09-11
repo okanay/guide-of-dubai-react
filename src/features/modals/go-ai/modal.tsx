@@ -1,6 +1,6 @@
 import { X } from 'lucide-react'
 import { useGoAiModal } from './store'
-import { ModalWrapper } from 'src/components/modal-wrapper'
+import { ModalWrapper } from '@/features/modals/components/wrapper'
 
 export function GoAiModal() {
   const { isOpen, closeModal, scopeId } = useGoAiModal()

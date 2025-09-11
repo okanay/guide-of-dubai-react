@@ -1,6 +1,7 @@
 import { ClientOnly } from '@tanstack/react-router'
 import React, { useEffect, useRef, ReactNode, cloneElement, isValidElement } from 'react'
 import { createPortal } from 'react-dom'
+import { useModalBodyLock } from './use-modal-body-lock'
 
 // =============================================================================
 // TYPE DEFINITIONS
@@ -29,7 +30,7 @@ export interface ModalWrapperProps {
    */
   disableOutsideClick?: boolean
   /**
-   * Body scroll'u kilitle
+   * Body scroll'u kilitle (Global Modal Manager ile yönetilir)
    * @default true
    */
   lockBodyScroll?: boolean
@@ -58,32 +59,9 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
 }) => {
   const overlayRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
-  const originalScrollY = useRef<number>(0)
 
-  // Global body scroll lock with DOM positioning fix
-  useEffect(() => {
-    if (!isOpen || !lockBodyScroll) return
-
-    // Scroll pozisyonunu kaydet
-    originalScrollY.current = window.scrollY
-
-    // Body'yi sabitle - Tüm tarayıcılar için liquid glass/viewport fix
-    document.body.style.position = 'fixed'
-    document.body.style.top = `-${originalScrollY.current}px`
-    document.body.style.left = '0'
-    document.body.style.right = '0'
-    document.body.style.overflow = 'hidden'
-
-    return () => {
-      // Styles'ı temizle ve scroll'u restore et
-      document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.left = ''
-      document.body.style.right = ''
-      document.body.style.overflow = ''
-      window.scrollTo(0, originalScrollY.current)
-    }
-  }, [isOpen, lockBodyScroll])
+  // Global modal body lock kullan
+  useModalBodyLock(lockBodyScroll && isOpen)
 
   // Outside click handler
   useEffect(() => {

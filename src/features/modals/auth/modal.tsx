@@ -1,4 +1,4 @@
-import { ModalWrapper } from 'src/components/modal-wrapper'
+import { ModalWrapper } from '@/features/modals/components/wrapper'
 import { ForgotPasswordForm } from './form-forgot-password'
 import { EmailLoginForm } from './form-login'
 import { RegisterForm } from './form-register'

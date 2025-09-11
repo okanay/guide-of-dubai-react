@@ -4,56 +4,34 @@ import { useLanguage } from '@/i18n/prodiver'
 import { useAuth } from '@/providers/auth'
 import { useTheme } from '@/providers/theme-mode'
 import { X, ChevronRight } from 'lucide-react'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import { useMobileMenu } from './store'
+import { useModalBodyLock } from '@/features/modals/components/use-modal-body-lock'
 
 export function MobileMenu() {
-  const { isOpen, activeSubmenu, closeMenu } = useMobileMenu()
+  const { isOpen, closeMenu } = useMobileMenu()
   const { t } = useTranslation('layout-header')
-
   const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null)
-  const originalScrollY = useRef<number>(0)
 
-  // Portal container'ı client-side'da set et
+  // Global modal body lock
+  useModalBodyLock(isOpen)
+
+  // Portal container set et
   useEffect(() => {
     setPortalContainer(document.body)
   }, [])
-
-  // Global body scroll lock with Safari iOS fix
-  useEffect(() => {
-    if (!isOpen) return
-
-    // Scroll pozisyonunu kaydet
-    originalScrollY.current = window.scrollY
-
-    // Body'yi sabitle - Tüm tarayıcılar için liquid glass/viewport fix
-    document.body.style.position = 'fixed'
-    document.body.style.top = `-${originalScrollY.current}px`
-    document.body.style.left = '0'
-    document.body.style.right = '0'
-    document.body.style.overflow = 'hidden'
-
-    return () => {
-      // Styles'ı temizle ve scroll'u restore et
-      document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.left = ''
-      document.body.style.right = ''
-      document.body.style.overflow = ''
-      window.scrollTo(0, originalScrollY.current)
-    }
-  }, [isOpen])
 
   if (!portalContainer) return null
 
   return createPortal(
     <div
+      id="mobile-menu-container"
       data-open={isOpen}
-      className="pointer-events-none fixed inset-0 z-50 transition-all duration-300 data-[open=true]:pointer-events-auto"
+      className="pointer-events-none fixed inset-0 z-50 transition-all duration-300 data-[open=true]:pointer-events-auto lg:hidden"
     >
-      {/* Overlay */}
+      {/* Scrim/Overlay */}
       <div
         onClick={closeMenu}
         data-open={isOpen}
@@ -64,57 +42,126 @@ export function MobileMenu() {
       {/* Menu Panel */}
       <div
         data-open={isOpen}
-        data-submenu={activeSubmenu !== null}
-        className="absolute top-0 left-0 h-full w-full max-w-sm transform bg-box-surface shadow-xl transition-transform duration-300 ease-out data-[open=false]:-translate-x-full data-[open=true]:translate-x-0 md:max-w-sm"
+        className="absolute top-0 left-0 flex h-full w-full transform flex-col bg-box-surface shadow-xl transition-transform duration-300 ease-out data-[open=false]:-translate-x-full data-[open=true]:translate-x-0 md:max-w-sm"
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
-          <div className="flex items-center gap-3">
-            {activeSubmenu && <BackButton />}
-            <h2 className="text-lg font-semibold text-on-box-black">
-              {activeSubmenu ? t(`buttons.${activeSubmenu}`) : t('buttons.menu')}
-            </h2>
-          </div>
-          <CloseButton />
+        <div className="flex shrink-0 items-center justify-between border-b border-gray-200 px-6 py-4">
+          <h2 className="text-lg font-semibold text-on-box-black">{t('buttons.menu')}</h2>
+          <button
+            onClick={closeMenu}
+            className="flex items-center justify-center rounded-lg p-2 text-gray-500 transition-colors hover:bg-gray-100"
+          >
+            <X className="h-5 w-5" />
+          </button>
         </div>
 
-        {/* Content */}
-        <div className="flex h-full flex-col overflow-hidden"></div>
+        {/* Content - Scrollable */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="p-6">
+            <MenuContent />
+          </div>
+        </div>
       </div>
     </div>,
     portalContainer,
   )
 }
 
-// =============================================================================
-// SUB COMPONENTS
-// =============================================================================
-function CloseButton() {
-  const { closeMenu } = useMobileMenu()
-  const { t } = useTranslation('global-modal')
+function MenuContent() {
+  const { sessionStatus, user, logout } = useAuth()
+  const { openModal: openAuthModal } = useAuthModal()
+  const { openModal: openSystemSettingsModal, currency } = useSystemSettings()
+  const { language } = useLanguage()
+  const { theme } = useTheme()
+  const { t } = useTranslation(['layout-header', 'global-modal'])
+
+  const openSettingsModal = (type: any) => {
+    openSystemSettingsModal(type, 'mobile-menu-container')
+  }
+
+  const openAuthInMenu = () => {
+    openAuthModal('login', 'mobile-menu-container')
+  }
 
   return (
-    <button
-      onClick={closeMenu}
-      className="flex items-center justify-center rounded-lg p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700"
-      aria-label={t('settings.close')}
-    >
-      <X className="h-5 w-5" />
-    </button>
-  )
-}
+    <div className="space-y-6">
+      {/* Auth Section */}
+      <div className="border-b border-gray-200 pb-6">
+        {sessionStatus === 'authenticated' ? (
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-100">
+                <span className="text-lg font-semibold text-primary-600">
+                  {user?.displayName?.[0]?.toUpperCase() || 'U'}
+                </span>
+              </div>
+              <div>
+                <p className="font-semibold text-on-box-black">{user?.displayName}</p>
+                <p className="text-sm text-gray-500">{user?.email}</p>
+              </div>
+            </div>
+            <button
+              onClick={logout}
+              className="w-full text-left text-sm text-red-600 hover:text-red-700"
+            >
+              {t('layout-header:profile.logout')}
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={openAuthInMenu}
+            className="w-full rounded-lg bg-primary-500 px-4 py-3 text-white transition-colors hover:bg-primary-600"
+          >
+            {t('layout-header:profile.login_register')}
+          </button>
+        )}
+      </div>
 
-function BackButton() {
-  const { goBack } = useMobileMenu()
-  const { t } = useTranslation('global-modal')
+      {/* Settings */}
+      <div className="space-y-4">
+        <h3 className="text-sm font-semibold text-gray-500 uppercase">
+          {t('global-modal:settings.title')}
+        </h3>
 
-  return (
-    <button
-      onClick={goBack}
-      className="flex items-center justify-center rounded-lg p-1 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700"
-      aria-label={t('settings.back')}
-    >
-      <ChevronRight className="h-4 w-4 rotate-180" />
-    </button>
+        <button
+          onClick={() => openSettingsModal('language')}
+          className="flex w-full items-center justify-between rounded-lg border border-gray-200 p-4 text-left transition-colors hover:bg-gray-50"
+        >
+          <span className="font-medium text-on-box-black">
+            {t('global-modal:settings.language')}
+          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">{language.label}</span>
+            <ChevronRight className="h-4 w-4 text-gray-400" />
+          </div>
+        </button>
+
+        <button
+          onClick={() => openSettingsModal('currency')}
+          className="flex w-full items-center justify-between rounded-lg border border-gray-200 p-4 text-left transition-colors hover:bg-gray-50"
+        >
+          <span className="font-medium text-on-box-black">
+            {t('global-modal:settings.currency')}
+          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">{currency.name}</span>
+            <ChevronRight className="h-4 w-4 text-gray-400" />
+          </div>
+        </button>
+
+        <button
+          onClick={() => openSettingsModal('theme')}
+          className="flex w-full items-center justify-between rounded-lg border border-gray-200 p-4 text-left transition-colors hover:bg-gray-50"
+        >
+          <span className="font-medium text-on-box-black">{t('global-modal:settings.theme')}</span>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">
+              {t(`global-modal:settings.${theme}_theme`)}
+            </span>
+            <ChevronRight className="h-4 w-4 text-gray-400" />
+          </div>
+        </button>
+      </div>
+    </div>
   )
 }

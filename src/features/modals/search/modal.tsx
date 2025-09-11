@@ -1,6 +1,6 @@
 import { X } from 'lucide-react'
 import { useSearchModal } from './store'
-import { ModalWrapper } from 'src/components/modal-wrapper'
+import { ModalWrapper } from '@/features/modals/components/wrapper'
 
 export function SearchModal() {
   const { isOpen, closeModal, scopeId } = useSearchModal()
