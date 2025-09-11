@@ -1,9 +1,8 @@
-// src/features/modals/components/manager.ts
 class GlobalModalManager {
   private static instance: GlobalModalManager
-  private modalStacks = new Map<string, number>() // scope -> modal count
-  private originalScrollPositions = new Map<string, number>() // scope -> scroll position
-  private bodyLockCount = 0 // Toplam body lock sayısı
+  private modalStacks = new Map<string, number>()
+  private originalScrollPositions = new Map<string, number>()
+  private bodyLockCount = 0
 
   public static getInstance(): GlobalModalManager {
     if (!GlobalModalManager.instance) {
@@ -21,9 +20,6 @@ class GlobalModalManager {
     if (currentCount === 0) {
       this.lockScope(scopeId)
     }
-
-    console.log(`Modal opened in scope: ${scopeId}. Count: ${currentCount + 1}`)
-    console.log('All scopes:', Object.fromEntries(this.modalStacks))
   }
 
   public closeModal(scopeId: string = 'body'): void {
@@ -37,19 +33,14 @@ class GlobalModalManager {
     const newCount = currentCount - 1
     this.modalStacks.set(scopeId, newCount)
 
-    // Eğer bu scope'taki son modal kapanıyorsa
     if (newCount === 0) {
       this.unlockScope(scopeId)
       this.modalStacks.delete(scopeId)
     }
-
-    console.log(`Modal closed in scope: ${scopeId}. Count: ${newCount}`)
-    console.log('All scopes:', Object.fromEntries(this.modalStacks))
   }
 
   private lockScope(scopeId: string): void {
     if (scopeId === 'body') {
-      // Body için scroll lock
       this.bodyLockCount++
       if (this.bodyLockCount === 1) {
         this.originalScrollPositions.set('body', window.scrollY)
@@ -60,7 +51,6 @@ class GlobalModalManager {
         document.body.style.overflow = 'hidden'
       }
     } else {
-      // Diğer scope'lar için - ama body'yi de etkiliyorsa body lock sayısını da artır
       this.bodyLockCount++
       if (this.bodyLockCount === 1) {
         this.originalScrollPositions.set('body', window.scrollY)
@@ -81,7 +71,6 @@ class GlobalModalManager {
 
   private unlockScope(scopeId: string): void {
     if (scopeId === 'body') {
-      // Body için scroll unlock
       this.bodyLockCount--
       if (this.bodyLockCount === 0) {
         const originalScrollY = this.originalScrollPositions.get('body') || 0

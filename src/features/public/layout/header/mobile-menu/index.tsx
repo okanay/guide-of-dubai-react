@@ -9,11 +9,13 @@ import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import { useMobileMenu } from './store'
 import { useModalBodyLock } from '@/features/modals/components/use-modal-body-lock'
+import { useMediaQuery } from '@/hooks/use-media-query'
 
 export function MobileMenu() {
   const { isOpen, closeMenu } = useMobileMenu()
   const { t } = useTranslation('layout-header')
   const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null)
+  const isLargeScreen = useMediaQuery('(min-width: 1024px)')
 
   // Global modal body lock
   useModalBodyLock(isOpen, 'mobile-menu-root')
@@ -22,6 +24,13 @@ export function MobileMenu() {
   useEffect(() => {
     setPortalContainer(document.body)
   }, [])
+
+  // Ekran büyüyünce zorla kapat
+  useEffect(() => {
+    if (isLargeScreen && isOpen) {
+      closeMenu()
+    }
+  }, [isLargeScreen, isOpen, closeMenu])
 
   if (!portalContainer) return null
 
@@ -42,7 +51,7 @@ export function MobileMenu() {
       {/* Menu Panel */}
       <div
         data-open={isOpen}
-        className="absolute top-0 left-0 flex h-full w-full transform flex-col bg-box-surface shadow-xl transition-transform duration-300 ease-out data-[open=false]:-translate-x-full data-[open=true]:translate-x-0 md:max-w-sm"
+        className="absolute top-0 left-0 flex h-full w-full transform flex-col bg-box-surface shadow-xl transition-transform duration-300 ease-out data-[open=false]:-translate-x-full data-[open=true]:translate-x-0 md:max-w-sm lg:hidden"
       >
         {/* Header */}
         <div className="flex shrink-0 items-center justify-between border-b border-gray-200 px-6 py-4">
