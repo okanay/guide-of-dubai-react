@@ -44,19 +44,6 @@ export interface ModalWrapperProps {
 }
 
 // =============================================================================
-// UTILITIES
-// =============================================================================
-const isSafariIOS = () => {
-  if (typeof window === 'undefined') return false
-
-  const userAgent = window.navigator.userAgent.toLowerCase()
-  const isSafari = /safari/.test(userAgent) && !/chrome|chromium|crios|fxios|opios/.test(userAgent)
-  const isIOS = /iphone|ipad|ipod/.test(userAgent)
-
-  return isSafari && isIOS
-}
-
-// =============================================================================
 // MAIN COMPONENT
 // =============================================================================
 export const ModalWrapper: React.FC<ModalWrapperProps> = ({
@@ -73,37 +60,28 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   const contentRef = useRef<HTMLDivElement>(null)
   const originalScrollY = useRef<number>(0)
 
-  // Safari iOS liquid glass fix - Basit ve etkili
+  // Global body scroll lock with DOM positioning fix
   useEffect(() => {
-    if (!isOpen) return
+    if (!isOpen || !lockBodyScroll) return
 
-    if (isSafariIOS()) {
-      // Scroll pozisyonunu kaydet
-      originalScrollY.current = window.scrollY
+    // Scroll pozisyonunu kaydet
+    originalScrollY.current = window.scrollY
 
-      // Body'yi sabitle - Safari liquid glass fix
-      document.body.style.position = 'fixed'
-      document.body.style.top = `-${originalScrollY.current}px`
-      document.body.style.left = '0'
-      document.body.style.right = '0'
-      document.body.style.overflow = 'hidden'
-    } else if (lockBodyScroll) {
-      // Normal tarayıcılar için basit scroll lock
-      document.body.style.overflow = 'hidden'
-    }
+    // Body'yi sabitle - Tüm tarayıcılar için liquid glass/viewport fix
+    document.body.style.position = 'fixed'
+    document.body.style.top = `-${originalScrollY.current}px`
+    document.body.style.left = '0'
+    document.body.style.right = '0'
+    document.body.style.overflow = 'hidden'
 
     return () => {
-      if (isSafariIOS()) {
-        // Safari styles'ı temizle ve scroll'u restore et
-        document.body.style.position = ''
-        document.body.style.top = ''
-        document.body.style.left = ''
-        document.body.style.right = ''
-        document.body.style.overflow = ''
-        window.scrollTo(0, originalScrollY.current)
-      } else {
-        document.body.style.overflow = ''
-      }
+      // Styles'ı temizle ve scroll'u restore et
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.left = ''
+      document.body.style.right = ''
+      document.body.style.overflow = ''
+      window.scrollTo(0, originalScrollY.current)
     }
   }, [isOpen, lockBodyScroll])
 
