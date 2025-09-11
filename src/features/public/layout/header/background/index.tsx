@@ -1,13 +1,14 @@
-import { Link } from 'src/i18n/router/link'
-import { LinkProps } from '@tanstack/react-router'
-import { Route } from 'src/routes/$lang/_public/route'
-import { useMemo } from 'react'
+import { Link, LinkProps } from '@tanstack/react-router'
+import { useMemo, useState, useEffect } from 'react'
 import { twMerge } from 'tailwind-merge'
-import Icon from 'src/components/icon'
 import { useTranslation } from 'react-i18next'
+
+import { Route } from 'src/routes/$lang/_public/route'
+import Icon from 'src/components/icon'
 import { SearchButton } from '@/features/modals/search/button'
 
 interface SlideConfig {
+  index: number
   path: string
   imageSrc: string
   imageSrcMobile: string
@@ -15,39 +16,72 @@ interface SlideConfig {
   titleKey: string
   searchPlaceholderKey: string
 }
-
 interface ResponsivePictureProps {
   slide: SlideConfig
   priority?: boolean
 }
+interface NavigationTabProps {
+  to: LinkProps['to']
+  icon: string
+  labelKey: string
+  className?: string
+}
 
-const ResponsivePicture = ({ slide, priority = false }: ResponsivePictureProps) => {
+const ResponsivePicture = ({ slide, priority = false }: ResponsivePictureProps) => (
+  <picture className="absolute inset-0 h-full w-full">
+    <source media="(max-width: 512px)" srcSet={slide.imageSrcMobile} type="image/jpeg" />
+    <source media="(min-width: 513px)" srcSet={slide.imageSrc} type="image/jpeg" />
+    <img
+      src={slide.imageSrc}
+      alt={slide.imageAlt}
+      className="absolute inset-0 h-full w-full object-cover"
+      loading={priority ? 'eager' : 'lazy'}
+      fetchPriority={priority ? 'high' : 'auto'}
+    />
+  </picture>
+)
+
+function NavigationTab({ to, icon, labelKey, className }: NavigationTabProps) {
+  const { t } = useTranslation('layout-header')
   return (
-    <picture className="absolute inset-0 h-full w-full">
-      {/* Mobile için source - 512px altında */}
-      <source media="(max-width: 512px)" srcSet={slide.imageSrcMobile} type="image/jpeg" />
-      {/* Desktop için source - 512px üstünde */}
-      <source media="(min-width: 513px)" srcSet={slide.imageSrc} type="image/jpeg" />
-      {/* Fallback img elementi */}
-      <img
-        src={slide.imageSrc}
-        alt={slide.imageAlt}
-        className="absolute inset-0 h-full w-full object-cover"
-        loading={priority ? 'eager' : 'lazy'}
-        fetchPriority={priority ? 'high' : 'auto'}
-      />
-    </picture>
+    <Link
+      to={to}
+      activeOptions={{ exact: true }}
+      preload={'render'}
+      className={twMerge(
+        'group flex w-full shrink-0 items-center justify-center gap-x-2 py-3 text-center font-bold text-white transition-colors duration-300 ease-in hover:bg-white/20 data-[status=active]:bg-white data-[status=active]:text-btn-primary sm:w-1/8 sm:min-w-[120px] xl:w-full dark:text-black data-[status=active]:dark:bg-black',
+        className,
+      )}
+    >
+      <Icon name={icon} className="text-[#F8F8F8] group-data-[status=active]:text-gray-700" />
+      {t(labelKey)}
+    </Link>
   )
+}
+
+const getActiveSlideIndex = (href: string, configs: SlideConfig[]): number | null => {
+  try {
+    const url = href.startsWith('http') ? new URL(href) : new URL(href, 'http://localhost')
+    const pathSegments = url.pathname
+      .split('/')
+      .filter((segment) => segment !== '' && segment.length > 2)
+    if (pathSegments.length > 1) return null
+    const targetPath = pathSegments.length === 0 ? '' : pathSegments[0]
+    const match = configs.find((slide) => slide.path === targetPath)
+    return match ? match.index : null
+  } catch {
+    return null
+  }
 }
 
 export const PublicHeaderBackground = () => {
   const { href } = Route.useLoaderData()
   const { t } = useTranslation('layout-header')
 
-  // Slide konfigürasyonları i18n ile
   const slideConfigs: SlideConfig[] = useMemo(
     () => [
       {
+        index: 0,
         path: '',
         imageSrc: '/images/public/header/explore.jpg',
         imageSrcMobile: '/images/public/header/explore-mobile.jpg',
@@ -56,6 +90,7 @@ export const PublicHeaderBackground = () => {
         searchPlaceholderKey: 'slides.explore.placeholder',
       },
       {
+        index: 1,
         path: 'tours',
         imageSrc: '/images/public/header/tours.jpg',
         imageSrcMobile: '/images/public/header/tours-mobile.jpg',
@@ -64,6 +99,7 @@ export const PublicHeaderBackground = () => {
         searchPlaceholderKey: 'slides.tours.placeholder',
       },
       {
+        index: 2,
         path: 'tickets',
         imageSrc: '/images/public/header/tours.jpg',
         imageSrcMobile: '/images/public/header/tours-mobile.jpg',
@@ -72,6 +108,7 @@ export const PublicHeaderBackground = () => {
         searchPlaceholderKey: 'slides.tickets.placeholder',
       },
       {
+        index: 3,
         path: 'hotels',
         imageSrc: '/images/public/header/hotels.png',
         imageSrcMobile: '/images/public/header/hotels-mobile.png',
@@ -80,6 +117,7 @@ export const PublicHeaderBackground = () => {
         searchPlaceholderKey: 'slides.hotels.placeholder',
       },
       {
+        index: 4,
         path: 'safari-tour',
         imageSrc: '/images/public/header/safari.jpg',
         imageSrcMobile: '/images/public/header/safari-mobile.jpg',
@@ -88,6 +126,7 @@ export const PublicHeaderBackground = () => {
         searchPlaceholderKey: 'slides.safari_tour.placeholder',
       },
       {
+        index: 5,
         path: 'rent-a-car',
         imageSrc: '/images/public/header/rent-a-car.jpg',
         imageSrcMobile: '/images/public/header/rent-a-car-mobile.jpg',
@@ -96,6 +135,7 @@ export const PublicHeaderBackground = () => {
         searchPlaceholderKey: 'slides.rent_a_car.placeholder',
       },
       {
+        index: 6,
         path: 'transfer',
         imageSrc: '/images/public/header/transfer.jpg',
         imageSrcMobile: '/images/public/header/transfer-mobile.jpg',
@@ -104,6 +144,7 @@ export const PublicHeaderBackground = () => {
         searchPlaceholderKey: 'slides.transfer.placeholder',
       },
       {
+        index: 7,
         path: 'all',
         imageSrc: '/images/public/header/explore.jpg',
         imageSrcMobile: '/images/public/header/explore-mobile.jpg',
@@ -115,62 +156,120 @@ export const PublicHeaderBackground = () => {
     [t],
   )
 
-  const activeSlideIndex = useMemo(() => getActiveSlideIndex(href), [href])
-  const hasSlide = activeSlideIndex !== null
+  const activeSlideIndexFromUrl = useMemo(
+    () => getActiveSlideIndex(href, slideConfigs),
+    [href, slideConfigs],
+  )
 
-  const activeSlide = hasSlide ? slideConfigs[activeSlideIndex] : null
+  const [initialized, setInitialized] = useState(false)
+  const [slideState, setSlideState] = useState(() => ({
+    current: activeSlideIndexFromUrl,
+    previous: activeSlideIndexFromUrl,
+    direction: 'none' as 'left' | 'right' | 'none',
+  }))
+
+  useEffect(() => {
+    // First pass: ensure we don't animate on initial hydration mismatch
+    if (!initialized) {
+      setSlideState({
+        current: activeSlideIndexFromUrl,
+        previous: activeSlideIndexFromUrl,
+        direction: 'none',
+      })
+      setInitialized(true)
+      return
+    }
+
+    function getDirection(prev: number, next: number): 'left' | 'right' {
+      if (prev === next) return 'left'
+      return next > prev ? 'right' : 'left'
+    }
+
+    setSlideState((prev) => {
+      if (prev.current === activeSlideIndexFromUrl) return prev
+      if (activeSlideIndexFromUrl === null) return prev
+
+      const direction = getDirection(prev.current!, activeSlideIndexFromUrl)
+
+      return {
+        current: activeSlideIndexFromUrl,
+        previous: prev.current,
+        direction,
+      }
+    })
+  }, [activeSlideIndexFromUrl, initialized])
+
+  const hasSlide = slideState.current !== null
+  const activeSlide = hasSlide ? slideConfigs[slideState.current || 0] : null
+
+  // Fonksiyona 'index' ve 'currentIndex' parametrelerini ekliyoruz
+  const getTransformClass = (
+    position: 'active' | 'exiting' | 'hidden',
+    index: number,
+    currentIndex: number | null,
+  ): string => {
+    if (currentIndex === null || slideState.previous === null) {
+      switch (position) {
+        case 'active':
+          return 'opacity-100 scale-100'
+        case 'exiting':
+          return 'opacity-0 scale-95'
+        default:
+          return 'opacity-0'
+      }
+    }
+
+    switch (position) {
+      case 'active':
+        return 'translate-x-0 opacity-100'
+      case 'exiting':
+        return slideState.direction === 'right'
+          ? '-translate-x-full opacity-0'
+          : 'translate-x-full opacity-0'
+      default:
+        return index > currentIndex ? 'translate-x-full opacity-0' : '-translate-x-full opacity-0'
+    }
+  }
 
   return (
     <>
-      {/* Layout Spacer */}
       <div
         className="transition-all duration-500 ease-in-out data-[slide=false]:h-[160px] data-[slide=true]:h-[540px]"
         data-slide={hasSlide}
       />
 
-      {/* Main Container */}
       <div
         className="absolute top-0 left-0 w-full bg-black transition-all duration-500 ease-in-out data-[slide=false]:h-[220px] data-[slide=true]:h-[600px] dark:bg-white"
         data-slide={hasSlide}
       >
         <div className="relative h-full" data-slide={hasSlide}>
-          {/* Slider Container */}
-          <div
-            className="absolute inset-0 z-30 overflow-hidden"
-            style={{ opacity: hasSlide ? 1 : 0, transition: 'opacity 300ms ease-in-out' }}
-          >
-            <div
-              className="flex h-full transition-transform duration-700 ease-in-out"
-              style={{
-                width: `${slideConfigs.length * 100}%`,
-                transform: hasSlide
-                  ? `translateX(-${(activeSlideIndex * 100) / slideConfigs.length}%)`
-                  : 'translateX(-100%)',
-              }}
-            >
-              {slideConfigs.map((slide, index) => (
+          <div className="absolute inset-0 z-30 overflow-hidden">
+            {slideConfigs.map((slide, index) => {
+              let position: 'active' | 'exiting' | 'hidden' = 'hidden'
+              if (index === slideState.current) position = 'active'
+              else if (index === slideState.previous) position = 'exiting'
+
+              return (
                 <div
                   key={slide.path}
-                  className="relative h-full flex-shrink-0"
-                  style={{ width: `${100 / slideConfigs.length}%` }}
+                  className={twMerge(
+                    'absolute inset-0 h-full w-full transform transition-all duration-700 ease-in-out',
+                    getTransformClass(position, index, slideState.current),
+                  )}
+                  style={{ zIndex: position === 'active' ? 40 : 30 }}
                 >
-                  {/* Responsive Picture Component kullanımı */}
-                  <ResponsivePicture
-                    slide={slide}
-                    priority={index === activeSlideIndex} // Aktif slide'a priority ver
-                  />
+                  <ResponsivePicture slide={slide} priority={index === slideState.current} />
                 </div>
-              ))}
-            </div>
+              )
+            })}
           </div>
 
-          {/* Hero Content */}
           <div
-            className="absolute inset-0 z-31 flex flex-col items-center justify-center gap-y-6 px-4 transition-opacity duration-500 data-[slide=false]:pointer-events-none data-[slide=false]:opacity-0"
-            data-slide={hasSlide}
+            className="absolute inset-0 z-31 flex flex-col items-center justify-center gap-y-6 px-4 transition-opacity duration-500"
+            style={{ opacity: hasSlide ? 1 : 1, pointerEvents: hasSlide ? 'auto' : 'none' }}
           >
             {activeSlide && (
-              <>
+              <div key={activeSlide.path} className="flex flex-col items-center gap-y-6">
                 <h1 className="text-center text-size-3xl font-bold text-white transition-all duration-300 md:text-heading-2 dark:text-black">
                   {t(activeSlide.titleKey)}
                 </h1>
@@ -179,17 +278,15 @@ export const PublicHeaderBackground = () => {
                   placeholder={t(activeSlide.searchPlaceholderKey)}
                   className="line-clamp-1 flex h-11 w-full max-w-[400px] items-center justify-start gap-x-2 rounded-full bg-white px-4 text-size-sm font-normal text-gray-600 shadow-lg sm:max-w-[560px] md:h-13 md:w-[560px] md:text-size dark:bg-black"
                 />
-              </>
+              </div>
             )}
           </div>
 
-          {/* Gradient Overlay */}
           <div
-            className="absolute inset-0 z-30 bg-gradient-to-b from-[#000] to-[#030712] opacity-50 transition-opacity duration-500 data-[slide=false]:opacity-0"
-            data-slide={hasSlide}
+            className="absolute inset-0 z-30 bg-gradient-to-b from-[#000] to-[#030712] transition-opacity duration-500"
+            style={{ opacity: hasSlide ? 0.5 : 1 }}
           />
 
-          {/* Navigation Tabs */}
           <div className="absolute -bottom-px left-0 z-32 w-full px-4">
             <nav className="mx-auto grid w-full max-w-main grid-cols-4 items-center justify-start overflow-x-auto text-size-sm font-semibold [scrollbar-width:none] sm:flex xl:grid xl:grid-cols-8 [&::-webkit-scrollbar]:hidden">
               <NavigationTab
@@ -241,57 +338,4 @@ export const PublicHeaderBackground = () => {
       </div>
     </>
   )
-}
-
-// Navigation Tab Component
-interface NavigationTabProps {
-  to: LinkProps['to']
-  icon: string
-  labelKey: string
-  className?: string
-}
-
-function NavigationTab({ to, icon, labelKey, className }: NavigationTabProps) {
-  const { t } = useTranslation('layout-header')
-
-  return (
-    <Link
-      to={to}
-      activeOptions={{ exact: true }}
-      preload={'render'}
-      className={twMerge(
-        'group flex w-full shrink-0 items-center justify-center gap-x-2 py-3 text-center font-bold text-white transition-colors duration-300 ease-in hover:bg-white/20 data-[status=active]:bg-white data-[status=active]:text-btn-primary sm:w-1/8 sm:min-w-[120px] xl:w-full dark:text-black data-[status=active]:dark:bg-black',
-        className,
-      )}
-    >
-      <Icon name={icon} className="text-[#F8F8F8] group-data-[status=active]:text-gray-700" />
-      {t(labelKey)}
-    </Link>
-  )
-}
-
-const getActiveSlideIndex = (href: string): number | null => {
-  try {
-    const url = href.startsWith('http') ? new URL(href) : new URL(href, 'http://localhost')
-    const pathSegments = url.pathname.split('/').filter((segment) => segment !== '')
-
-    if (pathSegments.length >= 3) return null
-
-    const targetPath = pathSegments.length === 1 ? '' : pathSegments[1]
-    const slideConfigs = [
-      { path: '' },
-      { path: 'tours' },
-      { path: 'tickets' },
-      { path: 'hotels' },
-      { path: 'safari-tour' },
-      { path: 'rent-a-car' },
-      { path: 'transfer' },
-      { path: 'all' },
-    ]
-    const slideIndex = slideConfigs.findIndex((slide) => slide.path === targetPath)
-
-    return slideIndex >= 0 ? slideIndex : null
-  } catch {
-    return null
-  }
 }
