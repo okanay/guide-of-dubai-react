@@ -10,7 +10,7 @@ export const PublicHeaderLogo = () => {
           name="brand/full-white"
           width={89}
           height={39}
-          className="absolute top-[50%] translate-x-[40%] translate-y-[-50%] md:left-[50%] md:translate-x-[-50%]"
+          className="absolute top-[50%] translate-x-[40%] translate-y-[-50%] lg:left-[50%] lg:translate-x-[-50%]"
         />
       </Link>
     </div>
@@ -26,7 +26,7 @@ const LogoWrapper = () => {
         height="57"
         viewBox="0 0 203 57"
         fill="none"
-        className="text-primary-500 md:hidden"
+        className="text-primary-500 lg:hidden"
       >
         <path
           d="M203 0.768658C180.67 0.768658 169.034 57 146.704 57H-1C-1 57 -1 14.6434 -1 0.000130373L203 0.768658Z"
@@ -39,7 +39,7 @@ const LogoWrapper = () => {
         height="57"
         viewBox="0 0 244 57"
         fill="none"
-        className="hidden text-primary-500 md:block"
+        className="hidden text-primary-500 lg:block"
       >
         <path
           d="M244 0C221.618 0 209.954 57 187.572 57H56.4278C34.0458 57 22.3819 0 0 0H244Z"

@@ -16,7 +16,7 @@ export function MobileMenu() {
   const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null)
 
   // Global modal body lock
-  useModalBodyLock(isOpen)
+  useModalBodyLock(isOpen, 'mobile-menu-root')
 
   // Portal container set et
   useEffect(() => {
@@ -29,7 +29,7 @@ export function MobileMenu() {
     <div
       id="mobile-menu-container"
       data-open={isOpen}
-      className="pointer-events-none fixed inset-0 z-50 transition-all duration-300 data-[open=true]:pointer-events-auto lg:hidden"
+      className="pointer-events-none fixed inset-0 z-50 transition-all duration-300 data-[open=true]:pointer-events-auto"
     >
       {/* Scrim/Overlay */}
       <div

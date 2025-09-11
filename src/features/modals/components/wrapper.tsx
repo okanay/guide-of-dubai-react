@@ -1,3 +1,4 @@
+// src/features/modals/components/wrapper.tsx
 import { ClientOnly } from '@tanstack/react-router'
 import React, { useEffect, useRef, ReactNode, cloneElement, isValidElement } from 'react'
 import { createPortal } from 'react-dom'
@@ -60,8 +61,11 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   const overlayRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
-  // Global modal body lock kullan
-  useModalBodyLock(lockBodyScroll && isOpen)
+  // Scope ID'yi normalize et
+  const normalizedScopeId = scopeId || 'body'
+
+  // Global modal body lock kullan - scope-aware
+  useModalBodyLock(lockBodyScroll && isOpen, normalizedScopeId)
 
   // Outside click handler
   useEffect(() => {
@@ -92,11 +96,13 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   if (!isOpen) return null
 
   // Find scope element
-  const scopeElement = scopeId
-    ? scopeId === 'body'
-      ? document.body
-      : document.getElementById(scopeId)
-    : document.body
+  const scopeElement =
+    normalizedScopeId === 'body' ? document.body : document.getElementById(normalizedScopeId)
+
+  if (!scopeElement) {
+    console.warn(`Scope element not found: ${normalizedScopeId}`)
+    return null
+  }
 
   return createPortal(
     <ClientOnly fallback={<div />}>
@@ -108,6 +114,6 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
         {cloneChildrenWithRef(children)}
       </div>
     </ClientOnly>,
-    scopeElement!,
+    scopeElement,
   )
 }

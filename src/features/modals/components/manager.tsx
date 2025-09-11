@@ -1,8 +1,9 @@
-// src/utils/modal-manager.ts
+// src/features/modals/components/manager.ts
 class GlobalModalManager {
   private static instance: GlobalModalManager
-  private openModalsCount = 0
-  private originalScrollY = 0
+  private modalStacks = new Map<string, number>() // scope -> modal count
+  private originalScrollPositions = new Map<string, number>() // scope -> scroll position
+  private bodyLockCount = 0 // Toplam body lock sayısı
 
   public static getInstance(): GlobalModalManager {
     if (!GlobalModalManager.instance) {
@@ -11,52 +12,143 @@ class GlobalModalManager {
     return GlobalModalManager.instance
   }
 
-  public openModal(): void {
-    if (this.openModalsCount === 0) {
-      // İlk modal açılıyor - body'yi sabitle
-      this.originalScrollY = window.scrollY
-      document.body.style.position = 'fixed'
-      document.body.style.top = `-${this.originalScrollY}px`
-      document.body.style.left = '0'
-      document.body.style.right = '0'
-      document.body.style.overflow = 'hidden'
+  public openModal(scopeId: string = 'body'): void {
+    // Bu scope'taki modal sayısını artır
+    const currentCount = this.modalStacks.get(scopeId) || 0
+    this.modalStacks.set(scopeId, currentCount + 1)
+
+    // Eğer bu scope'ta ilk modal açılıyorsa
+    if (currentCount === 0) {
+      this.lockScope(scopeId)
     }
-    this.openModalsCount++
-    console.log(`Modal opened. Count: ${this.openModalsCount}`)
+
+    console.log(`Modal opened in scope: ${scopeId}. Count: ${currentCount + 1}`)
+    console.log('All scopes:', Object.fromEntries(this.modalStacks))
   }
 
-  public closeModal(): void {
-    this.openModalsCount--
-    console.log(`Modal closed. Count: ${this.openModalsCount}`)
+  public closeModal(scopeId: string = 'body'): void {
+    const currentCount = this.modalStacks.get(scopeId) || 0
 
-    if (this.openModalsCount === 0) {
-      // Son modal kapanıyor - body'yi restore et
-      document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.left = ''
-      document.body.style.right = ''
-      document.body.style.overflow = ''
-      window.scrollTo(0, this.originalScrollY)
+    if (currentCount <= 0) {
+      console.warn(`No modals to close in scope: ${scopeId}`)
+      return
     }
 
-    // Negatif sayıya düşmesin
-    if (this.openModalsCount < 0) {
-      this.openModalsCount = 0
+    const newCount = currentCount - 1
+    this.modalStacks.set(scopeId, newCount)
+
+    // Eğer bu scope'taki son modal kapanıyorsa
+    if (newCount === 0) {
+      this.unlockScope(scopeId)
+      this.modalStacks.delete(scopeId)
+    }
+
+    console.log(`Modal closed in scope: ${scopeId}. Count: ${newCount}`)
+    console.log('All scopes:', Object.fromEntries(this.modalStacks))
+  }
+
+  private lockScope(scopeId: string): void {
+    if (scopeId === 'body') {
+      // Body için scroll lock
+      this.bodyLockCount++
+      if (this.bodyLockCount === 1) {
+        this.originalScrollPositions.set('body', window.scrollY)
+        document.body.style.position = 'fixed'
+        document.body.style.top = `-${window.scrollY}px`
+        document.body.style.left = '0'
+        document.body.style.right = '0'
+        document.body.style.overflow = 'hidden'
+      }
+    } else {
+      // Diğer scope'lar için - ama body'yi de etkiliyorsa body lock sayısını da artır
+      this.bodyLockCount++
+      if (this.bodyLockCount === 1) {
+        this.originalScrollPositions.set('body', window.scrollY)
+        document.body.style.position = 'fixed'
+        document.body.style.top = `-${window.scrollY}px`
+        document.body.style.left = '0'
+        document.body.style.right = '0'
+        document.body.style.overflow = 'hidden'
+      }
+
+      const element = document.getElementById(scopeId)
+      if (element) {
+        this.originalScrollPositions.set(scopeId, element.scrollTop)
+        element.style.overflow = 'hidden'
+      }
     }
   }
 
-  public getOpenModalsCount(): number {
-    return this.openModalsCount
+  private unlockScope(scopeId: string): void {
+    if (scopeId === 'body') {
+      // Body için scroll unlock
+      this.bodyLockCount--
+      if (this.bodyLockCount === 0) {
+        const originalScrollY = this.originalScrollPositions.get('body') || 0
+        document.body.style.position = ''
+        document.body.style.top = ''
+        document.body.style.left = ''
+        document.body.style.right = ''
+        document.body.style.overflow = ''
+        window.scrollTo(0, originalScrollY)
+        this.originalScrollPositions.delete('body')
+      }
+    } else {
+      // Diğer scope'lar için - ama body lock sayısını da azalt
+      this.bodyLockCount--
+      if (this.bodyLockCount === 0) {
+        const originalScrollY = this.originalScrollPositions.get('body') || 0
+        document.body.style.position = ''
+        document.body.style.top = ''
+        document.body.style.left = ''
+        document.body.style.right = ''
+        document.body.style.overflow = ''
+        window.scrollTo(0, originalScrollY)
+        this.originalScrollPositions.delete('body')
+      }
+
+      const element = document.getElementById(scopeId)
+      if (element) {
+        element.style.overflow = ''
+        const originalScrollTop = this.originalScrollPositions.get(scopeId) || 0
+        element.scrollTop = originalScrollTop
+        this.originalScrollPositions.delete(scopeId)
+      }
+    }
+  }
+
+  public getOpenModalsCount(scopeId?: string): number {
+    if (scopeId) {
+      return this.modalStacks.get(scopeId) || 0
+    }
+    // Toplam modal sayısı
+    return Array.from(this.modalStacks.values()).reduce((sum, count) => sum + count, 0)
+  }
+
+  public getAllScopes(): Record<string, number> {
+    return Object.fromEntries(this.modalStacks)
   }
 
   // Emergency reset - development için
   public reset(): void {
-    this.openModalsCount = 0
+    this.modalStacks.clear()
+    this.originalScrollPositions.clear()
+    this.bodyLockCount = 0
+
+    // Body'yi temizle
     document.body.style.position = ''
     document.body.style.top = ''
     document.body.style.left = ''
     document.body.style.right = ''
     document.body.style.overflow = ''
+
+    // Tüm bilinen scope'ları temizle
+    const allElements = document.querySelectorAll('[id]')
+    allElements.forEach((element) => {
+      if (element instanceof HTMLElement) {
+        element.style.overflow = ''
+      }
+    })
   }
 }
 
