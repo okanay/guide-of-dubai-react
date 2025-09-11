@@ -144,16 +144,7 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
 
   return createPortal(
     <ClientOnly fallback={<div />}>
-      <div
-        ref={overlayRef}
-        className={containerClassName}
-        role="dialog"
-        aria-modal="true"
-        style={{
-          // Safari iOS için ekstra yüksek z-index
-          zIndex: isSafariIOS() ? 2147483647 : undefined,
-        }}
-      >
+      <div ref={overlayRef} className={containerClassName} role="dialog" aria-modal="true">
         {/* Overlay */}
         <div className={overlayClassName} />
 
