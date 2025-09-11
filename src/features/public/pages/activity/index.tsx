@@ -1,12 +1,12 @@
 import { Route } from 'src/routes/$lang/_public'
 import { SearchForm } from './form-search'
-import { FastOffers } from './section-fast-offers'
+import { MostPopular } from './section-most-popular'
 
-export const TicketIndexPage = () => {
+export const ActivityIndexPage = () => {
   return (
     <main className="flex flex-col">
       <SearchForm />
-      <FastOffers />
+      <MostPopular />
     </main>
   )
 }

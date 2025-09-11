@@ -48,6 +48,7 @@ function NavigationTab({ to, icon, labelKey, className }: NavigationTabProps) {
       to={to}
       activeOptions={{ exact: true }}
       preload={'render'}
+      resetScroll={false}
       className={twMerge(
         'group flex w-full shrink-0 items-center justify-center gap-x-2 py-3 text-center font-bold text-white transition-colors duration-300 ease-in hover:bg-white/20 data-[status=active]:bg-white data-[status=active]:text-btn-primary sm:w-1/8 sm:min-w-[120px] xl:w-full dark:text-black data-[status=active]:dark:bg-black',
         className,
@@ -100,12 +101,12 @@ export const PublicHeaderBackground = () => {
       },
       {
         index: 2,
-        path: 'tickets',
+        path: 'activities',
         imageSrc: '/images/public/header/tours.jpg',
         imageSrcMobile: '/images/public/header/tours-mobile.jpg',
-        imageAlt: t('slides.tickets.alt'),
-        titleKey: 'slides.tickets.title',
-        searchPlaceholderKey: 'slides.tickets.placeholder',
+        imageAlt: t('slides.activities.alt'),
+        titleKey: 'slides.activities.title',
+        searchPlaceholderKey: 'slides.activities.placeholder',
       },
       {
         index: 3,
@@ -311,7 +312,7 @@ export const PublicHeaderBackground = () => {
                 className="flex"
               />
               <NavigationTab
-                to="/$lang/tickets"
+                to="/$lang/activities"
                 icon="app/tickets"
                 labelKey="nav.activities"
                 className="hidden sm:flex"

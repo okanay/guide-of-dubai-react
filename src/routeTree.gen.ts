@@ -19,12 +19,12 @@ import { Route as LangPublicRouteRouteImport } from './routes/$lang/_public/rout
 import { Route as LangPublicIndexRouteImport } from './routes/$lang/_public/index'
 import { Route as LangPublicTransferIndexRouteImport } from './routes/$lang/_public/transfer.index'
 import { Route as LangPublicToursIndexRouteImport } from './routes/$lang/_public/tours.index'
-import { Route as LangPublicTicketsIndexRouteImport } from './routes/$lang/_public/tickets.index'
 import { Route as LangPublicSafariTourIndexRouteImport } from './routes/$lang/_public/safari-tour.index'
 import { Route as LangPublicRentACarIndexRouteImport } from './routes/$lang/_public/rent-a-car.index'
 import { Route as LangPublicHotelsIndexRouteImport } from './routes/$lang/_public/hotels.index'
 import { Route as LangPublicFlightIndexRouteImport } from './routes/$lang/_public/flight.index'
 import { Route as LangPublicAllIndexRouteImport } from './routes/$lang/_public/all.index'
+import { Route as LangPublicActivitiesIndexRouteImport } from './routes/$lang/_public/activities.index'
 import { ServerRoute as SitemapDotxmlServerRouteImport } from './routes/sitemap[.]xml'
 import { ServerRoute as RssDotxmlServerRouteImport } from './routes/rss[.]xml'
 import { ServerRoute as RobotsDottxtServerRouteImport } from './routes/robots[.]txt'
@@ -71,11 +71,6 @@ const LangPublicToursIndexRoute = LangPublicToursIndexRouteImport.update({
   path: '/tours/',
   getParentRoute: () => LangPublicRouteRoute,
 } as any)
-const LangPublicTicketsIndexRoute = LangPublicTicketsIndexRouteImport.update({
-  id: '/tickets/',
-  path: '/tickets/',
-  getParentRoute: () => LangPublicRouteRoute,
-} as any)
 const LangPublicSafariTourIndexRoute =
   LangPublicSafariTourIndexRouteImport.update({
     id: '/safari-tour/',
@@ -102,6 +97,12 @@ const LangPublicAllIndexRoute = LangPublicAllIndexRouteImport.update({
   path: '/all/',
   getParentRoute: () => LangPublicRouteRoute,
 } as any)
+const LangPublicActivitiesIndexRoute =
+  LangPublicActivitiesIndexRouteImport.update({
+    id: '/activities/',
+    path: '/activities/',
+    getParentRoute: () => LangPublicRouteRoute,
+  } as any)
 const SitemapDotxmlServerRoute = SitemapDotxmlServerRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -124,12 +125,12 @@ export interface FileRoutesByFullPath {
   '/$lang/error': typeof LangErrorRoute
   '/$lang/not-found': typeof LangNotFoundRoute
   '/$lang/': typeof LangPublicIndexRoute
+  '/$lang/activities': typeof LangPublicActivitiesIndexRoute
   '/$lang/all': typeof LangPublicAllIndexRoute
   '/$lang/flight': typeof LangPublicFlightIndexRoute
   '/$lang/hotels': typeof LangPublicHotelsIndexRoute
   '/$lang/rent-a-car': typeof LangPublicRentACarIndexRoute
   '/$lang/safari-tour': typeof LangPublicSafariTourIndexRoute
-  '/$lang/tickets': typeof LangPublicTicketsIndexRoute
   '/$lang/tours': typeof LangPublicToursIndexRoute
   '/$lang/transfer': typeof LangPublicTransferIndexRoute
 }
@@ -138,12 +139,12 @@ export interface FileRoutesByTo {
   '/$lang': typeof LangPublicIndexRoute
   '/$lang/error': typeof LangErrorRoute
   '/$lang/not-found': typeof LangNotFoundRoute
+  '/$lang/activities': typeof LangPublicActivitiesIndexRoute
   '/$lang/all': typeof LangPublicAllIndexRoute
   '/$lang/flight': typeof LangPublicFlightIndexRoute
   '/$lang/hotels': typeof LangPublicHotelsIndexRoute
   '/$lang/rent-a-car': typeof LangPublicRentACarIndexRoute
   '/$lang/safari-tour': typeof LangPublicSafariTourIndexRoute
-  '/$lang/tickets': typeof LangPublicTicketsIndexRoute
   '/$lang/tours': typeof LangPublicToursIndexRoute
   '/$lang/transfer': typeof LangPublicTransferIndexRoute
 }
@@ -155,12 +156,12 @@ export interface FileRoutesById {
   '/$lang/error': typeof LangErrorRoute
   '/$lang/not-found': typeof LangNotFoundRoute
   '/$lang/_public/': typeof LangPublicIndexRoute
+  '/$lang/_public/activities/': typeof LangPublicActivitiesIndexRoute
   '/$lang/_public/all/': typeof LangPublicAllIndexRoute
   '/$lang/_public/flight/': typeof LangPublicFlightIndexRoute
   '/$lang/_public/hotels/': typeof LangPublicHotelsIndexRoute
   '/$lang/_public/rent-a-car/': typeof LangPublicRentACarIndexRoute
   '/$lang/_public/safari-tour/': typeof LangPublicSafariTourIndexRoute
-  '/$lang/_public/tickets/': typeof LangPublicTicketsIndexRoute
   '/$lang/_public/tours/': typeof LangPublicToursIndexRoute
   '/$lang/_public/transfer/': typeof LangPublicTransferIndexRoute
 }
@@ -172,12 +173,12 @@ export interface FileRouteTypes {
     | '/$lang/error'
     | '/$lang/not-found'
     | '/$lang/'
+    | '/$lang/activities'
     | '/$lang/all'
     | '/$lang/flight'
     | '/$lang/hotels'
     | '/$lang/rent-a-car'
     | '/$lang/safari-tour'
-    | '/$lang/tickets'
     | '/$lang/tours'
     | '/$lang/transfer'
   fileRoutesByTo: FileRoutesByTo
@@ -186,12 +187,12 @@ export interface FileRouteTypes {
     | '/$lang'
     | '/$lang/error'
     | '/$lang/not-found'
+    | '/$lang/activities'
     | '/$lang/all'
     | '/$lang/flight'
     | '/$lang/hotels'
     | '/$lang/rent-a-car'
     | '/$lang/safari-tour'
-    | '/$lang/tickets'
     | '/$lang/tours'
     | '/$lang/transfer'
   id:
@@ -202,12 +203,12 @@ export interface FileRouteTypes {
     | '/$lang/error'
     | '/$lang/not-found'
     | '/$lang/_public/'
+    | '/$lang/_public/activities/'
     | '/$lang/_public/all/'
     | '/$lang/_public/flight/'
     | '/$lang/_public/hotels/'
     | '/$lang/_public/rent-a-car/'
     | '/$lang/_public/safari-tour/'
-    | '/$lang/_public/tickets/'
     | '/$lang/_public/tours/'
     | '/$lang/_public/transfer/'
   fileRoutesById: FileRoutesById
@@ -304,13 +305,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangPublicToursIndexRouteImport
       parentRoute: typeof LangPublicRouteRoute
     }
-    '/$lang/_public/tickets/': {
-      id: '/$lang/_public/tickets/'
-      path: '/tickets'
-      fullPath: '/$lang/tickets'
-      preLoaderRoute: typeof LangPublicTicketsIndexRouteImport
-      parentRoute: typeof LangPublicRouteRoute
-    }
     '/$lang/_public/safari-tour/': {
       id: '/$lang/_public/safari-tour/'
       path: '/safari-tour'
@@ -346,6 +340,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangPublicAllIndexRouteImport
       parentRoute: typeof LangPublicRouteRoute
     }
+    '/$lang/_public/activities/': {
+      id: '/$lang/_public/activities/'
+      path: '/activities'
+      fullPath: '/$lang/activities'
+      preLoaderRoute: typeof LangPublicActivitiesIndexRouteImport
+      parentRoute: typeof LangPublicRouteRoute
+    }
   }
 }
 declare module '@tanstack/react-start/server' {
@@ -376,24 +377,24 @@ declare module '@tanstack/react-start/server' {
 
 interface LangPublicRouteRouteChildren {
   LangPublicIndexRoute: typeof LangPublicIndexRoute
+  LangPublicActivitiesIndexRoute: typeof LangPublicActivitiesIndexRoute
   LangPublicAllIndexRoute: typeof LangPublicAllIndexRoute
   LangPublicFlightIndexRoute: typeof LangPublicFlightIndexRoute
   LangPublicHotelsIndexRoute: typeof LangPublicHotelsIndexRoute
   LangPublicRentACarIndexRoute: typeof LangPublicRentACarIndexRoute
   LangPublicSafariTourIndexRoute: typeof LangPublicSafariTourIndexRoute
-  LangPublicTicketsIndexRoute: typeof LangPublicTicketsIndexRoute
   LangPublicToursIndexRoute: typeof LangPublicToursIndexRoute
   LangPublicTransferIndexRoute: typeof LangPublicTransferIndexRoute
 }
 
 const LangPublicRouteRouteChildren: LangPublicRouteRouteChildren = {
   LangPublicIndexRoute: LangPublicIndexRoute,
+  LangPublicActivitiesIndexRoute: LangPublicActivitiesIndexRoute,
   LangPublicAllIndexRoute: LangPublicAllIndexRoute,
   LangPublicFlightIndexRoute: LangPublicFlightIndexRoute,
   LangPublicHotelsIndexRoute: LangPublicHotelsIndexRoute,
   LangPublicRentACarIndexRoute: LangPublicRentACarIndexRoute,
   LangPublicSafariTourIndexRoute: LangPublicSafariTourIndexRoute,
-  LangPublicTicketsIndexRoute: LangPublicTicketsIndexRoute,
   LangPublicToursIndexRoute: LangPublicToursIndexRoute,
   LangPublicTransferIndexRoute: LangPublicTransferIndexRoute,
 }
