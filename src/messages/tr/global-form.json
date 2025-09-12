@@ -1,1 +1,14 @@
-{}
+{
+  "labels": {
+    "date": "Tarih",
+    "participants": "Katılımcılar",
+    "select_date": "Tarih Seçin"
+  },
+  "participants": {
+    "adults": "Yetişkin",
+    "children": "Çocuk"
+  },
+  "search": {
+    "tour": "Tur Arayın"
+  }
+}

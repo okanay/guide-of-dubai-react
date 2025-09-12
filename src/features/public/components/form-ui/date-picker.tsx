@@ -64,7 +64,7 @@ export const DatePicker = ({
       minDate={minDate}
       triggerRef={triggerRef}
     >
-      {({ openCalendar, formattedDate }) => (
+      {({ openCalendar }) => (
         <BaseInput
           htmlFor={id}
           label={label}
@@ -133,10 +133,11 @@ export const DatePickerRaw = ({
 
   const formattedDate = useMemo(() => {
     if (!value) return ''
+    // Metin formatını daha okunaklı hale getirelim: '12 Eylül Cuma'
     return new Intl.DateTimeFormat(locale, {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
+      day: 'numeric',
+      month: 'long',
+      weekday: 'long',
     }).format(value)
   }, [value, locale])
 
@@ -164,28 +165,45 @@ export const DatePickerRaw = ({
 }
 
 // ============================================================================
-// 3. DATE PICKER TEXT - Basit text versiyonu (örnek kullanım)
+// 3. DATE PICKER TEXT - react-hook-form ile uyumlu
 // ============================================================================
-export function DatePickerText() {
-  const [checkIn, setCheckIn] = useState<Date | null>(null)
-  const triggerRef = useRef<HTMLDivElement>(null)
+interface DatePickerTextProps {
+  value: Date | null
+  onChange: (date: Date | null) => void
+  minDate?: Date
+  className?: string
+  placeholder?: string
+}
+
+export const DatePickerText = ({
+  value,
+  onChange,
+  minDate,
+  className,
+  placeholder,
+}: DatePickerTextProps) => {
+  const triggerRef = useRef<HTMLButtonElement>(null)
   const { language } = useLanguage()
+  const { t } = useTranslation('global-form')
 
   return (
     <DatePickerRaw
-      value={checkIn}
-      onChange={setCheckIn}
+      value={value}
+      onChange={onChange}
       locale={language.locale}
+      minDate={minDate}
       triggerRef={triggerRef}
     >
       {({ openCalendar, formattedDate }) => (
-        <div
+        <button
           ref={triggerRef}
+          type="button"
           onClick={openCalendar}
-          className="cursor-pointer text-gray-600 hover:text-black"
+          className={twMerge('hover:text-primary cursor-pointer text-gray-800', className)}
         >
-          {formattedDate || 'Pick a Date'}
-        </div>
+          {/* FormattedDate'i kullan, eğer boşsa placeholder göster */}
+          {formattedDate || placeholder || t('labels.select_date')}
+        </button>
       )}
     </DatePickerRaw>
   )
@@ -223,7 +241,6 @@ export const DatePickerIndicator = ({
     }).format(value)
   }, [value, locale, defaultPlaceholder])
 
-  // Eğer children function varsa onu kullan
   if (children) {
     return (
       <span className={className} onClick={onClick}>
@@ -232,7 +249,6 @@ export const DatePickerIndicator = ({
     )
   }
 
-  // Değilse sadece text döndür
   return (
     <span className={className} onClick={onClick}>
       {formattedDate}
@@ -270,8 +286,8 @@ function CalendarPanel({
     if (triggerRef?.current) {
       const rect = triggerRef.current.getBoundingClientRect()
       setPosition({
-        top: rect.bottom + window.scrollY + 8,
-        left: rect.left + window.scrollX,
+        top: rect.bottom + window.scrollY + 16,
+        left: rect.left + window.scrollX - 4,
       })
     }
   }, [triggerRef])
@@ -292,7 +308,6 @@ function CalendarPanel({
       role="dialog"
       aria-modal="true"
     >
-      {/* Header */}
       <div className="flex items-center justify-between pb-4">
         <button
           type="button"
@@ -313,7 +328,6 @@ function CalendarPanel({
         </button>
       </div>
 
-      {/* Grid */}
       <div className="grid grid-cols-7 gap-y-1 text-center">
         {hook.weekdays.map((day, index) => (
           <div key={`weekday-${index}`} className="text-xs font-medium text-gray-500">
@@ -347,7 +361,6 @@ function CalendarPanel({
         })}
       </div>
 
-      {/* Clear Button */}
       <div className="mt-4 border-t border-gray-200 pt-4">
         <button
           type="button"
@@ -423,6 +436,6 @@ function useDatePicker({ selectedDate, locale, minDate }: UseDatePickerProps) {
   }
 }
 
-// Display name'leri
 DatePicker.displayName = 'DatePicker'
 DatePickerRaw.displayName = 'DatePickerRaw'
+DatePickerText.displayName = 'DatePickerText'

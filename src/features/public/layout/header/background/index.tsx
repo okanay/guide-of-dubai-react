@@ -1,4 +1,4 @@
-import { Link, LinkProps } from '@tanstack/react-router'
+import { Link, LinkProps, useLocation } from '@tanstack/react-router'
 import { useMemo, useState, useEffect } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useTranslation } from 'react-i18next'
@@ -22,6 +22,7 @@ interface ResponsivePictureProps {
 }
 interface NavigationTabProps {
   to: LinkProps['to']
+  exact?: boolean
   icon: string
   labelKey: string
   className?: string
@@ -41,12 +42,12 @@ const ResponsivePicture = ({ slide, priority = false }: ResponsivePictureProps) 
   </picture>
 )
 
-function NavigationTab({ to, icon, labelKey, className }: NavigationTabProps) {
+function NavigationTab({ to, exact = false, icon, labelKey, className }: NavigationTabProps) {
   const { t } = useTranslation('layout-header')
   return (
     <Link
       to={to}
-      activeOptions={{ exact: true }}
+      activeOptions={{ exact }}
       preload={'render'}
       resetScroll={false}
       className={twMerge(
@@ -76,6 +77,7 @@ const getActiveSlideIndex = (href: string, configs: SlideConfig[]): number | nul
 }
 
 export const PublicHeaderBackground = () => {
+  const location = useLocation()
   const { href } = Route.useLoaderData()
   const { t } = useTranslation('layout-header')
 
@@ -168,7 +170,7 @@ export const PublicHeaderBackground = () => {
 
   const activeSlideIndexFromUrl = useMemo(
     () => getActiveSlideIndex(href, slideConfigs),
-    [href, slideConfigs],
+    [location.href, slideConfigs, href],
   )
 
   const [initialized, setInitialized] = useState(false)
@@ -179,7 +181,7 @@ export const PublicHeaderBackground = () => {
   }))
 
   useEffect(() => {
-    // First pass: ensure we don't animate on initial hydration mismatch
+    // İlk render için animasyon engelleme
     if (!initialized) {
       setSlideState({
         current: activeSlideIndexFromUrl,
@@ -190,16 +192,17 @@ export const PublicHeaderBackground = () => {
       return
     }
 
-    function getDirection(prev: number, next: number): 'left' | 'right' {
+    function getDirection(prev: number | null, next: number | null): 'left' | 'right' {
+      if (prev === null || next === null) return 'left'
       if (prev === next) return 'left'
       return next > prev ? 'right' : 'left'
     }
 
     setSlideState((prev) => {
+      // Sadece gerçekten değişiklik varsa güncelle
       if (prev.current === activeSlideIndexFromUrl) return prev
-      if (activeSlideIndexFromUrl === null) return prev
 
-      const direction = getDirection(prev.current!, activeSlideIndexFromUrl)
+      const direction = getDirection(prev.current, activeSlideIndexFromUrl)
 
       return {
         current: activeSlideIndexFromUrl,
@@ -207,7 +210,7 @@ export const PublicHeaderBackground = () => {
         direction,
       }
     })
-  }, [activeSlideIndexFromUrl, initialized])
+  }, [activeSlideIndexFromUrl, initialized, href])
 
   const hasSlide = slideState.current !== null
   const activeSlide = hasSlide ? slideConfigs[slideState.current || 0] : null
@@ -301,6 +304,7 @@ export const PublicHeaderBackground = () => {
             <nav className="mx-auto grid w-full max-w-main grid-cols-4 items-center justify-start overflow-x-auto text-size-sm font-semibold [scrollbar-width:none] sm:flex xl:grid xl:grid-cols-9 [&::-webkit-scrollbar]:hidden">
               <NavigationTab
                 to="/$lang"
+                exact={true}
                 icon="app/explore"
                 labelKey="nav.explore"
                 className="flex"

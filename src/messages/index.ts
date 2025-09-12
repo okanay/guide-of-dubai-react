@@ -2,6 +2,7 @@ import enCommon from './en/global-common.json'
 import enComponents from './en/global-components.json'
 import enModal from './en/global-modal.json'
 import enCard from './en/global-card.json'
+import enForm from './en/global-form.json'
 import enHeader from './en/layout-header.json'
 import enFooter from './en/layout-footer.json'
 import enIndex from './en/page-index.json'
@@ -16,6 +17,7 @@ import trCommon from './tr/global-common.json'
 import trComponents from './tr/global-components.json'
 import trModal from './tr/global-modal.json'
 import trCard from './tr/global-card.json'
+import trForm from './tr/global-form.json'
 import trHeader from './tr/layout-header.json'
 import trFooter from './tr/layout-footer.json'
 import trIndex from './tr/page-index.json'
@@ -35,6 +37,7 @@ export const namespaces = [
   'global-components',
   'global-modal',
   'global-card',
+  'global-form',
   'layout-header',
   'layout-footer',
   'page-index',
@@ -51,6 +54,7 @@ const resource = {
     'global-components': enComponents,
     'global-modal': enModal,
     'global-card': enCard,
+    'global-form': enForm,
     'layout-header': enHeader,
     'layout-footer': enFooter,
     'page-index': enIndex,
@@ -66,6 +70,7 @@ const resource = {
     'global-components': trComponents,
     'global-modal': trModal,
     'global-card': trCard,
+    'global-form': trForm,
     'layout-header': trHeader,
     'layout-footer': trFooter,
     'page-index': trIndex,

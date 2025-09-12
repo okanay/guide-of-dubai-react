@@ -60,12 +60,11 @@ export const BetweenDatePicker = ({
   maxDate,
 }: BetweenDatePickerProps) => {
   const { language } = useLanguage()
-  const { t } = useTranslation('global-components')
+  const { t } = useTranslation('global-form')
   const triggerRef = useRef<HTMLDivElement>(null)
 
-  const defaultStartPlaceholder =
-    startPlaceholder || t('form.date_picker_between.start_placeholder')
-  const defaultEndPlaceholder = endPlaceholder || t('form.date_picker_between.end_placeholder')
+  const defaultStartPlaceholder = startPlaceholder || t('date_picker_between.start_placeholder')
+  const defaultEndPlaceholder = endPlaceholder || t('date_picker_between.end_placeholder')
 
   const formattedDateRange = useMemo(() => {
     const formatDate = (date: Date | null) => {
@@ -142,8 +141,6 @@ interface BetweenDatePickerRawProps {
     isOpen: boolean
     openCalendar: () => void
     closeCalendar: () => void
-    formattedStartDate: string
-    formattedEndDate: string
   }) => React.ReactNode
 }
 
@@ -165,26 +162,12 @@ export const BetweenDatePickerRaw = ({
     maxDate,
   })
 
-  const formatDate = useCallback(
-    (date: Date | null) => {
-      if (!date) return ''
-      return new Intl.DateTimeFormat(locale, {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-      }).format(date)
-    },
-    [locale],
-  )
-
   return (
     <>
       {children({
         isOpen: betweenDatePickerHook.isOpen,
         openCalendar: betweenDatePickerHook.openCalendar,
         closeCalendar: betweenDatePickerHook.closeCalendar,
-        formattedStartDate: formatDate(startDate),
-        formattedEndDate: formatDate(endDate),
       })}
 
       {betweenDatePickerHook.isOpen && (
@@ -204,37 +187,77 @@ export const BetweenDatePickerRaw = ({
 }
 
 // ============================================================================
-// 3. BETWEEN DATE PICKER TEXT - Basit text versiyonu
+// 3. BETWEEN DATE PICKER TEXT - react-hook-form uyumlu
 // ============================================================================
-export function BetweenDatePickerText() {
-  const [startDate, setStartDate] = useState<Date | null>(null)
-  const [endDate, setEndDate] = useState<Date | null>(null)
-  const triggerRef = useRef<HTMLDivElement>(null)
-  const { language } = useLanguage()
+interface BetweenDatePickerTextProps {
+  startDate: Date | null
+  endDate: Date | null
+  onChange: (startDate: Date | null, endDate: Date | null) => void
+  minDate?: Date
+  maxDate?: Date
+  className?: string
+  startPlaceholder?: string
+  endPlaceholder?: string
+}
 
-  const handleChange = (start: Date | null, end: Date | null) => {
-    setStartDate(start)
-    setEndDate(end)
-  }
+export const BetweenDatePickerText = ({
+  startDate,
+  endDate,
+  onChange,
+  minDate,
+  maxDate,
+  className,
+  startPlaceholder,
+  endPlaceholder,
+}: BetweenDatePickerTextProps) => {
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const { language } = useLanguage()
+  const { t } = useTranslation('global-form')
+
+  const formatDate = useCallback(
+    (date: Date | null) => {
+      if (!date) return null
+      return new Intl.DateTimeFormat(language.locale, {
+        day: 'numeric',
+        month: 'long',
+      }).format(date)
+    },
+    [language.locale],
+  )
+
+  const formattedStartDate = useMemo(
+    () => formatDate(startDate) || startPlaceholder || t('date_picker_between.start_placeholder'),
+    [startDate, formatDate, startPlaceholder, t],
+  )
+  const formattedEndDate = useMemo(
+    () => formatDate(endDate) || endPlaceholder || t('date_picker_between.end_placeholder'),
+    [endDate, formatDate, endPlaceholder, t],
+  )
 
   return (
     <BetweenDatePickerRaw
       startDate={startDate}
       endDate={endDate}
-      onChange={handleChange}
+      onChange={onChange}
       locale={language.locale}
+      minDate={minDate}
+      maxDate={maxDate}
       triggerRef={triggerRef}
     >
-      {({ openCalendar, formattedStartDate, formattedEndDate }) => (
-        <div
+      {({ openCalendar }) => (
+        <button
           ref={triggerRef}
+          type="button"
           onClick={openCalendar}
-          className="flex cursor-pointer items-center gap-2 text-gray-600 hover:text-black"
+          className={twMerge(
+            'hover:text-primary flex cursor-pointer items-center gap-2 text-gray-800',
+            className,
+          )}
         >
-          <span>{formattedStartDate || 'Start Date'}</span>
-          <ArrowRight className="h-4 w-4" />
-          <span>{formattedEndDate || 'End Date'}</span>
-        </div>
+          <span className={!startDate ? 'text-gray-500' : ''}>{formattedStartDate}</span>
+          <ArrowRight className="h-4 w-4 flex-shrink-0 text-gray-400" />
+          <span className={!endDate ? 'text-gray-500' : ''}>{formattedEndDate}</span>
+        </button>
       )}
     </BetweenDatePickerRaw>
   )
@@ -266,7 +289,7 @@ function BetweenCalendarPanel({
   maxDate,
   className,
 }: BetweenCalendarPanelProps) {
-  const { t } = useTranslation('global-components')
+  const { t } = useTranslation('global-form')
   const panelRef = useClickOutside<HTMLDivElement>(onClose, true, triggerRef)
   const [position, setPosition] = useState({ top: 0, left: 0 })
 
@@ -282,13 +305,10 @@ function BetweenCalendarPanel({
 
   const handleSelectDate = (day: Date) => {
     if (hook.selectionMode === 'start' || (!startDate && !endDate)) {
-      // İlk tarih seçiliyor
       onChange(day, null)
       hook.setSelectionMode('end')
     } else if (hook.selectionMode === 'end') {
-      // İkinci tarih seçiliyor
       if (startDate && isBefore(day, startDate)) {
-        // Eğer seçilen tarih başlangıçtan önceyse, başlangıç tarihi yap
         onChange(day, startDate)
       } else {
         onChange(startDate, day)
@@ -302,13 +322,8 @@ function BetweenCalendarPanel({
     return isWithinInterval(day, { start: startDate, end: endDate })
   }
 
-  const isRangeStart = (day: Date) => {
-    return startDate ? isSameDay(day, startDate) : false
-  }
-
-  const isRangeEnd = (day: Date) => {
-    return endDate ? isSameDay(day, endDate) : false
-  }
+  const isRangeStart = (day: Date) => (startDate ? isSameDay(day, startDate) : false)
+  const isRangeEnd = (day: Date) => (endDate ? isSameDay(day, endDate) : false)
 
   return createPortal(
     <div
@@ -321,13 +336,12 @@ function BetweenCalendarPanel({
       role="dialog"
       aria-modal="true"
     >
-      {/* Header */}
       <div className="flex items-center justify-between pb-4">
         <button
           type="button"
           onClick={hook.goToPrevMonth}
           className="rounded-full p-1.5 hover:bg-gray-100"
-          aria-label={t('form.date_picker.previous_month')}
+          aria-label={t('date_picker_between.previous_month')}
         >
           <ChevronLeft className="size-5" />
         </button>
@@ -336,20 +350,18 @@ function BetweenCalendarPanel({
           type="button"
           onClick={hook.goToNextMonth}
           className="rounded-full p-1.5 hover:bg-gray-100"
-          aria-label={t('form.date_picker.next_month')}
+          aria-label={t('date_picker_between.next_month')}
         >
           <ChevronRight className="size-5" />
         </button>
       </div>
 
-      {/* Selection Info */}
       <div className="mb-4 text-center text-sm text-gray-600">
         {hook.selectionMode === 'start'
-          ? t('form.date_picker_between.select_start')
-          : t('form.date_picker_between.select_end')}
+          ? t('date_picker_between.select_start')
+          : t('date_picker_between.select_end')}
       </div>
 
-      {/* Grid */}
       <div className="grid grid-cols-7 gap-y-1 text-center">
         {hook.weekdays.map((day, index) => (
           <div key={`weekday-${index}`} className="text-xs font-medium text-gray-500">
@@ -371,14 +383,12 @@ function BetweenCalendarPanel({
               type="button"
               onClick={() => handleSelectDate(day)}
               className={twMerge(
-                'relative flex h-9 w-9 items-center justify-center text-sm transition-colors',
+                'relative flex h-9 w-9 items-center justify-center rounded-full text-sm transition-colors',
                 !isCurrentMonth && 'text-gray-400',
                 isCurrentMonth && 'hover:bg-gray-100',
                 isTodaysDate && 'font-bold',
-                inRange && 'bg-primary-100',
-                (rangeStart || rangeEnd) &&
-                  'rounded-full bg-primary-500 text-white hover:bg-primary-600',
-                !rangeStart && !rangeEnd && inRange && 'rounded-none',
+                inRange && !rangeStart && !rangeEnd && 'rounded-none bg-primary-100',
+                (rangeStart || rangeEnd) && 'bg-primary-500 text-white hover:bg-primary-600',
                 rangeStart && !rangeEnd && 'rounded-l-full rounded-r-none',
                 rangeEnd && !rangeStart && 'rounded-l-none rounded-r-full',
                 isDisabled && 'cursor-not-allowed opacity-50',
@@ -391,7 +401,6 @@ function BetweenCalendarPanel({
         })}
       </div>
 
-      {/* Reset Button */}
       <div className="mt-4 border-t border-gray-200 pt-4">
         <button
           type="button"
@@ -401,7 +410,7 @@ function BetweenCalendarPanel({
           }}
           className="w-full rounded-xs px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-800"
         >
-          {t('form.date_picker_between.clear')}
+          {t('date_picker_between.clear')}
         </button>
       </div>
     </div>,
@@ -422,26 +431,17 @@ interface UseBetweenDatePickerProps {
 
 type SelectionMode = 'start' | 'end'
 
-function useBetweenDatePicker({
-  startDate,
-  endDate,
-  locale,
-  minDate,
-  maxDate,
-}: UseBetweenDatePickerProps) {
+function useBetweenDatePicker({ startDate, endDate, locale }: UseBetweenDatePickerProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [viewDate, setViewDate] = useState(startDate || new Date())
   const [selectionMode, setSelectionMode] = useState<SelectionMode>('start')
 
   const openCalendar = () => {
     setIsOpen(true)
-    // Eğer hiçbiri seçili değilse start mode'dan başla
-    if (!startDate && !endDate) {
+    if (!startDate || (startDate && endDate)) {
       setSelectionMode('start')
-    } else if (startDate && !endDate) {
+    } else {
       setSelectionMode('end')
-    } else if (startDate && endDate) {
-      setSelectionMode('start')
     }
   }
 
@@ -494,3 +494,4 @@ function useBetweenDatePicker({
 // Display name'leri
 BetweenDatePicker.displayName = 'BetweenDatePicker'
 BetweenDatePickerRaw.displayName = 'BetweenDatePickerRaw'
+BetweenDatePickerText.displayName = 'BetweenDatePickerText'

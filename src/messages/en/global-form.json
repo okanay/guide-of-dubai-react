@@ -1,1 +1,14 @@
-{}
+{
+  "labels": {
+    "date": "Date",
+    "participants": "Participants",
+    "select_date": "Select Date"
+  },
+  "participants": {
+    "adults": "Adults",
+    "children": "Children"
+  },
+  "search": {
+    "tour": "Search Tour"
+  }
+}
