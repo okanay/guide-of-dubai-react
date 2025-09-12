@@ -3,5 +3,55 @@
     "title": "Most Popular Activities",
     "description": "Your next adventure may be closer than you think. Discover activities.",
     "view_all": "View All"
+  },
+  "lux-activities": {
+    "title": "Luxury Activities",
+    "description": "Experience the best of Dubai's luxury activities.",
+    "view_all": "View All"
+  },
+  "water-activities": {
+    "title": "Water Activities",
+    "description": "Experience the best of Dubai's water activities.",
+    "view_all": "View All"
+  },
+  "fast-planner": {
+    "title": "Fast Planner",
+    "tabs": [
+      {
+        "title": "Adrenaline Enthusiasts"
+      },
+      {
+        "title": "Gardens"
+      },
+      {
+        "title": "Entertainment & Sports"
+      },
+      {
+        "title": "Abu Dhabi"
+      },
+      {
+        "title": "For Family"
+      }
+    ]
+  },
+  "informations": {
+    "title": "Capture Unforgettable Moments in Activities",
+    "boxes": [
+      {
+        "title": "Discover the Event",
+        "description": "Easily choose from dozens of events that interest you. Each event comes with detailed descriptions, visuals, and user reviews ready for you.",
+        "icon": "flag"
+      },
+      {
+        "title": "Make Your Reservation",
+        "description": "Securely reserve your event with just a few clicks. Create your plans freely with flexible cancellation options and instant confirmation.",
+        "icon": "reservation-check"
+      },
+      {
+        "title": "Enjoy the Experience",
+        "description": "When the event day arrives, focus only on your enjoyment. The entire organization will have been thought out for you.",
+        "icon": "emoji-smile"
+      }
+    ]
   }
 }

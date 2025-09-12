@@ -15,7 +15,7 @@ export const Interests = () => {
   return (
     <section className="bg-box-surface px-4 pt-6 pb-10 text-on-box-black">
       <div className="mx-auto max-w-main">
-        <h2 className="mb-6 text-size-2xl font-bold md:text-size-3xl">{t('interests.title')}</h2>
+        <h2 className="mb-4 text-size-2xl font-bold md:text-size-3xl">{t('interests.title')}</h2>
         <div
           className="scrollbar-hide flex gap-x-4 overflow-x-auto sm:gap-x-1"
           style={{

@@ -2,6 +2,56 @@
   "most-popular": {
     "title": "En Popüler Etkinlikler",
     "description": "Bir sonraki maceranız düşündüğünüzden daha yakın olabilir. Etkinlikleri keşfedin.",
-    "view_all": "Tümüne Bakın"
+    "view_all": "Hepsini Gör"
+  },
+  "lux-activities": {
+    "title": "Lüks Etkinlikler",
+    "description": "Dubai'nin lüks etkinliklerinin en iyilerini deneyimleyin.",
+    "view_all": "Hepsini Gör"
+  },
+  "water-activities": {
+    "title": "Su Etkinlikleri",
+    "description": "Dubai'nin su etkinliklerinin en iyilerini deneyimleyin.",
+    "view_all": "Hepsini Gör"
+  },
+  "fast-planner": {
+    "title": "Hızlı Planlayıcı",
+    "tabs": [
+      {
+        "title": "Adrenalin Tutkunları"
+      },
+      {
+        "title": "Bahçeler"
+      },
+      {
+        "title": "Eğlence & Spor"
+      },
+      {
+        "title": "Abu Dhabi"
+      },
+      {
+        "title": "Aile İçin"
+      }
+    ]
+  },
+  "informations": {
+    "title": "Aktivitelerde Unutulmaz Anlar Yakala",
+    "boxes": [
+      {
+        "title": "Etkinliği Keşfet",
+        "description": "İlginizi çeken onlarca etkinlik arasından kolayca seçim yapın. Her etkinlik detaylı açıklama, görsel ve kullanıcı yorumlarıyla sizin için hazır.",
+        "icon": "flag"
+      },
+      {
+        "title": "Rezervasyonunu Yap",
+        "description": "Birkaç tıkla etkinliğinizi güvenle rezerve edin. Esnek iptal seçenekleri ve anında onay ile planlarınızı özgürce oluşturun.",
+        "icon": "reservation-check"
+      },
+      {
+        "title": "Deneyimin Tadını Çıkar",
+        "description": "Etkinlik günü geldiğinde sadece keyfinize odaklanın. Tüm organizasyon sizin yerinize düşünülmüş olacak.",
+        "icon": "emoji-smile"
+      }
+    ]
   }
 }
