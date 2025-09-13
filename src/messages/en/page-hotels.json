@@ -1,0 +1,30 @@
+{
+  "most-popular": {
+    "title": "Your Dream Hotels Here",
+    "view_all": "View All"
+  },
+  "informations": {
+    "boxes": [
+      {
+        "title": "Free Cancellation and Flexible Booking",
+        "description": "Thanks to free cancellation and flexible booking, even if your plans change, you can easily cancel or update your reservation without paying extra fees.",
+        "icon": "bell"
+      },
+      {
+        "title": "Up-to-date Pricing",
+        "description": "Take advantage of up-to-date pricing with free cancellation and flexible booking options to change your plans as you wish.",
+        "icon": "price-tag"
+      },
+      {
+        "title": "Top Quality Hotels",
+        "description": "Plan your vacation with peace of mind, enjoying free cancellation and flexible booking privileges at top quality hotels.",
+        "icon": "stars"
+      }
+    ],
+    "additional": {
+      "title": "Private Vehicle Reservation for a Comfortable Journey",
+      "description": "Reserve your private vehicle for safe and comfortable transportation from your hotel to anywhere you wish.",
+      "button": "Reserve Now"
+    }
+  }
+}

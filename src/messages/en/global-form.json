@@ -1,7 +1,11 @@
 {
   "labels": {
+    "search-otel": "Search Hotel",
     "date": "Date",
+    "date-hotel-start": "Check-in Date",
+    "date-hotel-end": "Check-out Date",
     "participants": "Participants",
+    "participants-hotel": "Guest Information",
     "select_date": "Select Date"
   },
   "participants": {
@@ -9,6 +13,7 @@
     "children": "Children"
   },
   "search": {
-    "tour": "Search Tour"
+    "tour": "Search Tour",
+    "hotel": "Search Hotel"
   }
 }

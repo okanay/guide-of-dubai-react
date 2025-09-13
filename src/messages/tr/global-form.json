@@ -1,7 +1,11 @@
 {
   "labels": {
+    "search-otel": "Otel Arayın",
     "date": "Tarih",
+    "date-hotel-start": "Giriş Tarihi",
+    "date-hotel-end": "Çıkış Tarihi",
     "participants": "Katılımcılar",
+    "participants-hotel": "Kişi Bilgileri",
     "select_date": "Tarih Seçin"
   },
   "participants": {
@@ -9,6 +13,7 @@
     "children": "Çocuk"
   },
   "search": {
-    "tour": "Tur Arayın"
+    "tour": "Tur Ara",
+    "hotel": "Otel Ara"
   }
 }

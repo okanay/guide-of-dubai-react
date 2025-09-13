@@ -1,0 +1,30 @@
+{
+  "most-popular": {
+    "title": "Hayalinizdeki Oteller Burada",
+    "view_all": "Hepsini Gör"
+  },
+  "informations": {
+    "boxes": [
+      {
+        "title": "Ücretsiz İptal ve Esnek Rezervasyon",
+        "description": "Ücretsiz iptal ve esnek rezervasyon sayesinde planlarınız değişse bile ekstra ücret ödemeden rezervasyonunuzu kolayca iptal edebilir veya tarihinizi güncelleyebilirsiniz",
+        "icon": "bell"
+      },
+      {
+        "title": "Güncel Fiyatlandırma",
+        "description": "Güncel fiyatlandırma ile ücretsiz iptal ve esnek rezervasyon seçeneklerinden faydalanarak planlarınızı dilediğiniz gibi değiştirebilirsiniz.",
+        "icon": "price-tag"
+      },
+      {
+        "title": "En Kaliteli Oteller",
+        "description": "En kaliteli otellerde ücretsiz iptal ve esnek rezervasyon ayrıcalıklarıyla tatilinizi gönül rahatlığıyla planlayın",
+        "icon": "stars"
+      }
+    ],
+    "additional": {
+      "title": "Konforlu Yolculuk İçin Özel Araç Rezervasyonu",
+      "description": "Otelinizden dilediğiniz yere güvenli ve konforlu ulaşım için özel aracınızı hemen rezerve edin.",
+      "button": "Şimdi Rezerve Et"
+    }
+  }
+}
