@@ -26,7 +26,6 @@ class GlobalModalManager {
     const currentCount = this.modalStacks.get(scopeId) || 0
 
     if (currentCount <= 0) {
-      console.warn(`No modals to close in scope: ${scopeId}`)
       return
     }
 

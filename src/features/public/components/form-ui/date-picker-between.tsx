@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
 import { twMerge } from 'tailwind-merge'
 import { Calendar, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react'
 import {
@@ -19,7 +18,7 @@ import {
   isWithinInterval,
 } from 'date-fns'
 import { BaseInput } from './base-input'
-import useClickOutside from 'src/hooks/use-click-outside'
+import { DropdownPortal } from './dropdown-portal'
 import { useLanguage } from 'src/i18n/prodiver'
 import { useTranslation } from 'react-i18next'
 
@@ -34,6 +33,7 @@ interface BetweenDatePickerProps {
   error?: string
   description?: string
   className?: string
+  dropdownClassName?: string
   id?: string
   required?: boolean
   disabled?: boolean
@@ -51,6 +51,7 @@ export const BetweenDatePicker = ({
   error,
   description,
   className,
+  dropdownClassName,
   id,
   required,
   disabled = false,
@@ -91,6 +92,7 @@ export const BetweenDatePicker = ({
       endDate={endDate}
       onChange={onChange}
       locale={language.locale}
+      dropdownClassName={dropdownClassName}
       minDate={minDate}
       maxDate={maxDate}
       triggerRef={triggerRef}
@@ -134,6 +136,7 @@ interface BetweenDatePickerRawProps {
   endDate: Date | null
   onChange: (startDate: Date | null, endDate: Date | null) => void
   locale?: string
+  dropdownClassName?: string
   minDate?: Date
   maxDate?: Date
   triggerRef?: any
@@ -149,6 +152,7 @@ export const BetweenDatePickerRaw = ({
   endDate,
   onChange,
   locale = 'tr-TR',
+  dropdownClassName,
   minDate,
   maxDate,
   triggerRef = null,
@@ -162,6 +166,33 @@ export const BetweenDatePickerRaw = ({
     maxDate,
   })
 
+  const handleSelectDate = (day: Date) => {
+    if (betweenDatePickerHook.selectionMode === 'start' || (!startDate && !endDate)) {
+      onChange(day, null)
+      betweenDatePickerHook.setSelectionMode('end')
+    } else if (betweenDatePickerHook.selectionMode === 'end') {
+      if (startDate && isBefore(day, startDate)) {
+        onChange(day, startDate)
+      } else {
+        onChange(startDate, day)
+      }
+      betweenDatePickerHook.closeCalendar()
+    }
+  }
+
+  const handleClearDates = () => {
+    onChange(null, null)
+    betweenDatePickerHook.setSelectionMode('start')
+  }
+
+  const isInRange = (day: Date) => {
+    if (!startDate || !endDate) return false
+    return isWithinInterval(day, { start: startDate, end: endDate })
+  }
+
+  const isRangeStart = (day: Date) => (startDate ? isSameDay(day, startDate) : false)
+  const isRangeEnd = (day: Date) => (endDate ? isSameDay(day, endDate) : false)
+
   return (
     <>
       {children({
@@ -170,18 +201,91 @@ export const BetweenDatePickerRaw = ({
         closeCalendar: betweenDatePickerHook.closeCalendar,
       })}
 
-      {betweenDatePickerHook.isOpen && (
-        <BetweenCalendarPanel
-          startDate={startDate}
-          endDate={endDate}
-          onChange={onChange}
-          onClose={betweenDatePickerHook.closeCalendar}
-          triggerRef={triggerRef}
-          hook={betweenDatePickerHook}
-          minDate={minDate}
-          maxDate={maxDate}
-        />
-      )}
+      <DropdownPortal
+        isOpen={betweenDatePickerHook.isOpen}
+        triggerRef={triggerRef}
+        onClose={betweenDatePickerHook.closeCalendar}
+        placement="bottom-start"
+        className={twMerge(
+          'w-80 rounded-xs border border-gray-200 bg-box-surface p-4 shadow-lg',
+          dropdownClassName,
+        )}
+      >
+        <div className="flex items-center justify-between pb-4">
+          <button
+            type="button"
+            onClick={betweenDatePickerHook.goToPrevMonth}
+            className="rounded-full p-1.5 hover:bg-gray-100"
+            aria-label="Önceki ay"
+          >
+            <ChevronLeft className="size-5" />
+          </button>
+          <div className="font-semibold">{betweenDatePickerHook.monthName}</div>
+          <button
+            type="button"
+            onClick={betweenDatePickerHook.goToNextMonth}
+            className="rounded-full p-1.5 hover:bg-gray-100"
+            aria-label="Sonraki ay"
+          >
+            <ChevronRight className="size-5" />
+          </button>
+        </div>
+
+        <div className="mb-4 text-center text-sm text-gray-600">
+          {betweenDatePickerHook.selectionMode === 'start'
+            ? 'Başlangıç tarihini seçin'
+            : 'Bitiş tarihini seçin'}
+        </div>
+
+        <div className="grid grid-cols-7 gap-y-1 text-center">
+          {betweenDatePickerHook.weekdays.map((day, index) => (
+            <div key={`weekday-${index}`} className="text-xs font-medium text-gray-500">
+              {day}
+            </div>
+          ))}
+          {betweenDatePickerHook.calendarGrid.map((day) => {
+            const isCurrentMonth = isSameMonth(day, betweenDatePickerHook.viewDate)
+            const isTodaysDate = isToday(day)
+            const isDisabled =
+              (minDate && isBefore(day, minDate)) || (maxDate && isAfter(day, maxDate))
+            const inRange = isInRange(day)
+            const rangeStart = isRangeStart(day)
+            const rangeEnd = isRangeEnd(day)
+
+            return (
+              <button
+                key={day.toString()}
+                type="button"
+                onClick={() => handleSelectDate(day)}
+                className={twMerge(
+                  'relative flex h-9 w-9 items-center justify-center rounded-full text-sm transition-colors',
+                  !isCurrentMonth && 'text-gray-400',
+                  isCurrentMonth && 'hover:bg-gray-100',
+                  isTodaysDate && 'font-bold',
+                  inRange && !rangeStart && !rangeEnd && 'rounded-none bg-primary-100',
+                  (rangeStart || rangeEnd) && 'bg-primary-500 text-white hover:bg-primary-600',
+                  rangeStart && !rangeEnd && 'rounded-l-full rounded-r-none',
+                  rangeEnd && !rangeStart && 'rounded-l-none rounded-r-full',
+                  isDisabled && 'cursor-not-allowed opacity-50',
+                )}
+                disabled={isDisabled}
+              >
+                {format(day, 'd')}
+              </button>
+            )
+          })}
+        </div>
+
+        <div className="mt-4 border-t border-gray-200 pt-4">
+          <button
+            type="button"
+            onClick={handleClearDates}
+            className="w-full rounded-xs px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-800"
+          >
+            Temizle
+          </button>
+        </div>
+      </DropdownPortal>
     </>
   )
 }
@@ -196,6 +300,7 @@ interface BetweenDatePickerTextProps {
   minDate?: Date
   maxDate?: Date
   className?: string
+  dropdownClassName?: string
   startPlaceholder?: string
   endPlaceholder?: string
 }
@@ -207,6 +312,7 @@ export const BetweenDatePickerText = ({
   minDate,
   maxDate,
   className,
+  dropdownClassName,
   startPlaceholder,
   endPlaceholder,
 }: BetweenDatePickerTextProps) => {
@@ -240,6 +346,7 @@ export const BetweenDatePickerText = ({
       endDate={endDate}
       onChange={onChange}
       locale={language.locale}
+      dropdownClassName={dropdownClassName}
       minDate={minDate}
       maxDate={maxDate}
       triggerRef={triggerRef}
@@ -264,162 +371,7 @@ export const BetweenDatePickerText = ({
 }
 
 // ============================================================================
-// 4. BETWEEN CALENDAR PANEL - Modal/Popover
-// ============================================================================
-interface BetweenCalendarPanelProps {
-  startDate: Date | null
-  endDate: Date | null
-  onChange: (startDate: Date | null, endDate: Date | null) => void
-  onClose: () => void
-  triggerRef: any
-  hook: ReturnType<typeof useBetweenDatePicker>
-  minDate?: Date
-  maxDate?: Date
-  className?: string
-}
-
-function BetweenCalendarPanel({
-  startDate,
-  endDate,
-  onChange,
-  onClose,
-  triggerRef,
-  hook,
-  minDate,
-  maxDate,
-  className,
-}: BetweenCalendarPanelProps) {
-  const { t } = useTranslation('global-form')
-  const panelRef = useClickOutside<HTMLDivElement>(onClose, true, triggerRef)
-  const [position, setPosition] = useState({ top: 0, left: 0 })
-
-  useEffect(() => {
-    if (triggerRef?.current) {
-      const rect = triggerRef.current.getBoundingClientRect()
-      setPosition({
-        top: rect.bottom + window.scrollY + 8,
-        left: rect.left + window.scrollX,
-      })
-    }
-  }, [triggerRef])
-
-  const handleSelectDate = (day: Date) => {
-    if (hook.selectionMode === 'start' || (!startDate && !endDate)) {
-      onChange(day, null)
-      hook.setSelectionMode('end')
-    } else if (hook.selectionMode === 'end') {
-      if (startDate && isBefore(day, startDate)) {
-        onChange(day, startDate)
-      } else {
-        onChange(startDate, day)
-      }
-      onClose()
-    }
-  }
-
-  const isInRange = (day: Date) => {
-    if (!startDate || !endDate) return false
-    return isWithinInterval(day, { start: startDate, end: endDate })
-  }
-
-  const isRangeStart = (day: Date) => (startDate ? isSameDay(day, startDate) : false)
-  const isRangeEnd = (day: Date) => (endDate ? isSameDay(day, endDate) : false)
-
-  return createPortal(
-    <div
-      ref={panelRef}
-      className={twMerge(
-        'absolute z-50 w-80 rounded-xs border border-gray-200 bg-box-surface p-4 shadow-lg',
-        className,
-      )}
-      style={{ top: position.top, left: position.left }}
-      role="dialog"
-      aria-modal="true"
-    >
-      <div className="flex items-center justify-between pb-4">
-        <button
-          type="button"
-          onClick={hook.goToPrevMonth}
-          className="rounded-full p-1.5 hover:bg-gray-100"
-          aria-label={t('date_picker_between.previous_month')}
-        >
-          <ChevronLeft className="size-5" />
-        </button>
-        <div className="font-semibold">{hook.monthName}</div>
-        <button
-          type="button"
-          onClick={hook.goToNextMonth}
-          className="rounded-full p-1.5 hover:bg-gray-100"
-          aria-label={t('date_picker_between.next_month')}
-        >
-          <ChevronRight className="size-5" />
-        </button>
-      </div>
-
-      <div className="mb-4 text-center text-sm text-gray-600">
-        {hook.selectionMode === 'start'
-          ? t('date_picker_between.select_start')
-          : t('date_picker_between.select_end')}
-      </div>
-
-      <div className="grid grid-cols-7 gap-y-1 text-center">
-        {hook.weekdays.map((day, index) => (
-          <div key={`weekday-${index}`} className="text-xs font-medium text-gray-500">
-            {day}
-          </div>
-        ))}
-        {hook.calendarGrid.map((day) => {
-          const isCurrentMonth = isSameMonth(day, hook.viewDate)
-          const isTodaysDate = isToday(day)
-          const isDisabled =
-            (minDate && isBefore(day, minDate)) || (maxDate && isAfter(day, maxDate))
-          const inRange = isInRange(day)
-          const rangeStart = isRangeStart(day)
-          const rangeEnd = isRangeEnd(day)
-
-          return (
-            <button
-              key={day.toString()}
-              type="button"
-              onClick={() => handleSelectDate(day)}
-              className={twMerge(
-                'relative flex h-9 w-9 items-center justify-center rounded-full text-sm transition-colors',
-                !isCurrentMonth && 'text-gray-400',
-                isCurrentMonth && 'hover:bg-gray-100',
-                isTodaysDate && 'font-bold',
-                inRange && !rangeStart && !rangeEnd && 'rounded-none bg-primary-100',
-                (rangeStart || rangeEnd) && 'bg-primary-500 text-white hover:bg-primary-600',
-                rangeStart && !rangeEnd && 'rounded-l-full rounded-r-none',
-                rangeEnd && !rangeStart && 'rounded-l-none rounded-r-full',
-                isDisabled && 'cursor-not-allowed opacity-50',
-              )}
-              disabled={isDisabled}
-            >
-              {format(day, 'd')}
-            </button>
-          )
-        })}
-      </div>
-
-      <div className="mt-4 border-t border-gray-200 pt-4">
-        <button
-          type="button"
-          onClick={() => {
-            onChange(null, null)
-            hook.setSelectionMode('start')
-          }}
-          className="w-full rounded-xs px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-800"
-        >
-          {t('date_picker_between.clear')}
-        </button>
-      </div>
-    </div>,
-    document.body,
-  )
-}
-
-// ============================================================================
-// 5. BETWEEN DATE PICKER HOOK - Logic kısmı
+// 4. BETWEEN DATE PICKER HOOK - Logic kısmı
 // ============================================================================
 interface UseBetweenDatePickerProps {
   startDate: Date | null

@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
 import { twMerge } from 'tailwind-merge'
 import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react'
 import {
@@ -16,7 +15,7 @@ import {
   subMonths,
 } from 'date-fns'
 import { BaseInput } from './base-input'
-import useClickOutside from 'src/hooks/use-click-outside'
+import { DropdownPortal } from './dropdown-portal'
 import { useLanguage } from 'src/i18n/prodiver'
 import { useTranslation } from 'react-i18next'
 
@@ -30,6 +29,7 @@ interface DatePickerProps {
   error?: string
   description?: string
   className?: string
+  dropdownClassName?: string
   id?: string
   required?: boolean
   disabled?: boolean
@@ -44,6 +44,7 @@ export const DatePicker = ({
   error,
   description,
   className,
+  dropdownClassName,
   id,
   required,
   disabled = false,
@@ -62,6 +63,7 @@ export const DatePicker = ({
       onChange={onChange}
       locale={language.locale}
       minDate={minDate}
+      dropdownClassName={dropdownClassName}
       triggerRef={triggerRef}
     >
       {({ openCalendar }) => (
@@ -108,6 +110,7 @@ interface DatePickerRawProps {
   onChange: (date: Date | null) => void
   locale?: string
   minDate?: Date
+  dropdownClassName?: string
   triggerRef?: any
   children: (props: {
     isOpen: boolean
@@ -120,6 +123,7 @@ interface DatePickerRawProps {
 export const DatePickerRaw = ({
   value,
   onChange,
+  dropdownClassName,
   locale = 'tr-TR',
   minDate,
   triggerRef = null,
@@ -141,6 +145,16 @@ export const DatePickerRaw = ({
     }).format(value)
   }, [value, locale])
 
+  const handleSelectDate = (day: Date) => {
+    onChange(day)
+    datePickerHook.closeCalendar()
+  }
+
+  const handleClearDate = () => {
+    onChange(null)
+    datePickerHook.closeCalendar()
+  }
+
   return (
     <>
       {children({
@@ -150,16 +164,79 @@ export const DatePickerRaw = ({
         formattedDate,
       })}
 
-      {datePickerHook.isOpen && (
-        <CalendarPanel
-          value={value}
-          onChange={onChange}
-          onClose={datePickerHook.closeCalendar}
-          triggerRef={triggerRef}
-          hook={datePickerHook}
-          minDate={minDate}
-        />
-      )}
+      <DropdownPortal
+        isOpen={datePickerHook.isOpen}
+        triggerRef={triggerRef}
+        onClose={datePickerHook.closeCalendar}
+        placement="bottom-start"
+        className={twMerge(
+          'w-80 rounded-xs border border-gray-200 bg-box-surface p-4 shadow-lg',
+          dropdownClassName,
+        )}
+      >
+        <div className="flex items-center justify-between pb-4">
+          <button
+            type="button"
+            onClick={datePickerHook.goToPrevMonth}
+            className="rounded-full p-1.5 hover:bg-gray-100"
+            aria-label="Önceki ay"
+          >
+            <ChevronLeft className="size-5" />
+          </button>
+          <div className="font-semibold">{datePickerHook.monthName}</div>
+          <button
+            type="button"
+            onClick={datePickerHook.goToNextMonth}
+            className="rounded-full p-1.5 hover:bg-gray-100"
+            aria-label="Sonraki ay"
+          >
+            <ChevronRight className="size-5" />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-7 gap-y-1 text-center">
+          {datePickerHook.weekdays.map((day, index) => (
+            <div key={`weekday-${index}`} className="text-xs font-medium text-gray-500">
+              {day}
+            </div>
+          ))}
+          {datePickerHook.calendarGrid.map((day) => {
+            const isCurrentMonth = isSameMonth(day, datePickerHook.viewDate)
+            const isSelected = value ? isSameDay(day, value) : false
+            const isTodaysDate = isToday(day)
+            const isDisabled = minDate && day < minDate
+
+            return (
+              <button
+                key={day.toString()}
+                type="button"
+                onClick={() => handleSelectDate(day)}
+                className={twMerge(
+                  'flex h-9 w-9 items-center justify-center rounded-full text-sm transition-colors',
+                  !isCurrentMonth && 'text-gray-400',
+                  isCurrentMonth && 'hover:bg-gray-100',
+                  isTodaysDate && 'font-bold text-primary-600',
+                  isSelected && 'bg-primary-500 text-on-btn-primary hover:bg-primary-600',
+                  isDisabled && 'cursor-not-allowed opacity-50',
+                )}
+                disabled={isDisabled}
+              >
+                {format(day, 'd')}
+              </button>
+            )
+          })}
+        </div>
+
+        <div className="mt-4 border-t border-gray-200 pt-4">
+          <button
+            type="button"
+            onClick={handleClearDate}
+            className="w-full rounded-xs px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-800"
+          >
+            Temizle
+          </button>
+        </div>
+      </DropdownPortal>
     </>
   )
 }
@@ -171,6 +248,7 @@ interface DatePickerTextProps {
   value: Date | null
   onChange: (date: Date | null) => void
   minDate?: Date
+  dropdownClassName?: string
   className?: string
   placeholder?: string
 }
@@ -181,6 +259,7 @@ export const DatePickerText = ({
   minDate,
   className,
   placeholder,
+  dropdownClassName,
 }: DatePickerTextProps) => {
   const triggerRef = useRef<HTMLButtonElement>(null)
   const { language } = useLanguage()
@@ -193,6 +272,7 @@ export const DatePickerText = ({
       locale={language.locale}
       minDate={minDate}
       triggerRef={triggerRef}
+      dropdownClassName={dropdownClassName}
     >
       {({ openCalendar, formattedDate }) => (
         <button
@@ -257,129 +337,7 @@ export const DatePickerIndicator = ({
 }
 
 // ============================================================================
-// 5. CALENDAR PANEL - Modal/Popover (iç kullanım)
-// ============================================================================
-interface CalendarPanelProps {
-  value: Date | null
-  onChange: (date: Date | null) => void
-  onClose: () => void
-  triggerRef: any
-  hook: ReturnType<typeof useDatePicker>
-  minDate?: Date
-  className?: string
-}
-
-function CalendarPanel({
-  value,
-  onChange,
-  onClose,
-  triggerRef,
-  hook,
-  minDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24),
-  className,
-}: CalendarPanelProps) {
-  const { t } = useTranslation('global-components')
-  const panelRef = useClickOutside<HTMLDivElement>(onClose, true, triggerRef)
-  const [position, setPosition] = useState({ top: 0, left: 0 })
-
-  useEffect(() => {
-    if (triggerRef?.current) {
-      const rect = triggerRef.current.getBoundingClientRect()
-      setPosition({
-        top: rect.bottom + window.scrollY + 16,
-        left: rect.left + window.scrollX - 4,
-      })
-    }
-  }, [triggerRef])
-
-  const handleSelectDate = (day: Date) => {
-    onChange(day)
-    onClose()
-  }
-
-  return createPortal(
-    <div
-      ref={panelRef}
-      className={twMerge(
-        'absolute z-50 w-80 rounded-xs border border-gray-200 bg-box-surface p-4 shadow-lg',
-        className,
-      )}
-      style={{ top: position.top, left: position.left }}
-      role="dialog"
-      aria-modal="true"
-    >
-      <div className="flex items-center justify-between pb-4">
-        <button
-          type="button"
-          onClick={hook.goToPrevMonth}
-          className="rounded-full p-1.5 hover:bg-gray-100"
-          aria-label={t('form.date_picker.previous_month')}
-        >
-          <ChevronLeft className="size-5" />
-        </button>
-        <div className="font-semibold">{hook.monthName}</div>
-        <button
-          type="button"
-          onClick={hook.goToNextMonth}
-          className="rounded-full p-1.5 hover:bg-gray-100"
-          aria-label={t('form.date_picker.next_month')}
-        >
-          <ChevronRight className="size-5" />
-        </button>
-      </div>
-
-      <div className="grid grid-cols-7 gap-y-1 text-center">
-        {hook.weekdays.map((day, index) => (
-          <div key={`weekday-${index}`} className="text-xs font-medium text-gray-500">
-            {day}
-          </div>
-        ))}
-        {hook.calendarGrid.map((day) => {
-          const isCurrentMonth = isSameMonth(day, hook.viewDate)
-          const isSelected = value ? isSameDay(day, value) : false
-          const isTodaysDate = isToday(day)
-          const isDisabled = minDate && day < minDate
-
-          return (
-            <button
-              key={day.toString()}
-              type="button"
-              onClick={() => handleSelectDate(day)}
-              className={twMerge(
-                'flex h-9 w-9 items-center justify-center rounded-full text-sm transition-colors',
-                !isCurrentMonth && 'text-gray-400',
-                isCurrentMonth && 'hover:bg-gray-100',
-                isTodaysDate && 'font-bold text-primary-600',
-                isSelected && 'bg-primary-500 text-on-btn-primary hover:bg-primary-600',
-                isDisabled && 'cursor-not-allowed opacity-50',
-              )}
-              disabled={isDisabled}
-            >
-              {format(day, 'd')}
-            </button>
-          )
-        })}
-      </div>
-
-      <div className="mt-4 border-t border-gray-200 pt-4">
-        <button
-          type="button"
-          onClick={() => {
-            onChange(null)
-            onClose()
-          }}
-          className="w-full rounded-xs px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-800"
-        >
-          {t('form.date_picker.clear')}
-        </button>
-      </div>
-    </div>,
-    document.body,
-  )
-}
-
-// ============================================================================
-// 6. DATE PICKER HOOK - Logic kısmı (en az dokunacağın kısım)
+// 5. DATE PICKER HOOK - Logic kısmı
 // ============================================================================
 interface UseDatePickerProps {
   selectedDate: Date | null

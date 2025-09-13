@@ -1,16 +1,16 @@
 import Icon from '@/components/icon'
 import { DatePickerText } from '@/features/public/components/form-ui/date-picker'
 import { NumericStepper } from '@/features/public/components/form-ui/numeric-stepper'
-import useClickOutside from '@/hooks/use-click-outside'
 import { useLanguage } from '@/i18n/prodiver'
 import { activitySearchSchema } from '@/routes/$lang/_public/activities.route'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
 import { format, parseISO } from 'date-fns'
-import { useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useRef, useState } from 'react'
+import { Control, Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
+import { DropdownPortal } from '../../components/form-ui/dropdown-portal'
 
 // Formun tipini Zod şemasından türet
 type SearchFormValues = z.infer<typeof activitySearchSchema>
@@ -19,12 +19,16 @@ interface SearchFormProps {
   initialData?: Partial<SearchFormValues>
 }
 
+// ============================================================================
+// MAIN SEARCH FORM COMPONENT
+// ============================================================================
 export const SearchForm = ({ initialData }: SearchFormProps) => {
   const { language } = useLanguage()
   const { t } = useTranslation()
   const navigate = useNavigate()
+
   const [isParticipantOpen, setIsParticipantOpen] = useState(false)
-  const participantRef = useClickOutside<HTMLDivElement>(() => setIsParticipantOpen(false))
+  const participantTriggerRef = useRef<HTMLDivElement>(null)
 
   const { control, handleSubmit, watch } = useForm<SearchFormValues>({
     resolver: zodResolver(activitySearchSchema),
@@ -75,6 +79,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
                 onChange={(date) => field.onChange(date ? format(date, 'yyyy-MM-dd') : '')}
                 minDate={new Date()}
                 className="w-full text-start text-size-sm font-semibold"
+                dropdownClassName="mt-2 -ml-4"
               />
             )}
           />
@@ -82,11 +87,11 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
 
         {/* Katılımcı Seçici */}
         <div
+          ref={participantTriggerRef}
           className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start shadow md:py-0 md:shadow-none"
-          ref={participantRef}
         >
           <label className="text-xs font-medium text-gray-700">
-            {t('global-form:labels.participants')}
+            {t('global-form:labels.participants-hotel')}
           </label>
           <button
             type="button"
@@ -98,42 +103,13 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
             </span>
           </button>
 
-          {isParticipantOpen && (
-            <div className="absolute top-full left-0 z-10 w-full border border-t-0 border-gray-200 bg-white shadow-xl">
-              <div className="flex flex-col gap-y-4 p-4">
-                <Controller
-                  name="adult"
-                  control={control}
-                  render={({ field }) => (
-                    <div className="flex items-center justify-between">
-                      <label>{t('global-form:participants.adults')}</label>
-                      <NumericStepper
-                        value={field.value || 1}
-                        onChange={field.onChange}
-                        min={1}
-                        className="w-40"
-                      />
-                    </div>
-                  )}
-                />
-                <Controller
-                  name="child"
-                  control={control}
-                  render={({ field }) => (
-                    <div className="flex items-center justify-between">
-                      <label>{t('global-form:participants.children')}</label>
-                      <NumericStepper
-                        value={field.value || 0}
-                        onChange={field.onChange}
-                        min={0}
-                        className="w-40"
-                      />
-                    </div>
-                  )}
-                />
-              </div>
-            </div>
-          )}
+          {/* Participants Dropdown */}
+          <ParticipantsDropdown
+            isOpen={isParticipantOpen}
+            triggerRef={participantTriggerRef}
+            onClose={() => setIsParticipantOpen(false)}
+            control={control}
+          />
         </div>
 
         {/* Arama Butonu */}
@@ -146,5 +122,73 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
         </button>
       </form>
     </section>
+  )
+}
+
+// ============================================================================
+// DROPDOWN COMPONENTS
+// ============================================================================
+
+// Participants Dropdown Component
+interface ParticipantsDropdownProps {
+  isOpen: boolean
+  triggerRef: any
+  onClose: () => void
+  control: Control<SearchFormValues>
+}
+
+const ParticipantsDropdown = ({
+  isOpen,
+  triggerRef,
+  onClose,
+  control,
+}: ParticipantsDropdownProps) => {
+  const { t } = useTranslation()
+
+  return (
+    <DropdownPortal
+      isOpen={isOpen}
+      triggerRef={triggerRef}
+      onClose={onClose}
+      placement="bottom-start"
+      className="w-full max-w-[calc(100%_-_2rem)] rounded-xs border border-gray-200 bg-white shadow-xl md:max-w-[320px]"
+    >
+      <div className="flex flex-col gap-y-4 p-4">
+        <Controller
+          name="adult"
+          control={control}
+          render={({ field }) => (
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium text-gray-950">
+                {t('global-form:participants.adults')}
+              </label>
+              <NumericStepper
+                value={field.value || 1}
+                onChange={field.onChange}
+                min={1}
+                className="w-32"
+              />
+            </div>
+          )}
+        />
+        <Controller
+          name="child"
+          control={control}
+          render={({ field }) => (
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium text-gray-950">
+                {t('global-form:participants.children')}
+              </label>
+              <NumericStepper
+                value={field.value || 0}
+                onChange={field.onChange}
+                min={0}
+                className="w-32"
+              />
+            </div>
+          )}
+        />
+      </div>
+    </DropdownPortal>
   )
 }
