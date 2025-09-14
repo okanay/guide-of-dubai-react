@@ -9,10 +9,16 @@ import { ButtonFavorite } from './button-favorite'
 interface HotelCardProps {
   hotel: Hotel
   className?: string
+  mode?: 'black' | 'white'
   onLikeToggle?: (hotelId: string, isLiked: boolean) => void
 }
 
-export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeToggle }) => {
+export const HotelCard: React.FC<HotelCardProps> = ({
+  hotel,
+  className,
+  onLikeToggle,
+  mode = 'black',
+}) => {
   const { t } = useTranslation('global-card')
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const imageContainerRef = useRef<HTMLDivElement>(null)
@@ -102,7 +108,8 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
 
   return (
     <article
-      className="group relative flex h-full w-full flex-col overflow-hidden rounded-xs bg-on-box-black"
+      data-mode={mode}
+      className="group/hc relative flex h-full w-full flex-col overflow-hidden rounded-xs border border-transparent bg-on-box-black data-[mode=white]:border-gray-200 data-[mode=white]:bg-white"
       aria-labelledby={`hotel-${hotel.id}-title`}
     >
       {/* Hotel Image Gallery */}
@@ -137,19 +144,25 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
             {/* Previous Button */}
             <button
               onClick={handlePrevImage}
-              className="absolute top-1/2 left-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-70 hover:opacity-100"
+              className="absolute top-1/2 left-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover/hc:opacity-70 group-data-[mode=white]/hc:bg-white hover:opacity-100"
               aria-label="Previous hotel image"
             >
-              <Icon name="chevron-left" className="h-4 w-4 text-white" />
+              <Icon
+                name="chevron-left"
+                className="h-4 w-4 text-white group-data-[mode=white]/hc:text-black"
+              />
             </button>
 
             {/* Next Button */}
             <button
               onClick={handleNextImage}
-              className="absolute top-1/2 right-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-70 hover:opacity-100"
+              className="absolute top-1/2 right-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover/hc:opacity-70 group-data-[mode=white]/hc:bg-white hover:opacity-100"
               aria-label="Next hotel image"
             >
-              <Icon name="chevron-right" className="h-4 w-4 text-white" />
+              <Icon
+                name="chevron-right"
+                className="h-4 w-4 text-white group-data-[mode=white]/hc:text-black"
+              />
             </button>
           </>
         )}
@@ -180,7 +193,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
       </header>
 
       {/* Hotel Information */}
-      <section className="flex flex-1 flex-col gap-y-2 p-4 text-on-box-white">
+      <section className="text-on-box-whit flex flex-1 flex-col gap-y-2 p-4 group-data-[mode=white]/hc:text-black">
         {/* Hotel Name */}
         <h2 id={`hotel-${hotel.id}-title`} className="text-size-lg font-bold">
           {hotel.name}
@@ -223,7 +236,10 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
         </div>
 
         {/* Divider */}
-        <hr className="my-1 border-card-surface" aria-hidden="true" />
+        <hr
+          className="my-1 border-card-surface group-data-[mode=white]/hc:border-gray-200"
+          aria-hidden="true"
+        />
 
         {/* Hotel Features */}
         <section aria-labelledby={`hotel-${hotel.id}-features`}>
@@ -284,7 +300,10 @@ export const HotelCard: React.FC<HotelCardProps> = ({ hotel, className, onLikeTo
         </section>
 
         {/* Divider */}
-        <hr className="my-1 mt-auto border-card-surface" aria-hidden="true" />
+        <hr
+          className="mt-auto border-card-surface group-data-[mode=white]/hc:border-gray-200"
+          aria-hidden="true"
+        />
 
         {/* Pricing and Booking */}
         <footer className="flex flex-col gap-y-1.5">

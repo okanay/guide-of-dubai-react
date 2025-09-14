@@ -12,7 +12,7 @@ export const Information = () => {
   const boxes = t('informations.boxes', { returnObjects: true }) as Box[]
 
   return (
-    <section className="bg-gray-50 px-4 pt-6 pb-10 text-on-box-black">
+    <section className="bg-gray-50 px-4 pt-8 pb-8 text-on-box-black">
       <div className="mx-auto max-w-main">
         <h2 className="mb-4 text-size-2xl font-bold md:text-size-3xl">{t('informations.title')}</h2>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
