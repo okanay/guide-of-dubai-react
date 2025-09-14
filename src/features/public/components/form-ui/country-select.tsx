@@ -17,6 +17,15 @@ export const CountrySelect = React.forwardRef<HTMLInputElement, CountrySelectPro
     }, [language.locale])
     // =====================================
 
-    return <SearchableSelect {...props} options={countryOptions} placeholder="Bir ülke seçin..." />
+    return (
+      <SearchableSelect
+        {...props}
+        options={countryOptions}
+        placeholder="Bir ülke seçin..."
+        dropdownClassName="max-w-[calc(100vw-3rem)] md:max-w-[400px]"
+      />
+    )
   },
 )
+
+CountrySelect.displayName = 'CountrySelect'

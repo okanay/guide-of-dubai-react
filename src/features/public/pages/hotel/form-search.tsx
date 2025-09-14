@@ -199,7 +199,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
                 }
                 minDate={new Date()}
                 className="w-full text-start text-size-sm font-semibold"
-                dropdownClassName="mt-2 -ml-4"
+                dropdownClassName="mt-2.5 -ml-4"
               />
             )}
           />
@@ -219,7 +219,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
                 onChange={(dateEnd) => field.onChange(dateEnd ? format(dateEnd, 'yyyy-MM-dd') : '')}
                 minDate={new Date()}
                 className="w-full text-start text-size-sm font-semibold"
-                dropdownClassName="mt-2 -ml-4"
+                dropdownClassName="mt-2.5 -ml-4"
               />
             )}
           />
