@@ -109,5 +109,20 @@
       "iconic_place": "Iconic Place",
       "most_popular": "Most Popular"
     }
+  },
+  "safari": {
+    "priceNote": "/ per person",
+    "morning": {
+      "title": "Morning Desert Safari Tour",
+      "features": ["4 People", "Shared Vehicle", "Hotel Pickup"],
+      "buttonText": "Join Morning Safari"
+    },
+    "night": {
+      "title": "Evening Desert Safari Tour",
+      "features": ["4 People", "Shared Vehicle", "Hotel Pickup"],
+      "campOptions": "4 Different Camp Options:",
+      "camps": ["Silver Camp", "Platinum Camp", "Premium Camp", "Heritage Camp", "Gold Camp"],
+      "buttonText": "Join Evening Safari"
+    }
   }
 }

@@ -109,5 +109,20 @@
       "iconic_place": "İkonik Yer",
       "most_popular": "En Popüler"
     }
+  },
+  "safari": {
+    "priceNote": "/ kişi başı",
+    "morning": {
+      "title": "Sabah Çöl Safari Turu",
+      "features": ["4 Kişilik", "Paylaşımlı Araç", "Otelden Alım"],
+      "buttonText": "Sabah Safarisine Katıl"
+    },
+    "night": {
+      "title": "Akşam Çöl Safari Turu",
+      "features": ["4 Kişilik", "Paylaşımlı Araç", "Otelden Alım"],
+      "campOptions": "4 Farklı Kamp Seçeneği:",
+      "camps": ["Silver Kamp", "Platinyum Kamp", "Premium Kamp", "Heritage Kamp", "Gold Kamp"],
+      "buttonText": "Akşam Safarisine Katıl"
+    }
   }
 }
