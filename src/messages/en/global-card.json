@@ -114,12 +114,26 @@
     "priceNote": "/ per person",
     "morning": {
       "title": "Morning Desert Safari Tour",
-      "features": ["4 People", "Shared Vehicle", "Hotel Pickup"],
+      "features": [
+        "4-Person Vehicle Capacity",
+        "Shared Group Tour",
+        "Hotel Transfer Included",
+        "Desert Driving Experience",
+        "Camel Riding Activity",
+        "Photography Break"
+      ],
       "buttonText": "Join Morning Safari"
     },
     "night": {
       "title": "Evening Desert Safari Tour",
-      "features": ["4 People", "Shared Vehicle", "Hotel Pickup"],
+      "features": [
+        "4-Person Vehicle Capacity",
+        "Shared Group Tour",
+        "Hotel Transfer Included",
+        "Desert Driving Experience",
+        "Camel Riding & Sandboarding",
+        "BBQ Dinner"
+      ],
       "campOptions": "4 Different Camp Options:",
       "camps": ["Silver Camp", "Platinum Camp", "Premium Camp", "Heritage Camp", "Gold Camp"],
       "buttonText": "Join Evening Safari"

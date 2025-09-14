@@ -16,7 +16,7 @@ export const Activities = () => {
       <div className="mx-auto max-w-main py-10">
         {/* Header */}
         <header className="mb-4 flex items-start justify-between sm:items-center">
-          <h2 className="text-size-2xl font-bold md:text-size-3xl">{t('activities.title')}</h2>
+          <h2 className="text-size-2xl font-bold">{t('activities.title')}</h2>
           <Link
             to="/$lang/not-found"
             className="btn-default flex shrink-0 items-center gap-1 rounded-full px-2 py-1 text-size-sm font-semibold text-primary-500 sm:py-2"

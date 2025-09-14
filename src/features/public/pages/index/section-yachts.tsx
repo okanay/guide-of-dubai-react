@@ -24,7 +24,7 @@ export const Yachts = () => {
     <section className="bg-box-surface px-4 text-on-box-black">
       <div className="mx-auto max-w-main pt-10">
         <header className="mb-4 flex items-start justify-between sm:items-center">
-          <h2 className="text-size-2xl font-bold md:text-size-3xl">{t('yachts.title')}</h2>
+          <h2 className="text-size-2xl font-bold">{t('yachts.title')}</h2>
           <Link
             to="/$lang/not-found"
             className="btn-default flex items-center gap-2 rounded-full py-1 text-size-sm font-semibold text-nowrap text-primary-500 hover:text-primary-500/80 sm:px-2 sm:py-2"

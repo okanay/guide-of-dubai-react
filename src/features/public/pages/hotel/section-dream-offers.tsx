@@ -20,7 +20,7 @@ export const DreamOffers = () => {
     <section className="bg-box-surface px-4 text-on-box-black">
       <div className="mx-auto max-w-main pt-6 pb-10">
         <header className="mb-4 flex items-start justify-between sm:items-center">
-          <h2 className="text-size-2xl font-bold md:text-size-3xl">{t('dream-offers.title')}</h2>
+          <h2 className="text-size-2xl font-bold">{t('dream-offers.title')}</h2>
           <Link
             to="/$lang/not-found"
             className="btn-default flex items-center gap-2 rounded-full py-1 text-size-sm font-semibold text-nowrap text-white hover:text-white/80 sm:px-2 sm:py-2 dark:text-primary-500"

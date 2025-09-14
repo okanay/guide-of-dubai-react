@@ -114,12 +114,26 @@
     "priceNote": "/ kişi başı",
     "morning": {
       "title": "Sabah Çöl Safari Turu",
-      "features": ["4 Kişilik", "Paylaşımlı Araç", "Otelden Alım"],
+      "features": [
+        "4 Kişilik Araç Kapasitesi",
+        "Paylaşımlı Grup Turu",
+        "Otel Transfer Dahil",
+        "Çöl Sürüşü Deneyimi",
+        "Deve Binme Aktivitesi",
+        "Fotoğraf Çekimi Molası"
+      ],
       "buttonText": "Sabah Safarisine Katıl"
     },
     "night": {
       "title": "Akşam Çöl Safari Turu",
-      "features": ["4 Kişilik", "Paylaşımlı Araç", "Otelden Alım"],
+      "features": [
+        "4 Kişilik Araç Kapasitesi",
+        "Paylaşımlı Grup Turu",
+        "Otel Transfer Dahil",
+        "Çöl Sürüşü Deneyimi",
+        "Deve Binme & Sandboard",
+        "BBQ Akşam Yemeği"
+      ],
       "campOptions": "4 Farklı Kamp Seçeneği:",
       "camps": ["Silver Kamp", "Platinyum Kamp", "Premium Kamp", "Heritage Kamp", "Gold Kamp"],
       "buttonText": "Akşam Safarisine Katıl"

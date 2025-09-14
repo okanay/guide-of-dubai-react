@@ -40,7 +40,7 @@ export const Bundles = () => {
       <div className="mx-auto max-w-main">
         {/* Başlık ve Tümü Linki */}
         <header className="mb-4 flex items-start justify-between sm:items-center">
-          <h2 className="text-size-2xl font-bold md:text-size-3xl">{t('bundles.title')}</h2>
+          <h2 className="text-size-2xl font-bold">{t('bundles.title')}</h2>
           <Link
             to="/$lang/not-found"
             className="btn-default flex items-center gap-2 rounded-full py-1 text-size-sm font-semibold text-nowrap text-primary-500 hover:text-primary-500/80 sm:px-2 sm:py-2"

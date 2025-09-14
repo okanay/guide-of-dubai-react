@@ -17,12 +17,8 @@ export const WaterActivities = () => {
         {/* Header */}
         <header className="mb-4 flex items-start justify-between sm:items-end">
           <div className="flex flex-col gap-y-1">
-            <h2 className="text-size-2xl font-bold md:text-size-3xl">
-              {t('water-activities.title')}
-            </h2>
-            <p className="text-size-base text-on-box-black md:text-size-lg">
-              {t('water-activities.description')}
-            </p>
+            <h2 className="text-size-2xl font-bold">{t('water-activities.title')}</h2>
+            <p className="text-size-base text-gray-700"> {t('water-activities.description')}</p>
           </div>
           <Link
             to="/$lang/not-found"

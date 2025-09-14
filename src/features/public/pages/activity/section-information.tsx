@@ -14,7 +14,7 @@ export const Information = () => {
   return (
     <section className="bg-gray-50 px-4 pt-8 pb-8 text-on-box-black">
       <div className="mx-auto max-w-main">
-        <h2 className="mb-4 text-size-2xl font-bold md:text-size-3xl">{t('informations.title')}</h2>
+        <h2 className="mb-4 text-size-2xl font-bold">{t('informations.title')}</h2>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {boxes.map((information, index) => (
             <div key={information.title} className="flex w-full flex-col rounded-xs bg-white p-4">

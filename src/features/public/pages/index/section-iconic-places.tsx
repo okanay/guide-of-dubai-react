@@ -41,7 +41,7 @@ export const IconicPlaces = () => {
     <section className="bg-box-surface px-4 text-on-box-black">
       <div className="mx-auto max-w-main pt-10">
         {/* Header */}
-        <h2 className="mb-4 text-size-2xl font-bold text-on-box-black md:text-size-3xl">
+        <h2 className="mb-4 text-size-2xl font-bold text-on-box-black">
           {t('iconic-places.title')}
         </h2>
 
