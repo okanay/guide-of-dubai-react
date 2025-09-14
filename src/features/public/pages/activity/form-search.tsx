@@ -10,7 +10,7 @@ import { useRef, useState } from 'react'
 import { Control, Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
-import { DropdownPortal } from '../../components/form-ui/dropdown-portal'
+import { DropdownPortal } from '@/components/dropdown-portal'
 
 // Formun tipini Zod şemasından türet
 type SearchFormValues = z.infer<typeof activitySearchSchema>
@@ -159,7 +159,7 @@ const ParticipantsDropdown = ({
           control={control}
           render={({ field }) => (
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-gray-950">
+              <label className="text-sm font-medium text-black">
                 {t('global-form:participants.adults')}
               </label>
               <NumericStepper
@@ -176,7 +176,7 @@ const ParticipantsDropdown = ({
           control={control}
           render={({ field }) => (
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-gray-950">
+              <label className="text-sm font-medium text-black">
                 {t('global-form:participants.children')}
               </label>
               <NumericStepper

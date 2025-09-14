@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { BaseInput } from './base-input'
-import { DropdownPortal } from './dropdown-portal'
 import { twMerge } from 'tailwind-merge'
 import { ChevronDown } from 'lucide-react'
+import { DropdownPortal } from '@/components/dropdown-portal'
 
 interface Option {
   value: string

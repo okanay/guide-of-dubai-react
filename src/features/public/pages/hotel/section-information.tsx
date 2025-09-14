@@ -33,8 +33,8 @@ export const Information = () => {
           </div>
         </div>
       </section>
-      <section className="px-4 pt-8 pb-4 text-on-box-black">
-        <div className="mx-auto flex max-w-main flex-col items-center justify-between gap-4 bg-primary-50 p-8 md:flex-row">
+      <section className="pt-8 pb-4 text-on-box-black md:px-4">
+        <div className="mx-auto flex max-w-main flex-col items-center justify-between gap-4 bg-primary-50 px-4 py-8 md:flex-row">
           <div className="flex items-center gap-x-4 md:items-center">
             <img
               src="/images/public/hotels/black-van-car.png"

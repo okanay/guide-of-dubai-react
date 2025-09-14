@@ -11,7 +11,7 @@ import { useRef, useState, useMemo } from 'react'
 import { Control, Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
-import { DropdownPortal } from '../../components/form-ui/dropdown-portal'
+import { DropdownPortal } from '@/components/dropdown-portal'
 
 // Form tipini Zod şemasından türet
 type SearchFormValues = z.infer<typeof hotelsSearchSchema>
@@ -320,7 +320,6 @@ const SearchSuggestionsDropdown = ({
               onSelect(suggestion)
             }}
             onMouseDown={(e) => {
-              // Input'un blur olayını engelle
               e.preventDefault()
             }}
             className="flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-gray-50 focus:bg-gray-50 focus:outline-none"
@@ -335,7 +334,7 @@ const SearchSuggestionsDropdown = ({
 
             {/* Content */}
             <div className="min-w-0 flex-1">
-              <div className="truncate text-sm font-medium text-gray-900">
+              <div className="truncate text-sm font-medium text-black">
                 {highlightSearchTerm(suggestion.name, searchValue)}
               </div>
 
@@ -363,7 +362,7 @@ const SearchSuggestionsDropdown = ({
 
             {/* Badge */}
             <div className="flex-shrink-0">
-              <span className="rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-400 capitalize">
+              <span className="rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-900 capitalize">
                 {suggestion.type === 'hotel'
                   ? 'Otel'
                   : suggestion.type === 'location'
@@ -440,7 +439,7 @@ const ParticipantsDropdown = ({
           control={control}
           render={({ field }) => (
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-gray-950">
+              <label className="text-sm font-medium text-black">
                 {t('global-form:participants.adults')}
               </label>
               <NumericStepper
@@ -459,7 +458,7 @@ const ParticipantsDropdown = ({
           control={control}
           render={({ field }) => (
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-gray-950">
+              <label className="text-sm font-medium text-black">
                 {t('global-form:participants.children')}
               </label>
               <NumericStepper
