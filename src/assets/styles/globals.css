@@ -2,6 +2,7 @@
 @import './font.css';
 @import './typography.css';
 @import './leaflet.css';
+@import './scroll-lock.css';
 
 @import 'tailwindcss';
 @custom-variant dark (&:where(.dark, .dark *));

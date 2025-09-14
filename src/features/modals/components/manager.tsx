@@ -12,11 +12,9 @@ class GlobalModalManager {
   }
 
   public openModal(scopeId: string = 'body'): void {
-    // Bu scope'taki modal sayısını artır
     const currentCount = this.modalStacks.get(scopeId) || 0
     this.modalStacks.set(scopeId, currentCount + 1)
 
-    // Eğer bu scope'ta ilk modal açılıyorsa
     if (currentCount === 0) {
       this.lockScope(scopeId)
     }
@@ -40,25 +38,12 @@ class GlobalModalManager {
 
   private lockScope(scopeId: string): void {
     if (scopeId === 'body') {
+      // BODY'Yİ RAHAT BIRAK! Sadece sayaç tut
       this.bodyLockCount++
-      if (this.bodyLockCount === 1) {
-        this.originalScrollPositions.set('body', window.scrollY)
-        document.body.style.position = 'fixed'
-        document.body.style.top = `-${window.scrollY}px`
-        document.body.style.left = '0'
-        document.body.style.right = '0'
-        document.body.style.overflow = 'hidden'
-      }
+      // Modal container'ın kendisi CSS ile fixed olacak
     } else {
+      // Diğer scope'lar için normal işlem
       this.bodyLockCount++
-      if (this.bodyLockCount === 1) {
-        this.originalScrollPositions.set('body', window.scrollY)
-        document.body.style.position = 'fixed'
-        document.body.style.top = `-${window.scrollY}px`
-        document.body.style.left = '0'
-        document.body.style.right = '0'
-        document.body.style.overflow = 'hidden'
-      }
 
       const element = document.getElementById(scopeId)
       if (element) {
@@ -70,30 +55,12 @@ class GlobalModalManager {
 
   private unlockScope(scopeId: string): void {
     if (scopeId === 'body') {
+      // BODY'Yİ RAHAT BIRAK! Sadece sayaç azalt
       this.bodyLockCount--
-      if (this.bodyLockCount === 0) {
-        const originalScrollY = this.originalScrollPositions.get('body') || 0
-        document.body.style.position = ''
-        document.body.style.top = ''
-        document.body.style.left = ''
-        document.body.style.right = ''
-        document.body.style.overflow = ''
-        window.scrollTo(0, originalScrollY)
-        this.originalScrollPositions.delete('body')
-      }
+      // Modal kapatıldığında body'de değişiklik yok = scroll pozisyonu korunuyor
     } else {
-      // Diğer scope'lar için - ama body lock sayısını da azalt
+      // Diğer scope'ları restore et
       this.bodyLockCount--
-      if (this.bodyLockCount === 0) {
-        const originalScrollY = this.originalScrollPositions.get('body') || 0
-        document.body.style.position = ''
-        document.body.style.top = ''
-        document.body.style.left = ''
-        document.body.style.right = ''
-        document.body.style.overflow = ''
-        window.scrollTo(0, originalScrollY)
-        this.originalScrollPositions.delete('body')
-      }
 
       const element = document.getElementById(scopeId)
       if (element) {
@@ -109,7 +76,6 @@ class GlobalModalManager {
     if (scopeId) {
       return this.modalStacks.get(scopeId) || 0
     }
-    // Toplam modal sayısı
     return Array.from(this.modalStacks.values()).reduce((sum, count) => sum + count, 0)
   }
 
@@ -117,20 +83,12 @@ class GlobalModalManager {
     return Object.fromEntries(this.modalStacks)
   }
 
-  // Emergency reset - development için
   public reset(): void {
     this.modalStacks.clear()
     this.originalScrollPositions.clear()
     this.bodyLockCount = 0
 
-    // Body'yi temizle
-    document.body.style.position = ''
-    document.body.style.top = ''
-    document.body.style.left = ''
-    document.body.style.right = ''
-    document.body.style.overflow = ''
-
-    // Tüm bilinen scope'ları temizle
+    // Body'yi zaten değiştirmiyoruz, sadece diğer elementleri temizle
     const allElements = document.querySelectorAll('[id]')
     allElements.forEach((element) => {
       if (element instanceof HTMLElement) {
@@ -140,5 +98,4 @@ class GlobalModalManager {
   }
 }
 
-// Export singleton instance
 export const modalManager = GlobalModalManager.getInstance()

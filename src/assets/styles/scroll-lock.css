@@ -1,0 +1,43 @@
+.isl_holder {
+  position: relative;
+}
+
+.isl_holder--contents {
+  display: contents;
+}
+
+.isl_holder--open {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: calc(var(--isl-vh, 1vh) * 100);
+  background: var(--isl-bg, rgba(0, 0, 0, 0.5));
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.isl_scroller {
+  position: relative;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.isl_scroller_inner {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.isl_scroller_content {
+  flex: 1;
+}
+
+@supports (-webkit-appearance: none) and (stroke-color: transparent) {
+  .isl_holder--open {
+    height: calc(var(--isl-vh, 1vh) * 100);
+  }
+}

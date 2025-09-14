@@ -55,7 +55,7 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   scopeId = 'body',
   disableOutsideClick = false,
   lockBodyScroll = true,
-  containerClassName = 'fixed inset-0 z-50 flex h-[100dvh] w-screen items-start justify-start p-0 md:items-center md:justify-center md:p-4',
+  containerClassName = 'flex h-[100dvh] w-screen items-start justify-start p-0 md:items-center md:justify-center md:p-4',
   overlayClassName = 'absolute inset-0 bg-black/30 md:bg-black/50',
 }) => {
   const overlayRef = useRef<HTMLDivElement>(null)
@@ -64,7 +64,7 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   // Scope ID'yi normalize et
   const normalizedScopeId = scopeId || 'body'
 
-  // Global modal body lock kullan - scope-aware
+  // Modal body lock kullan (şimdi body'yi değiştirmiyor)
   useModalBodyLock(lockBodyScroll && isOpen, normalizedScopeId)
 
   // Outside click handler
@@ -106,12 +106,37 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
 
   return createPortal(
     <ClientOnly fallback={<div />}>
-      <div ref={overlayRef} className={containerClassName} role="dialog" aria-modal="true">
+      <div
+        ref={overlayRef}
+        className={`fixed inset-0 z-50 ${containerClassName}`}
+        role="dialog"
+        aria-modal="true"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100vh',
+          zIndex: 50,
+          overflow: 'hidden',
+        }}
+      >
         {/* Overlay */}
         <div data-theme="force-main" className={overlayClassName} />
 
-        {/* Modal Content - Orijinal boyutlarıyla */}
-        {cloneChildrenWithRef(children)}
+        {/* Scrollable content area */}
+        <div
+          className="relative h-full w-full overflow-y-auto"
+          style={{
+            overflowY: 'auto',
+            WebkitOverflowScrolling: 'touch',
+            height: '100%',
+          }}
+        >
+          <div className="flex h-full items-center justify-center">
+            {cloneChildrenWithRef(children)}
+          </div>
+        </div>
       </div>
     </ClientOnly>,
     scopeElement,
