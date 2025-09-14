@@ -80,7 +80,15 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
     if (!isOpen || disableOutsideClick) return
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (contentRef.current && !contentRef.current.contains(event.target as Node)) {
+      const target = event.target as Element
+
+      // Dropdown elementine tıklanmışsa modal'ı kapatma
+      if (isDropdownElement(target)) {
+        return
+      }
+
+      // Modal content'ine tıklanmışsa modal'ı kapatma
+      if (contentRef.current && !contentRef.current.contains(target as Node)) {
         onClose()
       }
     }
@@ -119,11 +127,9 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
         role="dialog"
         aria-modal="true"
         style={
-          // iOS Safari için body zaten fixed, container'ı basit tut
           isIOSSafari
             ? undefined
             : {
-                // Diğer tarayıcılar için container-based scroll lock
                 position: 'fixed',
                 top: 0,
                 left: 0,
@@ -145,4 +151,20 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
     </ClientOnly>,
     scopeElement,
   )
+}
+
+const isDropdownElement = (element: Element | null): boolean => {
+  if (!element) return false
+
+  // Element kendisi dropdown mu?
+  if (element.id?.startsWith('dropdown-')) return true
+
+  // Parent elementleri kontrol et
+  let currentElement = element.parentElement
+  while (currentElement) {
+    if (currentElement.id?.startsWith('dropdown-')) return true
+    currentElement = currentElement.parentElement
+  }
+
+  return false
 }

@@ -34,7 +34,7 @@ export const DropdownPortal: React.FC<DropdownPortalProps> = ({
   className = '',
   onClose,
   placement = 'bottom-start',
-  offset = 4,
+  offset = 8,
   autoFlip = true,
 }) => {
   const [position, setPosition] = useState({ top: 0, left: 0 })
@@ -124,6 +124,7 @@ export const DropdownPortal: React.FC<DropdownPortalProps> = ({
 
   return createPortal(
     <div
+      id={`dropdown-${Math.random().toString(36).slice(2, 11)}`}
       ref={dropdownRef}
       className={`${className} transition-opacity duration-150 ease-out`}
       style={{
