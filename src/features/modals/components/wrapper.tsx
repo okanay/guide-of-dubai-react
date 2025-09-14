@@ -55,16 +55,24 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   scopeId = 'body',
   disableOutsideClick = false,
   lockBodyScroll = true,
-  containerClassName = 'flex h-[100dvh] w-screen items-start justify-start p-0 md:items-center md:justify-center md:p-4',
+  containerClassName = 'fixed inset-0 z-50 flex h-[100dvh] w-screen items-start justify-start p-0 md:items-center md:justify-center md:p-4',
   overlayClassName = 'absolute inset-0 bg-black/30 md:bg-black/50',
 }) => {
   const overlayRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
+  // iOS Safari detection
+  const isIOSSafari =
+    typeof window !== 'undefined' &&
+    /iPad|iPhone|iPod/.test(window.navigator.userAgent) &&
+    !(window as any).MSStream &&
+    /Safari/.test(window.navigator.userAgent) &&
+    !/Chrome/.test(window.navigator.userAgent)
+
   // Scope ID'yi normalize et
   const normalizedScopeId = scopeId || 'body'
 
-  // Modal body lock kullan (şimdi body'yi değiştirmiyor)
+  // Modal body lock kullan
   useModalBodyLock(lockBodyScroll && isOpen, normalizedScopeId)
 
   // Outside click handler
@@ -89,7 +97,6 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
         ...(children.props as any),
       })
     }
-
     return <div ref={contentRef}>{children}</div>
   }
 
@@ -106,32 +113,33 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
 
   return createPortal(
     <ClientOnly fallback={<div />}>
-      {/* Fixed container - iOS Safari liquid glass için tam ekran kaplıyor */}
       <div
         ref={overlayRef}
         className={containerClassName}
         role="dialog"
         aria-modal="true"
-        style={{
-          // iOS Safari için kesin full screen coverage
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          width: '100%',
-          height: '100%',
-          minHeight: '100dvh', // Dynamic viewport
-          zIndex: 50,
-          overflow: 'hidden',
-          WebkitBackdropFilter: 'blur(0px)',
-          backdropFilter: 'blur(0px)',
-        }}
+        style={
+          // iOS Safari için body zaten fixed, container'ı basit tut
+          isIOSSafari
+            ? undefined
+            : {
+                // Diğer tarayıcılar için container-based scroll lock
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                width: '100%',
+                height: '100%',
+                zIndex: 50,
+                overflow: 'hidden',
+              }
+        }
       >
         {/* Overlay */}
         <div data-theme="force-main" className={overlayClassName} />
 
-        {/* Modal Content - Orijinal boyutlarıyla */}
+        {/* Modal Content */}
         {cloneChildrenWithRef(children)}
       </div>
     </ClientOnly>,

@@ -11,6 +11,14 @@ class GlobalModalManager {
     return GlobalModalManager.instance
   }
 
+  private isIOSSafari(): boolean {
+    if (typeof window === 'undefined') return false
+    const userAgent = window.navigator.userAgent
+    const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream
+    const isSafari = /Safari/.test(userAgent) && !/Chrome/.test(userAgent)
+    return isIOS && isSafari
+  }
+
   public openModal(scopeId: string = 'body'): void {
     const currentCount = this.modalStacks.get(scopeId) || 0
     this.modalStacks.set(scopeId, currentCount + 1)
@@ -38,12 +46,34 @@ class GlobalModalManager {
 
   private lockScope(scopeId: string): void {
     if (scopeId === 'body') {
-      // BODY'Yİ RAHAT BIRAK! Sadece sayaç tut
       this.bodyLockCount++
-      // Modal container'ın kendisi CSS ile fixed olacak
+      if (this.bodyLockCount === 1) {
+        // iOS Safari için eski yaklaşım (liquid glass fix)
+        if (this.isIOSSafari()) {
+          this.originalScrollPositions.set('body', window.scrollY)
+          document.body.style.position = 'fixed'
+          document.body.style.top = `-${window.scrollY}px`
+          document.body.style.left = '0'
+          document.body.style.right = '0'
+          document.body.style.width = '100%'
+          document.body.style.overflow = 'hidden'
+        } else {
+          // Diğer tarayıcılar için container-based (body'ye dokunma)
+          // Modal container'ın kendisi fixed olacak
+        }
+      }
     } else {
       // Diğer scope'lar için normal işlem
       this.bodyLockCount++
+      if (this.bodyLockCount === 1 && this.isIOSSafari()) {
+        this.originalScrollPositions.set('body', window.scrollY)
+        document.body.style.position = 'fixed'
+        document.body.style.top = `-${window.scrollY}px`
+        document.body.style.left = '0'
+        document.body.style.right = '0'
+        document.body.style.width = '100%'
+        document.body.style.overflow = 'hidden'
+      }
 
       const element = document.getElementById(scopeId)
       if (element) {
@@ -55,12 +85,51 @@ class GlobalModalManager {
 
   private unlockScope(scopeId: string): void {
     if (scopeId === 'body') {
-      // BODY'Yİ RAHAT BIRAK! Sadece sayaç azalt
       this.bodyLockCount--
-      // Modal kapatıldığında body'de değişiklik yok = scroll pozisyonu korunuyor
+      if (this.bodyLockCount === 0) {
+        // iOS Safari için eski yaklaşım (scroll restore)
+        if (this.isIOSSafari()) {
+          const originalScrollY = this.originalScrollPositions.get('body') || 0
+          document.body.style.position = ''
+          document.body.style.top = ''
+          document.body.style.left = ''
+          document.body.style.right = ''
+          document.body.style.width = ''
+          document.body.style.overflow = ''
+
+          // Scroll pozisyonunu restore et
+          requestAnimationFrame(() => {
+            window.scrollTo({
+              top: originalScrollY,
+              behavior: 'instant',
+            })
+          })
+
+          this.originalScrollPositions.delete('body')
+        } else {
+          // Diğer tarayıcılar için hiçbir şey yapma
+        }
+      }
     } else {
-      // Diğer scope'ları restore et
       this.bodyLockCount--
+      if (this.bodyLockCount === 0 && this.isIOSSafari()) {
+        const originalScrollY = this.originalScrollPositions.get('body') || 0
+        document.body.style.position = ''
+        document.body.style.top = ''
+        document.body.style.left = ''
+        document.body.style.right = ''
+        document.body.style.width = ''
+        document.body.style.overflow = ''
+
+        requestAnimationFrame(() => {
+          window.scrollTo({
+            top: originalScrollY,
+            behavior: 'instant',
+          })
+        })
+
+        this.originalScrollPositions.delete('body')
+      }
 
       const element = document.getElementById(scopeId)
       if (element) {
@@ -88,7 +157,15 @@ class GlobalModalManager {
     this.originalScrollPositions.clear()
     this.bodyLockCount = 0
 
-    // Body'yi zaten değiştirmiyoruz, sadece diğer elementleri temizle
+    // Body stillerini temizle
+    document.body.style.position = ''
+    document.body.style.top = ''
+    document.body.style.left = ''
+    document.body.style.right = ''
+    document.body.style.width = ''
+    document.body.style.overflow = ''
+
+    // Diğer elementleri temizle
     const allElements = document.querySelectorAll('[id]')
     allElements.forEach((element) => {
       if (element instanceof HTMLElement) {
