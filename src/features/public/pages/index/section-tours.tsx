@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from '@/i18n/router/link'
 import Icon from '@/components/icon'
-import { TourCard } from '../components/card-tour'
+import { TourCard } from '@/features/public/components/cards/card-tour'
 import { MOCK_TOURS } from '@/mockdata/tours'
 
 export const Tours = () => {

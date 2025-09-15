@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSnapScroll } from '@/hooks/use-snap-scroll'
 import Icon from '@/components/icon'
-import { PopularCard } from '../components/card-popular'
+import { PopularCard } from '@/features/public/components/cards/card-popular'
 import { ICONIC_PLACES } from '@/mockdata/iconic-places'
 
 export const IconicPlaces = () => {

@@ -2,7 +2,7 @@ import { useSnapScroll } from '@/hooks/use-snap-scroll'
 import { MOCK_YACHTS } from '@/mockdata/yachts'
 import Icon from '@/components/icon'
 import { useTranslation } from 'react-i18next'
-import { YachtCard } from '../components/card-yacht'
+import { YachtCard } from '@/features/public/components/cards/card-yacht'
 import { Link } from '@/i18n/router/link'
 
 export const Yachts = () => {

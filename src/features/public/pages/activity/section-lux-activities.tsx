@@ -3,7 +3,7 @@ import { useSnapScroll } from '@/hooks/use-snap-scroll'
 import { Link } from '@/i18n/router/link'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActivityCardLux } from '../components/card-activity-lux'
+import { ActivityCardLux } from '@/features/public/components/cards/card-activity-lux'
 import { MOCK_POPULAR_ACTIVITIES } from '@/mockdata/popular-activities'
 
 export const LuxActivities = () => {

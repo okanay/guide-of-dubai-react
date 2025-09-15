@@ -2,7 +2,7 @@ import { useSnapScroll } from '@/hooks/use-snap-scroll'
 import { MOCK_HOTELS } from '@/mockdata/hotel'
 import Icon from '@/components/icon'
 import { useTranslation } from 'react-i18next'
-import { HotelCard } from '../components/card-hotel'
+import { HotelCard } from '@/features/public/components/cards/card-hotel'
 import { Link } from '@/i18n/router/link'
 
 export const DreamOffers = () => {

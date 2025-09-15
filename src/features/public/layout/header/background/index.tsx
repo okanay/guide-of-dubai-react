@@ -148,7 +148,7 @@ export const PublicHeaderBackground = () => {
       },
       {
         index: 7,
-        path: 'flight',
+        path: 'flights',
         imageSrc: '/images/public/header/explore.jpg',
         imageSrcMobile: '/images/public/header/explore-mobile.jpg',
         imageAlt: t('slides.all.alt'),
@@ -157,7 +157,7 @@ export const PublicHeaderBackground = () => {
       },
       {
         index: 8,
-        path: 'all',
+        path: 'guide',
         imageSrc: '/images/public/header/explore.jpg',
         imageSrcMobile: '/images/public/header/explore-mobile.jpg',
         imageAlt: t('slides.all.alt'),
@@ -346,12 +346,12 @@ export const PublicHeaderBackground = () => {
                 className="hidden sm:flex"
               />
               <NavigationTab
-                to="/$lang/flight"
+                to="/$lang/flights"
                 icon="app/flight"
                 labelKey="nav.flight"
                 className="hidden sm:flex"
               />
-              <NavigationTab to="/$lang/all" icon="app/all" labelKey="nav.all" className="flex" />
+              <NavigationTab to="/$lang/guide" icon="app/all" labelKey="nav.all" className="flex" />
             </nav>
           </div>
         </div>

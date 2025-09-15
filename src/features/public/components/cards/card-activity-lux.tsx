@@ -3,17 +3,16 @@ import { useTranslation } from 'react-i18next'
 import { twMerge } from 'tailwind-merge'
 import { Link } from '@/i18n/router/link'
 import Icon from '@/components/icon'
-import { ButtonFavorite } from './button-favorite'
+import { ButtonFavorite } from '../buttons/button-favorite'
 
 interface Props {
-  activity: PopularCard
-  index: number
+  activity: ActivityCard
   className?: string
   onLikeToggle?: (activityId: string, isLiked: boolean) => void
 }
 
-export const PopularCard: React.FC<Props> = ({ activity, index, className, onLikeToggle }) => {
-  const { t } = useTranslation('global-card') // global-card namespace kullan
+export const ActivityCardLux: React.FC<Props> = ({ activity, className, onLikeToggle }) => {
+  const { t } = useTranslation('global-card')
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const imageContainerRef = useRef<HTMLDivElement>(null)
 
@@ -85,7 +84,7 @@ export const PopularCard: React.FC<Props> = ({ activity, index, className, onLik
   return (
     <article
       className={twMerge(
-        'group relative flex h-[540px] w-full flex-col overflow-hidden rounded-xs border border-gray-100 bg-box-surface dark:bg-gray-950',
+        'group relative flex h-full w-full flex-col overflow-hidden rounded-xs border border-gray-100 bg-box-surface md:min-h-[460px] dark:bg-gray-950',
         className,
       )}
       aria-labelledby={`activity-${activity.id}-title`}
@@ -166,68 +165,59 @@ export const PopularCard: React.FC<Props> = ({ activity, index, className, onLik
       {/* Content */}
       <Link
         to="/$lang/not-found"
-        className="flex flex-1 flex-col transition-colors hover:bg-gray-50/50 md:p-4"
+        className="flex w-full flex-1 flex-col p-4 transition-colors hover:bg-gray-50/50"
       >
-        {/* Rank Badge */}
-        <div className="mb-2 flex items-center gap-1 px-4 pt-4 md:p-0">
-          <Icon name="trophy-primary" className="size-4" aria-hidden="true" />
-          <span className="text-size-sm font-bold text-primary-500">
-            {t('popular.labels.rank', { rank: index + 1 })}
-          </span>
-        </div>
+        <div className="flex h-full w-full flex-col justify-between transition-colors md:h-auto md:flex-row md:gap-x-4">
+          {/* Content */}
+          <div className="flex flex-col transition-colors">
+            {/* Title */}
+            <h2
+              id={`activity-${activity.id}-title`}
+              className="mb-2 line-clamp-2 text-size font-bold text-on-box-black"
+            >
+              {activity.title}
+            </h2>
 
-        {/* Title */}
-        <h2
-          id={`activity-${activity.id}-title`}
-          className="mb-2 line-clamp-2 px-4 text-size font-bold text-on-box-black md:px-0"
-        >
-          {activity.title}
-        </h2>
+            {/* Rating and Reviews */}
+            <div className="mb-2 flex items-center gap-1 text-size-sm">
+              <Icon name="star" className="size-4 text-primary-500" aria-hidden="true" />
+              <span className="font-medium text-on-box-black">{activity.rating.toFixed(1)}</span>
+              <span className="text-gray-600">({activity.reviewCount})</span>
+              <div className="ml-1 rounded-xs bg-gray-100 px-2 py-1 text-body-xs text-gray-700">
+                {t('popular.labels.purchased_count', { count: activity.reviewCount })}
+              </div>
+            </div>
 
-        {/* Rating and Reviews */}
-        <div className="mb-2 flex items-center gap-1 px-4 text-size-sm md:px-0">
-          <Icon name="star" className="size-4 text-primary-500" aria-hidden="true" />
-          <span className="font-medium text-on-box-black">{activity.rating.toFixed(1)}</span>
-          <span className="text-gray-600">({activity.reviewCount})</span>
-          <div className="ml-1 rounded-xs bg-gray-100 px-2 py-1 text-body-xs text-gray-700">
-            {t('popular.labels.purchased_count', { count: activity.purchaseCount })}
+            {/* Description */}
+            <ul className="mb-3 flex flex-wrap items-center gap-1.5">
+              <li className="inline-flex items-center gap-1.5">{activity.description}</li>
+            </ul>
           </div>
-        </div>
 
-        {/* Description */}
-        <ul className="mb-3 flex flex-wrap items-center gap-1.5 px-4 md:px-0">
-          {activity.description.map((item, descIndex) => (
-            <li key={descIndex} className="inline-flex items-center gap-1.5">
-              <span className="inline-block size-1 rounded-full bg-gray-600" aria-hidden="true" />
-              <span className="text-size-sm whitespace-nowrap text-gray-600">{item}</span>
-            </li>
-          ))}
-        </ul>
-
-        {/* Pricing */}
-        <div className="mt-auto space-y-2">
-          <div className="flex flex-col px-4 md:px-0">
+          {/* Price */}
+          <div className="mt-auto mb-2 flex shrink-0 flex-col justify-start md:mt-0 md:mb-0 md:items-end md:text-end">
             {activity.originalPrice && (
               <span className="text-body-xs text-gray-500 line-through">
                 {formatPrice(activity.originalPrice)}
               </span>
             )}
-            <div className="flex items-baseline gap-1">
+            <div className="flex items-end gap-1 md:flex-col md:text-end">
               <span className="text-body-xl font-bold text-on-box-black">
                 {formatPrice(activity.price)}
               </span>
               <span className="text-body-xs text-gray-500">{t('common.labels.per_person')}</span>
             </div>
           </div>
-
-          <button
-            type="button"
-            onClick={handleBookingClick}
-            className="h-10 w-full rounded-xs border border-btn-primary bg-btn-primary text-body-sm font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus md:bg-transparent md:text-btn-primary md:hover:bg-primary-50 md:focus:bg-primary-50"
-          >
-            {t('common.buttons.book_now')}
-          </button>
         </div>
+
+        {/* Button */}
+        <button
+          type="button"
+          onClick={handleBookingClick}
+          className="mt-auto h-10 w-full rounded-xs border border-btn-primary bg-btn-primary text-body-sm font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus sm:bg-transparent sm:text-btn-primary sm:hover:bg-primary-50 sm:focus:bg-primary-50"
+        >
+          {t('common.buttons.book_now')}
+        </button>
       </Link>
     </article>
   )

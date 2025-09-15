@@ -4,7 +4,7 @@ import { useSystemSettings } from '@/features/modals/system-settings/store'
 import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { twMerge } from 'tailwind-merge'
-import { ButtonFavorite } from './button-favorite'
+import { ButtonFavorite } from '../buttons/button-favorite'
 
 // Multi-currency pricing data
 const safariPricing = {

@@ -1,6 +1,6 @@
 import { MOCK_TRANSFERS } from '@/mockdata/transfers'
 import { useTranslation } from 'react-i18next'
-import { TransferCard } from '../components/card-transfer'
+import { TransferCard } from '@/features/public/components/cards/card-transfer'
 
 export const TransferSelection = () => {
   const { t } = useTranslation('page-transfer')

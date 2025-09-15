@@ -3,7 +3,7 @@ import { Link } from '@/i18n/router/link'
 import { useRef, useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { twMerge } from 'tailwind-merge'
-import { ButtonFavorite } from './button-favorite'
+import { ButtonFavorite } from '../buttons/button-favorite'
 
 interface YachtCardProps {
   yacht: Yacht

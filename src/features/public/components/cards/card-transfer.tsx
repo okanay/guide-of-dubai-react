@@ -2,7 +2,7 @@ import Icon from '@/components/icon'
 import { useTranslation } from 'react-i18next'
 import { twMerge } from 'tailwind-merge'
 import { useCallback, useRef, useState } from 'react'
-import { ButtonFavorite } from './button-favorite'
+import { ButtonFavorite } from '../buttons/button-favorite'
 
 interface Props {
   transfer: Transfer

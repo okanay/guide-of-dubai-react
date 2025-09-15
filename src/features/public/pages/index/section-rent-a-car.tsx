@@ -2,7 +2,7 @@ import { useSnapScroll } from '@/hooks/use-snap-scroll'
 import { MOCK_RENT_A_CAR } from '@/mockdata/rent-a-car'
 import Icon from '@/components/icon'
 import { useTranslation } from 'react-i18next'
-import { RentACarCard } from '../components/card-rent-a-car'
+import { RentACarCard } from '@/features/public/components/cards/card-rent-a-car'
 import { Link } from '@/i18n/router/link'
 
 export const RentACar = () => {

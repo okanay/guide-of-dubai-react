@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { CardSafari } from '../components/card-safari'
+import { CardSafari } from '@/features/public/components/cards/card-safari'
 
 export const SafariSelection = () => {
   const { t } = useTranslation('page-safari')

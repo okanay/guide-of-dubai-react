@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from '@/i18n/router/link'
 import Icon from '@/components/icon'
-import { ActivityCard } from '../components/card-activity'
+import { ActivityCard } from '@/features/public/components/cards/card-activity'
 import { MOCK_POPULAR_ACTIVITIES } from '@/mockdata/popular-activities'
 
 export const Activities = () => {

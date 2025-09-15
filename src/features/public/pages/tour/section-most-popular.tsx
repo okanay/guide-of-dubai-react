@@ -4,7 +4,7 @@ import { Link } from '@/i18n/router/link'
 import { ICONIC_PLACES } from '@/mockdata/iconic-places'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PopularCard } from '../components/card-popular'
+import { PopularCard } from '@/features/public/components/cards/card-popular'
 
 export const MostPopular = () => {
   const { t } = useTranslation('page-tours')
