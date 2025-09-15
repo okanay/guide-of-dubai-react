@@ -147,5 +147,9 @@
       "food_and_beverage": "Yiyecek & İçecek Dahil",
       "free_cancellation": "Ücretsiz İptal"
     }
+  },
+  "flight": {
+    "starting_from": "/Başlayan fiyatlar",
+    "view_flights": "Uçuşları Gör"
   }
 }
