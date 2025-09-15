@@ -1,0 +1,26 @@
+{
+  "selection": {
+    "title": "Her Türlü Ulaşım İçin Transfer",
+    "description": "Size en uygun olanı seçebilirsiniz"
+  },
+  "informations": {
+    "title": "Transfer Süreci Nasıl İşler?",
+    "boxes": [
+      {
+        "title": "Aracınızı Rezerve Etme",
+        "description": "Rezervasyonunuz anında onaylanır. Plan değişikliği durumunda, belirlenen alınma saatinden 24 saat öncesine kadar ücretsiz iptal hakkınız bulunmaktadır.",
+        "icon": "bus"
+      },
+      {
+        "title": "Sürücünüzle Karşılaşma",
+        "description": "Varış anınızda sizi karşılayarak aracınıza yönlendireceğiz. Uçuşunuz erken inse veya gecikse bile sürücünüz sizi bekliyor olacak.",
+        "icon": "transfer-driver"
+      },
+      {
+        "title": "Hedefinize Ulaşma",
+        "description": "Hedefinize güvenli ve konforlu bir şekilde ulaşın. Taksi kuyruğu ve toplu taşıma karmaşasından kurtulun.",
+        "icon": "steering"
+      }
+    ]
+  }
+}

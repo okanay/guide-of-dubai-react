@@ -4,10 +4,6 @@ import { CardSafari } from '../components/card-safari'
 export const SafariSelection = () => {
   const { t } = useTranslation('page-safari')
 
-  const handleLikeToggle = (tourType: 'morning' | 'night', isLiked: boolean) => {
-    console.log(`Safari ${tourType} ${isLiked ? 'liked' : 'unliked'}`)
-  }
-
   return (
     <section className="bg-box-surface px-4 text-on-box-black">
       <div className="mx-auto max-w-main pt-10 pb-4">
@@ -18,8 +14,8 @@ export const SafariSelection = () => {
 
         {/* Safari Cards Grid */}
         <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2">
-          <CardSafari type="morning" onLikeToggle={handleLikeToggle} />
-          <CardSafari type="night" onLikeToggle={handleLikeToggle} />
+          <CardSafari type="morning" />
+          <CardSafari type="night" />
         </div>
       </div>
     </section>

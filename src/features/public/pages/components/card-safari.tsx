@@ -42,10 +42,9 @@ const safariData = {
 interface SafariCardProps {
   type: 'morning' | 'night'
   className?: string
-  onLikeToggle?: (tourType: 'morning' | 'night', isLiked: boolean) => void
 }
 
-export const CardSafari: React.FC<SafariCardProps> = ({ type, className, onLikeToggle }) => {
+export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
   const { t } = useTranslation('global-card')
   const { currency } = useSystemSettings()
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
@@ -75,11 +74,6 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className, onLikeT
       if (newIndex !== currentImageIndex) setCurrentImageIndex(newIndex)
     },
     [currentImageIndex],
-  )
-
-  const handleLikeToggle = useCallback(
-    (_id: string, isLiked: boolean) => onLikeToggle?.(type, isLiked),
-    [onLikeToggle, type],
   )
 
   const handlePrevImage = useCallback(
@@ -172,7 +166,7 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className, onLikeT
         )}
 
         {/* Favorite Button */}
-        <ButtonFavorite contentId={data.id} onToggle={handleLikeToggle} className="right-2.25" />
+        <ButtonFavorite contentId={data.id} className="right-2.25" />
       </header>
 
       {/* Content */}

@@ -1,0 +1,26 @@
+{
+  "selection": {
+    "title": "Transfer for All Kinds of Transportation",
+    "description": "You can choose the one that suits you best"
+  },
+  "informations": {
+    "title": "How Does the Transfer Process Work?",
+    "boxes": [
+      {
+        "title": "Reserving Your Vehicle",
+        "description": "Your reservation is confirmed instantly. In case of a change of plans, you have the right to cancel free of charge up to 24 hours before the scheduled pick-up time.",
+        "icon": "bus"
+      },
+      {
+        "title": "Meeting Your Driver",
+        "description": "We will greet you upon arrival and direct you to your vehicle. Your driver will be waiting for you even if your flight arrives early or is delayed.",
+        "icon": "transfer-driver"
+      },
+      {
+        "title": "Reaching Your Destination",
+        "description": "Reach your destination safely and comfortably. Avoid taxi queues and public transportation hassles.",
+        "icon": "steering"
+      }
+    ]
+  }
+}
