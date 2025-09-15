@@ -13,6 +13,7 @@ import { createServerRootRoute } from '@tanstack/react-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LangPendingRouteImport } from './routes/$lang/pending'
 import { Route as LangNotFoundRouteImport } from './routes/$lang/not-found'
 import { Route as LangErrorRouteImport } from './routes/$lang/error'
 import { Route as LangPublicRouteRouteImport } from './routes/$lang/_public/route'
@@ -53,6 +54,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const LangPendingRoute = LangPendingRouteImport.update({
+  id: '/pending',
+  path: '/pending',
+  getParentRoute: () => LangRoute,
 } as any)
 const LangNotFoundRoute = LangNotFoundRouteImport.update({
   id: '/not-found',
@@ -201,6 +207,7 @@ export interface FileRoutesByFullPath {
   '/$lang': typeof LangPublicRouteRouteWithChildren
   '/$lang/error': typeof LangErrorRoute
   '/$lang/not-found': typeof LangNotFoundRoute
+  '/$lang/pending': typeof LangPendingRoute
   '/$lang/activities': typeof LangPublicActivitiesRouteRouteWithChildren
   '/$lang/flights': typeof LangPublicFlightsRouteRouteWithChildren
   '/$lang/hotels': typeof LangPublicHotelsRouteRouteWithChildren
@@ -228,6 +235,7 @@ export interface FileRoutesByTo {
   '/$lang': typeof LangPublicIndexRoute
   '/$lang/error': typeof LangErrorRoute
   '/$lang/not-found': typeof LangNotFoundRoute
+  '/$lang/pending': typeof LangPendingRoute
   '/$lang/activities/search': typeof LangPublicActivitiesSearchRoute
   '/$lang/flights/search': typeof LangPublicFlightsSearchRoute
   '/$lang/guide/hospitals': typeof LangPublicGuideHospitalsRoute
@@ -252,6 +260,7 @@ export interface FileRoutesById {
   '/$lang/_public': typeof LangPublicRouteRouteWithChildren
   '/$lang/error': typeof LangErrorRoute
   '/$lang/not-found': typeof LangNotFoundRoute
+  '/$lang/pending': typeof LangPendingRoute
   '/$lang/_public/activities': typeof LangPublicActivitiesRouteRouteWithChildren
   '/$lang/_public/flights': typeof LangPublicFlightsRouteRouteWithChildren
   '/$lang/_public/hotels': typeof LangPublicHotelsRouteRouteWithChildren
@@ -281,6 +290,7 @@ export interface FileRouteTypes {
     | '/$lang'
     | '/$lang/error'
     | '/$lang/not-found'
+    | '/$lang/pending'
     | '/$lang/activities'
     | '/$lang/flights'
     | '/$lang/hotels'
@@ -308,6 +318,7 @@ export interface FileRouteTypes {
     | '/$lang'
     | '/$lang/error'
     | '/$lang/not-found'
+    | '/$lang/pending'
     | '/$lang/activities/search'
     | '/$lang/flights/search'
     | '/$lang/guide/hospitals'
@@ -331,6 +342,7 @@ export interface FileRouteTypes {
     | '/$lang/_public'
     | '/$lang/error'
     | '/$lang/not-found'
+    | '/$lang/pending'
     | '/$lang/_public/activities'
     | '/$lang/_public/flights'
     | '/$lang/_public/hotels'
@@ -403,6 +415,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/$lang/pending': {
+      id: '/$lang/pending'
+      path: '/pending'
+      fullPath: '/$lang/pending'
+      preLoaderRoute: typeof LangPendingRouteImport
+      parentRoute: typeof LangRoute
     }
     '/$lang/not-found': {
       id: '/$lang/not-found'
@@ -703,12 +722,14 @@ interface LangRouteChildren {
   LangPublicRouteRoute: typeof LangPublicRouteRouteWithChildren
   LangErrorRoute: typeof LangErrorRoute
   LangNotFoundRoute: typeof LangNotFoundRoute
+  LangPendingRoute: typeof LangPendingRoute
 }
 
 const LangRouteChildren: LangRouteChildren = {
   LangPublicRouteRoute: LangPublicRouteRouteWithChildren,
   LangErrorRoute: LangErrorRoute,
   LangNotFoundRoute: LangNotFoundRoute,
+  LangPendingRoute: LangPendingRoute,
 }
 
 const LangRouteWithChildren = LangRoute._addFileChildren(LangRouteChildren)
