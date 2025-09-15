@@ -1,0 +1,28 @@
+{
+  "fast-offers": {
+    "title": "Kolay ve Hızlı Araç Kiralama",
+    "description": "Bir sonraki maceranız sandığınızdan daha yakın olabilir. Otelleri keşfedin.",
+    "view_all": "Tümüne Bakın"
+  },
+  "informations": {
+    "title": "Araç Kiralama Süreci Nasıl?",
+    "link": "Daha fazla sorun mu var?",
+    "boxes": [
+      {
+        "title": "Sana Uygun Aracı Seç",
+        "description": "htiyacınıza en uygun aracı geniş araç filomuz arasından seçin. Fiyat, model ve özellikleri kolayca karşılaştırın.",
+        "icon": "car"
+      },
+      {
+        "title": "arih ve Lokasyon Belirle",
+        "description": "Varış anında sizi karşılayıp aracınıza yönlendireceğiz. Uçuşunuz erken inse veya gecikse bile, sürücünüz sizi bekliyor olacak.",
+        "icon": "calendar"
+      },
+      {
+        "title": "Anında Rezervasyon",
+        "description": "Ödemenizi güvenle yapın, rezervasyonunuz anında onaylansın. Aracınız sizi hazır beklesin.",
+        "icon": "check"
+      }
+    ]
+  }
+}

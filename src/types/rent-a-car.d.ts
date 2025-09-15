@@ -14,7 +14,7 @@ interface RentACar {
   brand: string
   model: string
   year: number
-  category: 'Economy' | 'Compact' | 'SUV' | 'Luxury' | 'Van' | 'Convertible'
+  category: 'Economy' | 'Compact' | 'SUV' | 'Luxury' | 'Van' | 'Convertible' | 'Hybrid'
   images: string[]
   rating: number
   reviewCount: number

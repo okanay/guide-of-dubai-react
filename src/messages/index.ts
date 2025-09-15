@@ -10,6 +10,7 @@ import enTours from './en/page-tours.json'
 import enActivities from './en/page-activities.json'
 import enHotels from './en/page-hotels.json'
 import enSafari from './en/page-safari.json'
+import enRentACar from './en/page-rent-a-car.json'
 import enErrors from './en/page-errors.json'
 import enZod from './en/errors-zod.json'
 import enApi from './en/errors-api.json'
@@ -26,6 +27,7 @@ import trIndex from './tr/page-index.json'
 import trTours from './tr/page-tours.json'
 import trActivities from './tr/page-activities.json'
 import trSafari from './tr/page-safari.json'
+import trRentACar from './tr/page-rent-a-car.json'
 import trHotels from './tr/page-hotels.json'
 import trErrors from './tr/page-errors.json'
 import trZod from './tr/errors-zod.json'
@@ -49,6 +51,7 @@ export const namespaces = [
   'page-activities',
   'page-hotels',
   'page-safari',
+  'page-rent-a-car',
   'page-errors',
   'errors-zod',
   'errors-api',
@@ -68,6 +71,7 @@ const resource = {
     'page-activities': enActivities,
     'page-hotels': enHotels,
     'page-safari': enSafari,
+    'page-rent-a-car': enRentACar,
     'page-errors': enErrors,
     'errors-zod': enZod,
     'errors-api': enApi,
@@ -86,6 +90,7 @@ const resource = {
     'page-activities': trActivities,
     'page-hotels': trHotels,
     'page-safari': trSafari,
+    'page-rent-a-car': trRentACar,
     'page-errors': trErrors,
     'errors-zod': trZod,
     'errors-api': trApi,

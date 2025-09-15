@@ -1,0 +1,28 @@
+{
+  "fast-offers": {
+    "title": "Easy and Fast Car Rental",
+    "description": "Your next adventure might be closer than you think. Explore hotels.",
+    "view_all": "View All"
+  },
+  "informations": {
+    "title": "How is the Car Rental Process?",
+    "link": "More questions?",
+    "boxes": [
+      {
+        "title": "Choose the Right Vehicle for You",
+        "description": "Select the vehicle that best suits your needs from our extensive fleet. Easily compare prices, models, and features.",
+        "icon": "car"
+      },
+      {
+        "title": "Set Date and Location",
+        "description": "We will meet you upon arrival and direct you to your vehicle. Even if your flight arrives early or is delayed, your driver will be waiting for you.",
+        "icon": "calendar"
+      },
+      {
+        "title": "Instant Reservation",
+        "description": "Make your payment securely, and your reservation will be confirmed instantly. Your vehicle will be ready and waiting for you.",
+        "icon": "check"
+      }
+    ]
+  }
+}

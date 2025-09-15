@@ -262,7 +262,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
             onClick={handleBookingClick}
             className="h-10 w-full rounded-xs border border-btn-primary bg-btn-primary text-body-sm font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus"
           >
-            {t('common.buttons.book_now')}
+            {t('common.buttons.rent_now')}
           </button>
         </div>
       </Link>
