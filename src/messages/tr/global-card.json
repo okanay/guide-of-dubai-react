@@ -6,7 +6,8 @@
       "rent_now": "Kirala",
       "view_all": "Tümünü Gör",
       "view_details": "Detayları Gör",
-      "reserve": "Rezerve Et"
+      "reserve": "Rezerve Et",
+      "transfer": "Yerimi Şimdi Ayırt"
     },
     "actions": {
       "like": "Beğen",
@@ -23,6 +24,12 @@
       "rating": "Puan",
       "reviews": "değerlendirme",
       "review": "değerlendirme"
+    },
+    "aria": {
+      "image_alt": "{{title}} - Görünüm {{index}}",
+      "prev_image": "Önceki resim",
+      "next_image": "Sonraki resim",
+      "view_image": "Resmi görüntüle {{index}}"
     }
   },
   "hotel": {
@@ -124,9 +131,6 @@
       "sharedVehicle": "Paylaşımlı Araç",
       "hotelPickup": "Otelden Alım"
     },
-    "labels": {
-      "perPerson": "/ kişi başı"
-    },
     "nightCampOptions": "4 Farklı Kamp Seçeneği:",
     "camps": {
       "silver": "Silver Kamp",
@@ -134,16 +138,9 @@
       "gold": "Gold Kamp",
       "premium": "Premium Kamp",
       "heritage": "Heritage Kamp"
-    },
-    "image_alt": "{{title}} - Görünüm {{index}}",
-    "prev_image": "Önceki resim",
-    "next_image": "Sonraki resim",
-    "view_image": "Resmi görüntüle {{index}}"
+    }
   },
   "transfer": {
-    "buttons": {
-      "book_now": "Yerimi Şimdi Ayırt"
-    },
     "features": {
       "pax": "{{capacity}} Yolcu",
       "baggage": "{{count}} Bagaj",

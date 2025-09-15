@@ -112,13 +112,13 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
           onScroll={handleImageScroll}
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           role="region"
-          aria-label="Safari tour images"
+          aria-label={t('common.aria.image_alt', { title: t(`safari.${type}.title`) })}
         >
           {data.images.map((image, idx) => (
             <img
               key={`${data.id}-image-${idx}`}
               src={image}
-              alt={t('safari.image_alt', { title: t(`safari.${type}.title`), index: idx + 1 })}
+              alt={t('common.aria.image_alt', { title: t(`safari.${type}.title`), index: idx + 1 })}
               className="h-full w-full shrink-0 snap-start object-cover"
               loading="lazy"
             />
@@ -131,14 +131,14 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
             <button
               onClick={handlePrevImage}
               className="absolute top-1/2 left-3 z-20 flex size-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100 hover:bg-white"
-              aria-label={t('safari.prev_image')}
+              aria-label={t('common.aria.prev_image')}
             >
               <Icon name="chevron-left" className="size-4 text-black" />
             </button>
             <button
               onClick={handleNextImage}
               className="absolute top-1/2 right-3 z-20 flex size-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100 hover:bg-white"
-              aria-label={t('safari.next_image')}
+              aria-label={t('common.aria.next_image')}
             >
               <Icon name="chevron-right" className="size-4 text-black" />
             </button>
@@ -159,7 +159,7 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
                   'h-2 rounded-full transition-all duration-300',
                   idx === currentImageIndex ? 'w-6 bg-white' : 'w-2 bg-white/60',
                 )}
-                aria-label={t('safari.view_image', { index: idx + 1 })}
+                aria-label={t('common.aria.view_image', { index: idx + 1 })}
               />
             ))}
           </nav>
@@ -170,7 +170,7 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
       </header>
 
       {/* Content */}
-      <Link to="/$lang/not-found" className="flex flex-1 flex-col gap-y-2 md:p-4">
+      <Link to={'/$lang/not-found'} className="flex flex-1 flex-col gap-y-2 md:p-4">
         <div className="flex flex-wrap items-center justify-start gap-x-4 gap-y-2 px-4 pt-4 text-start md:px-0 md:pt-0">
           {/* Title */}
           <h2 id={`safari-${type}-title`} className="text-size font-bold text-black">
@@ -181,7 +181,10 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
           <div className="flex items-center gap-1.5 text-size-sm">
             <Icon name="star" className="size-4 text-primary-500" />
             <span className="font-medium text-black">{data.rating}</span>
-            <span className="text-gray-700">({data.reviewCount})</span>
+            <span className="text-gray-700">
+              ({data.reviewCount}{' '}
+              {data.reviewCount > 1 ? t('common.labels.reviews') : t('common.labels.review')})
+            </span>
           </div>
         </div>
 
@@ -221,7 +224,7 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
         <div className="mt-auto flex w-full flex-col gap-y-2 md:flex-row md:items-center md:justify-between">
           <div className="flex items-baseline gap-1 px-4 md:px-0">
             <span className="text-xl font-bold text-black">{formatPrice(currentPrice)}</span>
-            <span className="text-sm text-gray-700">{t('safari.labels.perPerson')}</span>
+            <span className="text-sm text-gray-700">{t('common.labels.per_person')}</span>
           </div>
 
           {/* Full width button, görseldeki gibi */}

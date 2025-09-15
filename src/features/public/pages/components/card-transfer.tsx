@@ -98,7 +98,7 @@ export const TransferCard: React.FC<Props> = ({ transfer, className }) => {
             <img
               key={`${transfer.id}-image-${idx}`}
               src={image}
-              alt={'card-image-alt'}
+              alt={t('common.aria.image_alt', { title: transfer.title, index: idx + 1 })}
               className="h-full w-full shrink-0 snap-start object-cover"
               loading="lazy"
             />
@@ -111,14 +111,14 @@ export const TransferCard: React.FC<Props> = ({ transfer, className }) => {
             <button
               onClick={handlePrevImage}
               className="absolute top-1/2 left-3 z-20 flex size-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100 hover:bg-white"
-              aria-label={t('safari.prev_image')}
+              aria-label={t('common.aria.prev_image')}
             >
               <Icon name="chevron-left" className="size-4 text-black" />
             </button>
             <button
               onClick={handleNextImage}
               className="absolute top-1/2 right-3 z-20 flex size-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100 hover:bg-white"
-              aria-label={t('safari.next_image')}
+              aria-label={t('common.aria.next_image')}
             >
               <Icon name="chevron-right" className="size-4 text-black" />
             </button>
@@ -139,7 +139,7 @@ export const TransferCard: React.FC<Props> = ({ transfer, className }) => {
                   'h-2 rounded-full transition-all duration-300',
                   idx === currentImageIndex ? 'w-6 bg-white' : 'w-2 bg-white/60',
                 )}
-                aria-label={t('safari.view_image', { index: idx + 1 })}
+                aria-label={t('common.aria.view_image', { index: idx + 1 })}
               />
             ))}
           </nav>
@@ -181,7 +181,7 @@ export const TransferCard: React.FC<Props> = ({ transfer, className }) => {
               ))}
           </div>
           <div className="flex w-full shrink-0 items-center justify-center rounded-xs bg-btn-primary px-4 py-2 text-size-sm font-bold text-on-btn-primary md:w-fit">
-            {t('transfer.buttons.book_now')}
+            {t('common.buttons.transfer')}
           </div>
         </div>
       </div>

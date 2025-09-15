@@ -6,7 +6,8 @@
       "rent_now": "Rent Now",
       "view_all": "View All",
       "view_details": "View Details",
-      "reserve": "Reserve"
+      "reserve": "Reserve",
+      "transfer": "Reserve My Seat Now"
     },
     "actions": {
       "like": "Like",
@@ -23,6 +24,12 @@
       "rating": "Rating",
       "reviews": "reviews",
       "review": "review"
+    },
+    "aria": {
+      "image_alt": "{{title}} - View {{index}}",
+      "prev_image": "Previous image",
+      "next_image": "Next image",
+      "view_image": "View image {{index}}"
     }
   },
   "hotel": {
@@ -42,7 +49,7 @@
     },
     "labels": {
       "distance_to_center": "Distance to center",
-      "per_night_guests": "{{count}} Night, {{adults}} Adults",
+      "per_night_guests": "{{count}} Night, {{adults}} Adult",
       "map_view": "View on Map",
       "star_rating": "{{count}} Star Hotel"
     }
@@ -56,7 +63,7 @@
       "age_limit": "Age Limit"
     },
     "discount": {
-      "save_percent": "Save {{percent}}%",
+      "save_percent": "Save %{{percent}}",
       "original_price": "Original Price",
       "discounted_price": "Discounted Price"
     }
@@ -88,7 +95,7 @@
     "labels": {
       "distance_to_center": "Distance to city center",
       "important_info": "Important Information",
-      "price_per_days": "{{days}} Day Price",
+      "price_per_days": "Price for {{days}} Days",
       "pickup_locations": "Pickup Locations",
       "fuel_policy": "Fuel Policy"
     }
@@ -96,15 +103,15 @@
   "yacht": {
     "labels": {
       "location": "Location",
-      "min_rental": "Min Rental Duration",
-      "capacity": "People",
+      "min_rental": "Minimum Rental Duration",
+      "capacity": "Capacity",
       "amenities": "Amenities",
       "size": "Yacht Size"
     }
   },
   "popular": {
     "labels": {
-      "rank": "Number {{rank}}",
+      "rank": "Rank {{rank}}",
       "purchased_count": "{{count}}+ purchased",
       "iconic_place": "Iconic Place",
       "most_popular": "Most Popular"
@@ -113,19 +120,16 @@
   "safari": {
     "morning": {
       "title": "Morning Desert Safari Tour",
-      "button": "Join the Morning Safari"
+      "button": "Join Morning Safari"
     },
     "night": {
       "title": "Evening Desert Safari Tour",
-      "button": "Join the Evening Safari"
+      "button": "Join Evening Safari"
     },
     "features": {
-      "capacity": "{{count}} People",
+      "capacity": "Capacity for {{count}} People",
       "sharedVehicle": "Shared Vehicle",
       "hotelPickup": "Hotel Pickup"
-    },
-    "labels": {
-      "perPerson": "/ per person"
     },
     "nightCampOptions": "4 Different Camp Options:",
     "camps": {
@@ -134,18 +138,11 @@
       "gold": "Gold Camp",
       "premium": "Premium Camp",
       "heritage": "Heritage Camp"
-    },
-    "image_alt": "{{title}} - View {{index}}",
-    "prev_image": "Previous image",
-    "next_image": "Next image",
-    "view_image": "View image {{index}}"
+    }
   },
   "transfer": {
-    "buttons": {
-      "book_now": "Book Now"
-    },
     "features": {
-      "pax": "{{capacity}} Passenger",
+      "pax": "{{capacity}} Passengers",
       "baggage": "{{count}} Baggage",
       "food_and_beverage": "Food & Beverage Included",
       "free_cancellation": "Free Cancellation"
