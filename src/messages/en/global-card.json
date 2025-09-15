@@ -145,7 +145,7 @@
       "book_now": "Book Now"
     },
     "features": {
-      "pax": "{{count}} Passengers",
+      "pax": "{{capacity}} Passenger",
       "baggage": "{{count}} Baggage",
       "food_and_beverage": "Food & Beverage Included",
       "free_cancellation": "Free Cancellation"

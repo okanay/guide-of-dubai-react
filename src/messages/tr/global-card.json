@@ -145,7 +145,7 @@
       "book_now": "Yerimi Şimdi Ayırt"
     },
     "features": {
-      "pax": "{{count}} Yolcu",
+      "pax": "{{capacity}} Yolcu",
       "baggage": "{{count}} Bagaj",
       "food_and_beverage": "Yiyecek & İçecek Dahil",
       "free_cancellation": "Ücretsiz İptal"

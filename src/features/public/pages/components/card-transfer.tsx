@@ -14,12 +14,6 @@ export const TransferCard: React.FC<Props> = ({ transfer, className }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const imageContainerRef = useRef<HTMLDivElement>(null)
 
-  const handleBookingClick = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    console.log(`Booking transfer: ${transfer.id}`)
-  }
-
   const scrollToImage = useCallback((imageIndex: number) => {
     if (!imageContainerRef.current) return
     const imageWidth = imageContainerRef.current.clientWidth
@@ -60,12 +54,12 @@ export const TransferCard: React.FC<Props> = ({ transfer, className }) => {
     {
       key: 'passengerCapacity',
       icon: 'person',
-      text: t('transfer.features.pax', { count: Number(transfer.features.passengerCapacity) }),
+      text: t('transfer.features.pax', { capacity: transfer.features.passengerCapacity }),
       visible: true,
     },
     {
       key: 'baggageCapacity',
-      icon: 'bus',
+      icon: 'valise',
       text: t('transfer.features.baggage', { count: Number(transfer.features.baggageCapacity) }),
       visible: true,
     },
@@ -163,7 +157,7 @@ export const TransferCard: React.FC<Props> = ({ transfer, className }) => {
         >
           {transfer.title}
         </h2>
-        <p className="px-4 text-size-sm text-gray-700 md:px-0">{transfer.vehicle}</p>
+        <p className="px-4 text-size-sm text-gray-800 md:px-0">{transfer.vehicle}</p>
         <div className="mt-6 flex flex-col items-end justify-between gap-x-4 gap-y-4 md:flex-row">
           <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(120px,auto))] gap-x-8 gap-y-2 px-4 md:px-0">
             {features
@@ -173,20 +167,22 @@ export const TransferCard: React.FC<Props> = ({ transfer, className }) => {
                   <Icon
                     name={feature.icon}
                     className={`size-4 shrink-0 ${
-                      feature.key.startsWith('has') ? 'text-green-500' : 'text-gray-700'
+                      feature.key.startsWith('has') ? 'font-medium text-badge-green' : 'text-black'
                     }`}
                   />
-                  <span className="text-size-sm text-nowrap text-gray-700">{feature.text}</span>
+                  <span
+                    className={`text-size-sm ${
+                      feature.key.startsWith('has') ? 'font-medium text-badge-green' : 'text-black'
+                    }`}
+                  >
+                    {feature.text}
+                  </span>
                 </div>
               ))}
           </div>
-          <button
-            type="button"
-            onClick={handleBookingClick}
-            className="w-full shrink-0 rounded-xs bg-btn-primary px-4 py-2.5 font-semibold text-on-btn-primary hover:bg-btn-primary-hover md:w-fit"
-          >
+          <div className="flex w-full shrink-0 items-center justify-center rounded-xs bg-btn-primary px-4 py-2 text-size-sm font-bold text-on-btn-primary md:w-fit">
             {t('transfer.buttons.book_now')}
-          </button>
+          </div>
         </div>
       </div>
     </article>
