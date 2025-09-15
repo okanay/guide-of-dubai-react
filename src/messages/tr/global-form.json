@@ -4,12 +4,18 @@
     "date": "Tarih",
     "date-hotel-start": "Giriş Tarihi",
     "date-hotel-end": "Çıkış Tarihi",
+    "date-rent-a-car-start": "Alış Tarihi",
+    "date-rent-a-car-end": "Bırakış Tarihi",
+    "time-rent-a-car-start": "Alış Saati",
+    "time-rent-a-car-end": "Bırakış Saati",
     "participants": "Katılımcılar",
     "participants-hotel": "Kişi Bilgileri",
     "select_date": "Tarih Seçin"
   },
   "placeholders": {
-    "search-hotel": "Otel, şehir veya bölge ara..."
+    "search-hotel": "Otel, şehir veya bölge ara...",
+    "time-rent-a-car-start": "SS:DD",
+    "time-rent-a-car-end": "SS:DD"
   },
   "participants": {
     "adults": "Yetişkin",
@@ -17,7 +23,8 @@
   },
   "search": {
     "tour": "Tur Ara",
-    "hotel": "Otel Ara"
+    "hotel": "Otel Ara",
+    "rent-a-car": "Araç Ara"
   },
   "suggestions": {
     "no-results-title": "Sonuç bulunamadı",

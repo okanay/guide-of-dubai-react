@@ -301,7 +301,7 @@ export const PublicHeaderBackground = () => {
           />
 
           <div className="absolute -bottom-px left-0 z-32 w-full px-4">
-            <nav className="mx-auto grid w-full max-w-main grid-cols-4 items-center justify-start overflow-x-auto text-size-sm font-semibold [scrollbar-width:none] sm:flex xl:grid xl:grid-cols-9 [&::-webkit-scrollbar]:hidden">
+            <nav className="mx-auto grid w-full max-w-main grid-cols-4 items-center justify-start overflow-x-auto text-size-sm font-semibold [scrollbar-width:none] sm:flex lg:grid lg:grid-cols-9 [&::-webkit-scrollbar]:hidden">
               <NavigationTab
                 to="/$lang"
                 exact={true}
@@ -340,15 +340,15 @@ export const PublicHeaderBackground = () => {
                 className="hidden sm:flex"
               />
               <NavigationTab
-                to="/$lang/flight"
-                icon="app/flight"
-                labelKey="nav.flight"
-                className="hidden sm:flex"
-              />
-              <NavigationTab
                 to="/$lang/transfer"
                 icon="app/transfer"
                 labelKey="nav.transfer"
+                className="hidden sm:flex"
+              />
+              <NavigationTab
+                to="/$lang/flight"
+                icon="app/flight"
+                labelKey="nav.flight"
                 className="hidden sm:flex"
               />
               <NavigationTab to="/$lang/all" icon="app/all" labelKey="nav.all" className="flex" />

@@ -1,45 +1,33 @@
 import Icon from '@/components/icon'
 import { DatePickerText } from '@/features/public/components/form-ui/date-picker'
+import { TimePicker, TimePickerRaw } from '@/features/public/components/form-ui/time-picker'
 import { useLanguage } from '@/i18n/prodiver'
 import { rentACarSearchSchema } from '@/routes/$lang/_public/rent-a-car.route'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
 import { format, parseISO } from 'date-fns'
-import { useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 
-// Form tipini Zod şemasından türet
 type SearchFormValues = z.infer<typeof rentACarSearchSchema>
 
 interface SearchFormProps {
   initialData?: Partial<SearchFormValues>
 }
 
-// ============================================================================
-// MAIN SEARCH FORM COMPONENT
-// ============================================================================
 export const SearchForm = ({ initialData }: SearchFormProps) => {
   const navigate = useNavigate()
   const { language } = useLanguage()
   const { t } = useTranslation('global-form')
 
-  // Search dropdown state
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const searchTriggerRef = useRef<HTMLDivElement>(null)
-
-  // Participants dropdown state
-  const [isParticipantOpen, setIsParticipantOpen] = useState(false)
-  const participantTriggerRef = useRef<HTMLDivElement>(null)
-
-  const { control, handleSubmit, watch } = useForm<SearchFormValues>({
+  const { control, handleSubmit } = useForm<SearchFormValues>({
     resolver: zodResolver(rentACarSearchSchema),
     defaultValues: {
       dateStart: initialData?.dateStart || format(new Date(), 'yyyy-MM-dd'),
       dateEnd: initialData?.dateEnd || format(new Date(), 'yyyy-MM-dd'),
-      timeStart: initialData?.timeStart || '',
-      timeEnd: initialData?.timeEnd || '',
+      timeStart: initialData?.timeStart || '10:00',
+      timeEnd: initialData?.timeEnd || '20:00',
     },
   })
 
@@ -55,7 +43,6 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
         timeStart: data.timeStart,
         timeEnd: data.timeEnd,
       },
-      replace: true,
       resetScroll: false,
     })
   }
@@ -64,10 +51,10 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
     <section className="bg-box-surface pb-4 md:py-4">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="mx-auto flex max-w-main flex-col gap-y-4 border-b border-gray-200 bg-white p-4 md:flex-row md:items-center md:p-0 md:shadow"
+        className="mx-auto flex max-w-main flex-col gap-y-4 border-b border-gray-200 bg-white p-4 md:flex-row md:items-center md:divide-x md:divide-gray-200 md:p-0 md:shadow"
       >
-        {/* Tarih Başlangıç */}
-        <div className="relative flex h-14 min-w-[200px] flex-col items-start justify-center border-gray-200 px-4 py-2.5 text-start shadow md:border-r md:py-0 md:shadow-none">
+        {/* Alış Tarihi */}
+        <div className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start">
           <label className="text-xs font-medium text-gray-700">
             {t('labels.date-rent-a-car-start')}
           </label>
@@ -88,8 +75,30 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
           />
         </div>
 
-        {/* Tarih Dönüş */}
-        <div className="relative flex h-14 min-w-[200px] flex-col items-start justify-center border-gray-200 px-4 py-2.5 text-start shadow md:border-r md:py-0 md:shadow-none">
+        {/* Alış Saati */}
+        <div className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start">
+          <label className="text-xs font-medium text-gray-700">
+            {t('labels.time-rent-a-car-start')}
+          </label>
+          <Controller
+            name="timeStart"
+            control={control}
+            render={({ field }) => (
+              <TimePickerRaw value={field.value || ''} onChange={field.onChange} rounding={15}>
+                {({ inputProps }) => (
+                  <input
+                    {...inputProps}
+                    placeholder={t('placeholders.time-rent-a-car-start')}
+                    className="w-full border-none bg-transparent p-0 text-start text-size-sm font-semibold focus:outline-none"
+                  />
+                )}
+              </TimePickerRaw>
+            )}
+          />
+        </div>
+
+        {/* Bırakış Tarihi */}
+        <div className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start">
           <label className="text-xs font-medium text-gray-700">
             {t('labels.date-rent-a-car-end')}
           </label>
@@ -104,6 +113,27 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
                 className="w-full text-start text-size-sm font-semibold"
                 dropdownClassName="mt-2.5 -ml-4"
               />
+            )}
+          />
+        </div>
+        {/* Bırakış Saati */}
+        <div className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start">
+          <label className="text-xs font-medium text-gray-700">
+            {t('labels.time-rent-a-car-end')}
+          </label>
+          <Controller
+            name="timeEnd"
+            control={control}
+            render={({ field }) => (
+              <TimePickerRaw value={field.value || ''} onChange={field.onChange} rounding={15}>
+                {({ inputProps }) => (
+                  <input
+                    {...inputProps}
+                    placeholder={t('placeholders.time-rent-a-car-end')}
+                    className="w-full border-none bg-transparent p-0 text-start text-size-sm font-semibold focus:outline-none"
+                  />
+                )}
+              </TimePickerRaw>
             )}
           />
         </div>

@@ -4,12 +4,18 @@
     "date": "Date",
     "date-hotel-start": "Check-in Date",
     "date-hotel-end": "Check-out Date",
+    "date-rent-a-car-start": "Pickup Date",
+    "date-rent-a-car-end": "Drop-off Date",
+    "time-rent-a-car-start": "Pickup Time",
+    "time-rent-a-car-end": "Drop-off Time",
     "participants": "Participants",
     "participants-hotel": "Guest Information",
     "select_date": "Select Date"
   },
   "placeholders": {
-    "search-hotel": "Search for hotel, city or region..."
+    "search-hotel": "Search for hotel, city or region...",
+    "time-rent-a-car-start": "HH:MM",
+    "time-rent-a-car-end": "HH:MM"
   },
   "participants": {
     "adults": "Adults",
@@ -17,7 +23,8 @@
   },
   "search": {
     "tour": "Search Tour",
-    "hotel": "Search Hotel"
+    "hotel": "Search Hotel",
+    "rent-a-car": "Search Cars"
   },
   "suggestions": {
     "no-results-title": "No results found",

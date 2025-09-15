@@ -54,7 +54,6 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
         adult: data.adult,
         child: data.child,
       },
-      replace: true,
       resetScroll: false,
     })
   }
