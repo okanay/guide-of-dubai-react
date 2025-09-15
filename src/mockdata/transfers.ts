@@ -30,8 +30,8 @@ export const MOCK_TRANSFERS: Transfer[] = [
       hasFreeCancellation: true,
     },
     images: [
-      'https://picsum.photos/400/600?random=101',
-      'https://picsum.photos/400/600?random=102',
+      'https://picsum.photos/400/600?random=103',
+      'https://picsum.photos/400/600?random=104',
     ],
     price: { amount: 150, currency: 'USD' },
   },
