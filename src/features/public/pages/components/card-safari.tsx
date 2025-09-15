@@ -124,7 +124,7 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className, onLikeT
             <img
               key={`${data.id}-image-${idx}`}
               src={image}
-              alt={`${t(`safari.${type}.title`)} - View ${idx + 1}`}
+              alt={t('safari.image_alt', { title: t(`safari.${type}.title`), index: idx + 1 })}
               className="h-full w-full shrink-0 snap-start object-cover"
               loading="lazy"
             />
@@ -137,14 +137,14 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className, onLikeT
             <button
               onClick={handlePrevImage}
               className="absolute top-1/2 left-3 z-20 flex size-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100 hover:bg-white"
-              aria-label="Previous image"
+              aria-label={t('safari.prev_image')}
             >
               <Icon name="chevron-left" className="size-4 text-black" />
             </button>
             <button
               onClick={handleNextImage}
               className="absolute top-1/2 right-3 z-20 flex size-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100 hover:bg-white"
-              aria-label="Next image"
+              aria-label={t('safari.next_image')}
             >
               <Icon name="chevron-right" className="size-4 text-black" />
             </button>
@@ -165,7 +165,7 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className, onLikeT
                   'h-2 rounded-full transition-all duration-300',
                   idx === currentImageIndex ? 'w-6 bg-white' : 'w-2 bg-white/60',
                 )}
-                aria-label={`View image ${idx + 1}`}
+                aria-label={t('safari.view_image', { index: idx + 1 })}
               />
             ))}
           </nav>
@@ -176,7 +176,7 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className, onLikeT
       </header>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col gap-y-2 p-4">
+      <Link to="/$lang/not-found" className="flex flex-1 flex-col gap-y-2 p-4">
         <div className="flex flex-wrap items-center justify-start gap-x-4 gap-y-2 text-start">
           {/* Title */}
           <h2 id={`safari-${type}-title`} className="text-size font-bold text-black">
@@ -196,19 +196,25 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className, onLikeT
           {/* 4 Kişilik */}
           <div className="flex items-center gap-3">
             <Icon name="person" className="size-3.5 text-gray-700" />
-            <span className="text-size font-medium text-black">4 Kişilik</span>
+            <span className="text-size font-medium text-black">
+              {t('safari.features.capacity', { count: 4 })}
+            </span>
           </div>
 
           {/* Paylaşımlı Araç */}
           <div className="flex items-center gap-3">
             <Icon name="car" className="size-3.5 text-gray-700" />
-            <span className="text-size font-medium text-black">Paylaşımlı Araç</span>
+            <span className="text-size font-medium text-black">
+              {t('safari.features.sharedVehicle')}
+            </span>
           </div>
 
           {/* Otelden Alım */}
           <div className="flex items-center gap-3">
             <Icon name="hotels-taken" className="size-4 text-gray-700" />
-            <span className="text-size font-medium text-black">Otelden Alım</span>
+            <span className="text-size font-medium text-black">
+              {t('safari.features.hotelPickup')}
+            </span>
           </div>
         </div>
 
@@ -221,46 +227,44 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className, onLikeT
         <div className="mt-auto flex w-full flex-col gap-y-2 md:flex-row md:items-center md:justify-between">
           <div className="flex items-baseline gap-1">
             <span className="text-xl font-bold text-black">{formatPrice(currentPrice)}</span>
-            <span className="text-sm text-gray-700">/ kişi başı</span>
+            <span className="text-sm text-gray-700">{t('safari.labels.perPerson')}</span>
           </div>
 
           {/* Full width button, görseldeki gibi */}
-          <Link
-            to={data.href as any}
-            className="flex w-full items-center justify-center rounded-xs bg-btn-primary px-4 py-2 text-size-sm font-bold text-on-btn-primary md:w-fit"
-          >
-            {type === 'morning' ? 'Sabah Safarisine Katıl' : 'Akşam Safarisine Katıl'}
-          </Link>
+          <div className="flex w-full items-center justify-center rounded-xs bg-btn-primary px-4 py-2 text-size-sm font-bold text-on-btn-primary md:w-fit">
+            {t(`safari.${type}.button`)}
+          </div>
         </div>
-      </div>
+      </Link>
     </article>
   )
 }
 
 // Night Safari Kamp Seçenekleri - Görseldeki gibi
 const NightCampOptions = () => {
+  const { t } = useTranslation('global-card')
   return (
     <div className="flex flex-wrap gap-x-4 gap-y-2 pb-4">
-      <h4 className="text-size font-medium text-black">4 Farklı Kamp Seçeneği:</h4>
+      <h4 className="text-size font-medium text-black">{t('safari.nightCampOptions')}</h4>
       <div className="flex items-center gap-1.5 rounded bg-gray-50 px-2 py-1">
         <Icon name="safari/camp-silver" className="size-4.5" />
-        <span className="text-xs font-medium text-black">Silver Kamp</span>
+        <span className="text-xs font-medium text-black">{t('safari.camps.silver')}</span>
       </div>
       <div className="flex items-center gap-1.5 rounded bg-gray-50 px-2 py-1">
         <Icon name="safari/camp-plat" className="size-4.5" />
-        <span className="text-xs font-medium text-black">Platinyum Kamp</span>
+        <span className="text-xs font-medium text-black">{t('safari.camps.platinum')}</span>
       </div>
       <div className="flex items-center gap-1.5 rounded bg-gray-50 px-2 py-1">
         <Icon name="safari/camp-gold" className="size-4.5" />
-        <span className="text-xs font-medium text-black">Gold Kamp</span>
+        <span className="text-xs font-medium text-black">{t('safari.camps.gold')}</span>
       </div>
       <div className="flex items-center gap-1.5 rounded bg-gray-50 px-2 py-1">
         <Icon name="safari/camp-premium" className="size-4.5" />
-        <span className="text-xs font-medium text-black">Premium Kamp</span>
+        <span className="text-xs font-medium text-black">{t('safari.camps.premium')}</span>
       </div>
       <div className="flex items-center gap-1.5 rounded bg-gray-50 px-2 py-1">
         <Icon name="safari/camp-heritage" className="size-4.5" />
-        <span className="text-xs font-medium text-black">Heritage Kamp</span>
+        <span className="text-xs font-medium text-black">{t('safari.camps.heritage')}</span>
       </div>
     </div>
   )
