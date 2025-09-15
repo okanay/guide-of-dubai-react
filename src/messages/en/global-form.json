@@ -8,6 +8,9 @@
     "participants-hotel": "Guest Information",
     "select_date": "Select Date"
   },
+  "placeholders": {
+    "search-hotel": "Search for hotel, city or region..."
+  },
   "participants": {
     "adults": "Adults",
     "children": "Children"
@@ -15,5 +18,17 @@
   "search": {
     "tour": "Search Tour",
     "hotel": "Search Hotel"
+  },
+  "suggestions": {
+    "no-results-title": "No results found",
+    "no-results-description": "No results found for \"{searchValue}\"",
+    "recent-search": "Recent search",
+    "start-typing-title": "Start searching",
+    "start-typing-description": "Start typing to see your recent searches",
+    "types": {
+      "hotel": "Hotel",
+      "location": "Location",
+      "recent": "Recent"
+    }
   }
 }

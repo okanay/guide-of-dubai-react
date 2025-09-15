@@ -50,7 +50,7 @@ const mockSuggestions = [
 export const SearchForm = ({ initialData }: SearchFormProps) => {
   const navigate = useNavigate()
   const { language } = useLanguage()
-  const { t } = useTranslation()
+  const { t } = useTranslation('global-form')
 
   // Search dropdown state
   const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -119,9 +119,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
           ref={searchTriggerRef}
           className="relative flex h-14 flex-1 flex-col items-start justify-center border-gray-200 px-4 py-2.5 text-start shadow md:border-r md:py-0 md:shadow-none"
         >
-          <label className="text-xs font-medium text-gray-700">
-            {t('global-form:labels.search-otel')}
-          </label>
+          <label className="text-xs font-medium text-gray-700">{t('labels.search-otel')}</label>
           <Controller
             name="search"
             control={control}
@@ -133,20 +131,18 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
                     value={field.value || ''}
                     onChange={(e) => {
                       field.onChange(e.target.value)
-                      // Input değiştiğinde dropdown'ı aç
                       if (!isSearchOpen) {
                         setIsSearchOpen(true)
                       }
                     }}
                     onFocus={() => setIsSearchOpen(true)}
                     onBlur={(e) => {
-                      // Dropdown içindeki bir elemento tıklanıp tıklanmadığını kontrol et
                       const relatedTarget = e.relatedTarget as HTMLElement
                       if (!relatedTarget?.closest('[data-search-dropdown]')) {
                         setTimeout(() => setIsSearchOpen(false), 200)
                       }
                     }}
-                    placeholder="Otel, şehir veya bölge ara..."
+                    placeholder={t('placeholders.search-hotel')}
                     className="w-full border-none bg-transparent pr-6 text-start text-size-sm font-semibold focus:outline-none"
                     autoComplete="off"
                   />
@@ -186,7 +182,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
         {/* Tarih Başlangıç */}
         <div className="relative flex h-14 min-w-[200px] flex-col items-start justify-center border-gray-200 px-4 py-2.5 text-start shadow md:border-r md:py-0 md:shadow-none">
           <label className="text-xs font-medium text-gray-700">
-            {t('global-form:labels.date-hotel-start')}
+            {t('labels.date-hotel-start')}
           </label>
           <Controller
             name="dateStart"
@@ -207,9 +203,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
 
         {/* Tarih Dönüş */}
         <div className="relative flex h-14 min-w-[200px] flex-col items-start justify-center border-gray-200 px-4 py-2.5 text-start shadow md:border-r md:py-0 md:shadow-none">
-          <label className="text-xs font-medium text-gray-700">
-            {t('global-form:labels.date-hotel-end')}
-          </label>
+          <label className="text-xs font-medium text-gray-700">{t('labels.date-hotel-end')}</label>
           <Controller
             name="dateEnd"
             control={control}
@@ -231,7 +225,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
           className="relative flex h-14 min-w-[200px] flex-col items-start justify-center px-4 py-2.5 text-start shadow md:py-0 md:shadow-none"
         >
           <label className="text-xs font-medium text-gray-700">
-            {t('global-form:labels.participants-hotel')}
+            {t('labels.participants-hotel')}
           </label>
           <button
             type="button"
@@ -239,7 +233,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
             className="flex w-full items-center justify-between text-left"
           >
             <span className="text-size-sm font-semibold">
-              {`${adults} ${t('global-form:participants.adults')}, ${children} ${t('global-form:participants.children')}`}
+              {`${adults} ${t('participants.adults')}, ${children} ${t('participants.children')}`}
             </span>
           </button>
 
@@ -258,7 +252,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
           className="flex h-14 w-full shrink-0 items-center justify-center gap-x-2 bg-btn-primary px-6 font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover md:w-fit"
         >
           <Icon name="search" className="h-5 w-5" />
-          <span>{t('global-form:search.hotel')}</span>
+          <span>{t('search.hotel')}</span>
         </button>
       </form>
     </section>
@@ -289,7 +283,7 @@ const SearchSuggestionsDropdown = ({
   searchValue,
   hasError = false,
 }: SearchSuggestionsDropdownProps) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('global-form')
 
   // Dropdown açık değilse render etme
   if (!isOpen) return null
@@ -306,8 +300,8 @@ const SearchSuggestionsDropdown = ({
         {suggestions.length === 0 && searchValue.trim().length > 0 && (
           <div className="px-4 py-6 text-center text-sm text-gray-500">
             <MapPin className="mx-auto mb-2 h-8 w-8 text-gray-300" />
-            <p className="font-medium">Sonuç bulunamadı</p>
-            <p className="mt-1">"{searchValue}" için herhangi bir sonuç bulunamadı</p>
+            <p className="font-medium">{t('suggestions.no-results-title')}</p>
+            <p className="mt-1">{t('suggestions.no-results-description', { searchValue })}</p>
           </div>
         )}
 
@@ -356,18 +350,14 @@ const SearchSuggestionsDropdown = ({
               )}
 
               {suggestion.type === 'recent' && (
-                <div className="text-xs text-gray-500">Son arama</div>
+                <div className="text-xs text-gray-500">{t('suggestions.recent-search')}</div>
               )}
             </div>
 
             {/* Badge */}
             <div className="flex-shrink-0">
               <span className="rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-900 capitalize">
-                {suggestion.type === 'hotel'
-                  ? 'Otel'
-                  : suggestion.type === 'location'
-                    ? 'Bölge'
-                    : 'Geçmiş'}
+                {t(`suggestions.types.${suggestion.type}`)}
               </span>
             </div>
           </button>
@@ -377,8 +367,8 @@ const SearchSuggestionsDropdown = ({
         {suggestions.length === 0 && searchValue.trim().length === 0 && (
           <div className="px-4 py-6 text-center text-sm text-gray-500">
             <Clock className="mx-auto mb-2 h-8 w-8 text-gray-300" />
-            <p>Arama yapmaya başlayın</p>
-            <p className="mt-1 text-xs">Son aramalarınızı görmek için yazmaya başlayın</p>
+            <p>{t('suggestions.start-typing-title')}</p>
+            <p className="mt-1 text-xs">{t('suggestions.start-typing-description')}</p>
           </div>
         )}
       </div>
@@ -422,7 +412,7 @@ const ParticipantsDropdown = ({
   onClose,
   control,
 }: ParticipantsDropdownProps) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('global-form')
 
   return (
     <DropdownPortal
@@ -439,9 +429,7 @@ const ParticipantsDropdown = ({
           control={control}
           render={({ field }) => (
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-black">
-                {t('global-form:participants.adults')}
-              </label>
+              <label className="text-sm font-medium text-black">{t('participants.adults')}</label>
               <NumericStepper
                 value={field.value || 1}
                 onChange={field.onChange}
@@ -458,9 +446,7 @@ const ParticipantsDropdown = ({
           control={control}
           render={({ field }) => (
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-black">
-                {t('global-form:participants.children')}
-              </label>
+              <label className="text-sm font-medium text-black">{t('participants.children')}</label>
               <NumericStepper
                 value={field.value || 0}
                 onChange={field.onChange}

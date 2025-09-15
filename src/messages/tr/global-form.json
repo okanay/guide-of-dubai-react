@@ -8,6 +8,9 @@
     "participants-hotel": "Kişi Bilgileri",
     "select_date": "Tarih Seçin"
   },
+  "placeholders": {
+    "search-hotel": "Otel, şehir veya bölge ara..."
+  },
   "participants": {
     "adults": "Yetişkin",
     "children": "Çocuk"
@@ -15,5 +18,17 @@
   "search": {
     "tour": "Tur Ara",
     "hotel": "Otel Ara"
+  },
+  "suggestions": {
+    "no-results-title": "Sonuç bulunamadı",
+    "no-results-description": "\"{searchValue}\" için herhangi bir sonuç bulunamadı",
+    "recent-search": "Son arama",
+    "start-typing-title": "Arama yapmaya başlayın",
+    "start-typing-description": "Son aramalarınızı görmek için yazmaya başlayın",
+    "types": {
+      "hotel": "Otel",
+      "location": "Bölge",
+      "recent": "Geçmiş"
+    }
   }
 }
