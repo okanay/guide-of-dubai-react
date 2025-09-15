@@ -86,7 +86,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
   return (
     <article
       className={twMerge(
-        'group relative flex h-full w-full flex-col overflow-hidden rounded-xs border border-gray-200 bg-box-surface',
+        'group relative flex h-full w-full flex-col overflow-hidden rounded-xs border border-gray-100 bg-box-surface',
         className,
       )}
       aria-labelledby={`car-${car.id}-title`}

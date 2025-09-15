@@ -54,7 +54,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
         className="mx-auto flex max-w-main flex-col gap-y-4 border-b border-gray-200 bg-white p-4 md:flex-row md:items-center md:divide-x md:divide-gray-200 md:p-0 md:shadow"
       >
         {/* Alış Tarihi */}
-        <div className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start">
+        <div className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start shadow md:shadow-none">
           <label className="text-xs font-medium text-gray-700">
             {t('labels.date-rent-a-car-start')}
           </label>
@@ -76,7 +76,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
         </div>
 
         {/* Alış Saati */}
-        <div className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start">
+        <div className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start shadow md:shadow-none">
           <label className="text-xs font-medium text-gray-700">
             {t('labels.time-rent-a-car-start')}
           </label>
@@ -98,7 +98,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
         </div>
 
         {/* Bırakış Tarihi */}
-        <div className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start">
+        <div className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start shadow md:shadow-none">
           <label className="text-xs font-medium text-gray-700">
             {t('labels.date-rent-a-car-end')}
           </label>
@@ -117,7 +117,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
           />
         </div>
         {/* Bırakış Saati */}
-        <div className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start">
+        <div className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start shadow md:shadow-none">
           <label className="text-xs font-medium text-gray-700">
             {t('labels.time-rent-a-car-end')}
           </label>

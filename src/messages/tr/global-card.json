@@ -139,5 +139,16 @@
     "prev_image": "Önceki resim",
     "next_image": "Sonraki resim",
     "view_image": "Resmi görüntüle {{index}}"
+  },
+  "transfer": {
+    "buttons": {
+      "book_now": "Yerimi Şimdi Ayırt"
+    },
+    "features": {
+      "pax": "{{count}} Yolcu",
+      "baggage": "{{count}} Bagaj",
+      "food_and_beverage": "Yiyecek & İçecek Dahil",
+      "free_cancellation": "Ücretsiz İptal"
+    }
   }
 }

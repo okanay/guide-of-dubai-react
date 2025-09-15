@@ -84,7 +84,7 @@ export const ActivityCardLux: React.FC<Props> = ({ activity, className, onLikeTo
   return (
     <article
       className={twMerge(
-        'group relative flex h-full w-full flex-col overflow-hidden rounded-xs border border-gray-200 bg-box-surface md:min-h-[460px] dark:bg-gray-950',
+        'group relative flex h-full w-full flex-col overflow-hidden rounded-xs border border-gray-100 bg-box-surface md:min-h-[460px] dark:bg-gray-950',
         className,
       )}
       aria-labelledby={`activity-${activity.id}-title`}

@@ -139,5 +139,16 @@
     "prev_image": "Previous image",
     "next_image": "Next image",
     "view_image": "View image {{index}}"
+  },
+  "transfer": {
+    "buttons": {
+      "book_now": "Book Now"
+    },
+    "features": {
+      "pax": "{{count}} Passengers",
+      "baggage": "{{count}} Baggage",
+      "food_and_beverage": "Food & Beverage Included",
+      "free_cancellation": "Free Cancellation"
+    }
   }
 }
