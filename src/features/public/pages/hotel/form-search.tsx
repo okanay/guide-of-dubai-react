@@ -20,30 +20,6 @@ interface SearchFormProps {
   initialData?: Partial<SearchFormValues>
 }
 
-// Mock suggestions - gerçek uygulamada API'den gelecek
-const mockSuggestions = [
-  { id: 'recent-1', name: 'Dubai Marina', type: 'recent' },
-  { id: 'recent-2', name: 'Burj Al Arab', type: 'recent' },
-  {
-    id: 'hotel-1',
-    name: 'Burj Al Arab Jumeirah',
-    type: 'hotel',
-    location: 'Dubai, UAE',
-    rating: 5,
-  },
-  { id: 'hotel-2', name: 'Atlantis The Palm', type: 'hotel', location: 'Dubai, UAE', rating: 5 },
-  {
-    id: 'hotel-3',
-    name: 'Four Seasons Hotel Istanbul',
-    type: 'hotel',
-    location: 'Istanbul, Turkey',
-    rating: 5,
-  },
-  { id: 'location-1', name: 'Istanbul', type: 'location', country: 'Türkiye' },
-  { id: 'location-2', name: 'Antalya', type: 'location', country: 'Türkiye' },
-  { id: 'location-3', name: 'Dubai', type: 'location', country: 'UAE' },
-]
-
 // ============================================================================
 // MAIN SEARCH FORM COMPONENT
 // ============================================================================
@@ -75,19 +51,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
 
   // Search değeri değiştiğinde filtreleme yap
   const filteredSuggestions = useMemo(() => {
-    if (!searchValue || searchValue.trim().length === 0) {
-      // Arama değeri boşsa son aramaları göster
-      return mockSuggestions.filter((item) => item.type === 'recent')
-    }
-
-    const trimmedSearch = searchValue.trim().toLowerCase()
-
-    return mockSuggestions.filter(
-      (item) =>
-        item.name.toLowerCase().includes(trimmedSearch) ||
-        (item.type === 'hotel' && item.location?.toLowerCase().includes(trimmedSearch)) ||
-        (item.type === 'location' && item.country?.toLowerCase().includes(trimmedSearch)),
-    )
+    return []
   }, [searchValue])
 
   const onSubmit = (data: SearchFormValues) => {
@@ -268,7 +232,7 @@ interface SearchSuggestionsDropdownProps {
   triggerRef: any
   onClose: () => void
   onSelect: (suggestion: any) => void
-  suggestions: typeof mockSuggestions
+  suggestions: unknown[]
   searchValue: string
   hasError?: boolean
 }
@@ -304,64 +268,6 @@ const SearchSuggestionsDropdown = ({
           </div>
         )}
 
-        {/* Suggestions listesi */}
-        {suggestions.map((suggestion, index) => (
-          <button
-            key={suggestion.id}
-            type="button"
-            onClick={() => {
-              onSelect(suggestion)
-            }}
-            onMouseDown={(e) => {
-              e.preventDefault()
-            }}
-            className="flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-gray-50 focus:bg-gray-50 focus:outline-none"
-            tabIndex={0}
-          >
-            {/* Icon */}
-            <div className="flex-shrink-0">
-              {suggestion.type === 'hotel' && <Building className="h-4 w-4 text-blue-500" />}
-              {suggestion.type === 'location' && <MapPin className="h-4 w-4 text-green-500" />}
-              {suggestion.type === 'recent' && <Clock className="h-4 w-4 text-gray-400" />}
-            </div>
-
-            {/* Content */}
-            <div className="min-w-0 flex-1">
-              <div className="truncate text-sm font-medium text-black">
-                {highlightSearchTerm(suggestion.name, searchValue)}
-              </div>
-
-              {suggestion.type === 'hotel' && suggestion.location && (
-                <div className="flex items-center gap-1 text-xs text-gray-500">
-                  <span>{suggestion.location}</span>
-                  {suggestion.rating && (
-                    <>
-                      <span>•</span>
-                      <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                      <span>{suggestion.rating}</span>
-                    </>
-                  )}
-                </div>
-              )}
-
-              {suggestion.type === 'location' && suggestion.country && (
-                <div className="text-xs text-gray-500">{suggestion.country}</div>
-              )}
-
-              {suggestion.type === 'recent' && (
-                <div className="text-xs text-gray-500">{t('suggestions.recent-search')}</div>
-              )}
-            </div>
-
-            {/* Badge */}
-            <div className="flex-shrink-0">
-              <span className="rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-900 capitalize">
-                {t(`suggestions.types.${suggestion.type}`)}
-              </span>
-            </div>
-          </button>
-        ))}
-
         {/* Arama değeri boşken gösterilecek mesaj */}
         {suggestions.length === 0 && searchValue.trim().length === 0 && (
           <div className="px-4 py-6 text-center text-sm text-gray-500">
@@ -372,28 +278,6 @@ const SearchSuggestionsDropdown = ({
         )}
       </div>
     </DropdownPortal>
-  )
-}
-
-// Arama terimini vurgulama fonksiyonu
-const highlightSearchTerm = (text: string, searchTerm: string) => {
-  if (!searchTerm.trim()) return text
-
-  const regex = new RegExp(`(${searchTerm.trim()})`, 'gi')
-  const parts = text.split(regex)
-
-  return (
-    <>
-      {parts.map((part, index) =>
-        regex.test(part) ? (
-          <mark key={index} className="bg-yellow-200 font-semibold">
-            {part}
-          </mark>
-        ) : (
-          part
-        ),
-      )}
-    </>
   )
 }
 

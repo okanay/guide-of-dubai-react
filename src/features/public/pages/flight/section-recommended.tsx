@@ -7,8 +7,8 @@ export const RecommendedFlights = () => {
   const { t } = useTranslation('page-flights')
 
   return (
-    <section className="px-4 py-10">
-      <div className="mx-auto max-w-main">
+    <section className="bg-box-surface px-4 text-on-box-black">
+      <div className="mx-auto max-w-main pt-6 pb-10">
         <header className="mb-4 flex items-start justify-between sm:items-end">
           <div className="flex flex-col gap-y-1">
             <h2 className="text-size-2xl font-bold">{t('recommended.title')}</h2>

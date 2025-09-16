@@ -7,7 +7,7 @@ export const FlightsLayout = () => {
 
   return (
     <main className="flex flex-col">
-      <SearchForm />
+      <SearchForm initialData={search} />
       <Outlet />
     </main>
   )

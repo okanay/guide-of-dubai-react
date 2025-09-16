@@ -33,8 +33,8 @@ export const RadioGroup = ({
   className,
 }: RadioGroupProps) => {
   return (
-    <BaseInput label={label} error={error} required={required} className={className}>
-      <div className="space-y-2">
+    <BaseInput label={label} error={error} required={required}>
+      <div className={twMerge('space-y-2', className)}>
         {options.map((option) => {
           const radioId = `${name}-${option.value}`
           const isChecked = option.value === value
@@ -86,11 +86,11 @@ export const RadioIndicator = ({ className }: RadioIndicatorProps) => {
   return (
     <div
       className={twMerge(
-        'flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-2 border-gray-300 transition-all group-data-[checked=true]/ri:border-primary-500 peer-focus:ring-2 peer-focus:ring-primary-500/20',
+        'flex size-5 cursor-pointer items-center justify-center rounded-full border-2 border-gray-300 p-px transition-all group-data-[checked=true]/ri:border-primary-500 peer-focus:ring-2 peer-focus:ring-primary-500/20',
         className,
       )}
     >
-      <span className="size-[95%] rounded-full bg-primary-500 opacity-0 transition-opacity group-data-[checked=true]/ri:opacity-100" />
+      <span className="size-full rounded-full bg-primary-500 opacity-0 transition-opacity group-data-[checked=true]/ri:opacity-100" />
     </div>
   )
 }
