@@ -4,14 +4,17 @@
       "placeholder": "Tarih seçin",
       "previous_month": "Önceki ay",
       "next_month": "Sonraki ay",
-      "clear": "Temizle"
+      "clear": "Temizle",
+      "today": "Bugün",
+      "select_date": "Tarih seç"
     },
     "date_picker_between": {
       "start_placeholder": "Başlangıç tarihi",
       "end_placeholder": "Bitiş tarihi",
-      "select_start": "Başlangıç tarihi seçin",
-      "select_end": "Bitiş tarihi seçin",
-      "clear": "Temizle"
+      "select_start": "Başlangıç tarihini seçin",
+      "select_end": "Bitiş tarihini seçin",
+      "clear": "Temizle",
+      "today": "Bugün"
     },
     "time_picker": {
       "placeholder": "SS:DD",

@@ -4,14 +4,17 @@
       "placeholder": "Select date",
       "previous_month": "Previous month",
       "next_month": "Next month",
-      "clear": "Clear"
+      "clear": "Clear",
+      "today": "Today",
+      "select_date": "Select date"
     },
     "date_picker_between": {
       "start_placeholder": "Start date",
       "end_placeholder": "End date",
       "select_start": "Select start date",
       "select_end": "Select end date",
-      "clear": "Clear"
+      "clear": "Clear",
+      "today": "Today"
     },
     "time_picker": {
       "placeholder": "HH:MM",

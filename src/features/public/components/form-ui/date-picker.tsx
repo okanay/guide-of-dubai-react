@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Calendar, ChevronLeft, ChevronRight, X } from 'lucide-react'
 import {
   addMonths,
   eachDayOfInterval,
@@ -13,6 +13,8 @@ import {
   startOfMonth,
   startOfWeek,
   subMonths,
+  isAfter,
+  isBefore,
 } from 'date-fns'
 import { BaseInput } from './base-input'
 import { DropdownPortal } from '@/components/dropdown-portal'
@@ -35,6 +37,7 @@ interface DatePickerProps {
   disabled?: boolean
   placeholder?: string
   minDate?: Date
+  maxDate?: Date
 }
 
 export const DatePicker = ({
@@ -50,6 +53,7 @@ export const DatePicker = ({
   disabled = false,
   placeholder,
   minDate,
+  maxDate,
 }: DatePickerProps) => {
   const { language } = useLanguage()
   const { t } = useTranslation('global-components')
@@ -63,6 +67,7 @@ export const DatePicker = ({
       onChange={onChange}
       locale={language.locale}
       minDate={minDate}
+      maxDate={maxDate}
       dropdownClassName={dropdownClassName}
       triggerRef={triggerRef}
     >
@@ -82,19 +87,23 @@ export const DatePicker = ({
             onClick={openCalendar}
             disabled={disabled}
             className={twMerge(
-              'relative h-11 w-full cursor-pointer rounded-xs border border-gray-300 bg-box-surface px-3 py-2 text-left text-size transition-colors',
-              'focus:border-primary-500 focus:ring-1 focus:ring-primary-500 focus:outline-none',
-              'disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500 disabled:opacity-50',
-              error && 'border-error-500',
+              'relative h-11 w-full cursor-pointer rounded-xs border bg-box-surface px-3 py-2 text-left text-size transition-colors',
+              'border-gray-100 hover:border-gray-400',
+              'focus:border-primary-500 focus:ring-2 focus:ring-primary-100 focus:outline-none',
+              'disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-500 disabled:opacity-60',
+              error && 'border-error-500 focus:border-error-500 focus:ring-error-100',
             )}
           >
             <DatePickerIndicator
               value={value}
               placeholder={defaultPlaceholder}
               locale={language.locale}
-              className={twMerge(!value && 'text-gray-500')}
+              className={twMerge(
+                'block truncate font-medium',
+                !value && 'font-normal text-gray-500',
+              )}
             />
-            <Calendar className="absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+            <Calendar className="absolute top-1/2 right-3 size-5 -translate-y-1/2 text-gray-400" />
           </button>
         </BaseInput>
       )}
@@ -110,6 +119,7 @@ interface DatePickerRawProps {
   onChange: (date: Date | null) => void
   locale?: string
   minDate?: Date
+  maxDate?: Date
   dropdownClassName?: string
   triggerRef?: any
   children: (props: {
@@ -126,18 +136,20 @@ export const DatePickerRaw = ({
   dropdownClassName,
   locale = 'tr-TR',
   minDate,
+  maxDate,
   triggerRef = null,
   children,
 }: DatePickerRawProps) => {
+  const { t } = useTranslation('global-components')
   const datePickerHook = useDatePicker({
     selectedDate: value,
     locale,
     minDate,
+    maxDate,
   })
 
   const formattedDate = useMemo(() => {
     if (!value) return ''
-    // Metin formatını daha okunaklı hale getirelim: '12 Eylül Cuma'
     return new Intl.DateTimeFormat(locale, {
       day: 'numeric',
       month: 'long',
@@ -147,12 +159,14 @@ export const DatePickerRaw = ({
 
   const handleSelectDate = (day: Date) => {
     onChange(day)
-    datePickerHook.closeCalendar()
   }
 
   const handleClearDate = () => {
     onChange(null)
-    datePickerHook.closeCalendar()
+  }
+
+  const handleTodayClick = () => {
+    onChange(new Date())
   }
 
   return (
@@ -170,71 +184,116 @@ export const DatePickerRaw = ({
         onClose={datePickerHook.closeCalendar}
         placement="bottom-start"
         className={twMerge(
-          'w-80 rounded-xs border border-gray-200 bg-box-surface p-4 shadow-lg',
+          'w-full max-w-[22rem] rounded-xs border border-gray-200 bg-box-surface shadow-2xl',
           dropdownClassName,
         )}
       >
-        <div className="flex items-center justify-between pb-4">
+        {/* Header */}
+        <div className="flex items-center justify-between border-b border-gray-100 px-2 py-3">
           <button
             type="button"
             onClick={datePickerHook.goToPrevMonth}
-            className="rounded-full p-1.5 hover:bg-gray-100"
-            aria-label="Önceki ay"
+            className="flex size-7.5 items-center justify-center rounded-xs transition-colors hover:bg-gray-50 focus:bg-gray-50 focus:outline-none"
+            aria-label={t('form.date_picker.previous_month')}
           >
-            <ChevronLeft className="size-5" />
+            <ChevronLeft className="size-5 text-gray-600" />
           </button>
-          <div className="font-semibold">{datePickerHook.monthName}</div>
+
+          <div className="text-size font-semibold text-on-box-black">
+            {datePickerHook.monthName}
+          </div>
+
           <button
             type="button"
             onClick={datePickerHook.goToNextMonth}
-            className="rounded-full p-1.5 hover:bg-gray-100"
-            aria-label="Sonraki ay"
+            className="flex size-7.5 items-center justify-center rounded-xs transition-colors hover:bg-gray-50 focus:bg-gray-50 focus:outline-none"
+            aria-label={t('form.date_picker.next_month')}
           >
-            <ChevronRight className="size-5" />
+            <ChevronRight className="size-5 text-gray-600" />
           </button>
         </div>
 
-        <div className="grid grid-cols-7 gap-y-1 text-center">
-          {datePickerHook.weekdays.map((day, index) => (
-            <div key={`weekday-${index}`} className="text-xs font-medium text-gray-500">
-              {day}
-            </div>
-          ))}
-          {datePickerHook.calendarGrid.map((day) => {
-            const isCurrentMonth = isSameMonth(day, datePickerHook.viewDate)
-            const isSelected = value ? isSameDay(day, value) : false
-            const isTodaysDate = isToday(day)
-            const isDisabled = minDate && day < minDate
-
-            return (
-              <button
-                key={day.toString()}
-                type="button"
-                onClick={() => handleSelectDate(day)}
-                className={twMerge(
-                  'flex h-9 w-9 items-center justify-center rounded-full text-sm transition-colors',
-                  !isCurrentMonth && 'text-gray-400',
-                  isCurrentMonth && 'hover:bg-gray-100',
-                  isTodaysDate && 'font-bold text-primary-600',
-                  isSelected && 'bg-primary-500 text-on-btn-primary hover:bg-primary-600',
-                  isDisabled && 'cursor-not-allowed opacity-50',
-                )}
-                disabled={isDisabled}
+        {/* Calendar Grid */}
+        <div className="p-2.5">
+          <div className="mb-2 grid grid-cols-7 gap-2">
+            {datePickerHook.weekdays.map((day, index) => (
+              <div
+                key={`weekday-${index}`}
+                className="flex h-8 items-center justify-center !text-size-xs font-medium text-gray-700 uppercase"
               >
-                {format(day, 'd')}
-              </button>
-            )
-          })}
+                {day}
+              </div>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-7 gap-2">
+            {datePickerHook.calendarGrid.map((day) => {
+              const isCurrentMonth = isSameMonth(day, datePickerHook.viewDate)
+              const isSelected = value ? isSameDay(day, value) : false
+              const isTodaysDate = isToday(day)
+              const isDisabled =
+                (minDate && isBefore(day, minDate)) || (maxDate && isAfter(day, maxDate))
+
+              return (
+                <button
+                  key={day.toString()}
+                  type="button"
+                  onClick={() => handleSelectDate(day)}
+                  disabled={isDisabled}
+                  className={twMerge(
+                    'relative flex size-10 items-center justify-center rounded-xs !text-size transition-colors duration-150',
+                    // Base states
+                    !isCurrentMonth && 'text-gray-400',
+                    isCurrentMonth &&
+                      !isDisabled &&
+                      'text-on-box-black hover:bg-primary-50 hover:text-primary-600',
+                    // Today indicator
+                    isTodaysDate && !isSelected && 'bg-primary-50 font-semibold text-primary-500',
+                    // Selected state
+                    isSelected &&
+                      'bg-btn-primary font-semibold !text-on-btn-primary shadow-sm hover:bg-btn-primary-hover',
+                    // Disabled state
+                    isDisabled &&
+                      'cursor-not-allowed text-gray-300 hover:bg-transparent hover:text-gray-300',
+                    // Focus state
+                    'focus:ring-2 focus:ring-primary-200 focus:ring-offset-1 focus:outline-none',
+                  )}
+                >
+                  {format(day, 'd')}
+                </button>
+              )
+            })}
+          </div>
         </div>
 
-        <div className="mt-4 border-t border-gray-200 pt-4">
+        {/* Footer Actions */}
+        <div className="flex items-center justify-between gap-2 border-t border-gray-100 py-3 pr-2.5 pl-2">
           <button
             type="button"
-            onClick={handleClearDate}
-            className="w-full rounded-xs px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-800"
+            onClick={handleTodayClick}
+            className="flex h-8 items-center rounded-xs px-3 text-body-sm font-medium text-primary-600"
           >
-            Temizle
+            {t('form.date_picker.today')}
           </button>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handleClearDate}
+              className="flex h-8 items-center rounded-xs px-3 text-body-sm font-medium text-gray-600 transition-colors hover:bg-gray-50 focus:bg-gray-50 focus:outline-none"
+            >
+              {t('form.date_picker.clear')}
+            </button>
+
+            <button
+              type="button"
+              onClick={datePickerHook.closeCalendar}
+              className="flex size-7.5 items-center justify-center rounded-xs text-gray-500 transition-colors hover:bg-gray-50 focus:bg-gray-50 focus:outline-none"
+              aria-label="Kapat"
+            >
+              <X className="size-5" />
+            </button>
+          </div>
         </div>
       </DropdownPortal>
     </>
@@ -248,6 +307,7 @@ interface DatePickerTextProps {
   value: Date | null
   onChange: (date: Date | null) => void
   minDate?: Date
+  maxDate?: Date
   dropdownClassName?: string
   className?: string
   placeholder?: string
@@ -257,13 +317,14 @@ export const DatePickerText = ({
   value,
   onChange,
   minDate,
+  maxDate,
   className,
   placeholder,
   dropdownClassName,
 }: DatePickerTextProps) => {
   const triggerRef = useRef<HTMLButtonElement>(null)
   const { language } = useLanguage()
-  const { t } = useTranslation('global-form')
+  const { t } = useTranslation('global-components')
 
   return (
     <DatePickerRaw
@@ -271,6 +332,7 @@ export const DatePickerText = ({
       onChange={onChange}
       locale={language.locale}
       minDate={minDate}
+      maxDate={maxDate}
       triggerRef={triggerRef}
       dropdownClassName={dropdownClassName}
     >
@@ -279,10 +341,13 @@ export const DatePickerText = ({
           ref={triggerRef}
           type="button"
           onClick={openCalendar}
-          className={twMerge('hover:text-primary cursor-pointer text-gray-800', className)}
+          className={twMerge(
+            'cursor-pointer font-medium text-on-box-black transition-colors hover:text-primary-600 focus:text-primary-600 focus:outline-none',
+            !value && 'font-normal text-gray-500',
+            className,
+          )}
         >
-          {/* FormattedDate'i kullan, eğer boşsa placeholder göster */}
-          {formattedDate || placeholder || t('labels.select_date')}
+          {formattedDate || placeholder || t('form.date_picker.select_date')}
         </button>
       )}
     </DatePickerRaw>
@@ -343,9 +408,10 @@ interface UseDatePickerProps {
   selectedDate: Date | null
   locale: string
   minDate?: Date
+  maxDate?: Date
 }
 
-function useDatePicker({ selectedDate, locale, minDate }: UseDatePickerProps) {
+function useDatePicker({ selectedDate, locale, minDate, maxDate }: UseDatePickerProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [viewDate, setViewDate] = useState(selectedDate || new Date())
 
@@ -372,8 +438,27 @@ function useDatePicker({ selectedDate, locale, minDate }: UseDatePickerProps) {
     return eachDayOfInterval({ start, end })
   }, [viewDate])
 
-  const goToNextMonth = () => setViewDate((current) => addMonths(current, 1))
-  const goToPrevMonth = () => setViewDate((current) => subMonths(current, 1))
+  const goToNextMonth = useCallback(() => {
+    setViewDate((current) => {
+      const nextMonth = addMonths(current, 1)
+      // maxDate kontrolü - eğer bir sonraki ay maxDate'ten sonraysa geçme
+      if (maxDate && isAfter(startOfMonth(nextMonth), endOfMonth(maxDate))) {
+        return current
+      }
+      return nextMonth
+    })
+  }, [maxDate])
+
+  const goToPrevMonth = useCallback(() => {
+    setViewDate((current) => {
+      const prevMonth = subMonths(current, 1)
+      // minDate kontrolü - eğer bir önceki ay minDate'ten önce ise geçme
+      if (minDate && isBefore(endOfMonth(prevMonth), startOfMonth(minDate))) {
+        return current
+      }
+      return prevMonth
+    })
+  }, [minDate])
 
   useEffect(() => {
     if (selectedDate) {

@@ -6,7 +6,7 @@ import { Checkbox } from '@/features/public/components/form-ui/checkbox'
 import { useLanguage } from '@/i18n/prodiver'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
-import { format, parseISO } from 'date-fns'
+import { format, parseISO, subDays } from 'date-fns'
 import { MapPin, ArrowUpDown, Clock, X } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { Control, Controller, useForm, useWatch } from 'react-hook-form'
@@ -108,7 +108,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
     <section className="bg-box-surface pb-4 md:py-4">
       <form onSubmit={handleSubmit(onSubmit)} className="mx-auto max-w-main bg-white md:shadow">
         {/* Trip Type and Direct Flights Row */}
-        <div className="flex items-center justify-between border-b border-gray-200 px-4 py-3">
+        <div className="flex items-center justify-between border-b border-gray-100 px-4 py-3">
           <Controller
             name="tripType"
             control={control}
@@ -250,7 +250,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
                 <DatePickerText
                   value={field.value ? parseISO(field.value) : new Date()}
                   onChange={(date) => field.onChange(date ? format(date, 'yyyy-MM-dd') : '')}
-                  minDate={new Date()}
+                  minDate={subDays(new Date(), 1)}
                   className="w-full text-start text-size-sm font-semibold"
                   dropdownClassName="mt-2.5 -ml-4"
                 />
@@ -269,7 +269,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
                   <DatePickerText
                     value={field.value ? parseISO(field.value) : new Date()}
                     onChange={(date) => field.onChange(date ? format(date, 'yyyy-MM-dd') : '')}
-                    minDate={new Date()}
+                    minDate={subDays(new Date(), 1)}
                     className="w-full text-start text-size-sm font-semibold"
                     dropdownClassName="mt-2.5 -ml-4"
                   />
