@@ -37,7 +37,18 @@ export const PublicFooter = () => {
 
 const HideWrapper = ({ children }: { children: React.ReactNode }) => {
   const matches = useMatches()
-  const HideAddreses = ['/$lang/_public/flights']
+  // const HideAddreses = [
+  //   '/$lang/_public/flights',
+  //   '/$lang/_public/yatch',
+  //   '/$lang/_public/guide/',
+  //   '/$lang/_public/guide/visa',
+  //   '/$lang/_public/guide/bundles',
+  //   '/$lang/_public/guide/hospitals',
+  //   '/$lang/_public/guide/sim-card',
+  //   '/$lang/_public/guide/restaurants',
+  // ]
+
+  const HideAddreses = ['']
 
   if (HideAddreses.some((address) => matches.find((match) => match.routeId === address))) {
     return null
