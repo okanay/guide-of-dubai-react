@@ -149,7 +149,7 @@
     }
   },
   "flight": {
-    "starting_from": "/Başlayan fiyatlar",
+    "starting_from": "/ Başlayan fiyatlar",
     "view_flights": "Uçuşları Gör"
   }
 }

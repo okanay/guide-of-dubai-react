@@ -37,5 +37,28 @@
       "location": "Bölge",
       "recent": "Geçmiş"
     }
+  },
+  "flight": {
+    "trip_type": "Gezi Tipi",
+    "one_way": "Tek Yön",
+    "round_trip": "Gidiş - Dönüş",
+    "direct_flights_only": "Sadece Direkt Uçuşlar",
+    "from": "Nereden",
+    "to": "Nereye",
+    "departure_date": "Gidiş Tarihi",
+    "return_date": "Dönüş Tarihi",
+    "passengers": "Yolcular",
+    "search_button": "Uçuş Ara",
+    "swap_locations": "Konumları Değiştir",
+    "departure_placeholder": "Kalkış yeri",
+    "arrival_placeholder": "Varış yeri",
+    "no_results_title": "Sonuç bulunamadı",
+    "no_results_description": "\"{searchValue}\" için sonuç bulunamadı.",
+    "start_typing_title": "Aramaya başlayın",
+    "start_typing_description": "Bir havalimanı veya şehir adı yazın.",
+    "adults": "Yetişkin",
+    "children": "Çocuk",
+    "adults_description": "12+ yaş",
+    "children_description": "2-12 yaş"
   }
 }

@@ -37,5 +37,28 @@
       "location": "Location",
       "recent": "Recent"
     }
+  },
+  "flight": {
+    "trip_type": "Trip Type",
+    "one_way": "One Way",
+    "round_trip": "Round Trip",
+    "direct_flights_only": "Direct Flights Only",
+    "from": "From",
+    "to": "To",
+    "departure_date": "Departure Date",
+    "return_date": "Return Date",
+    "passengers": "Passengers",
+    "search_button": "Search Flights",
+    "swap_locations": "Swap Locations",
+    "departure_placeholder": "Departure point",
+    "arrival_placeholder": "Arrival point",
+    "no_results_title": "No results found",
+    "no_results_description": "No results found for \"{searchValue}\"",
+    "start_typing_title": "Start typing",
+    "start_typing_description": "Type an airport or city name.",
+    "adults": "Adults",
+    "children": "Children",
+    "adults_description": "12+ years",
+    "children_description": "2-12 years"
   }
 }

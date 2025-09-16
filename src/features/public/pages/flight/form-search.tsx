@@ -7,8 +7,8 @@ import { useLanguage } from '@/i18n/prodiver'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
 import { format, parseISO } from 'date-fns'
-import { MapPin, ArrowUpDown, Building, Clock, X } from 'lucide-react'
-import { useRef, useState, useMemo } from 'react'
+import { MapPin, ArrowUpDown, Clock, X } from 'lucide-react'
+import { useRef, useState } from 'react'
 import { Control, Controller, useForm, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
@@ -39,7 +39,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
   const toTriggerRef = useRef<HTMLDivElement>(null)
   const passengerTriggerRef = useRef<HTMLDivElement>(null)
 
-  const { control, handleSubmit, setValue, reset } = useForm<SearchFormValues>({
+  const { control, handleSubmit, setValue } = useForm<SearchFormValues>({
     resolver: zodResolver(flightsFormSchema),
     defaultValues: {
       tripType: initialData?.tripType || 'round-trip',
@@ -62,8 +62,8 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
 
   // Trip type options
   const tripTypeOptions = [
-    { value: 'one-way', label: 'Tek Yön' },
-    { value: 'round-trip', label: 'Gidiş - Dönüş' },
+    { value: 'one-way', label: t('flight.one_way') },
+    { value: 'round-trip', label: t('flight.round_trip') },
   ]
 
   // Trip type değiştiğinde return date'i temizle/ayarla
@@ -131,7 +131,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
                 id="direct-flights"
                 checked={field.value}
                 onChange={(e) => field.onChange(e.target.checked)}
-                label="Aktarmasız Uçuşlar"
+                label={t('flight.direct_flights_only')}
                 className="ml-4"
               />
             )}
@@ -146,21 +146,21 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
               ref={fromTriggerRef}
               className="relative flex h-14 flex-1 flex-col items-start justify-center border-gray-200 py-2.5 pr-6 pl-4 text-start shadow md:border-r md:py-0 md:shadow-none"
             >
-              <label className="text-xs font-medium text-gray-700">Nereden</label>
+              <label className="text-xs font-medium text-gray-700">{t('flight.from')}</label>
               <Controller
                 name="from"
                 control={control}
-                render={({ field, fieldState }) => (
+                render={({ field }) => (
                   <>
                     <LocationInput
                       value={field.value || ''}
                       onChange={(value) => {
                         field.onChange(value)
-                        setIsFromOpen(false)
+                        setIsFromOpen(true)
                       }}
                       onFocus={() => setIsFromOpen(true)}
                       onClear={() => field.onChange('')}
-                      placeholder="Kalkış noktası"
+                      placeholder={t('flight.departure_placeholder')}
                     />
 
                     <LocationDropdown
@@ -183,40 +183,38 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
               />
             </div>
 
-            {/* Swap Button - Only show for round-trip */}
-            {tripType === 'round-trip' && (
-              <div className="absolute top-1/2 right-4 z-20 -translate-y-[50%] md:top-auto md:right-auto md:left-1/2 md:-translate-x-[55%] md:translate-y-0">
-                <button
-                  type="button"
-                  onClick={handleSwapLocations}
-                  className="flex size-8 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-800 md:size-10 md:h-8 md:w-8"
-                  aria-label="Yerleri değiştir"
-                >
-                  <ArrowUpDown className="size-4 text-primary-500 md:size-4" />
-                </button>
-              </div>
-            )}
+            {/* Swap Button */}
+            <div className="absolute top-1/2 right-4 z-20 -translate-y-[50%] md:top-auto md:right-auto md:left-1/2 md:-translate-x-[55%] md:translate-y-0">
+              <button
+                type="button"
+                onClick={handleSwapLocations}
+                className="flex size-8 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-800 md:size-10 md:h-8 md:w-8"
+                aria-label={t('flight.swap_locations')}
+              >
+                <ArrowUpDown className="size-4 text-primary-500 md:size-4" />
+              </button>
+            </div>
 
             {/* To Location */}
             <div
               ref={toTriggerRef}
               className="relative flex h-14 flex-1 flex-col items-start justify-center border-gray-200 py-2.5 pr-4 pl-6 text-start shadow md:border-r md:py-0 md:shadow-none"
             >
-              <label className="text-xs font-medium text-gray-700">Nereye</label>
+              <label className="text-xs font-medium text-gray-700">{t('flight.to')}</label>
               <Controller
                 name="to"
                 control={control}
-                render={({ field, fieldState }) => (
+                render={({ field }) => (
                   <>
                     <LocationInput
                       value={field.value || ''}
                       onChange={(value) => {
                         field.onChange(value)
-                        setIsToOpen(false)
+                        setIsToOpen(true)
                       }}
                       onFocus={() => setIsToOpen(true)}
                       onClear={() => field.onChange('')}
-                      placeholder="Varış noktası"
+                      placeholder={t('flight.arrival_placeholder')}
                     />
 
                     <LocationDropdown
@@ -242,7 +240,9 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
 
           {/* Departure Date */}
           <div className="relative flex h-14 min-w-[200px] flex-col items-start justify-center border-gray-200 py-2.5 pl-4 text-start shadow md:border-r md:py-0 md:shadow-none">
-            <label className="text-xs font-medium text-gray-700">Gidiş Tarihi</label>
+            <label className="text-xs font-medium text-gray-700">
+              {t('flight.departure_date')}
+            </label>
             <Controller
               name="departureDate"
               control={control}
@@ -261,7 +261,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
           {/* Return Date - Only show for round-trip */}
           {tripType === 'round-trip' && (
             <div className="relative flex h-14 min-w-[200px] flex-col items-start justify-center border-gray-200 px-4 py-2.5 text-start shadow md:border-r md:py-0 md:shadow-none">
-              <label className="text-xs font-medium text-gray-700">Dönüş Tarihi</label>
+              <label className="text-xs font-medium text-gray-700">{t('flight.return_date')}</label>
               <Controller
                 name="returnDate"
                 control={control}
@@ -283,14 +283,14 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
             ref={passengerTriggerRef}
             className="relative flex h-14 min-w-[200px] flex-col items-start justify-center px-4 py-2.5 text-start shadow md:py-0 md:shadow-none"
           >
-            <label className="text-xs font-medium text-gray-700">Yolcular</label>
+            <label className="text-xs font-medium text-gray-700">{t('flight.passengers')}</label>
             <button
               type="button"
               onClick={() => setIsPassengerOpen(!isPassengerOpen)}
               className="flex w-full items-center justify-between text-left"
             >
               <span className="text-size-sm font-semibold">
-                {`${adults} Yetişkin${children! > 0 ? `, ${children} Çocuk` : ''}`}
+                {`${adults} ${t('flight.adults')}${children! > 0 ? `, ${children} ${t('flight.children')}` : ''}`}
               </span>
             </button>
 
@@ -308,7 +308,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
             className="flex h-14 w-full shrink-0 items-center justify-center gap-x-2 bg-btn-primary px-6 font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover md:w-fit"
           >
             <Icon name="search" className="h-5 w-5" />
-            <span>Uçuş Ara</span>
+            <span>{t('flight.search_button')}</span>
           </button>
         </div>
       </form>
@@ -373,7 +373,8 @@ const LocationDropdown = ({
   searchValue,
   excludeValue = '',
 }: LocationDropdownProps) => {
-  const filteredAirports = []
+  const { t } = useTranslation('global-form')
+  const filteredAirports = [] // NOTE: You should implement your airport filtering logic here
 
   if (!isOpen) return null
 
@@ -388,18 +389,20 @@ const LocationDropdown = ({
         {filteredAirports.length === 0 && searchValue.trim().length > 0 && (
           <div className="px-4 py-6 text-center text-sm text-gray-500">
             <MapPin className="mx-auto mb-2 h-8 w-8 text-gray-300" />
-            <p className="font-medium">Sonuç bulunamadı</p>
-            <p className="mt-1">"{searchValue}" için sonuç bulunamadı</p>
+            <p className="font-medium">{t('flight.no_results_title')}</p>
+            <p className="mt-1">{t('flight.no_results_description', { searchValue })}</p>
           </div>
         )}
 
         {filteredAirports.length === 0 && searchValue.trim().length === 0 && (
           <div className="px-4 py-6 text-center text-sm text-gray-500">
             <Clock className="mx-auto mb-2 h-8 w-8 text-gray-300" />
-            <p>Yazmaya başlayın</p>
-            <p className="mt-1 text-xs">Havaalanı veya şehir adı yazın</p>
+            <p>{t('flight.start_typing_title')}</p>
+            <p className="mt-1 text-xs">{t('flight.start_typing_description')}</p>
           </div>
         )}
+
+        {/* Render your filtered airports here */}
       </div>
     </DropdownPortal>
   )
@@ -416,6 +419,7 @@ interface PassengerDropdownProps {
 }
 
 const PassengerDropdown = ({ isOpen, triggerRef, onClose, control }: PassengerDropdownProps) => {
+  const { t } = useTranslation('global-form')
   return (
     <DropdownPortal
       isOpen={isOpen}
@@ -431,8 +435,8 @@ const PassengerDropdown = ({ isOpen, triggerRef, onClose, control }: PassengerDr
           render={({ field }) => (
             <div className="flex items-center justify-between">
               <div>
-                <label className="text-sm font-medium text-black">Yetişkin</label>
-                <p className="text-xs text-gray-500">12 yaş üstü</p>
+                <label className="text-sm font-medium text-black">{t('flight.adults')}</label>
+                <p className="text-xs text-gray-500">{t('flight.adults_description')}</p>
               </div>
               <NumericStepper
                 value={field.value || 1}
@@ -451,8 +455,8 @@ const PassengerDropdown = ({ isOpen, triggerRef, onClose, control }: PassengerDr
           render={({ field }) => (
             <div className="flex items-center justify-between">
               <div>
-                <label className="text-sm font-medium text-black">Çocuk</label>
-                <p className="text-xs text-gray-500">2-12 yaş arası</p>
+                <label className="text-sm font-medium text-black">{t('flight.children')}</label>
+                <p className="text-xs text-gray-500">{t('flight.children_description')}</p>
               </div>
               <NumericStepper
                 value={field.value || 0}

@@ -149,7 +149,7 @@
     }
   },
   "flight": {
-    "starting_from": "/starting from",
+    "starting_from": "/ starting from",
     "view_flights": "View Flights"
   }
 }
