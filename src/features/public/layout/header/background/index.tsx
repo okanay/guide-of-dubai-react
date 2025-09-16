@@ -104,8 +104,8 @@ export const PublicHeaderBackground = () => {
       {
         index: 2,
         path: 'activities',
-        imageSrc: '/images/public/header/tours.jpg',
-        imageSrcMobile: '/images/public/header/tours-mobile.jpg',
+        imageSrc: '/images/public/header/activities.jpg',
+        imageSrcMobile: '/images/public/header/activities-mobile.jpg',
         imageAlt: t('slides.activities.alt'),
         titleKey: 'slides.activities.title',
         searchPlaceholderKey: 'slides.activities.placeholder',
@@ -149,8 +149,8 @@ export const PublicHeaderBackground = () => {
       {
         index: 7,
         path: 'flights',
-        imageSrc: '/images/public/header/explore.jpg',
-        imageSrcMobile: '/images/public/header/explore-mobile.jpg',
+        imageSrc: '/images/public/header/flights.png',
+        imageSrcMobile: '/images/public/header/flights-mobile.png',
         imageAlt: t('slides.all.alt'),
         titleKey: 'slides.all.title',
         searchPlaceholderKey: 'slides.all.placeholder',
