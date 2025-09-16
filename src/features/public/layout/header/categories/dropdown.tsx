@@ -3,6 +3,7 @@ import { useHeader } from '../store'
 import { Link } from 'src/i18n/router/link'
 import { useTranslation } from 'react-i18next'
 import { LinkProps } from '@tanstack/react-router'
+import useClickOutside from '@/hooks/use-click-outside'
 
 // Category data interface
 interface CategoryItem {
@@ -14,125 +15,124 @@ interface CategoryItem {
   detailLinkKey: string
 }
 
+// Categories data - i18n keys ile
+const categories: CategoryItem[] = [
+  {
+    id: 'dubai-visa',
+    titleKey: 'categories.dubai_visa.title',
+    descriptionKey: 'categories.dubai_visa.description',
+    image: '/images/categories/dubai-visa.jpg',
+    href: '/$lang/not-found',
+    detailLinkKey: 'categories.detail_link',
+  },
+  {
+    id: 'desert-safari',
+    titleKey: 'categories.desert_safari.title',
+    descriptionKey: 'categories.desert_safari.description',
+    image: '/images/categories/desert-safari.jpg',
+    href: '/$lang/not-found',
+    detailLinkKey: 'categories.detail_link',
+  },
+  {
+    id: 'activities',
+    titleKey: 'categories.activities.title',
+    descriptionKey: 'categories.activities.description',
+    image: '/images/categories/activities.jpg',
+    href: '/$lang/not-found',
+    detailLinkKey: 'categories.detail_link',
+  },
+  {
+    id: 'tours',
+    titleKey: 'categories.tours.title',
+    descriptionKey: 'categories.tours.description',
+    image: '/images/categories/tours.jpg',
+    href: '/$lang/not-found',
+    detailLinkKey: 'categories.detail_link',
+  },
+  {
+    id: 'hotels',
+    titleKey: 'categories.hotels.title',
+    descriptionKey: 'categories.hotels.description',
+    image: '/images/categories/hotels.jpg',
+    href: '/$lang/not-found',
+    detailLinkKey: 'categories.detail_link',
+  },
+  {
+    id: 'rent-a-car',
+    titleKey: 'categories.rent_a_car.title',
+    descriptionKey: 'categories.rent_a_car.description',
+    image: '/images/categories/rent-a-car.jpg',
+    href: '/$lang/not-found',
+    detailLinkKey: 'categories.detail_link',
+  },
+  {
+    id: 'esim',
+    titleKey: 'categories.esim.title',
+    descriptionKey: 'categories.esim.description',
+    image: '/images/categories/esim.jpg',
+    href: '/$lang/not-found',
+    detailLinkKey: 'categories.detail_link',
+  },
+  {
+    id: 'hospitals',
+    titleKey: 'categories.hospitals.title',
+    descriptionKey: 'categories.hospitals.description',
+    image: '/images/categories/hospitals.jpg',
+    href: '/$lang/not-found',
+    detailLinkKey: 'categories.detail_link',
+  },
+  {
+    id: 'restaurants',
+    titleKey: 'categories.restaurants.title',
+    descriptionKey: 'categories.restaurants.description',
+    image: '/images/categories/restaurants.jpg',
+    href: '/$lang/not-found',
+    detailLinkKey: 'categories.detail_link',
+  },
+  {
+    id: 'flight-tickets',
+    titleKey: 'categories.flight_tickets.title',
+    descriptionKey: 'categories.flight_tickets.description',
+    image: '/images/categories/flight-tickets.jpg',
+    href: '/$lang/not-found',
+    detailLinkKey: 'categories.detail_link',
+  },
+  {
+    id: 'yacht-tours',
+    titleKey: 'categories.yacht_tours.title',
+    descriptionKey: 'categories.yacht_tours.description',
+    image: '/images/categories/yacht-tours.jpg',
+    href: '/$lang/not-found',
+    detailLinkKey: 'categories.detail_link',
+  },
+  {
+    id: 'transfer',
+    titleKey: 'categories.transfer.title',
+    descriptionKey: 'categories.transfer.description',
+    image: '/images/categories/transfer.jpg',
+    href: '/$lang/not-found',
+    detailLinkKey: 'categories.detail_link',
+  },
+  {
+    id: 'hospitals-detail',
+    titleKey: 'categories.hospitals_detail.title',
+    descriptionKey: 'categories.hospitals_detail.description',
+    image: '/images/categories/hospitals-detail.jpg',
+    href: '/$lang/not-found',
+    detailLinkKey: 'categories.detail_link',
+  },
+  {
+    id: 'museums',
+    titleKey: 'categories.museums.title',
+    descriptionKey: 'categories.museums.description',
+    image: '/images/categories/museums.jpg',
+    href: '/$lang/not-found',
+    detailLinkKey: 'categories.detail_link',
+  },
+]
+
 export function CategoriesDropdown() {
   const { isCategoriesOpen, closeCategories } = useHeader()
-  const dropdownRef = useRef<HTMLDivElement>(null)
-
-  // Categories data - i18n keys ile
-  const categories: CategoryItem[] = [
-    {
-      id: 'dubai-visa',
-      titleKey: 'categories.dubai_visa.title',
-      descriptionKey: 'categories.dubai_visa.description',
-      image: '/images/categories/dubai-visa.jpg',
-      href: '/$lang/not-found',
-      detailLinkKey: 'categories.detail_link',
-    },
-    {
-      id: 'desert-safari',
-      titleKey: 'categories.desert_safari.title',
-      descriptionKey: 'categories.desert_safari.description',
-      image: '/images/categories/desert-safari.jpg',
-      href: '/$lang/not-found',
-      detailLinkKey: 'categories.detail_link',
-    },
-    {
-      id: 'activities',
-      titleKey: 'categories.activities.title',
-      descriptionKey: 'categories.activities.description',
-      image: '/images/categories/activities.jpg',
-      href: '/$lang/not-found',
-      detailLinkKey: 'categories.detail_link',
-    },
-    {
-      id: 'tours',
-      titleKey: 'categories.tours.title',
-      descriptionKey: 'categories.tours.description',
-      image: '/images/categories/tours.jpg',
-      href: '/$lang/not-found',
-      detailLinkKey: 'categories.detail_link',
-    },
-    {
-      id: 'hotels',
-      titleKey: 'categories.hotels.title',
-      descriptionKey: 'categories.hotels.description',
-      image: '/images/categories/hotels.jpg',
-      href: '/$lang/not-found',
-      detailLinkKey: 'categories.detail_link',
-    },
-    {
-      id: 'rent-a-car',
-      titleKey: 'categories.rent_a_car.title',
-      descriptionKey: 'categories.rent_a_car.description',
-      image: '/images/categories/rent-a-car.jpg',
-      href: '/$lang/not-found',
-      detailLinkKey: 'categories.detail_link',
-    },
-    {
-      id: 'esim',
-      titleKey: 'categories.esim.title',
-      descriptionKey: 'categories.esim.description',
-      image: '/images/categories/esim.jpg',
-      href: '/$lang/not-found',
-      detailLinkKey: 'categories.detail_link',
-    },
-    {
-      id: 'hospitals',
-      titleKey: 'categories.hospitals.title',
-      descriptionKey: 'categories.hospitals.description',
-      image: '/images/categories/hospitals.jpg',
-      href: '/$lang/not-found',
-      detailLinkKey: 'categories.detail_link',
-    },
-    {
-      id: 'restaurants',
-      titleKey: 'categories.restaurants.title',
-      descriptionKey: 'categories.restaurants.description',
-      image: '/images/categories/restaurants.jpg',
-      href: '/$lang/not-found',
-      detailLinkKey: 'categories.detail_link',
-    },
-    {
-      id: 'flight-tickets',
-      titleKey: 'categories.flight_tickets.title',
-      descriptionKey: 'categories.flight_tickets.description',
-      image: '/images/categories/flight-tickets.jpg',
-      href: '/$lang/not-found',
-      detailLinkKey: 'categories.detail_link',
-    },
-    {
-      id: 'yacht-tours',
-      titleKey: 'categories.yacht_tours.title',
-      descriptionKey: 'categories.yacht_tours.description',
-      image: '/images/categories/yacht-tours.jpg',
-      href: '/$lang/not-found',
-      detailLinkKey: 'categories.detail_link',
-    },
-    {
-      id: 'transfer',
-      titleKey: 'categories.transfer.title',
-      descriptionKey: 'categories.transfer.description',
-      image: '/images/categories/transfer.jpg',
-      href: '/$lang/not-found',
-      detailLinkKey: 'categories.detail_link',
-    },
-    {
-      id: 'hospitals-detail',
-      titleKey: 'categories.hospitals_detail.title',
-      descriptionKey: 'categories.hospitals_detail.description',
-      image: '/images/categories/hospitals-detail.jpg',
-      href: '/$lang/not-found',
-      detailLinkKey: 'categories.detail_link',
-    },
-    {
-      id: 'museums',
-      titleKey: 'categories.museums.title',
-      descriptionKey: 'categories.museums.description',
-      image: '/images/categories/museums.jpg',
-      href: '/$lang/not-found',
-      detailLinkKey: 'categories.detail_link',
-    },
-  ]
 
   return (
     <>
@@ -147,12 +147,16 @@ export function CategoriesDropdown() {
 
       {/* Dropdown Container */}
       <div
+        onClick={closeCategories}
         data-status={isCategoriesOpen ? 'active' : 'closed'}
-        ref={dropdownRef}
         className="absolute top-0 left-0 z-40 max-h-[560px] w-full origin-top overflow-hidden bg-white shadow-xl transition-all duration-300 ease-in-out data-[status=active]:pointer-events-auto data-[status=active]:translate-y-0 data-[status=active]:scale-y-100 data-[status=active]:opacity-100 data-[status=closed]:pointer-events-none data-[status=closed]:-translate-y-4 data-[status=closed]:scale-y-95 data-[status=closed]:opacity-0"
       >
-        <div className="mt-16 max-h-[560px] w-full origin-top overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:hover:bg-gray-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100">
+        <div
+          onClick={closeCategories}
+          className="mt-16 max-h-[560px] w-full origin-top overflow-y-auto bg-white [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:hover:bg-gray-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100"
+        >
           <div
+            onClick={closeCategories}
             data-status={isCategoriesOpen ? 'active' : 'closed'}
             className="mx-auto h-full max-w-8xl overflow-x-hidden overflow-y-auto scroll-smooth px-6 pb-20 transition-all duration-500 ease-out data-[status=active]:translate-y-0 data-[status=active]:opacity-100 data-[status=active]:delay-150 data-[status=closed]:translate-y-2 data-[status=closed]:opacity-0"
           >

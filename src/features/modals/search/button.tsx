@@ -17,7 +17,9 @@ export function SearchButton({ variant = 'icon', placeholder, className = '' }: 
   if (variant === 'hero') {
     return (
       <button
-        onClick={() => openModal()}
+        onClick={() => {
+          openModal()
+        }}
         className={`line-clamp-1 flex items-center gap-x-2 text-start ${className}`}
         aria-label={t('buttons.search')}
       >
