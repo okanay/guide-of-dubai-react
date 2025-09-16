@@ -8,18 +8,22 @@ import { Tours } from './section-tours'
 import { Yachts } from './section-yachts'
 import { Activities } from './section-activities'
 import { Interests } from './section-interests'
+import { PublicFooter } from '../../layout/footer'
 
 export const IndexPage = () => {
   return (
-    <main className="flex flex-col">
-      <IconicPlaces />
-      <Interests />
-      <Otels />
-      <Bundles />
-      <RentACar />
-      <Activities />
-      <Tours />
-      <Yachts />
-    </main>
+    <>
+      <main className="flex flex-col">
+        <IconicPlaces />
+        <Interests />
+        <Otels />
+        <Bundles />
+        <RentACar />
+        <Activities />
+        <Tours />
+        <Yachts />
+      </main>
+      <PublicFooter />
+    </>
   )
 }

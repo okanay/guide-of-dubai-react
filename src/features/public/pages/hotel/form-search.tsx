@@ -88,7 +88,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
             control={control}
             render={({ field, fieldState }) => (
               <>
-                <div className="relative w-full">
+                <div className="relative -mt-1.5 w-full">
                   <input
                     type="text"
                     value={field.value || ''}

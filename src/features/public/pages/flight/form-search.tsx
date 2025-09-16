@@ -329,7 +329,7 @@ interface LocationInputProps {
 
 const LocationInput = ({ value, onChange, onFocus, onClear, placeholder }: LocationInputProps) => {
   return (
-    <div className="relative w-full">
+    <div className="relative -mt-1.5 w-full">
       <input
         type="text"
         value={value}

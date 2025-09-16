@@ -7,7 +7,6 @@ export const PublicLayout = ({ children }: { children: React.ReactNode }) => {
     <PublicLayoutConfig>
       <PublicHeader />
       {children}
-      <PublicFooter />
     </PublicLayoutConfig>
   )
 }

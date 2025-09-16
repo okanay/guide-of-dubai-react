@@ -1,9 +1,6 @@
+import { BundlesIndexPage } from '@/features/public/pages/guide/bundles/page-index'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/$lang/_public/guide/bundles')({
-  component: RouteComponent,
+  component: BundlesIndexPage,
 })
-
-function RouteComponent() {
-  return <div>Hello "/$lang/_public/guide/bundles"!</div>
-}
