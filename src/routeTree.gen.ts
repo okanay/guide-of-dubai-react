@@ -33,7 +33,6 @@ import { Route as LangPublicGuideIndexRouteImport } from './routes/$lang/_public
 import { Route as LangPublicFlightsIndexRouteImport } from './routes/$lang/_public/flights.index'
 import { Route as LangPublicActivitiesIndexRouteImport } from './routes/$lang/_public/activities.index'
 import { Route as LangPublicYachtSearchRouteImport } from './routes/$lang/_public/yacht.search'
-import { Route as LangPublicRentACarSearchRouteImport } from './routes/$lang/_public/rent-a-car.search'
 import { Route as LangPublicHotelsSearchRouteImport } from './routes/$lang/_public/hotels.search'
 import { Route as LangPublicGuideVisaRouteImport } from './routes/$lang/_public/guide.visa'
 import { Route as LangPublicGuideSimCardRouteImport } from './routes/$lang/_public/guide.sim-card'
@@ -42,6 +41,8 @@ import { Route as LangPublicGuideHospitalsRouteImport } from './routes/$lang/_pu
 import { Route as LangPublicGuideBundlesRouteImport } from './routes/$lang/_public/guide.bundles'
 import { Route as LangPublicFlightsSearchRouteImport } from './routes/$lang/_public/flights.search'
 import { Route as LangPublicActivitiesSearchRouteImport } from './routes/$lang/_public/activities.search'
+import { Route as LangPublicRentACarSearchRouteRouteImport } from './routes/$lang/_public/rent-a-car.search.route'
+import { Route as LangPublicRentACarSearchIndexRouteImport } from './routes/$lang/_public/rent-a-car.search.index'
 import { ServerRoute as SitemapDotxmlServerRouteImport } from './routes/sitemap[.]xml'
 import { ServerRoute as RssDotxmlServerRouteImport } from './routes/rss[.]xml'
 import { ServerRoute as RobotsDottxtServerRouteImport } from './routes/robots[.]txt'
@@ -161,12 +162,6 @@ const LangPublicYachtSearchRoute = LangPublicYachtSearchRouteImport.update({
   path: '/search',
   getParentRoute: () => LangPublicYachtRouteRoute,
 } as any)
-const LangPublicRentACarSearchRoute =
-  LangPublicRentACarSearchRouteImport.update({
-    id: '/search',
-    path: '/search',
-    getParentRoute: () => LangPublicRentACarRouteRoute,
-  } as any)
 const LangPublicHotelsSearchRoute = LangPublicHotelsSearchRouteImport.update({
   id: '/search',
   path: '/search',
@@ -210,6 +205,18 @@ const LangPublicActivitiesSearchRoute =
     path: '/search',
     getParentRoute: () => LangPublicActivitiesRouteRoute,
   } as any)
+const LangPublicRentACarSearchRouteRoute =
+  LangPublicRentACarSearchRouteRouteImport.update({
+    id: '/search',
+    path: '/search',
+    getParentRoute: () => LangPublicRentACarRouteRoute,
+  } as any)
+const LangPublicRentACarSearchIndexRoute =
+  LangPublicRentACarSearchIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => LangPublicRentACarSearchRouteRoute,
+  } as any)
 const SitemapDotxmlServerRoute = SitemapDotxmlServerRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -238,6 +245,7 @@ export interface FileRoutesByFullPath {
   '/$lang/rent-a-car': typeof LangPublicRentACarRouteRouteWithChildren
   '/$lang/yacht': typeof LangPublicYachtRouteRouteWithChildren
   '/$lang/': typeof LangPublicIndexRoute
+  '/$lang/rent-a-car/search': typeof LangPublicRentACarSearchRouteRouteWithChildren
   '/$lang/activities/search': typeof LangPublicActivitiesSearchRoute
   '/$lang/flights/search': typeof LangPublicFlightsSearchRoute
   '/$lang/guide/bundles': typeof LangPublicGuideBundlesRoute
@@ -246,7 +254,6 @@ export interface FileRoutesByFullPath {
   '/$lang/guide/sim-card': typeof LangPublicGuideSimCardRoute
   '/$lang/guide/visa': typeof LangPublicGuideVisaRoute
   '/$lang/hotels/search': typeof LangPublicHotelsSearchRoute
-  '/$lang/rent-a-car/search': typeof LangPublicRentACarSearchRoute
   '/$lang/yacht/search': typeof LangPublicYachtSearchRoute
   '/$lang/activities/': typeof LangPublicActivitiesIndexRoute
   '/$lang/flights/': typeof LangPublicFlightsIndexRoute
@@ -257,6 +264,7 @@ export interface FileRoutesByFullPath {
   '/$lang/tours': typeof LangPublicToursIndexRoute
   '/$lang/transfer': typeof LangPublicTransferIndexRoute
   '/$lang/yacht/': typeof LangPublicYachtIndexRoute
+  '/$lang/rent-a-car/search/': typeof LangPublicRentACarSearchIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -272,7 +280,6 @@ export interface FileRoutesByTo {
   '/$lang/guide/sim-card': typeof LangPublicGuideSimCardRoute
   '/$lang/guide/visa': typeof LangPublicGuideVisaRoute
   '/$lang/hotels/search': typeof LangPublicHotelsSearchRoute
-  '/$lang/rent-a-car/search': typeof LangPublicRentACarSearchRoute
   '/$lang/yacht/search': typeof LangPublicYachtSearchRoute
   '/$lang/activities': typeof LangPublicActivitiesIndexRoute
   '/$lang/flights': typeof LangPublicFlightsIndexRoute
@@ -283,6 +290,7 @@ export interface FileRoutesByTo {
   '/$lang/tours': typeof LangPublicToursIndexRoute
   '/$lang/transfer': typeof LangPublicTransferIndexRoute
   '/$lang/yacht': typeof LangPublicYachtIndexRoute
+  '/$lang/rent-a-car/search': typeof LangPublicRentACarSearchIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -298,6 +306,7 @@ export interface FileRoutesById {
   '/$lang/_public/rent-a-car': typeof LangPublicRentACarRouteRouteWithChildren
   '/$lang/_public/yacht': typeof LangPublicYachtRouteRouteWithChildren
   '/$lang/_public/': typeof LangPublicIndexRoute
+  '/$lang/_public/rent-a-car/search': typeof LangPublicRentACarSearchRouteRouteWithChildren
   '/$lang/_public/activities/search': typeof LangPublicActivitiesSearchRoute
   '/$lang/_public/flights/search': typeof LangPublicFlightsSearchRoute
   '/$lang/_public/guide/bundles': typeof LangPublicGuideBundlesRoute
@@ -306,7 +315,6 @@ export interface FileRoutesById {
   '/$lang/_public/guide/sim-card': typeof LangPublicGuideSimCardRoute
   '/$lang/_public/guide/visa': typeof LangPublicGuideVisaRoute
   '/$lang/_public/hotels/search': typeof LangPublicHotelsSearchRoute
-  '/$lang/_public/rent-a-car/search': typeof LangPublicRentACarSearchRoute
   '/$lang/_public/yacht/search': typeof LangPublicYachtSearchRoute
   '/$lang/_public/activities/': typeof LangPublicActivitiesIndexRoute
   '/$lang/_public/flights/': typeof LangPublicFlightsIndexRoute
@@ -317,6 +325,7 @@ export interface FileRoutesById {
   '/$lang/_public/tours/': typeof LangPublicToursIndexRoute
   '/$lang/_public/transfer/': typeof LangPublicTransferIndexRoute
   '/$lang/_public/yacht/': typeof LangPublicYachtIndexRoute
+  '/$lang/_public/rent-a-car/search/': typeof LangPublicRentACarSearchIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -332,6 +341,7 @@ export interface FileRouteTypes {
     | '/$lang/rent-a-car'
     | '/$lang/yacht'
     | '/$lang/'
+    | '/$lang/rent-a-car/search'
     | '/$lang/activities/search'
     | '/$lang/flights/search'
     | '/$lang/guide/bundles'
@@ -340,7 +350,6 @@ export interface FileRouteTypes {
     | '/$lang/guide/sim-card'
     | '/$lang/guide/visa'
     | '/$lang/hotels/search'
-    | '/$lang/rent-a-car/search'
     | '/$lang/yacht/search'
     | '/$lang/activities/'
     | '/$lang/flights/'
@@ -351,6 +360,7 @@ export interface FileRouteTypes {
     | '/$lang/tours'
     | '/$lang/transfer'
     | '/$lang/yacht/'
+    | '/$lang/rent-a-car/search/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -366,7 +376,6 @@ export interface FileRouteTypes {
     | '/$lang/guide/sim-card'
     | '/$lang/guide/visa'
     | '/$lang/hotels/search'
-    | '/$lang/rent-a-car/search'
     | '/$lang/yacht/search'
     | '/$lang/activities'
     | '/$lang/flights'
@@ -377,6 +386,7 @@ export interface FileRouteTypes {
     | '/$lang/tours'
     | '/$lang/transfer'
     | '/$lang/yacht'
+    | '/$lang/rent-a-car/search'
   id:
     | '__root__'
     | '/'
@@ -391,6 +401,7 @@ export interface FileRouteTypes {
     | '/$lang/_public/rent-a-car'
     | '/$lang/_public/yacht'
     | '/$lang/_public/'
+    | '/$lang/_public/rent-a-car/search'
     | '/$lang/_public/activities/search'
     | '/$lang/_public/flights/search'
     | '/$lang/_public/guide/bundles'
@@ -399,7 +410,6 @@ export interface FileRouteTypes {
     | '/$lang/_public/guide/sim-card'
     | '/$lang/_public/guide/visa'
     | '/$lang/_public/hotels/search'
-    | '/$lang/_public/rent-a-car/search'
     | '/$lang/_public/yacht/search'
     | '/$lang/_public/activities/'
     | '/$lang/_public/flights/'
@@ -410,6 +420,7 @@ export interface FileRouteTypes {
     | '/$lang/_public/tours/'
     | '/$lang/_public/transfer/'
     | '/$lang/_public/yacht/'
+    | '/$lang/_public/rent-a-car/search/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -602,13 +613,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangPublicYachtSearchRouteImport
       parentRoute: typeof LangPublicYachtRouteRoute
     }
-    '/$lang/_public/rent-a-car/search': {
-      id: '/$lang/_public/rent-a-car/search'
-      path: '/search'
-      fullPath: '/$lang/rent-a-car/search'
-      preLoaderRoute: typeof LangPublicRentACarSearchRouteImport
-      parentRoute: typeof LangPublicRentACarRouteRoute
-    }
     '/$lang/_public/hotels/search': {
       id: '/$lang/_public/hotels/search'
       path: '/search'
@@ -664,6 +668,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/$lang/activities/search'
       preLoaderRoute: typeof LangPublicActivitiesSearchRouteImport
       parentRoute: typeof LangPublicActivitiesRouteRoute
+    }
+    '/$lang/_public/rent-a-car/search': {
+      id: '/$lang/_public/rent-a-car/search'
+      path: '/search'
+      fullPath: '/$lang/rent-a-car/search'
+      preLoaderRoute: typeof LangPublicRentACarSearchRouteRouteImport
+      parentRoute: typeof LangPublicRentACarRouteRoute
+    }
+    '/$lang/_public/rent-a-car/search/': {
+      id: '/$lang/_public/rent-a-car/search/'
+      path: '/'
+      fullPath: '/$lang/rent-a-car/search/'
+      preLoaderRoute: typeof LangPublicRentACarSearchIndexRouteImport
+      parentRoute: typeof LangPublicRentACarSearchRouteRoute
     }
   }
 }
@@ -740,14 +758,29 @@ const LangPublicHotelsRouteRouteWithChildren =
     LangPublicHotelsRouteRouteChildren,
   )
 
+interface LangPublicRentACarSearchRouteRouteChildren {
+  LangPublicRentACarSearchIndexRoute: typeof LangPublicRentACarSearchIndexRoute
+}
+
+const LangPublicRentACarSearchRouteRouteChildren: LangPublicRentACarSearchRouteRouteChildren =
+  {
+    LangPublicRentACarSearchIndexRoute: LangPublicRentACarSearchIndexRoute,
+  }
+
+const LangPublicRentACarSearchRouteRouteWithChildren =
+  LangPublicRentACarSearchRouteRoute._addFileChildren(
+    LangPublicRentACarSearchRouteRouteChildren,
+  )
+
 interface LangPublicRentACarRouteRouteChildren {
-  LangPublicRentACarSearchRoute: typeof LangPublicRentACarSearchRoute
+  LangPublicRentACarSearchRouteRoute: typeof LangPublicRentACarSearchRouteRouteWithChildren
   LangPublicRentACarIndexRoute: typeof LangPublicRentACarIndexRoute
 }
 
 const LangPublicRentACarRouteRouteChildren: LangPublicRentACarRouteRouteChildren =
   {
-    LangPublicRentACarSearchRoute: LangPublicRentACarSearchRoute,
+    LangPublicRentACarSearchRouteRoute:
+      LangPublicRentACarSearchRouteRouteWithChildren,
     LangPublicRentACarIndexRoute: LangPublicRentACarIndexRoute,
   }
 

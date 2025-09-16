@@ -23,3 +23,12 @@ export function CustomPendingPage() {
     </div>
   )
 }
+
+export const PendingIndicator = () => {
+  return (
+    <div className="fixed inset-0 z-1000 flex items-center justify-center gap-x-4 bg-black/10 backdrop-blur-xs">
+      <div className="absolute size-24 animate-spin rounded-full border-4 border-solid border-primary-500 border-t-transparent" />
+      <img src="/images/brand/brand-logo-primary.svg" alt="Loading..." className="size-14" />
+    </div>
+  )
+}

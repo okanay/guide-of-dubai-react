@@ -1,10 +1,10 @@
 import Icon from '@/components/icon'
 import { DatePickerText } from '@/features/public/components/form-ui/date-picker'
-import { TimePicker, TimePickerRaw } from '@/features/public/components/form-ui/time-picker'
+import { TimePickerRaw } from '@/features/public/components/form-ui/time-picker'
 import { useLanguage } from '@/i18n/prodiver'
 import { rentACarSearchSchema } from '@/routes/$lang/_public/rent-a-car.route'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useNavigate } from '@tanstack/react-router'
+import { useNavigate, useRouter } from '@tanstack/react-router'
 import { format, parseISO } from 'date-fns'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -20,6 +20,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
   const navigate = useNavigate()
   const { language } = useLanguage()
   const { t } = useTranslation('global-form')
+  const router = useRouter()
 
   const { control, handleSubmit } = useForm<SearchFormValues>({
     resolver: zodResolver(rentACarSearchSchema),
@@ -116,6 +117,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
             )}
           />
         </div>
+
         {/* Bırakış Saati */}
         <div className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start shadow md:shadow-none">
           <label className="text-xs font-medium text-gray-700">
