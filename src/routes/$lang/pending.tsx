@@ -10,7 +10,7 @@ export function CustomPendingPage() {
 
   return (
     <div
-      className="bg-background flex min-h-[400px] flex-col items-center justify-center pt-10 pb-6"
+      className="bg-background flex min-h-[100dvh] flex-col items-center justify-center pt-10 pb-6"
       aria-label={t('loading_message')}
       role="status"
     >
