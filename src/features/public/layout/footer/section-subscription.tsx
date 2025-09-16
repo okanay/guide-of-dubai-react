@@ -61,7 +61,10 @@ const AppDownloadCard = () => {
   const { t } = useTranslation('layout-footer')
 
   return (
-    <div className="flex h-full flex-col items-start gap-10 rounded-xs sm:flex-row sm:items-center sm:justify-between sm:bg-card-surface sm:p-6">
+    <div
+      id="app-promo-section"
+      className="flex h-full flex-col items-start gap-10 rounded-xs sm:flex-row sm:items-center sm:justify-between sm:bg-card-surface sm:p-6"
+    >
       <div>
         <h2 className="text-size-xl leading-tight font-bold text-white">
           {t('subscription.app_download.title')}
