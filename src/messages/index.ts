@@ -12,6 +12,7 @@ import enHotels from './en/page-hotels.json'
 import enSafari from './en/page-safari.json'
 import enRentACar from './en/page-rent-a-car.json'
 import enTransfer from './en/page-transfer.json'
+import enFlights from './en/page-flights.json'
 import enErrors from './en/page-errors.json'
 import enZod from './en/errors-zod.json'
 import enApi from './en/errors-api.json'
@@ -31,6 +32,7 @@ import trSafari from './tr/page-safari.json'
 import trRentACar from './tr/page-rent-a-car.json'
 import trHotels from './tr/page-hotels.json'
 import trTransfer from './tr/page-transfer.json'
+import trFlights from './tr/page-flights.json'
 import trErrors from './tr/page-errors.json'
 import trZod from './tr/errors-zod.json'
 import trApi from './tr/errors-api.json'
@@ -55,6 +57,7 @@ export const namespaces = [
   'page-safari',
   'page-rent-a-car',
   'page-transfer',
+  'page-flights',
   'page-errors',
   'errors-zod',
   'errors-api',
@@ -76,6 +79,7 @@ const resource = {
     'page-safari': enSafari,
     'page-rent-a-car': enRentACar,
     'page-transfer': enTransfer,
+    'page-flights': enFlights,
     'page-errors': enErrors,
     'errors-zod': enZod,
     'errors-api': enApi,
@@ -96,6 +100,7 @@ const resource = {
     'page-safari': trSafari,
     'page-rent-a-car': trRentACar,
     'page-transfer': trTransfer,
+    'page-flights': trFlights,
     'page-errors': trErrors,
     'errors-zod': trZod,
     'errors-api': trApi,

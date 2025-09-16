@@ -3,6 +3,7 @@ import { ClientOnly } from '@tanstack/react-router'
 import React, { useEffect, useRef, ReactNode, cloneElement, isValidElement } from 'react'
 import { createPortal } from 'react-dom'
 import { useModalBodyLock } from './use-modal-body-lock'
+import { twMerge } from 'tailwind-merge'
 
 // =============================================================================
 // TYPE DEFINITIONS
@@ -143,7 +144,7 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
         }
       >
         {/* Overlay */}
-        <div data-theme="force-main" className={overlayClassName} />
+        <div data-theme="force-main" className={twMerge(overlayClassName, '')} />
 
         {/* Modal Content */}
         {cloneChildrenWithRef(children)}
