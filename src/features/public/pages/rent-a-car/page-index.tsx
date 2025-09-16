@@ -4,9 +4,9 @@ import { Information } from './section-information'
 
 export const RentACarIndexPage = () => {
   return (
-    <article className="flex flex-col">
+    <>
       <FastOffers />
       <Information />
-    </article>
+    </>
   )
 }
