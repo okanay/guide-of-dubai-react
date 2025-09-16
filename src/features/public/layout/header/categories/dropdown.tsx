@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import { useHeader } from '../store'
 import { Link } from 'src/i18n/router/link'
 import { useTranslation } from 'react-i18next'
@@ -133,6 +133,21 @@ const categories: CategoryItem[] = [
 
 export function CategoriesDropdown() {
   const { isCategoriesOpen, closeCategories } = useHeader()
+  const dropdownRef = useClickOutside<HTMLDivElement>(closeCategories, true)
+
+  // ESC tuşu ile kapatma
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isCategoriesOpen) {
+        closeCategories()
+      }
+    }
+
+    if (isCategoriesOpen) {
+      document.addEventListener('keydown', handleEscape)
+      return () => document.removeEventListener('keydown', handleEscape)
+    }
+  }, [isCategoriesOpen, closeCategories])
 
   return (
     <>
@@ -147,16 +162,12 @@ export function CategoriesDropdown() {
 
       {/* Dropdown Container */}
       <div
-        onClick={closeCategories}
+        ref={dropdownRef}
         data-status={isCategoriesOpen ? 'active' : 'closed'}
         className="absolute top-0 left-0 z-40 max-h-[560px] w-full origin-top overflow-hidden bg-white shadow-xl transition-all duration-300 ease-in-out data-[status=active]:pointer-events-auto data-[status=active]:translate-y-0 data-[status=active]:scale-y-100 data-[status=active]:opacity-100 data-[status=closed]:pointer-events-none data-[status=closed]:-translate-y-4 data-[status=closed]:scale-y-95 data-[status=closed]:opacity-0"
       >
-        <div
-          onClick={closeCategories}
-          className="mt-16 max-h-[560px] w-full origin-top overflow-y-auto bg-white [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:hover:bg-gray-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100"
-        >
+        <div className="mt-16 max-h-[560px] w-full origin-top overflow-y-auto bg-white [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:hover:bg-gray-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100">
           <div
-            onClick={closeCategories}
             data-status={isCategoriesOpen ? 'active' : 'closed'}
             className="mx-auto h-full max-w-8xl overflow-x-hidden overflow-y-auto scroll-smooth px-6 pb-20 transition-all duration-500 ease-out data-[status=active]:translate-y-0 data-[status=active]:opacity-100 data-[status=active]:delay-150 data-[status=closed]:translate-y-2 data-[status=closed]:opacity-0"
           >

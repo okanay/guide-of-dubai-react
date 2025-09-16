@@ -4,6 +4,7 @@ import { immer } from 'zustand/middleware/immer'
 
 interface HeaderState {
   isCategoriesOpen: boolean
+  isProfileOpen: boolean
   isInverted: boolean
 }
 
@@ -11,7 +12,7 @@ interface HeaderActions {
   openCategories: () => void
   closeCategories: () => void
   toggleCategories: () => void
-  setInverted: (value: boolean) => void
+  setProfileOpen: (value: boolean) => void
   closeAll: () => void
 }
 
@@ -22,11 +23,16 @@ export function HeaderStore({ children }: PropsWithChildren) {
     createStore<HeaderStore>()(
       immer((set, get) => ({
         isCategoriesOpen: false,
+        isProfileOpen: false,
         isInverted: false,
 
         openCategories: () => {
           set((state) => {
+            // Önce profile'ı kapat
+            state.isProfileOpen = false
+            // Sonra category'yi aç
             state.isCategoriesOpen = true
+            // İnvert'i aktifleştir
             state.isInverted = true
           })
         },
@@ -34,7 +40,10 @@ export function HeaderStore({ children }: PropsWithChildren) {
         closeCategories: () => {
           set((state) => {
             state.isCategoriesOpen = false
-            state.isInverted = false
+            // Sadece profile açık değilse invert'i kapat
+            if (!state.isProfileOpen) {
+              state.isInverted = false
+            }
           })
         },
 
@@ -47,15 +56,29 @@ export function HeaderStore({ children }: PropsWithChildren) {
           }
         },
 
-        setInverted: (value: boolean) => {
+        setProfileOpen: (value: boolean) => {
           set((state) => {
-            state.isInverted = value
+            if (value) {
+              // Profile açılıyorsa, category'yi kapat
+              state.isCategoriesOpen = false
+              state.isProfileOpen = true
+              state.isInverted = true
+            } else {
+              // Profile kapanıyorsa
+              state.isProfileOpen = false
+              // Sadece category açık değilse invert'i kapat
+              if (!state.isCategoriesOpen) {
+                state.isInverted = false
+              }
+            }
           })
         },
 
         closeAll: () => {
           set((state) => {
             state.isCategoriesOpen = false
+            state.isProfileOpen = false
+            state.isInverted = false
           })
         },
       })),
