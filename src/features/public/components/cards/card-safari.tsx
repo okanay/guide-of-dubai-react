@@ -170,8 +170,8 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
       </header>
 
       {/* Content */}
-      <Link to={'/$lang/not-found'} className="flex flex-1 flex-col gap-y-2 md:p-4">
-        <div className="flex flex-wrap items-center justify-start gap-x-4 gap-y-2 px-4 pt-4 text-start md:px-0 md:pt-0">
+      <Link to={'/$lang/not-found'} className="flex flex-1 flex-col gap-y-2 p-4">
+        <div className="flex flex-wrap items-center justify-start gap-x-4 gap-y-2 text-start">
           {/* Title */}
           <h2 id={`safari-${type}-title`} className="text-size font-bold text-black">
             {t(`safari.${type}.title`)}
@@ -189,7 +189,7 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
         </div>
 
         {/* Features - Görseldeki 3 temel özellik */}
-        <div className="mt-1 mb-2 flex flex-wrap gap-3 px-4 md:px-0">
+        <div className="mt-1 mb-2 flex flex-wrap gap-3">
           {/* 4 Kişilik */}
           <div className="flex items-center gap-3">
             <Icon name="person" className="size-3.5 text-gray-700" />
@@ -222,7 +222,7 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
 
         {/* Price ve Button - En altta */}
         <div className="mt-auto flex w-full flex-col gap-y-2 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-baseline gap-1 px-4 md:px-0">
+          <div className="flex items-baseline gap-1">
             <span className="text-xl font-bold text-black">{formatPrice(currentPrice)}</span>
             <span className="text-sm text-gray-700">{t('common.labels.per_person')}</span>
           </div>

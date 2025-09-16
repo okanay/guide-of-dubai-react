@@ -150,16 +150,13 @@ export const TransferCard: React.FC<Props> = ({ transfer, className }) => {
       </header>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col pt-2 md:p-4">
-        <h2
-          id={`transfer-${transfer.id}-title`}
-          className="px-4 text-size font-bold text-black md:px-0"
-        >
+      <div className="flex flex-1 flex-col p-4">
+        <h2 id={`transfer-${transfer.id}-title`} className="text-size font-bold text-black">
           {transfer.title}
         </h2>
-        <p className="px-4 text-size-sm text-gray-800 md:px-0">{transfer.vehicle}</p>
+        <p className="text-size-sm text-gray-800">{transfer.vehicle}</p>
         <div className="mt-6 flex flex-col items-end justify-between gap-x-4 gap-y-4 md:flex-row">
-          <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(120px,auto))] gap-x-8 gap-y-2 px-4 md:px-0">
+          <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(120px,auto))] gap-x-8 gap-y-2">
             {features
               .filter((feature) => feature.visible)
               .map((feature) => (

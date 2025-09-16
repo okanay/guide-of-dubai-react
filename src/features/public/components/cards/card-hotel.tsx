@@ -193,17 +193,14 @@ export const HotelCard: React.FC<HotelCardProps> = ({
       </header>
 
       {/* Hotel Information */}
-      <section className="text-on-box-whit flex flex-1 flex-col gap-y-2 group-data-[mode=white]/hc:text-black md:p-4">
+      <section className="text-on-box-whit flex flex-1 flex-col gap-y-2 p-4 group-data-[mode=white]/hc:text-black">
         {/* Hotel Name */}
-        <h2
-          id={`hotel-${hotel.id}-title`}
-          className="px-4 pt-4 text-size-lg font-bold md:px-0 md:pt-0"
-        >
+        <h2 id={`hotel-${hotel.id}-title`} className="text-size-lg font-bold">
           {hotel.name}
         </h2>
 
         {/* Star Rating */}
-        <div className="flex items-center gap-2 px-4 text-size-sm md:px-0">
+        <div className="flex items-center gap-2 text-size-sm">
           <div className="flex gap-0.5">
             {Array.from({ length: hotel.starRating }, (_, i) => (
               <Icon
@@ -217,10 +214,10 @@ export const HotelCard: React.FC<HotelCardProps> = ({
         </div>
 
         {/* Room Type */}
-        <p className="-mt-0.5 px-4 text-size-sm font-semibold md:px-0">{hotel.roomType}</p>
+        <p className="-mt-0.5 text-size-sm font-semibold">{hotel.roomType}</p>
 
         {/* Reviews and Map Link */}
-        <div className="-mt-0.5 flex items-center gap-2 px-4 text-size-sm md:px-0">
+        <div className="-mt-0.5 flex items-center gap-2 text-size-sm">
           <Icon name="thumbs-up" className="size-4 text-badge-green" aria-hidden="true" />
           <span>
             <span className="sr-only">{t('common.labels.rating')}:</span>
@@ -245,7 +242,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({
         />
 
         {/* Hotel Features */}
-        <section aria-labelledby={`hotel-${hotel.id}-features`} className="px-4 pb-2 md:px-0">
+        <section aria-labelledby={`hotel-${hotel.id}-features`} className="pb-2">
           <h3 id={`hotel-${hotel.id}-features`} className="sr-only">
             Hotel features
           </h3>
@@ -310,14 +307,14 @@ export const HotelCard: React.FC<HotelCardProps> = ({
 
         {/* Pricing and Booking */}
         <footer className="flex flex-col gap-y-1.5">
-          <p className="px-4 pt-2 text-size-xs md:px-0">
+          <p className="pt-2 text-size-xs">
             {t('hotel.labels.per_night_guests', {
               count: hotel.nightCount,
               adults: hotel.adultCount,
             })}
           </p>
           <div
-            className="px-4 pb-2 text-size-xl font-bold md:px-0"
+            className="pb-2 text-size-xl font-bold"
             aria-label={`Price: ${hotel.currency}${hotel.price.toFixed(2)}`}
           >
             {hotel.currency}

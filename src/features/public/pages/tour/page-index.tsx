@@ -1,5 +1,4 @@
 import { MostPopular } from './section-most-popular'
-import { PublicFooter } from '../../layout/footer'
 
 export const ToursIndexPage = () => {
   return (
@@ -7,7 +6,6 @@ export const ToursIndexPage = () => {
       <main className="flex flex-col">
         <MostPopular />
       </main>
-      <PublicFooter />
     </>
   )
 }

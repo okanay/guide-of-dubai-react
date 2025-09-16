@@ -3,12 +3,10 @@ import { IconicPlaces } from './section-iconic-places'
 import { Otels } from './section-otels'
 import { Bundles } from './section-bundles'
 import { RentACar } from './section-rent-a-car'
-import { Restaurants } from './section-restaurants'
 import { Tours } from './section-tours'
 import { Yachts } from './section-yachts'
 import { Activities } from './section-activities'
 import { Interests } from './section-interests'
-import { PublicFooter } from '../../layout/footer'
 
 export const IndexPage = () => {
   return (
@@ -23,7 +21,6 @@ export const IndexPage = () => {
         <Tours />
         <Yachts />
       </main>
-      <PublicFooter />
     </>
   )
 }

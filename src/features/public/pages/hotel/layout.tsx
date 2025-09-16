@@ -1,7 +1,6 @@
 import { Route } from 'src/routes/$lang/_public/hotels.route'
 import { SearchForm } from './form-search'
 import { Outlet } from '@tanstack/react-router'
-import { PublicFooter } from '../../layout/footer'
 
 export const HotelLayout = () => {
   const search = Route.useSearch()
@@ -12,7 +11,6 @@ export const HotelLayout = () => {
         <SearchForm initialData={search} />
         <Outlet />
       </main>
-      <PublicFooter />
     </>
   )
 }

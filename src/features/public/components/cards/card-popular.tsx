@@ -166,10 +166,10 @@ export const PopularCard: React.FC<Props> = ({ activity, index, className, onLik
       {/* Content */}
       <Link
         to="/$lang/not-found"
-        className="flex flex-1 flex-col transition-colors hover:bg-gray-50/50 md:p-4"
+        className="flex flex-1 flex-col p-4 transition-colors hover:bg-gray-50/50"
       >
         {/* Rank Badge */}
-        <div className="mb-2 flex items-center gap-1 px-4 pt-4 md:p-0">
+        <div className="mb-2 flex items-center gap-1">
           <Icon name="trophy-primary" className="size-4" aria-hidden="true" />
           <span className="text-size-sm font-bold text-primary-500">
             {t('popular.labels.rank', { rank: index + 1 })}
@@ -179,13 +179,13 @@ export const PopularCard: React.FC<Props> = ({ activity, index, className, onLik
         {/* Title */}
         <h2
           id={`activity-${activity.id}-title`}
-          className="mb-2 line-clamp-2 px-4 text-size font-bold text-on-box-black md:px-0"
+          className="mb-2 line-clamp-2 text-size font-bold text-on-box-black"
         >
           {activity.title}
         </h2>
 
         {/* Rating and Reviews */}
-        <div className="mb-2 flex items-center gap-1 px-4 text-size-sm md:px-0">
+        <div className="mb-2 flex items-center gap-1 text-size-sm">
           <Icon name="star" className="size-4 text-primary-500" aria-hidden="true" />
           <span className="font-medium text-on-box-black">{activity.rating.toFixed(1)}</span>
           <span className="text-gray-600">({activity.reviewCount})</span>
@@ -195,7 +195,7 @@ export const PopularCard: React.FC<Props> = ({ activity, index, className, onLik
         </div>
 
         {/* Description */}
-        <ul className="mb-3 flex flex-wrap items-center gap-1.5 px-4 md:px-0">
+        <ul className="mb-3 flex flex-wrap items-center gap-1.5">
           {activity.description.map((item, descIndex) => (
             <li key={descIndex} className="inline-flex items-center gap-1.5">
               <span className="inline-block size-1 rounded-full bg-gray-600" aria-hidden="true" />
@@ -206,7 +206,7 @@ export const PopularCard: React.FC<Props> = ({ activity, index, className, onLik
 
         {/* Pricing */}
         <div className="mt-auto space-y-2">
-          <div className="flex flex-col px-4 md:px-0">
+          <div className="flex flex-col">
             {activity.originalPrice && (
               <span className="text-body-xs text-gray-500 line-through">
                 {formatPrice(activity.originalPrice)}
