@@ -1,4 +1,5 @@
 import { ChevronDown } from 'lucide-react'
+import { useRef } from 'react'
 import { useHeader } from '../store'
 import { useTranslation } from 'react-i18next'
 
@@ -6,8 +7,13 @@ export function CategoriesButton() {
   const { toggleCategories, isCategoriesOpen } = useHeader()
   const { t } = useTranslation('layout-header')
 
+  // Button referansını categories dropdown'a geçirmek için
+  const buttonRef = useRef<HTMLButtonElement>(null)
+
   return (
     <button
+      id="categories-button"
+      ref={buttonRef}
       onClick={toggleCategories}
       data-state={isCategoriesOpen ? 'open' : 'closed'}
       className="group btn-default -mr-1 flex items-center rounded-full px-2 py-1 data-[state=open]:bg-white data-[state=open]:text-on-box-black"

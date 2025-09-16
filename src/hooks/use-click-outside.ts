@@ -6,6 +6,7 @@ function useClickOutside<T extends HTMLElement = HTMLElement>(
   handler: Handler,
   active: boolean = true,
   exceptRef?: RefObject<HTMLElement | null>,
+  exceptId?: string,
 ): RefObject<T | null> {
   const ref = useRef<T>(null)
 
@@ -15,11 +16,13 @@ function useClickOutside<T extends HTMLElement = HTMLElement>(
     const listener = (event: MouseEvent | TouchEvent) => {
       const el = ref.current
       const exceptEl = exceptRef?.current
+      const exceptById = exceptId ? document.getElementById(exceptId) : null
 
       if (
         !el ||
         el.contains(event.target as Node) ||
-        (exceptEl && exceptEl.contains(event.target as Node))
+        (exceptEl && exceptEl.contains(event.target as Node)) ||
+        (exceptById && exceptById.contains(event.target as Node))
       ) {
         return
       }
@@ -34,7 +37,7 @@ function useClickOutside<T extends HTMLElement = HTMLElement>(
       document.removeEventListener('mousedown', listener)
       document.removeEventListener('touchstart', listener)
     }
-  }, [handler, active, exceptRef])
+  }, [handler, active, exceptRef, exceptId])
 
   return ref
 }

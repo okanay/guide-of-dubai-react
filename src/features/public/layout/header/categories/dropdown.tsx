@@ -133,7 +133,13 @@ const categories: CategoryItem[] = [
 
 export function CategoriesDropdown() {
   const { isCategoriesOpen, closeCategories } = useHeader()
-  const dropdownRef = useClickOutside<HTMLDivElement>(closeCategories, true)
+
+  const dropdownRef = useClickOutside<HTMLDivElement>(
+    closeCategories,
+    true,
+    undefined,
+    'categories-button',
+  )
 
   // ESC tuşu ile kapatma
   useEffect(() => {
