@@ -18,7 +18,6 @@ export const Link: React.FC<Props> = ({ children, ...rest }) => {
         lang: language.value,
         ...(rest.params as any),
       }}
-      resetScroll={true}
       preload={'intent'}
       preloadDelay={500}
     >

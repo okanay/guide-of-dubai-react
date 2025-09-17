@@ -35,6 +35,7 @@ import { Route as LangPublicActivitiesIndexRouteImport } from './routes/$lang/_p
 import { Route as LangPublicGuideVisaRouteImport } from './routes/$lang/_public/guide/visa'
 import { Route as LangPublicGuideSimCardRouteImport } from './routes/$lang/_public/guide/sim-card'
 import { Route as LangPublicGuideRestaurantsRouteImport } from './routes/$lang/_public/guide/restaurants'
+import { Route as LangPublicGuideMuseumsRouteImport } from './routes/$lang/_public/guide/museums'
 import { Route as LangPublicGuideHospitalsRouteImport } from './routes/$lang/_public/guide/hospitals'
 import { Route as LangPublicGuideBundlesRouteImport } from './routes/$lang/_public/guide/bundles'
 import { Route as LangPublicYachtSearchRouteRouteImport } from './routes/$lang/_public/yacht/search.route'
@@ -187,6 +188,11 @@ const LangPublicGuideRestaurantsRoute =
     path: '/guide/restaurants',
     getParentRoute: () => LangPublicRouteRoute,
   } as any)
+const LangPublicGuideMuseumsRoute = LangPublicGuideMuseumsRouteImport.update({
+  id: '/guide/museums',
+  path: '/guide/museums',
+  getParentRoute: () => LangPublicRouteRoute,
+} as any)
 const LangPublicGuideHospitalsRoute =
   LangPublicGuideHospitalsRouteImport.update({
     id: '/guide/hospitals',
@@ -353,6 +359,7 @@ export interface FileRoutesByFullPath {
   '/$lang/yacht/search': typeof LangPublicYachtSearchRouteRouteWithChildren
   '/$lang/guide/bundles': typeof LangPublicGuideBundlesRoute
   '/$lang/guide/hospitals': typeof LangPublicGuideHospitalsRoute
+  '/$lang/guide/museums': typeof LangPublicGuideMuseumsRoute
   '/$lang/guide/restaurants': typeof LangPublicGuideRestaurantsRoute
   '/$lang/guide/sim-card': typeof LangPublicGuideSimCardRoute
   '/$lang/guide/visa': typeof LangPublicGuideVisaRoute
@@ -389,6 +396,7 @@ export interface FileRoutesByTo {
   '/$lang/pending': typeof LangPendingRoute
   '/$lang/guide/bundles': typeof LangPublicGuideBundlesRoute
   '/$lang/guide/hospitals': typeof LangPublicGuideHospitalsRoute
+  '/$lang/guide/museums': typeof LangPublicGuideMuseumsRoute
   '/$lang/guide/restaurants': typeof LangPublicGuideRestaurantsRoute
   '/$lang/guide/sim-card': typeof LangPublicGuideSimCardRoute
   '/$lang/guide/visa': typeof LangPublicGuideVisaRoute
@@ -438,6 +446,7 @@ export interface FileRoutesById {
   '/$lang/_public/yacht/search': typeof LangPublicYachtSearchRouteRouteWithChildren
   '/$lang/_public/guide/bundles': typeof LangPublicGuideBundlesRoute
   '/$lang/_public/guide/hospitals': typeof LangPublicGuideHospitalsRoute
+  '/$lang/_public/guide/museums': typeof LangPublicGuideMuseumsRoute
   '/$lang/_public/guide/restaurants': typeof LangPublicGuideRestaurantsRoute
   '/$lang/_public/guide/sim-card': typeof LangPublicGuideSimCardRoute
   '/$lang/_public/guide/visa': typeof LangPublicGuideVisaRoute
@@ -487,6 +496,7 @@ export interface FileRouteTypes {
     | '/$lang/yacht/search'
     | '/$lang/guide/bundles'
     | '/$lang/guide/hospitals'
+    | '/$lang/guide/museums'
     | '/$lang/guide/restaurants'
     | '/$lang/guide/sim-card'
     | '/$lang/guide/visa'
@@ -523,6 +533,7 @@ export interface FileRouteTypes {
     | '/$lang/pending'
     | '/$lang/guide/bundles'
     | '/$lang/guide/hospitals'
+    | '/$lang/guide/museums'
     | '/$lang/guide/restaurants'
     | '/$lang/guide/sim-card'
     | '/$lang/guide/visa'
@@ -571,6 +582,7 @@ export interface FileRouteTypes {
     | '/$lang/_public/yacht/search'
     | '/$lang/_public/guide/bundles'
     | '/$lang/_public/guide/hospitals'
+    | '/$lang/_public/guide/museums'
     | '/$lang/_public/guide/restaurants'
     | '/$lang/_public/guide/sim-card'
     | '/$lang/_public/guide/visa'
@@ -802,6 +814,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/restaurants'
       fullPath: '/$lang/guide/restaurants'
       preLoaderRoute: typeof LangPublicGuideRestaurantsRouteImport
+      parentRoute: typeof LangPublicRouteRoute
+    }
+    '/$lang/_public/guide/museums': {
+      id: '/$lang/_public/guide/museums'
+      path: '/guide/museums'
+      fullPath: '/$lang/guide/museums'
+      preLoaderRoute: typeof LangPublicGuideMuseumsRouteImport
       parentRoute: typeof LangPublicRouteRoute
     }
     '/$lang/_public/guide/hospitals': {
@@ -1165,6 +1184,7 @@ interface LangPublicRouteRouteChildren {
   LangPublicIndexRoute: typeof LangPublicIndexRoute
   LangPublicGuideBundlesRoute: typeof LangPublicGuideBundlesRoute
   LangPublicGuideHospitalsRoute: typeof LangPublicGuideHospitalsRoute
+  LangPublicGuideMuseumsRoute: typeof LangPublicGuideMuseumsRoute
   LangPublicGuideRestaurantsRoute: typeof LangPublicGuideRestaurantsRoute
   LangPublicGuideSimCardRoute: typeof LangPublicGuideSimCardRoute
   LangPublicGuideVisaRoute: typeof LangPublicGuideVisaRoute
@@ -1183,6 +1203,7 @@ const LangPublicRouteRouteChildren: LangPublicRouteRouteChildren = {
   LangPublicIndexRoute: LangPublicIndexRoute,
   LangPublicGuideBundlesRoute: LangPublicGuideBundlesRoute,
   LangPublicGuideHospitalsRoute: LangPublicGuideHospitalsRoute,
+  LangPublicGuideMuseumsRoute: LangPublicGuideMuseumsRoute,
   LangPublicGuideRestaurantsRoute: LangPublicGuideRestaurantsRoute,
   LangPublicGuideSimCardRoute: LangPublicGuideSimCardRoute,
   LangPublicGuideVisaRoute: LangPublicGuideVisaRoute,

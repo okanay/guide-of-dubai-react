@@ -27,7 +27,7 @@ export const SearchForm = () => {
       params: { lang: language.value },
       search: searchParams,
       replace: true,
-      resetScroll: false,
+      resetScroll: true,
     })
   }
 

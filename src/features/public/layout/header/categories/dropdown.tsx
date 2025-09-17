@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useHeader } from '../store'
 import { Link } from 'src/i18n/router/link'
 import { useTranslation } from 'react-i18next'
@@ -6,7 +6,7 @@ import { LinkProps } from '@tanstack/react-router'
 import useClickOutside from '@/hooks/use-click-outside'
 
 // Category data interface
-interface CategoryItem {
+export interface CategoryItem {
   id: string
   titleKey: string
   descriptionKey: string
@@ -15,118 +15,117 @@ interface CategoryItem {
   detailLinkKey: string
 }
 
-// Categories data - i18n keys ile
-const categories: CategoryItem[] = [
+export const CATEGORIES: CategoryItem[] = [
   {
     id: 'dubai-visa',
     titleKey: 'categories.dubai_visa.title',
     descriptionKey: 'categories.dubai_visa.description',
-    image: '/images/categories/dubai-visa.jpg',
-    href: '/$lang/not-found',
+    image: '/images/public/categories/dubai-visa.png',
+    href: '/$lang/guide/visa',
     detailLinkKey: 'categories.detail_link',
   },
   {
     id: 'desert-safari',
     titleKey: 'categories.desert_safari.title',
     descriptionKey: 'categories.desert_safari.description',
-    image: '/images/categories/desert-safari.jpg',
-    href: '/$lang/not-found',
+    image: '/images/public/categories/safari-tour.png',
+    href: '/$lang/safari-tour',
     detailLinkKey: 'categories.detail_link',
   },
   {
     id: 'activities',
     titleKey: 'categories.activities.title',
     descriptionKey: 'categories.activities.description',
-    image: '/images/categories/activities.jpg',
-    href: '/$lang/not-found',
+    image: '/images/public/categories/activities.png',
+    href: '/$lang/activities',
     detailLinkKey: 'categories.detail_link',
   },
   {
     id: 'tours',
     titleKey: 'categories.tours.title',
     descriptionKey: 'categories.tours.description',
-    image: '/images/categories/tours.jpg',
-    href: '/$lang/not-found',
+    image: '/images/public/categories/tours.png',
+    href: '/$lang/tours',
     detailLinkKey: 'categories.detail_link',
   },
   {
     id: 'hotels',
     titleKey: 'categories.hotels.title',
     descriptionKey: 'categories.hotels.description',
-    image: '/images/categories/hotels.jpg',
-    href: '/$lang/not-found',
+    image: '/images/public/categories/hotels.png',
+    href: '/$lang/hotels',
     detailLinkKey: 'categories.detail_link',
   },
   {
     id: 'rent-a-car',
     titleKey: 'categories.rent_a_car.title',
     descriptionKey: 'categories.rent_a_car.description',
-    image: '/images/categories/rent-a-car.jpg',
-    href: '/$lang/not-found',
+    image: '/images/public/categories/rent-a-car.png',
+    href: '/$lang/rent-a-car',
     detailLinkKey: 'categories.detail_link',
   },
   {
     id: 'esim',
     titleKey: 'categories.esim.title',
     descriptionKey: 'categories.esim.description',
-    image: '/images/categories/esim.jpg',
-    href: '/$lang/not-found',
+    image: '/images/public/categories/sim-cards.png',
+    href: '/$lang/guide/sim-card',
     detailLinkKey: 'categories.detail_link',
   },
   {
     id: 'hospitals',
     titleKey: 'categories.hospitals.title',
     descriptionKey: 'categories.hospitals.description',
-    image: '/images/categories/hospitals.jpg',
-    href: '/$lang/not-found',
+    image: '/images/public/categories/hospitals.png',
+    href: '/$lang/guide/hospitals',
     detailLinkKey: 'categories.detail_link',
   },
   {
     id: 'restaurants',
     titleKey: 'categories.restaurants.title',
     descriptionKey: 'categories.restaurants.description',
-    image: '/images/categories/restaurants.jpg',
-    href: '/$lang/not-found',
+    image: '/images/public/categories/restaurants.png',
+    href: '/$lang/guide/restaurants',
     detailLinkKey: 'categories.detail_link',
   },
   {
     id: 'flight-tickets',
     titleKey: 'categories.flight_tickets.title',
     descriptionKey: 'categories.flight_tickets.description',
-    image: '/images/categories/flight-tickets.jpg',
-    href: '/$lang/not-found',
+    image: '/images/public/categories/flights.png',
+    href: '/$lang/flights',
     detailLinkKey: 'categories.detail_link',
   },
   {
     id: 'yacht-tours',
     titleKey: 'categories.yacht_tours.title',
     descriptionKey: 'categories.yacht_tours.description',
-    image: '/images/categories/yacht-tours.jpg',
-    href: '/$lang/not-found',
+    image: '/images/public/categories/yacht-tours.png',
+    href: '/$lang/yacht',
     detailLinkKey: 'categories.detail_link',
   },
   {
     id: 'transfer',
     titleKey: 'categories.transfer.title',
     descriptionKey: 'categories.transfer.description',
-    image: '/images/categories/transfer.jpg',
-    href: '/$lang/not-found',
+    image: '/images/public/categories/transfer.png',
+    href: '/$lang/transfer',
     detailLinkKey: 'categories.detail_link',
   },
   {
     id: 'hospitals-detail',
     titleKey: 'categories.hospitals_detail.title',
     descriptionKey: 'categories.hospitals_detail.description',
-    image: '/images/categories/hospitals-detail.jpg',
-    href: '/$lang/not-found',
+    image: '/images/public/categories/hospitals.png',
+    href: '/$lang/guide/hospitals',
     detailLinkKey: 'categories.detail_link',
   },
   {
     id: 'museums',
     titleKey: 'categories.museums.title',
     descriptionKey: 'categories.museums.description',
-    image: '/images/categories/museums.jpg',
-    href: '/$lang/not-found',
+    image: '/images/public/categories/museums.png',
+    href: '/$lang/guide/museums',
     detailLinkKey: 'categories.detail_link',
   },
 ]
@@ -179,7 +178,7 @@ export function CategoriesDropdown() {
           >
             {/* Categories Grid */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
-              {categories.map((category, index) => (
+              {CATEGORIES.map((category, index) => (
                 <CategoryCard
                   key={category.id}
                   category={category}
@@ -213,7 +212,6 @@ function CategoryCard({ category, index, isOpen, onClose }: CategoryCardProps) {
   return (
     <Link
       to={category.href}
-      key={category.id}
       data-status={isOpen ? 'active' : 'closed'}
       style={{
         transitionDelay: isOpen ? `${index * 20}ms` : '0ms',
@@ -223,12 +221,12 @@ function CategoryCard({ category, index, isOpen, onClose }: CategoryCardProps) {
     >
       {/* Category Image */}
       <div className="flex h-24 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xs bg-primary-100 transition-all duration-200 group-hover:bg-primary-200">
-        {/*<img
+        <img
           src={category.image}
           alt={t(category.titleKey)}
           className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
           loading="lazy"
-        />*/}
+        />
       </div>
 
       {/* Category Content */}
