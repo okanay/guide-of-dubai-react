@@ -1,16 +1,17 @@
-import { Route } from 'src/routes/$lang/_public/rent-a-car.route'
+import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { RentACarFilterProvider } from '@/features/public/pages/rent-a-car/store'
+import { Route } from '@/routes/$lang/_public/rent-a-car.route'
 import { SearchForm } from './form-search'
-import { Outlet } from '@tanstack/react-router'
 
-export const RentACarLayout = () => {
-  const search = Route.useSearch()
+export function RentACarLayout() {
+  const searchParams = Route.useSearch()
 
   return (
-    <>
-      <main className="flex flex-col">
-        <SearchForm initialData={search} />
+    <main className="flex flex-col">
+      <RentACarFilterProvider initialState={searchParams}>
+        <SearchForm />
         <Outlet />
-      </main>
-    </>
+      </RentACarFilterProvider>
+    </main>
   )
 }
