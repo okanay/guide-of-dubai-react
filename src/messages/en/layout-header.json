@@ -66,7 +66,7 @@
       "title": "Dubai Visa AI",
       "description": "Apply for visa. Check visa status"
     },
-    "desert_safari": {
+    "safari_tour": {
       "title": "Desert Safari",
       "description": "Discover the desert experience with morning and evening safari tours."
     },
@@ -86,7 +86,7 @@
       "title": "Rent a Car",
       "description": "More than 50 activities are waiting for you."
     },
-    "esim": {
+    "sim_cards": {
       "title": "eSIM",
       "description": "Uninterrupted internet with 6, 10, 18GB options."
     },
@@ -98,11 +98,11 @@
       "title": "Restaurants",
       "description": "Discover Dubai's most delicious restaurants."
     },
-    "flight_tickets": {
+    "flights": {
       "title": "Flight Tickets",
       "description": "Choose from luxury and comfortable hotels."
     },
-    "yacht_tours": {
+    "yachts": {
       "title": "Yacht Tours",
       "description": "More than 50 activities are waiting for you."
     },
@@ -110,7 +110,7 @@
       "title": "Transfer",
       "description": "More than 50 activities are waiting for you."
     },
-    "hospitals_detail": {
+    "hospitals_unknow": {
       "title": "Hospitals",
       "description": "More than 50 activities are waiting for you."
     },

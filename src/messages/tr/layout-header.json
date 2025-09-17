@@ -66,7 +66,7 @@
       "title": "Dubai Vize Al",
       "description": "Vize başvurusu yap. Vize durumunu kontrol et"
     },
-    "desert_safari": {
+    "safari_tour": {
       "title": "Çöl Safari",
       "description": "Sabah ve akşam safari turları ile çöl deneyimini keşfet."
     },
@@ -86,7 +86,7 @@
       "title": "Rent a Car",
       "description": "50'den fazla etkinlik seni bekliyor."
     },
-    "esim": {
+    "sim_card": {
       "title": "eSIM",
       "description": "6, 10, 18GB seçenekleri ile kesintisiz internet."
     },
@@ -98,11 +98,11 @@
       "title": "Restorantlar",
       "description": "Dubai'nin en lezzetli restoranlarını keşfet."
     },
-    "flight_tickets": {
+    "flights": {
       "title": "Uçak Bileti",
       "description": "Lüks ve konforlu oteller arasından seçim yap."
     },
-    "yacht_tours": {
+    "yachts": {
       "title": "Yat Turları",
       "description": "50'den fazla etkinlik seni bekliyor."
     },
@@ -110,7 +110,7 @@
       "title": "Transfer",
       "description": "50'den fazla etkinlik seni bekliyor."
     },
-    "hospitals_detail": {
+    "hospitals_unknow": {
       "title": "Hastaneler",
       "description": "50'den fazla etkinlik seni bekliyor."
     },

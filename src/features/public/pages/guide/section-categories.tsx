@@ -17,7 +17,7 @@ export const AllCategories = () => {
           <div className="scrollbar-hide grid grid-cols-[repeat(auto-fit,minmax(270px,1fr))] gap-x-4 gap-y-8 pb-4">
             {CATEGORIES.map((category, index) => (
               <div key={'guide' + category.titleKey} className="w-full min-w-[270px] shrink-0">
-                <CategoryCard category={category} />
+                <CategoryCard category={category} index={index} />
               </div>
             ))}
           </div>
@@ -27,23 +27,21 @@ export const AllCategories = () => {
   )
 }
 
-function CategoryCard({ category }: { category: CategoryItem }) {
+function CategoryCard({ category, index }: { category: CategoryItem; index: number }) {
   const { t } = useTranslation('layout-header')
 
   return (
     <Link
       to={category.href}
-      resetScroll={false}
-      preload="intent"
       className="group flex h-full cursor-pointer items-start gap-x-4 rounded-xs border border-gray-50 pr-3 shadow-xs"
     >
       {/* Category Image */}
-      <div className="flex h-full w-22 shrink-0 items-center justify-center overflow-hidden rounded-xs">
+      <div className="flex h-full min-h-28 w-22 shrink-0 items-center justify-center overflow-hidden rounded-xs">
         <img
           src={category.image}
           alt={t(category.titleKey)}
           className="h-full w-full object-cover"
-          loading="lazy"
+          loading={index < 5 ? 'eager' : 'lazy'}
         />
       </div>
 
