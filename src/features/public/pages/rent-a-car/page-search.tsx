@@ -1,4 +1,4 @@
-import { Route } from 'src/routes/$lang/_public/rent-a-car.search.route'
+import { Route } from 'src/routes/$lang/_public/rent-a-car/search.route'
 
 export const RentACarSearchPage = () => {
   const { text } = Route.useLoaderData()

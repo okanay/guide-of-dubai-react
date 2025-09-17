@@ -1,9 +1,9 @@
+import {
+  PendingIndicator,
+  PendingShortComponent,
+} from '@/features/public/layout/pending/pending-loading'
 import { createFileRoute, Outlet, useMatch } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
-import {
-  RentACarPendingComponent,
-  RentACarPendingIndicator,
-} from '@/features/public/pages/rent-a-car/pending-loading'
 
 type Data = {
   dateStart: string
@@ -45,7 +45,7 @@ export const Route = createFileRoute('/$lang/_public/rent-a-car/search')({
     return result
   },
   component: Layout,
-  pendingComponent: RentACarPendingComponent,
+  pendingComponent: PendingShortComponent,
 })
 
 function Layout() {
@@ -55,7 +55,7 @@ function Layout() {
   return (
     <>
       <Outlet />
-      {isReloading && <RentACarPendingIndicator />}
+      {isReloading && <PendingIndicator />}
     </>
   )
 }

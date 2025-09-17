@@ -1,5 +1,3 @@
-import { Route } from 'src/routes/$lang/_public/hotels.search'
-
 export const HotelSearchPage = () => {
   return (
     <section className="text-on-box min-h-40 bg-box-surface px-4">

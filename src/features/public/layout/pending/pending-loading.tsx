@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-export function RentACarPendingComponent() {
+export function PendingShortComponent() {
   const { t } = useTranslation('global-common')
 
   return (
@@ -19,7 +19,7 @@ export function RentACarPendingComponent() {
   )
 }
 
-export const RentACarPendingIndicator = () => {
+export const PendingIndicator = () => {
   return (
     <div className="fixed inset-0 z-1000 flex items-center justify-center gap-x-4 bg-white/10 backdrop-blur-xs">
       <div className="absolute size-24 animate-spin rounded-full border-4 border-solid border-primary-500 border-t-transparent" />

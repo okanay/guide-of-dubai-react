@@ -1,4 +1,4 @@
-import { Route } from 'src/routes/$lang/_public/hotels.route'
+import { Route } from 'src/routes/$lang/_public/hotels/route'
 import { SearchForm } from './form-search'
 import { Outlet } from '@tanstack/react-router'
 

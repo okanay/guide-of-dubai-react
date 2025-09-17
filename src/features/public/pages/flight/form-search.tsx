@@ -13,7 +13,7 @@ import { Control, Controller, useForm, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 import { DropdownPortal } from '@/components/dropdown-portal'
-import { flightsFormSchema } from '@/routes/$lang/_public/flights.route'
+import { flightsFormSchema } from '@/routes/$lang/_public/flights/route'
 
 type SearchFormValues = z.infer<typeof flightsFormSchema>
 
