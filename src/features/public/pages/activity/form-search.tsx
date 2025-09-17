@@ -2,21 +2,19 @@ import Icon from '@/components/icon'
 import { DatePickerText } from '@/features/public/components/form-ui/date-picker'
 import { NumericStepper } from '@/features/public/components/form-ui/numeric-stepper'
 import { useLanguage } from '@/i18n/prodiver'
-import { activitySearchSchema } from '@/routes/$lang/_public/activities/route'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
 import { format, parseISO } from 'date-fns'
 import { useRef, useState } from 'react'
-import { Control, Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { z } from 'zod'
 import { DropdownPortal } from '@/components/dropdown-portal'
-
-// Formun tipini Zod şemasından türet
-type SearchFormValues = z.infer<typeof activitySearchSchema>
+import { useActivityStore } from './store'
 
 interface SearchFormProps {
-  initialData?: Partial<SearchFormValues>
+  initialData?: Partial<{
+    date?: string
+    adult?: number
+    child?: number
+  }>
 }
 
 // ============================================================================
@@ -26,34 +24,27 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
   const { language } = useLanguage()
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { filters, setFilterValue } = useActivityStore()
 
   const [isParticipantOpen, setIsParticipantOpen] = useState(false)
   const participantTriggerRef = useRef<HTMLDivElement>(null)
 
-  const { control, handleSubmit, watch } = useForm<SearchFormValues>({
-    resolver: zodResolver(activitySearchSchema),
-    defaultValues: {
-      date: initialData?.date || format(new Date(), 'yyyy-MM-dd'),
-      adult: initialData?.adult || 2,
-      child: initialData?.child || 1,
-    },
-  })
-
-  // Katılımcı sayısını anlık olarak izle
-  const [adults, children] = watch(['adult', 'child'])
-
   // Form gönderildiğinde
-  const onSubmit = (data: SearchFormValues) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    const searchParams = Object.fromEntries(
+      Object.entries(filters).filter(
+        ([key, value]) => value !== undefined && key !== 'setFilterValue',
+      ),
+    )
+
     navigate({
       to: '/$lang/activities/search',
       params: {
         lang: language.value,
       },
-      search: {
-        date: data.date,
-        adult: data.adult,
-        child: data.child,
-      },
+      search: searchParams,
       resetScroll: false,
     })
   }
@@ -61,7 +52,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
   return (
     <section className="bg-box-surface pb-4 md:py-4">
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit}
         className="mx-auto flex max-w-main flex-col gap-y-4 border-b border-gray-200 bg-white p-4 md:flex-row md:items-center md:p-0 md:shadow"
       >
         {/* Tarih Seçici */}
@@ -69,18 +60,12 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
           <label className="text-xs font-medium text-gray-700">
             {t('global-form:labels.date')}
           </label>
-          <Controller
-            name="date"
-            control={control}
-            render={({ field }) => (
-              <DatePickerText
-                value={field.value ? parseISO(field.value) : new Date()}
-                onChange={(date) => field.onChange(date ? format(date, 'yyyy-MM-dd') : '')}
-                minDate={new Date()}
-                className="w-full text-start text-size-sm font-semibold"
-                dropdownClassName="mt-2.5 -ml-4"
-              />
-            )}
+          <DatePickerText
+            value={filters.date ? parseISO(filters.date) : new Date()}
+            onChange={(date) => setFilterValue('date', date ? format(date, 'yyyy-MM-dd') : '')}
+            minDate={new Date()}
+            className="w-full text-start text-size-sm font-semibold"
+            dropdownClassName="mt-2.5 -ml-4"
           />
         </div>
 
@@ -98,7 +83,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
             className="flex w-full items-center justify-between text-left"
           >
             <span className="text-size-sm font-semibold">
-              {`${adults} ${t('global-form:participants.adults')}, ${children} ${t('global-form:participants.children')}`}
+              {`${filters.adult} ${t('global-form:participants.adults')}, ${filters.child} ${t('global-form:participants.children')}`}
             </span>
           </button>
 
@@ -107,7 +92,6 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
             isOpen={isParticipantOpen}
             triggerRef={participantTriggerRef}
             onClose={() => setIsParticipantOpen(false)}
-            control={control}
           />
         </div>
 
@@ -133,16 +117,11 @@ interface ParticipantsDropdownProps {
   isOpen: boolean
   triggerRef: any
   onClose: () => void
-  control: Control<SearchFormValues>
 }
 
-const ParticipantsDropdown = ({
-  isOpen,
-  triggerRef,
-  onClose,
-  control,
-}: ParticipantsDropdownProps) => {
+const ParticipantsDropdown = ({ isOpen, triggerRef, onClose }: ParticipantsDropdownProps) => {
   const { t } = useTranslation()
+  const { filters, setFilterValue } = useActivityStore()
 
   return (
     <DropdownPortal
@@ -153,40 +132,28 @@ const ParticipantsDropdown = ({
       className="w-full max-w-[calc(100%_-_2rem)] rounded-xs border border-gray-200 bg-white shadow-xl md:max-w-[320px]"
     >
       <div className="flex flex-col gap-y-4 p-4">
-        <Controller
-          name="adult"
-          control={control}
-          render={({ field }) => (
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-black">
-                {t('global-form:participants.adults')}
-              </label>
-              <NumericStepper
-                value={field.value || 1}
-                onChange={field.onChange}
-                min={1}
-                className="w-32"
-              />
-            </div>
-          )}
-        />
-        <Controller
-          name="child"
-          control={control}
-          render={({ field }) => (
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-black">
-                {t('global-form:participants.children')}
-              </label>
-              <NumericStepper
-                value={field.value || 0}
-                onChange={field.onChange}
-                min={0}
-                className="w-32"
-              />
-            </div>
-          )}
-        />
+        <div className="flex items-center justify-between">
+          <label className="text-sm font-medium text-black">
+            {t('global-form:participants.adults')}
+          </label>
+          <NumericStepper
+            value={filters.adult}
+            onChange={(value) => setFilterValue('adult', value)}
+            min={1}
+            className="w-32"
+          />
+        </div>
+        <div className="flex items-center justify-between">
+          <label className="text-sm font-medium text-black">
+            {t('global-form:participants.children')}
+          </label>
+          <NumericStepper
+            value={filters.child}
+            onChange={(value) => setFilterValue('child', value)}
+            min={0}
+            className="w-32"
+          />
+        </div>
       </div>
     </DropdownPortal>
   )

@@ -1,6 +1,7 @@
-import { Route } from 'src/routes/$lang/_public/hotels/route'
-import { SearchForm } from './form-search'
 import { Outlet } from '@tanstack/react-router'
+import { HotelFilterProvider } from './store'
+import { Route } from '@/routes/$lang/_public/hotels/route'
+import { SearchForm } from './form-search'
 
 export const HotelLayout = () => {
   const search = Route.useSearch()
@@ -8,8 +9,10 @@ export const HotelLayout = () => {
   return (
     <>
       <main className="flex flex-col">
-        <SearchForm initialData={search} />
-        <Outlet />
+        <HotelFilterProvider initialState={search}>
+          <SearchForm />
+          <Outlet />
+        </HotelFilterProvider>
       </main>
     </>
   )

@@ -4,21 +4,25 @@ import { NumericStepper } from '@/features/public/components/form-ui/numeric-ste
 import { RadioGroup } from '@/features/public/components/form-ui/radio-input'
 import { Checkbox } from '@/features/public/components/form-ui/checkbox'
 import { useLanguage } from '@/i18n/prodiver'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
 import { format, parseISO, subDays } from 'date-fns'
 import { MapPin, ArrowUpDown, Clock, X } from 'lucide-react'
 import { useRef, useState } from 'react'
-import { Control, Controller, useForm, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { z } from 'zod'
 import { DropdownPortal } from '@/components/dropdown-portal'
-import { flightsFormSchema } from '@/routes/$lang/_public/flights/route'
-
-type SearchFormValues = z.infer<typeof flightsFormSchema>
+import { useFlightStore } from './store'
 
 interface SearchFormProps {
-  initialData?: Partial<SearchFormValues>
+  initialData?: Partial<{
+    tripType?: 'one-way' | 'round-trip'
+    from?: string
+    to?: string
+    departureDate?: string
+    returnDate?: string
+    adults?: number
+    children?: number
+    directFlightsOnly?: boolean
+  }>
 }
 
 // ============================================================================
@@ -28,6 +32,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
   const navigate = useNavigate()
   const { language } = useLanguage()
   const { t } = useTranslation('global-form')
+  const { filters, setFilterValue } = useFlightStore()
 
   // Dropdown states
   const [isFromOpen, setIsFromOpen] = useState(false)
@@ -39,27 +44,6 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
   const toTriggerRef = useRef<HTMLDivElement>(null)
   const passengerTriggerRef = useRef<HTMLDivElement>(null)
 
-  const { control, handleSubmit, setValue } = useForm<SearchFormValues>({
-    resolver: zodResolver(flightsFormSchema),
-    defaultValues: {
-      tripType: initialData?.tripType || 'round-trip',
-      from: initialData?.from || '',
-      to: initialData?.to || '',
-      departureDate: initialData?.departureDate || format(new Date(), 'yyyy-MM-dd'),
-      returnDate: initialData?.returnDate || format(new Date(), 'yyyy-MM-dd'),
-      adults: initialData?.adults || 1,
-      children: initialData?.children || 0,
-      directFlightsOnly: initialData?.directFlightsOnly || false,
-    },
-  })
-
-  // Watch specific fields
-  const tripType = useWatch({ control, name: 'tripType' })
-  const adults = useWatch({ control, name: 'adults' })
-  const children = useWatch({ control, name: 'children' })
-  const fromValue = useWatch({ control, name: 'from' })
-  const toValue = useWatch({ control, name: 'to' })
-
   // Trip type options
   const tripTypeOptions = [
     { value: 'one-way', label: t('flight.one_way') },
@@ -68,73 +52,60 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
 
   // Trip type değiştiğinde return date'i temizle/ayarla
   const handleTripTypeChange = (newTripType: 'one-way' | 'round-trip') => {
-    setValue('tripType', newTripType)
+    setFilterValue('tripType', newTripType)
     if (newTripType === 'one-way') {
-      setValue('returnDate', undefined)
+      setFilterValue('returnDate', undefined)
     } else {
-      setValue('returnDate', format(new Date(), 'yyyy-MM-dd'))
+      setFilterValue('returnDate', format(new Date(), 'yyyy-MM-dd'))
     }
   }
 
   // Swap locations function
   const handleSwapLocations = () => {
-    const currentFrom = fromValue
-    const currentTo = toValue
-    setValue('from', currentTo)
-    setValue('to', currentFrom)
+    const currentFrom = filters.from
+    const currentTo = filters.to
+    setFilterValue('from', currentTo)
+    setFilterValue('to', currentFrom)
   }
 
-  const onSubmit = (data: SearchFormValues) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    const searchParams = Object.fromEntries(
+      Object.entries(filters).filter(
+        ([key, value]) => value !== undefined && key !== 'setFilterValue',
+      ),
+    )
+
     navigate({
       to: '/$lang/flights/search',
       params: {
         lang: language.value,
       },
-      search: {
-        tripType: data.tripType,
-        from: data.from,
-        to: data.to,
-        departureDate: data.departureDate,
-        returnDate: data.returnDate,
-        adults: data.adults,
-        children: data.children,
-        directFlightsOnly: data.directFlightsOnly,
-      },
+      search: searchParams,
       resetScroll: false,
     })
   }
 
   return (
     <section className="bg-box-surface pb-4 md:py-4">
-      <form onSubmit={handleSubmit(onSubmit)} className="mx-auto max-w-main bg-white md:shadow">
+      <form onSubmit={handleSubmit} className="mx-auto max-w-main bg-white md:shadow">
         {/* Trip Type and Direct Flights Row */}
         <div className="flex items-center justify-between border-b border-gray-100 px-4 py-3">
-          <Controller
+          <RadioGroup
             name="tripType"
-            control={control}
-            render={({ field }) => (
-              <RadioGroup
-                name="tripType"
-                value={field.value}
-                onChange={(value) => handleTripTypeChange(value as any)}
-                options={tripTypeOptions}
-                className="flex w-full flex-row flex-wrap space-y-0 gap-x-4"
-              />
-            )}
+            value={filters.tripType}
+            onChange={(value) => handleTripTypeChange(value as 'one-way' | 'round-trip')}
+            options={tripTypeOptions}
+            className="flex w-full flex-row flex-wrap space-y-0 gap-x-4"
           />
 
-          <Controller
-            name="directFlightsOnly"
-            control={control}
-            render={({ field }) => (
-              <Checkbox
-                id="direct-flights"
-                checked={field.value}
-                onChange={(e) => field.onChange(e.target.checked)}
-                label={t('flight.direct_flights_only')}
-                className="ml-4"
-              />
-            )}
+          <Checkbox
+            id="direct-flights"
+            checked={filters.directFlightsOnly}
+            onChange={(e) => setFilterValue('directFlightsOnly', e.target.checked)}
+            label={t('flight.direct_flights_only')}
+            className="ml-4"
           />
         </div>
 
@@ -147,39 +118,29 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
               className="relative flex h-14 flex-1 flex-col items-start justify-center border-gray-200 py-2.5 pr-6 pl-4 text-start shadow md:border-r md:py-0 md:shadow-none"
             >
               <label className="text-xs font-medium text-gray-700">{t('flight.from')}</label>
-              <Controller
-                name="from"
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <LocationInput
-                      value={field.value || ''}
-                      onChange={(value) => {
-                        field.onChange(value)
-                        setIsFromOpen(true)
-                      }}
-                      onFocus={() => setIsFromOpen(true)}
-                      onClear={() => field.onChange('')}
-                      placeholder={t('flight.departure_placeholder')}
-                    />
+              <LocationInput
+                value={filters.from}
+                onChange={(value) => {
+                  setFilterValue('from', value)
+                  setIsFromOpen(true)
+                }}
+                onFocus={() => setIsFromOpen(true)}
+                onClear={() => setFilterValue('from', '')}
+                placeholder={t('flight.departure_placeholder')}
+              />
 
-                    <LocationDropdown
-                      isOpen={isFromOpen}
-                      triggerRef={fromTriggerRef}
-                      onClose={() => setIsFromOpen(false)}
-                      onSelect={(airport) => {
-                        const displayValue =
-                          airport.type === 'city'
-                            ? airport.name
-                            : `${airport.city} (${airport.code})`
-                        field.onChange(displayValue)
-                        setIsFromOpen(false)
-                      }}
-                      searchValue={field.value || ''}
-                      excludeValue={toValue}
-                    />
-                  </>
-                )}
+              <LocationDropdown
+                isOpen={isFromOpen}
+                triggerRef={fromTriggerRef}
+                onClose={() => setIsFromOpen(false)}
+                onSelect={(airport) => {
+                  const displayValue =
+                    airport.type === 'city' ? airport.name : `${airport.city} (${airport.code})`
+                  setFilterValue('from', displayValue)
+                  setIsFromOpen(false)
+                }}
+                searchValue={filters.from}
+                excludeValue={filters.to}
               />
             </div>
 
@@ -201,39 +162,29 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
               className="relative flex h-14 flex-1 flex-col items-start justify-center border-gray-200 py-2.5 pr-4 pl-6 text-start shadow md:border-r md:py-0 md:shadow-none"
             >
               <label className="text-xs font-medium text-gray-700">{t('flight.to')}</label>
-              <Controller
-                name="to"
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <LocationInput
-                      value={field.value || ''}
-                      onChange={(value) => {
-                        field.onChange(value)
-                        setIsToOpen(true)
-                      }}
-                      onFocus={() => setIsToOpen(true)}
-                      onClear={() => field.onChange('')}
-                      placeholder={t('flight.arrival_placeholder')}
-                    />
+              <LocationInput
+                value={filters.to}
+                onChange={(value) => {
+                  setFilterValue('to', value)
+                  setIsToOpen(true)
+                }}
+                onFocus={() => setIsToOpen(true)}
+                onClear={() => setFilterValue('to', '')}
+                placeholder={t('flight.arrival_placeholder')}
+              />
 
-                    <LocationDropdown
-                      isOpen={isToOpen}
-                      triggerRef={toTriggerRef}
-                      onClose={() => setIsToOpen(false)}
-                      onSelect={(airport) => {
-                        const displayValue =
-                          airport.type === 'city'
-                            ? airport.name
-                            : `${airport.city} (${airport.code})`
-                        field.onChange(displayValue)
-                        setIsToOpen(false)
-                      }}
-                      searchValue={field.value || ''}
-                      excludeValue={fromValue}
-                    />
-                  </>
-                )}
+              <LocationDropdown
+                isOpen={isToOpen}
+                triggerRef={toTriggerRef}
+                onClose={() => setIsToOpen(false)}
+                onSelect={(airport) => {
+                  const displayValue =
+                    airport.type === 'city' ? airport.name : `${airport.city} (${airport.code})`
+                  setFilterValue('to', displayValue)
+                  setIsToOpen(false)
+                }}
+                searchValue={filters.to}
+                excludeValue={filters.from}
               />
             </div>
           </div>
@@ -243,37 +194,29 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
             <label className="text-xs font-medium text-gray-700">
               {t('flight.departure_date')}
             </label>
-            <Controller
-              name="departureDate"
-              control={control}
-              render={({ field }) => (
-                <DatePickerText
-                  value={field.value ? parseISO(field.value) : new Date()}
-                  onChange={(date) => field.onChange(date ? format(date, 'yyyy-MM-dd') : '')}
-                  minDate={subDays(new Date(), 1)}
-                  className="w-full text-start text-size-sm font-semibold"
-                  dropdownClassName="mt-2.5 -ml-4"
-                />
-              )}
+            <DatePickerText
+              value={filters.departureDate ? parseISO(filters.departureDate) : new Date()}
+              onChange={(date) =>
+                setFilterValue('departureDate', date ? format(date, 'yyyy-MM-dd') : '')
+              }
+              minDate={subDays(new Date(), 1)}
+              className="w-full text-start text-size-sm font-semibold"
+              dropdownClassName="mt-2.5 -ml-4"
             />
           </div>
 
           {/* Return Date - Only show for round-trip */}
-          {tripType === 'round-trip' && (
+          {filters.tripType === 'round-trip' && (
             <div className="relative flex h-14 min-w-[200px] flex-col items-start justify-center border-gray-200 px-4 py-2.5 text-start shadow md:border-r md:py-0 md:shadow-none">
               <label className="text-xs font-medium text-gray-700">{t('flight.return_date')}</label>
-              <Controller
-                name="returnDate"
-                control={control}
-                render={({ field }) => (
-                  <DatePickerText
-                    value={field.value ? parseISO(field.value) : new Date()}
-                    onChange={(date) => field.onChange(date ? format(date, 'yyyy-MM-dd') : '')}
-                    minDate={subDays(new Date(), 1)}
-                    className="w-full text-start text-size-sm font-semibold"
-                    dropdownClassName="mt-2.5 -ml-4"
-                  />
-                )}
+              <DatePickerText
+                value={filters.returnDate ? parseISO(filters.returnDate) : new Date()}
+                onChange={(date) =>
+                  setFilterValue('returnDate', date ? format(date, 'yyyy-MM-dd') : '')
+                }
+                minDate={subDays(new Date(), 1)}
+                className="w-full text-start text-size-sm font-semibold"
+                dropdownClassName="mt-2.5 -ml-4"
               />
             </div>
           )}
@@ -290,7 +233,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
               className="flex w-full items-center justify-between text-left"
             >
               <span className="text-size-sm font-semibold">
-                {`${adults} ${t('flight.adults')}${children! > 0 ? `, ${children} ${t('flight.children')}` : ''}`}
+                {`${filters.adults} ${t('flight.adults')}${filters.children > 0 ? `, ${filters.children} ${t('flight.children')}` : ''}`}
               </span>
             </button>
 
@@ -298,7 +241,6 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
               isOpen={isPassengerOpen}
               triggerRef={passengerTriggerRef}
               onClose={() => setIsPassengerOpen(false)}
-              control={control}
             />
           </div>
 
@@ -415,11 +357,12 @@ interface PassengerDropdownProps {
   isOpen: boolean
   triggerRef: any
   onClose: () => void
-  control: Control<SearchFormValues>
 }
 
-const PassengerDropdown = ({ isOpen, triggerRef, onClose, control }: PassengerDropdownProps) => {
+const PassengerDropdown = ({ isOpen, triggerRef, onClose }: PassengerDropdownProps) => {
   const { t } = useTranslation('global-form')
+  const { filters, setFilterValue } = useFlightStore()
+
   return (
     <DropdownPortal
       isOpen={isOpen}
@@ -429,45 +372,33 @@ const PassengerDropdown = ({ isOpen, triggerRef, onClose, control }: PassengerDr
       className="w-full max-w-[calc(100%_-_2rem)] rounded-xs border border-gray-200 bg-white shadow-xl md:max-w-[320px]"
     >
       <div className="flex flex-col gap-y-4 p-4">
-        <Controller
-          name="adults"
-          control={control}
-          render={({ field }) => (
-            <div className="flex items-center justify-between">
-              <div>
-                <label className="text-sm font-medium text-black">{t('flight.adults')}</label>
-                <p className="text-xs text-gray-500">{t('flight.adults_description')}</p>
-              </div>
-              <NumericStepper
-                value={field.value || 1}
-                onChange={field.onChange}
-                min={1}
-                max={9}
-                className="w-32"
-              />
-            </div>
-          )}
-        />
+        <div className="flex items-center justify-between">
+          <div>
+            <label className="text-sm font-medium text-black">{t('flight.adults')}</label>
+            <p className="text-xs text-gray-500">{t('flight.adults_description')}</p>
+          </div>
+          <NumericStepper
+            value={filters.adults}
+            onChange={(value) => setFilterValue('adults', value)}
+            min={1}
+            max={9}
+            className="w-32"
+          />
+        </div>
 
-        <Controller
-          name="children"
-          control={control}
-          render={({ field }) => (
-            <div className="flex items-center justify-between">
-              <div>
-                <label className="text-sm font-medium text-black">{t('flight.children')}</label>
-                <p className="text-xs text-gray-500">{t('flight.children_description')}</p>
-              </div>
-              <NumericStepper
-                value={field.value || 0}
-                onChange={field.onChange}
-                min={0}
-                max={8}
-                className="w-32"
-              />
-            </div>
-          )}
-        />
+        <div className="flex items-center justify-between">
+          <div>
+            <label className="text-sm font-medium text-black">{t('flight.children')}</label>
+            <p className="text-xs text-gray-500">{t('flight.children_description')}</p>
+          </div>
+          <NumericStepper
+            value={filters.children}
+            onChange={(value) => setFilterValue('children', value)}
+            min={0}
+            max={8}
+            className="w-32"
+          />
+        </div>
       </div>
     </DropdownPortal>
   )

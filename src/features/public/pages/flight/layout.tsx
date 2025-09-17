@@ -1,6 +1,7 @@
+import { Outlet } from '@tanstack/react-router'
+import { FlightFilterProvider } from './store'
 import { Route } from 'src/routes/$lang/_public/flights/route'
 import { SearchForm } from './form-search'
-import { Outlet } from '@tanstack/react-router'
 
 export const FlightsLayout = () => {
   const search = Route.useSearch()
@@ -8,8 +9,10 @@ export const FlightsLayout = () => {
   return (
     <>
       <main className="flex flex-col">
-        <SearchForm initialData={search} />
-        <Outlet />
+        <FlightFilterProvider initialState={search}>
+          <SearchForm />
+          <Outlet />
+        </FlightFilterProvider>
       </main>
     </>
   )

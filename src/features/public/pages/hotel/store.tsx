@@ -2,34 +2,32 @@ import { createContext, PropsWithChildren, useContext, useState } from 'react'
 import { createStore, StoreApi, useStore } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 import { format } from 'date-fns'
-import { RentACarFilterState } from './form-schema'
+import { HotelFilterState } from './form-schema'
 
 // Store'un tam tipi
-type FilterStore = {
-  filters: RentACarFilterState
-  setFilterValue: <K extends keyof RentACarFilterState>(
-    key: K,
-    value: RentACarFilterState[K],
-  ) => void
+type HotelFilterStore = {
+  filters: HotelFilterState
+  setFilterValue: <K extends keyof HotelFilterState>(key: K, value: HotelFilterState[K]) => void
 }
 
 // Provider'a verilecek başlangıç verisi için tip
 type Props = PropsWithChildren<{
-  initialState: Partial<RentACarFilterState>
+  initialState: Partial<HotelFilterState>
 }>
 
 // Store'u oluşturmak için Context
-const FilterContext = createContext<StoreApi<FilterStore> | undefined>(undefined)
+const HotelFilterContext = createContext<StoreApi<HotelFilterStore> | undefined>(undefined)
 
-export function RentACarFilterProvider({ children, initialState }: Props) {
+export function HotelFilterProvider({ children, initialState }: Props) {
   const [store] = useState(() =>
-    createStore<FilterStore>()(
+    createStore<HotelFilterStore>()(
       immer((set) => ({
         filters: {
+          search: initialState.search || '',
           dateStart: initialState.dateStart || format(new Date(), 'yyyy-MM-dd'),
           dateEnd: initialState.dateEnd || format(new Date(), 'yyyy-MM-dd'),
-          timeStart: initialState.timeStart || '10:00',
-          timeEnd: initialState.timeEnd || '20:00',
+          adult: initialState.adult || 2,
+          child: initialState.child || 1,
         },
 
         // Tek bir input'un değerini güncelleyen eylem
@@ -42,14 +40,14 @@ export function RentACarFilterProvider({ children, initialState }: Props) {
     ),
   )
 
-  return <FilterContext.Provider value={store}>{children}</FilterContext.Provider>
+  return <HotelFilterContext.Provider value={store}>{children}</HotelFilterContext.Provider>
 }
 
-export function useRentACarStore(): FilterStore {
-  const store = useContext(FilterContext)
+export function useHotelStore(): HotelFilterStore {
+  const store = useContext(HotelFilterContext)
 
   if (!store) {
-    throw new Error('useRentACarFilter must be used within a RentACarFilterProvider')
+    throw new Error('useHotelStore must be used within a HotelFilterProvider')
   }
 
   return useStore(store)

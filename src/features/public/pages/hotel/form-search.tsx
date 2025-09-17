@@ -1,32 +1,23 @@
+import { DropdownPortal } from '@/components/dropdown-portal'
 import Icon from '@/components/icon'
 import { DatePickerText } from '@/features/public/components/form-ui/date-picker'
 import { NumericStepper } from '@/features/public/components/form-ui/numeric-stepper'
 import { useLanguage } from '@/i18n/prodiver'
-import { hotelsSearchSchema } from '@/routes/$lang/_public/hotels/route'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
 import { format, parseISO } from 'date-fns'
-import { Building, Clock, MapPin, Star, X } from 'lucide-react'
-import { useRef, useState, useMemo } from 'react'
-import { Control, Controller, useForm } from 'react-hook-form'
+import { Clock, MapPin, X } from 'lucide-react'
+import { useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { z } from 'zod'
-import { DropdownPortal } from '@/components/dropdown-portal'
-
-// Form tipini Zod şemasından türet
-type SearchFormValues = z.infer<typeof hotelsSearchSchema>
-
-interface SearchFormProps {
-  initialData?: Partial<SearchFormValues>
-}
+import { useHotelStore } from './store'
 
 // ============================================================================
 // MAIN SEARCH FORM COMPONENT
 // ============================================================================
-export const SearchForm = ({ initialData }: SearchFormProps) => {
+export const SearchForm = () => {
   const navigate = useNavigate()
   const { language } = useLanguage()
   const { t } = useTranslation('global-form')
+  const { filters, setFilterValue } = useHotelStore()
 
   // Search dropdown state
   const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -36,37 +27,26 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
   const [isParticipantOpen, setIsParticipantOpen] = useState(false)
   const participantTriggerRef = useRef<HTMLDivElement>(null)
 
-  const { control, handleSubmit, watch } = useForm<SearchFormValues>({
-    resolver: zodResolver(hotelsSearchSchema),
-    defaultValues: {
-      search: initialData?.search || '',
-      dateStart: initialData?.dateStart || format(new Date(), 'yyyy-MM-dd'),
-      dateEnd: initialData?.dateEnd || format(new Date(), 'yyyy-MM-dd'),
-      adult: initialData?.adult || 2,
-      child: initialData?.child || 1,
-    },
-  })
-
-  const [adults, children, searchValue] = watch(['adult', 'child', 'search'])
-
   // Search değeri değiştiğinde filtreleme yap
   const filteredSuggestions = useMemo(() => {
     return []
-  }, [searchValue])
+  }, [filters.search])
 
-  const onSubmit = (data: SearchFormValues) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    const searchParams = Object.fromEntries(
+      Object.entries(filters).filter(
+        ([key, value]) => value !== undefined && key !== 'setFilterValue',
+      ),
+    )
+
     navigate({
       to: '/$lang/hotels/search',
       params: {
         lang: language.value,
       },
-      search: {
-        search: data.search,
-        dateStart: data.dateStart,
-        dateEnd: data.dateEnd,
-        adult: data.adult,
-        child: data.child,
-      },
+      search: searchParams,
       resetScroll: false,
     })
   }
@@ -74,7 +54,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
   return (
     <section className="bg-box-surface pb-4 md:py-4">
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit}
         className="mx-auto flex max-w-main flex-col gap-y-4 border-b border-gray-200 bg-white p-4 md:flex-row md:items-center md:p-0 md:shadow"
       >
         {/* Arama Kelimesi */}
@@ -83,62 +63,54 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
           className="relative flex h-14 flex-1 flex-col items-start justify-center border-gray-200 px-4 py-2.5 text-start shadow md:border-r md:py-0 md:shadow-none"
         >
           <label className="text-xs font-medium text-gray-700">{t('labels.search-otel')}</label>
-          <Controller
-            name="search"
-            control={control}
-            render={({ field, fieldState }) => (
-              <>
-                <div className="relative -mt-1.5 w-full">
-                  <input
-                    type="text"
-                    value={field.value || ''}
-                    onChange={(e) => {
-                      field.onChange(e.target.value)
-                      if (!isSearchOpen) {
-                        setIsSearchOpen(true)
-                      }
-                    }}
-                    onFocus={() => setIsSearchOpen(true)}
-                    onBlur={(e) => {
-                      const relatedTarget = e.relatedTarget as HTMLElement
-                      if (!relatedTarget?.closest('[data-search-dropdown]')) {
-                        setTimeout(() => setIsSearchOpen(false), 200)
-                      }
-                    }}
-                    placeholder={t('placeholders.search-hotel')}
-                    className="w-full border-none bg-transparent pr-6 text-start text-size-sm font-semibold focus:outline-none"
-                    autoComplete="off"
-                  />
 
-                  {field.value && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        field.onChange('')
-                        setIsSearchOpen(true) // Temizleme sonrası dropdown'ı aç
-                      }}
-                      className="absolute top-1/2 right-0 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  )}
-                </div>
+          <div className="relative -mt-1.5 w-full">
+            <input
+              type="text"
+              value={filters.search}
+              onChange={(e) => {
+                setFilterValue('search', e.target.value)
+                if (!isSearchOpen) {
+                  setIsSearchOpen(true)
+                }
+              }}
+              onFocus={() => setIsSearchOpen(true)}
+              onBlur={(e) => {
+                const relatedTarget = e.relatedTarget as HTMLElement
+                if (!relatedTarget?.closest('[data-search-dropdown]')) {
+                  setTimeout(() => setIsSearchOpen(false), 200)
+                }
+              }}
+              placeholder={t('placeholders.search-hotel')}
+              className="w-full border-none bg-transparent pr-6 text-start text-size-sm font-semibold focus:outline-none"
+              autoComplete="off"
+            />
 
-                {/* Search Suggestions Dropdown */}
-                <SearchSuggestionsDropdown
-                  isOpen={isSearchOpen}
-                  triggerRef={searchTriggerRef}
-                  onClose={() => setIsSearchOpen(false)}
-                  onSelect={(suggestion) => {
-                    field.onChange(suggestion.name)
-                    setIsSearchOpen(false)
-                  }}
-                  suggestions={filteredSuggestions}
-                  searchValue={field.value || ''}
-                  hasError={!!fieldState.error}
-                />
-              </>
+            {filters.search && (
+              <button
+                type="button"
+                onClick={() => {
+                  setFilterValue('search', '')
+                  setIsSearchOpen(true) // Temizleme sonrası dropdown'ı aç
+                }}
+                className="absolute top-1/2 right-0 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                <X className="h-4 w-4" />
+              </button>
             )}
+          </div>
+
+          {/* Search Suggestions Dropdown */}
+          <SearchSuggestionsDropdown
+            isOpen={isSearchOpen}
+            triggerRef={searchTriggerRef}
+            onClose={() => setIsSearchOpen(false)}
+            onSelect={(suggestion) => {
+              setFilterValue('search', suggestion.name)
+              setIsSearchOpen(false)
+            }}
+            suggestions={filteredSuggestions}
+            searchValue={filters.search}
           />
         </div>
 
@@ -147,38 +119,28 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
           <label className="text-xs font-medium text-gray-700">
             {t('labels.date-hotel-start')}
           </label>
-          <Controller
-            name="dateStart"
-            control={control}
-            render={({ field }) => (
-              <DatePickerText
-                value={field.value ? parseISO(field.value) : new Date()}
-                onChange={(dateStart) =>
-                  field.onChange(dateStart ? format(dateStart, 'yyyy-MM-dd') : '')
-                }
-                minDate={new Date()}
-                className="w-full text-start text-size-sm font-semibold"
-                dropdownClassName="mt-2.5 -ml-4"
-              />
-            )}
+          <DatePickerText
+            value={filters.dateStart ? parseISO(filters.dateStart) : new Date()}
+            onChange={(dateStart) =>
+              setFilterValue('dateStart', dateStart ? format(dateStart, 'yyyy-MM-dd') : '')
+            }
+            minDate={new Date()}
+            className="w-full text-start text-size-sm font-semibold"
+            dropdownClassName="mt-2.5 -ml-4"
           />
         </div>
 
         {/* Tarih Dönüş */}
         <div className="relative flex h-14 min-w-[200px] flex-col items-start justify-center border-gray-200 px-4 py-2.5 text-start shadow md:border-r md:py-0 md:shadow-none">
           <label className="text-xs font-medium text-gray-700">{t('labels.date-hotel-end')}</label>
-          <Controller
-            name="dateEnd"
-            control={control}
-            render={({ field }) => (
-              <DatePickerText
-                value={field.value ? parseISO(field.value) : new Date()}
-                onChange={(dateEnd) => field.onChange(dateEnd ? format(dateEnd, 'yyyy-MM-dd') : '')}
-                minDate={new Date()}
-                className="w-full text-start text-size-sm font-semibold"
-                dropdownClassName="mt-2.5 -ml-4"
-              />
-            )}
+          <DatePickerText
+            value={filters.dateEnd ? parseISO(filters.dateEnd) : new Date()}
+            onChange={(dateEnd) =>
+              setFilterValue('dateEnd', dateEnd ? format(dateEnd, 'yyyy-MM-dd') : '')
+            }
+            minDate={new Date()}
+            className="w-full text-start text-size-sm font-semibold"
+            dropdownClassName="mt-2.5 -ml-4"
           />
         </div>
 
@@ -196,7 +158,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
             className="flex w-full items-center justify-between text-left"
           >
             <span className="text-size-sm font-semibold">
-              {`${adults} ${t('participants.adults')}, ${children} ${t('participants.children')}`}
+              {`${filters.adult} ${t('participants.adults')}, ${filters.child} ${t('participants.children')}`}
             </span>
           </button>
 
@@ -205,7 +167,6 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
             isOpen={isParticipantOpen}
             triggerRef={participantTriggerRef}
             onClose={() => setIsParticipantOpen(false)}
-            control={control}
           />
         </div>
 
@@ -234,7 +195,6 @@ interface SearchSuggestionsDropdownProps {
   onSelect: (suggestion: any) => void
   suggestions: unknown[]
   searchValue: string
-  hasError?: boolean
 }
 
 const SearchSuggestionsDropdown = ({
@@ -244,7 +204,6 @@ const SearchSuggestionsDropdown = ({
   onSelect,
   suggestions,
   searchValue,
-  hasError = false,
 }: SearchSuggestionsDropdownProps) => {
   const { t } = useTranslation('global-form')
 
@@ -286,16 +245,11 @@ interface ParticipantsDropdownProps {
   isOpen: boolean
   triggerRef: any
   onClose: () => void
-  control: Control<SearchFormValues>
 }
 
-const ParticipantsDropdown = ({
-  isOpen,
-  triggerRef,
-  onClose,
-  control,
-}: ParticipantsDropdownProps) => {
+const ParticipantsDropdown = ({ isOpen, triggerRef, onClose }: ParticipantsDropdownProps) => {
   const { t } = useTranslation('global-form')
+  const { filters, setFilterValue } = useHotelStore()
 
   return (
     <DropdownPortal
@@ -307,38 +261,26 @@ const ParticipantsDropdown = ({
     >
       <div className="flex flex-col gap-y-4 p-4">
         {/* Adults Counter */}
-        <Controller
-          name="adult"
-          control={control}
-          render={({ field }) => (
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-black">{t('participants.adults')}</label>
-              <NumericStepper
-                value={field.value || 1}
-                onChange={field.onChange}
-                min={1}
-                className="w-32"
-              />
-            </div>
-          )}
-        />
+        <div className="flex items-center justify-between">
+          <label className="text-sm font-medium text-black">{t('participants.adults')}</label>
+          <NumericStepper
+            value={filters.adult}
+            onChange={(value) => setFilterValue('adult', value)}
+            min={1}
+            className="w-32"
+          />
+        </div>
 
         {/* Children Counter */}
-        <Controller
-          name="child"
-          control={control}
-          render={({ field }) => (
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-black">{t('participants.children')}</label>
-              <NumericStepper
-                value={field.value || 0}
-                onChange={field.onChange}
-                min={0}
-                className="w-32"
-              />
-            </div>
-          )}
-        />
+        <div className="flex items-center justify-between">
+          <label className="text-sm font-medium text-black">{t('participants.children')}</label>
+          <NumericStepper
+            value={filters.child}
+            onChange={(value) => setFilterValue('child', value)}
+            min={0}
+            className="w-32"
+          />
+        </div>
       </div>
     </DropdownPortal>
   )
