@@ -8,47 +8,6 @@ import Icon from 'src/components/icon'
 import { SearchButton } from '@/features/modals/search/button'
 import { Link } from '@/i18n/router/link'
 
-interface SlideConfig {
-  index: number
-  path: string
-  imageSrc: string
-  imageSrcMobile: string
-  imageAlt: string
-  titleKey: string
-  searchPlaceholderKey: string
-}
-
-interface ResponsivePictureProps {
-  slide: SlideConfig
-  priority?: boolean
-}
-
-// Navigation tab configuration
-interface NavTab {
-  path: string
-  icon: string
-  labelKey: string
-  to: LinkProps['to']
-  preload: false | 'viewport' | 'render' | 'intent' | undefined
-  exact?: boolean
-  extended?: boolean
-  mobileExtend?: boolean
-}
-
-const ResponsivePicture = ({ slide, priority = false }: ResponsivePictureProps) => (
-  <picture className="absolute inset-0 h-full w-full">
-    <source media="(max-width: 512px)" srcSet={slide.imageSrcMobile} type="image/jpeg" />
-    <source media="(min-width: 513px)" srcSet={slide.imageSrc} type="image/jpeg" />
-    <img
-      src={slide.imageSrc}
-      alt={slide.imageAlt}
-      className="absolute inset-0 h-full w-full object-cover"
-      loading={priority ? 'eager' : 'lazy'}
-      fetchPriority={priority ? 'high' : 'auto'}
-    />
-  </picture>
-)
-
 export const PublicHeaderBackground = () => {
   const location = useLocation()
   const { href } = Route.useLoaderData()
@@ -124,18 +83,81 @@ export const PublicHeaderBackground = () => {
         path: 'flights',
         imageSrc: '/images/public/header/flights.jpg',
         imageSrcMobile: '/images/public/header/flights-mobile.jpg',
-        imageAlt: t('slides.all.alt'),
-        titleKey: 'slides.all.title',
-        searchPlaceholderKey: 'slides.all.placeholder',
+        imageAlt: t('slides.flights.alt'),
+        titleKey: 'slides.flights.title',
+        searchPlaceholderKey: 'slides.flights.placeholder',
       },
       {
         index: 8,
         path: 'guide',
         imageSrc: '/images/public/header/explore.jpg',
         imageSrcMobile: '/images/public/header/explore-mobile.jpg',
-        imageAlt: t('slides.all.alt'),
-        titleKey: 'slides.all.title',
-        searchPlaceholderKey: 'slides.all.placeholder',
+        imageAlt: t('slides.guide.alt'),
+        titleKey: 'slides.guide.title',
+        searchPlaceholderKey: 'slides.guide.placeholder',
+      },
+      {
+        index: 9,
+        path: 'yachts',
+        imageSrc: '/images/public/header/yacht.jpg',
+        imageSrcMobile: '/images/public/header/yacht-mobile.jpg',
+        imageAlt: t('slides.yacht.alt'),
+        titleKey: 'slides.yacht.title',
+        searchPlaceholderKey: 'slides.yacht.placeholder',
+      },
+      {
+        index: 10,
+        path: 'visa',
+        imageSrc: '/images/public/header/visa.jpg',
+        imageSrcMobile: '/images/public/header/visa-mobile.jpg',
+        imageAlt: t('slides.visa.alt'),
+        titleKey: 'slides.visa.title',
+        searchPlaceholderKey: 'slides.visa.placeholder',
+      },
+      {
+        index: 11,
+        path: 'sim-cards',
+        imageSrc: '/images/public/header/sim-cards.jpg',
+        imageSrcMobile: '/images/public/header/sim-cards-mobile.jpg',
+        imageAlt: t('slides.sim_card.alt'),
+        titleKey: 'slides.sim_card.title',
+        searchPlaceholderKey: 'slides.sim_card.placeholder',
+      },
+      {
+        index: 12,
+        path: 'restaurants',
+        imageSrc: '/images/public/header/explore.jpg',
+        imageSrcMobile: '/images/public/header/explore-mobile.jpg',
+        imageAlt: t('slides.restaurants.alt'),
+        titleKey: 'slides.restaurants.title',
+        searchPlaceholderKey: 'slides.restaurants.placeholder',
+      },
+      {
+        index: 13,
+        path: 'hospitals',
+        imageSrc: '/images/public/header/hospitals.jpg',
+        imageSrcMobile: '/images/public/header/hospitals-mobile.jpg',
+        imageAlt: t('slides.hospitals.alt'),
+        titleKey: 'slides.hospitals.title',
+        searchPlaceholderKey: 'slides.hospitals.placeholder',
+      },
+      {
+        index: 14,
+        path: 'museums',
+        imageSrc: '/images/public/header/explore.jpg',
+        imageSrcMobile: '/images/public/header/explore-mobile.jpg',
+        imageAlt: t('slides.museums.alt'),
+        titleKey: 'slides.museums.title',
+        searchPlaceholderKey: 'slides.museums.placeholder',
+      },
+      {
+        index: 15,
+        path: 'bundles',
+        imageSrc: '/images/public/header/bundles.jpg',
+        imageSrcMobile: '/images/public/header/bundles-mobile.jpg',
+        imageAlt: t('slides.bundles.alt'),
+        titleKey: 'slides.bundles.title',
+        searchPlaceholderKey: 'slides.bundles.placeholder',
       },
     ],
     [t],
@@ -288,7 +310,17 @@ export const PublicHeaderBackground = () => {
   )
 }
 
-// Extended Navigation Component
+interface NavTab {
+  path: string
+  icon: string
+  labelKey: string
+  to: LinkProps['to']
+  preload: false | 'viewport' | 'render' | 'intent' | undefined
+  exact?: boolean
+  extended?: boolean
+  mobileExtend?: boolean
+}
+
 function ExtendedNavigationTabs() {
   const { href } = Route.useLoaderData()
   const { t } = useTranslation('layout-header')
@@ -313,7 +345,7 @@ function ExtendedNavigationTabs() {
       },
       {
         path: 'activities',
-        icon: 'app/tickets',
+        icon: 'app/activities',
         labelKey: 'nav.activities',
         to: '/$lang/activities',
         preload: 'viewport',
@@ -328,7 +360,7 @@ function ExtendedNavigationTabs() {
       },
       {
         path: 'safari-tour',
-        icon: 'app/safari',
+        icon: 'app/safari-tour',
         labelKey: 'nav.safari_tour',
         to: '/$lang/safari-tour',
         preload: 'viewport',
@@ -336,7 +368,7 @@ function ExtendedNavigationTabs() {
       },
       {
         path: 'rent-a-car',
-        icon: 'app/car-rental',
+        icon: 'app/rent-a-car',
         labelKey: 'nav.rent_a_car',
         to: '/$lang/rent-a-car',
         preload: 'viewport',
@@ -352,66 +384,65 @@ function ExtendedNavigationTabs() {
       },
       {
         path: 'flights',
-        icon: 'app/flight',
-        labelKey: 'nav.flight',
+        icon: 'app/flights',
+        labelKey: 'nav.flights',
         to: '/$lang/flights',
         preload: 'viewport',
         mobileExtend: true,
       },
-      // Extended tabs - sadece ilgili sayfalarda görünür
       {
-        path: 'yacht',
-        icon: 'app/yacht',
-        labelKey: 'nav.yacht',
-        to: '/$lang/yacht',
+        path: 'yachts',
+        icon: 'app/yachts',
+        labelKey: 'nav.yachts',
+        to: '/$lang/yachts',
         preload: false,
         extended: true,
       },
       {
-        path: 'guide/visa',
+        path: 'visa',
         icon: 'app/visa',
         labelKey: 'nav.visa',
-        to: '/$lang/guide/visa',
+        to: '/$lang/visa',
         preload: false,
         extended: true,
       },
       {
-        path: 'guide/sim-card',
-        icon: 'app/sim-card',
-        labelKey: 'nav.sim_card',
-        to: '/$lang/guide/sim-card',
+        path: 'sim-cards',
+        icon: 'app/sim-cards',
+        labelKey: 'nav.sim_cards',
+        to: '/$lang/sim-cards',
         preload: false,
         extended: true,
       },
       {
-        path: 'guide/restaurants',
+        path: 'restaurants',
         icon: 'app/restaurant',
         labelKey: 'nav.restaurants',
-        to: '/$lang/guide/restaurants',
+        to: '/$lang/restaurants',
         preload: false,
         extended: true,
       },
       {
-        path: 'guide/hospitals',
-        icon: 'app/hospital',
+        path: 'hospitals',
+        icon: 'app/hospitals',
         labelKey: 'nav.hospitals',
-        to: '/$lang/guide/hospitals',
+        to: '/$lang/hospitals',
         preload: false,
         extended: true,
       },
       {
-        path: 'guide/museums',
-        icon: 'app/museum',
+        path: 'museums',
+        icon: 'app/museums',
         labelKey: 'nav.museums',
-        to: '/$lang/guide/museums',
+        to: '/$lang/museums',
         preload: false,
         extended: true,
       },
       {
-        path: 'guide/bundles',
+        path: 'bundles',
         icon: 'app/bundles',
         labelKey: 'nav.bundles',
-        to: '/$lang/guide/bundles',
+        to: '/$lang/bundles',
         preload: false,
         extended: true,
       },
@@ -479,13 +510,42 @@ function ExtendedNavigationTabs() {
         className="group flex h-12 w-fit flex-shrink-0 items-center justify-center gap-x-2 px-4 text-center font-bold text-nowrap text-white transition-colors duration-300 ease-in hover:bg-white/20 data-[status=active]:bg-white data-[status=active]:text-btn-primary sm:min-w-[calc(1120px/9)]"
       >
         <Icon
-          name="app/all"
+          name="app/guide"
           className="size-4 shrink-0 text-on-box-white group-data-[status=active]:text-gray-700"
         />
-        {t('nav.all')}
+        {t('nav.guide')}
       </Link>
     </nav>
   )
+}
+
+interface ResponsivePictureProps {
+  slide: SlideConfig
+  priority?: boolean
+}
+
+const ResponsivePicture = ({ slide, priority = false }: ResponsivePictureProps) => (
+  <picture className="absolute inset-0 h-full w-full">
+    <source media="(max-width: 512px)" srcSet={slide.imageSrcMobile} type="image/jpeg" />
+    <source media="(min-width: 513px)" srcSet={slide.imageSrc} type="image/jpeg" />
+    <img
+      src={slide.imageSrc}
+      alt={slide.imageAlt}
+      className="absolute inset-0 h-full w-full object-cover"
+      loading={priority ? 'eager' : 'lazy'}
+      fetchPriority={priority ? 'high' : 'auto'}
+    />
+  </picture>
+)
+
+interface SlideConfig {
+  index: number
+  path: string
+  imageSrc: string
+  imageSrcMobile: string
+  imageAlt: string
+  titleKey: string
+  searchPlaceholderKey: string
 }
 
 const getActiveSlideIndex = (href: string, configs: SlideConfig[]): number | null => {

@@ -7,14 +7,14 @@
     "safari_tour": "Safari Tour",
     "rent_a_car": "Rent a Car",
     "transfer": "Transfer",
-    "flight": "Flight Ticket",
-    "all": "All",
+    "flights": "Flight Ticket",
+    "guide": "All",
     "wishlist": "Wishlist",
     "reservations": "Reservations",
     "blog": "Blog",
-    "yacht": "Yacht Tours",
+    "yachts": "Yacht Tours",
     "visa": "Dubai Visa",
-    "sim_card": "eSIM Card",
+    "sim_cards": "eSIM Card",
     "restaurants": "Restaurants",
     "hospitals": "Hospitals",
     "museums": "Museums",
@@ -56,12 +56,12 @@
       "placeholder": "Search for transfer options...",
       "alt": "Dubai Transfer Services view"
     },
-    "flight": {
+    "flights": {
       "title": "Discover Dubai Flights",
       "placeholder": "Search for flight options...",
       "alt": "Dubai Flight view"
     },
-    "all": {
+    "guide": {
       "title": "Discover Everything in Dubai",
       "placeholder": "Search for any place or activity...",
       "alt": "Dubai General view"

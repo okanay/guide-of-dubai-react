@@ -6,15 +6,15 @@
     "hotels": "Oteller",
     "safari_tour": "Safari Turu",
     "rent_a_car": "Araç Kirala",
-    "flight": "Uçak Bileti",
+    "flights": "Uçak Bileti",
     "transfer": "Transfer",
-    "all": "Tümü",
+    "guide": "Tümü",
     "wishlist": "Beğendiklerim",
     "reservations": "Rezervasyonlar",
     "blog": "Blog",
-    "yacht": "Yat Turları",
+    "yachts": "Yat Turları",
     "visa": "Dubai Vizesi",
-    "sim_card": "eSIM Kart",
+    "sim_cards": "eSIM Kart",
     "restaurants": "Restoranlar",
     "hospitals": "Hastaneler",
     "museums": "Müzeler",
@@ -56,17 +56,17 @@
       "placeholder": "Transfer seçeneklerini arayın...",
       "alt": "Dubai Transfer Hizmetleri manzarası"
     },
-    "flight": {
+    "flights": {
       "title": "Dubai Uçak Biletlerini Keşfedin",
       "placeholder": "Uçuş seçeneklerini arayın...",
       "alt": "Dubai Uçuş manzarası"
     },
-    "all": {
+    "guide": {
       "title": "Dubai'de Her Şeyi Keşfedin",
       "placeholder": "Herhangi bir yer veya aktiviteyi arayın...",
       "alt": "Dubai Genel manzarası"
     },
-    "yacht": {
+    "yachts": {
       "title": "Dubai'de Lüks Yat Turları",
       "placeholder": "Yat turları ve deneyimlerini arayın...",
       "alt": "Dubai Yat Turları manzarası"
@@ -76,7 +76,7 @@
       "placeholder": "Vize bilgilerini ve hizmetlerini arayın...",
       "alt": "Dubai Vize Hizmetleri manzarası"
     },
-    "sim_card": {
+    "sim_cards": {
       "title": "Dubai'de eSIM ve Bağlantı",
       "placeholder": "eSIM ve mobil bağlantı seçeneklerini arayın...",
       "alt": "Dubai eSIM Hizmetleri manzarası"

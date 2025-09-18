@@ -4,7 +4,7 @@ import {
 } from '@/features/public/layout/pending/pending-loading'
 import { createFileRoute, Outlet, useMatch } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/$lang/_public/yacht/search')({
+export const Route = createFileRoute('/$lang/_public/yachts/search')({
   component: Layout,
   pendingComponent: PendingShortComponent,
 })

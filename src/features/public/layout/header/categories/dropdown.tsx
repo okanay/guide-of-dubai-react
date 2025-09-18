@@ -20,8 +20,8 @@ export const CATEGORIES: CategoryItem[] = [
     id: 'dubai-visa',
     titleKey: 'categories.dubai_visa.title',
     descriptionKey: 'categories.dubai_visa.description',
-    image: '/images/public/categories/dubai-visa.png',
-    href: '/$lang/guide/visa',
+    image: '/images/public/categories/visa.png',
+    href: '/$lang/visa',
     detailLinkKey: 'categories.detail_link',
   },
   {
@@ -69,7 +69,7 @@ export const CATEGORIES: CategoryItem[] = [
     titleKey: 'categories.sim_cards.title',
     descriptionKey: 'categories.sim_cards.description',
     image: '/images/public/categories/sim-cards.png',
-    href: '/$lang/guide/sim-card',
+    href: '/$lang/sim-cards',
     detailLinkKey: 'categories.detail_link',
   },
   {
@@ -77,7 +77,7 @@ export const CATEGORIES: CategoryItem[] = [
     titleKey: 'categories.hospitals.title',
     descriptionKey: 'categories.hospitals.description',
     image: '/images/public/categories/hospitals.png',
-    href: '/$lang/guide/hospitals',
+    href: '/$lang/hospitals',
     detailLinkKey: 'categories.detail_link',
   },
   {
@@ -85,7 +85,7 @@ export const CATEGORIES: CategoryItem[] = [
     titleKey: 'categories.restaurants.title',
     descriptionKey: 'categories.restaurants.description',
     image: '/images/public/categories/restaurants.png',
-    href: '/$lang/guide/restaurants',
+    href: '/$lang/restaurants',
     detailLinkKey: 'categories.detail_link',
   },
   {
@@ -100,8 +100,8 @@ export const CATEGORIES: CategoryItem[] = [
     id: 'yacht',
     titleKey: 'categories.yachts.title',
     descriptionKey: 'categories.yachts.description',
-    image: '/images/public/categories/yacht-tours.png',
-    href: '/$lang/yacht',
+    image: '/images/public/categories/yachts.png',
+    href: '/$lang/yachts',
     detailLinkKey: 'categories.detail_link',
   },
   {
@@ -117,7 +117,7 @@ export const CATEGORIES: CategoryItem[] = [
     titleKey: 'categories.hospitals_unknow.title',
     descriptionKey: 'categories.hospitals_unknow.description',
     image: '/images/public/categories/hospitals.png',
-    href: '/$lang/guide/hospitals',
+    href: '/$lang/hospitals',
     detailLinkKey: 'categories.detail_link',
   },
   {
@@ -125,7 +125,7 @@ export const CATEGORIES: CategoryItem[] = [
     titleKey: 'categories.museums.title',
     descriptionKey: 'categories.museums.description',
     image: '/images/public/categories/museums.png',
-    href: '/$lang/guide/museums',
+    href: '/$lang/museums',
     detailLinkKey: 'categories.detail_link',
   },
 ]
