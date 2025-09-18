@@ -9,20 +9,13 @@ import { useTranslation } from 'react-i18next'
 import { DropdownPortal } from '@/components/dropdown-portal'
 import { useActivityStore } from './store'
 
-interface SearchFormProps {
-  initialData?: Partial<{
-    date?: string
-    adult?: number
-    child?: number
-  }>
-}
-
 // ============================================================================
 // MAIN SEARCH FORM COMPONENT
 // ============================================================================
-export const SearchForm = ({ initialData }: SearchFormProps) => {
+export const SearchForm = () => {
   const { language } = useLanguage()
-  const { t } = useTranslation()
+  const { t } = useTranslation('global-form')
+
   const navigate = useNavigate()
   const { filters, setFilterValue } = useActivityStore()
 
