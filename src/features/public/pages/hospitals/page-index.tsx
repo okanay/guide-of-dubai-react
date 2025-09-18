@@ -1,11 +1,10 @@
-import { PublicFooterShort } from '@/features/public/layout/footer'
 import { Route } from 'src/routes/$lang/_public'
+import { HospitalSuggestionSection } from './section-suggestion'
 
 export const HospitalIndexPage = () => {
   return (
     <>
-      <main className="flex flex-col"></main>
-      <PublicFooterShort />
+      <HospitalSuggestionSection />
     </>
   )
 }

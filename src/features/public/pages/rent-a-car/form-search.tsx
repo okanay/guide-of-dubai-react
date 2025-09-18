@@ -37,10 +37,10 @@ export const SearchForm = () => {
         onSubmit={handleSubmit}
         className="mx-auto flex max-w-main flex-col gap-y-4 border-b border-gray-200 bg-white p-4 md:flex-row md:items-center md:divide-x md:divide-gray-200 md:p-0 md:shadow"
       >
-        {/* Alış Tarihi */}
+        {/* Pickup Date */}
         <div className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start shadow md:shadow-none">
           <label className="text-xs font-medium text-gray-700">
-            {t('labels.date-rent-a-car-start')}
+            {t('labels.pickup')} {t('labels.date')}
           </label>
           <DatePickerText
             value={parseISO(filters.dateStart)}
@@ -51,10 +51,10 @@ export const SearchForm = () => {
           />
         </div>
 
-        {/* Alış Saati */}
+        {/* Pickup Time */}
         <div className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start shadow md:shadow-none">
           <label className="text-xs font-medium text-gray-700">
-            {t('labels.time-rent-a-car-start')}
+            {t('labels.pickup')} {t('labels.time')}
           </label>
           <TimePickerRaw
             value={filters.timeStart}
@@ -64,17 +64,17 @@ export const SearchForm = () => {
             {({ inputProps }) => (
               <input
                 {...inputProps}
-                placeholder={t('placeholders.time-rent-a-car-start')}
+                placeholder={t('placeholders.time_format')}
                 className="w-full border-none bg-transparent p-0 text-start text-size-sm font-semibold focus:outline-none"
               />
             )}
           </TimePickerRaw>
         </div>
 
-        {/* Bırakış Tarihi */}
+        {/* Drop-off Date */}
         <div className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start shadow md:shadow-none">
           <label className="text-xs font-medium text-gray-700">
-            {t('labels.date-rent-a-car-end')}
+            {t('labels.dropoff')} {t('labels.date')}
           </label>
           <DatePickerText
             value={parseISO(filters.dateEnd)}
@@ -85,10 +85,10 @@ export const SearchForm = () => {
           />
         </div>
 
-        {/* Bırakış Saati */}
+        {/* Drop-off Time */}
         <div className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start shadow md:shadow-none">
           <label className="text-xs font-medium text-gray-700">
-            {t('labels.time-rent-a-car-end')}
+            {t('labels.dropoff')} {t('labels.time')}
           </label>
           <TimePickerRaw
             value={filters.timeEnd}
@@ -98,20 +98,20 @@ export const SearchForm = () => {
             {({ inputProps }) => (
               <input
                 {...inputProps}
-                placeholder={t('placeholders.time-rent-a-car-end')}
+                placeholder={t('placeholders.time_format')}
                 className="w-full border-none bg-transparent p-0 text-start text-size-sm font-semibold focus:outline-none"
               />
             )}
           </TimePickerRaw>
         </div>
 
-        {/* Arama Butonu */}
+        {/* Search Button */}
         <button
           type="submit"
           className="flex h-14 w-full shrink-0 items-center justify-center gap-x-2 bg-btn-primary px-6 font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover md:w-fit"
         >
           <Icon name="search" className="h-5 w-5" />
-          <span>{t('search.rent-a-car')}</span>
+          <span>{t('actions.search_cars')}</span>
         </button>
       </form>
     </section>

@@ -130,7 +130,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({
             <img
               key={`${hotel.id}-image-${idx}`}
               src={image}
-              alt={`${hotel.name} - View ${idx + 1} of ${hotel.images.length}`}
+              alt={t('accessibility.image_alt', { title: hotel.name, index: idx + 1 })}
               className="h-full w-full shrink-0 snap-start object-cover"
               loading={'lazy'}
               fetchPriority="low"
@@ -145,7 +145,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({
             <button
               onClick={handlePrevImage}
               className="absolute top-1/2 left-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover/hc:opacity-70 group-data-[mode=white]/hc:bg-white hover:opacity-100"
-              aria-label="Previous hotel image"
+              aria-label={t('accessibility.prev_image')}
             >
               <Icon
                 name="chevron-left"
@@ -157,7 +157,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({
             <button
               onClick={handleNextImage}
               className="absolute top-1/2 right-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover/hc:opacity-70 group-data-[mode=white]/hc:bg-white hover:opacity-100"
-              aria-label="Next hotel image"
+              aria-label={t('accessibility.next_image')}
             >
               <Icon
                 name="chevron-right"
@@ -181,7 +181,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({
                   'h-1 rounded-full transition-all duration-300 hover:bg-white/80',
                   idx === currentImageIndex ? 'w-4 bg-white' : 'w-2 bg-white/60',
                 )}
-                aria-label={`View image ${idx + 1}`}
+                aria-label={t('accessibility.view_image', { index: idx + 1 })}
                 aria-current={idx === currentImageIndex ? 'true' : 'false'}
               />
             ))}
@@ -220,18 +220,18 @@ export const HotelCard: React.FC<HotelCardProps> = ({
         <div className="-mt-0.5 flex items-center gap-2 text-size-sm">
           <Icon name="thumbs-up" className="size-4 text-badge-green" aria-hidden="true" />
           <span>
-            <span className="sr-only">{t('common.labels.rating')}:</span>
+            <span className="sr-only">{t('labels.rating')}:</span>
             <span>{hotel.reviewRating.toFixed(1)}</span>
             <span className="sr-only">out of 5, based on</span>
             <span className="ml-2">({hotel.reviewCount})</span>
-            <span className="sr-only">{t('common.labels.reviews')}</span>
+            <span className="sr-only">{t('labels.reviews')}</span>
           </span>
           <button
             type="button"
             onClick={handleMapViewClick}
             className="font-semibold text-primary-500 underline transition-colors hover:text-primary-400 focus:outline-none"
           >
-            {t('hotel.labels.map_view')}
+            {t('accessibility.map_view')}
           </button>
         </div>
 
@@ -251,7 +251,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({
             <li className="flex items-center gap-1">
               <Icon name="location-pin" className="size-4 -translate-x-0.5" aria-hidden="true" />
               <span>
-                <strong>{t('hotel.labels.distance_to_center')}:</strong>{' '}
+                <strong>{t('labels.distance_to_center')}:</strong>{' '}
                 <span className="font-medium">{hotel.distanceToCenter}</span>
               </span>
             </li>
@@ -265,8 +265,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({
                   aria-hidden="true"
                 />
                 <span>
-                  <strong>{t('hotel.features.breakfast.label')}:</strong>{' '}
-                  <span className="font-medium">{t('hotel.features.breakfast.value')}</span>
+                  <strong>{t('features.breakfast')}</strong>
                 </span>
               </li>
             )}
@@ -276,8 +275,8 @@ export const HotelCard: React.FC<HotelCardProps> = ({
               <li className="flex items-center gap-2">
                 <Icon name="person" className="size-3" aria-hidden="true" />
                 <span>
-                  <strong>{t('hotel.features.forTwoPeople.label')}:</strong>{' '}
-                  <span className="font-medium">{t('hotel.features.forTwoPeople.value')}</span>
+                  <strong>{t('labels.capacity')}:</strong>{' '}
+                  <span className="font-medium">2 {t('labels.capacity')}</span>
                 </span>
               </li>
             )}
@@ -291,8 +290,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({
                   aria-hidden="true"
                 />
                 <span>
-                  <strong>{t('hotel.features.freeCancellation.label')}:</strong>{' '}
-                  <span className="font-medium">{t('hotel.features.freeCancellation.value')}</span>
+                  <strong>{t('features.free_cancellation')}</strong>
                 </span>
               </li>
             )}
@@ -308,10 +306,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({
         {/* Pricing and Booking */}
         <footer className="flex flex-col gap-y-1.5">
           <p className="pt-2 text-size-xs">
-            {t('hotel.labels.per_night_guests', {
-              count: hotel.nightCount,
-              adults: hotel.adultCount,
-            })}
+            {hotel.nightCount} {hotel.nightCount > 1 ? 'Nights' : 'Night'}, {hotel.adultCount} Adult
           </p>
           <div
             className="pb-2 text-size-xl font-bold"
@@ -325,7 +320,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({
             className="w-full rounded-xs bg-btn-primary px-4 py-2 text-center text-size-sm font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus active:scale-[0.98]"
             role="button"
           >
-            {t('common.buttons.book_now')}
+            {t('actions.book_now')}
           </Link>
         </footer>
       </section>

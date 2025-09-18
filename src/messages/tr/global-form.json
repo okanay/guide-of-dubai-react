@@ -1,64 +1,93 @@
 {
   "labels": {
-    "search-otel": "Otel Arayın",
+    "search": "Arama",
     "date": "Tarih",
-    "date-hotel-start": "Giriş Tarihi",
-    "date-hotel-end": "Çıkış Tarihi",
-    "date-rent-a-car-start": "Alış Tarihi",
-    "date-rent-a-car-end": "Bırakış Tarihi",
-    "time-rent-a-car-start": "Alış Saati",
-    "time-rent-a-car-end": "Bırakış Saati",
+    "time": "Saat",
     "participants": "Katılımcılar",
-    "participants-hotel": "Kişi Bilgileri",
-    "select_date": "Tarih Seçin"
+    "guests": "Misafirler",
+    "passengers": "Yolcular",
+    "adults": "Yetişkin",
+    "children": "Çocuk",
+    "rooms": "Oda",
+    "from": "Nereden",
+    "to": "Nereye",
+    "departure": "Gidiş",
+    "arrival": "Dönüş",
+    "pickup": "Alış",
+    "dropoff": "Bırakış",
+    "checkin": "Giriş",
+    "checkout": "Çıkış",
+    "start_date": "Başlangıç Tarihi",
+    "end_date": "Bitiş Tarihi",
+    "start_time": "Başlangıç Saati",
+    "end_time": "Bitiş Saati"
   },
+
   "placeholders": {
-    "search-hotel": "Otel, şehir veya bölge ara...",
-    "time-rent-a-car-start": "SS:DD",
-    "time-rent-a-car-end": "SS:DD"
+    "search_general": "Ara...",
+    "search_hotel": "Otel, şehir veya bölge ara...",
+    "search_flight": "Destinasyon ara...",
+    "departure_point": "Kalkış yeri",
+    "arrival_point": "Varış yeri",
+    "time_format": "SS:DD",
+    "select_date": "Tarih seç",
+    "select_time": "Saat seç"
   },
+
+  "actions": {
+    "search": "Ara",
+    "search_flights": "Uçuş Ara",
+    "search_hotels": "Otel Ara",
+    "search_tours": "Tur Ara",
+    "search_cars": "Araç Ara",
+    "search_activities": "Aktivite Ara",
+    "swap_locations": "Konumları Değiştir",
+    "clear": "Temizle",
+    "apply": "Uygula"
+  },
+
+  "options": {
+    "trip_types": {
+      "one_way": "Tek Yön",
+      "round_trip": "Gidiş - Dönüş"
+    },
+    "direct_flights_only": "Sadece Direkt Uçuşlar"
+  },
+
   "participants": {
     "adults": "Yetişkin",
-    "children": "Çocuk"
+    "children": "Çocuk",
+    "infants": "Bebek",
+    "adults_description": "12+ yaş",
+    "children_description": "2-12 yaş",
+    "infants_description": "2 yaş altı"
   },
-  "search": {
-    "tour": "Tur Ara",
-    "hotel": "Otel Ara",
-    "rent-a-car": "Araç Ara"
-  },
+
   "suggestions": {
-    "no-results-title": "Sonuç bulunamadı",
-    "no-results-description": "\"{searchValue}\" için herhangi bir sonuç bulunamadı",
-    "recent-search": "Son arama",
-    "start-typing-title": "Arama yapmaya başlayın",
-    "start-typing-description": "Son aramalarınızı görmek için yazmaya başlayın",
+    "no_results": {
+      "title": "Sonuç bulunamadı",
+      "description": "\"{{searchValue}\" için herhangi bir sonuç bulunamadı"
+    },
+    "start_typing": {
+      "title": "Arama yapmaya başlayın",
+      "description": "Öneri görmek için yazmaya başlayın"
+    },
+    "recent_searches": "Son aramalar",
+    "popular_destinations": "Popüler destinasyonlar",
     "types": {
       "hotel": "Otel",
       "location": "Bölge",
+      "city": "Şehir",
+      "airport": "Havalimanı",
       "recent": "Geçmiş"
     }
   },
-  "flight": {
-    "trip_type": "Gezi Tipi",
-    "one_way": "Tek Yön",
-    "round_trip": "Gidiş - Dönüş",
-    "direct_flights_only": "Sadece Direkt Uçuşlar",
-    "from": "Nereden",
-    "to": "Nereye",
-    "departure_date": "Gidiş Tarihi",
-    "return_date": "Dönüş Tarihi",
-    "passengers": "Yolcular",
-    "search_button": "Uçuş Ara",
-    "swap_locations": "Konumları Değiştir",
-    "departure_placeholder": "Kalkış yeri",
-    "arrival_placeholder": "Varış yeri",
-    "no_results_title": "Sonuç bulunamadı",
-    "no_results_description": "\"{searchValue}\" için sonuç bulunamadı.",
-    "start_typing_title": "Aramaya başlayın",
-    "start_typing_description": "Bir havalimanı veya şehir adı yazın.",
-    "adults": "Yetişkin",
-    "children": "Çocuk",
-    "adults_description": "12+ yaş",
-    "children_description": "2-12 yaş"
+
+  "validation": {
+    "required": "Bu alan zorunludur",
+    "invalid_date": "Geçerli bir tarih seçin",
+    "invalid_time": "Geçerli bir saat seçin",
+    "min_passengers": "En az {{min}} yolcu gereklidir",
+    "max_passengers": "Maksimum {{max}} yolcu kabul edilir"
   }
 }

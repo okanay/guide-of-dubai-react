@@ -98,7 +98,7 @@ export const TransferCard: React.FC<Props> = ({ transfer, className }) => {
             <img
               key={`${transfer.id}-image-${idx}`}
               src={image}
-              alt={t('common.aria.image_alt', { title: transfer.title, index: idx + 1 })}
+              alt={t('accessibility.image_alt', { title: transfer.title, index: idx + 1 })}
               className="h-full w-full shrink-0 snap-start object-cover"
               loading="lazy"
             />
@@ -111,21 +111,21 @@ export const TransferCard: React.FC<Props> = ({ transfer, className }) => {
             <button
               onClick={handlePrevImage}
               className="absolute top-1/2 left-3 z-20 flex size-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100 hover:bg-white"
-              aria-label={t('common.aria.prev_image')}
+              aria-label={t('accessibility.prev_image')}
             >
               <Icon name="chevron-left" className="size-4 text-black" />
             </button>
             <button
               onClick={handleNextImage}
               className="absolute top-1/2 right-3 z-20 flex size-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100 hover:bg-white"
-              aria-label={t('common.aria.next_image')}
+              aria-label={t('accessibility.next_image')}
             >
               <Icon name="chevron-right" className="size-4 text-black" />
             </button>
           </>
         )}
 
-        {/* Image Indicators - Görseldeki gibi altta */}
+        {/* Image Indicators */}
         {transfer.images.length > 1 && (
           <nav
             className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2"
@@ -139,7 +139,7 @@ export const TransferCard: React.FC<Props> = ({ transfer, className }) => {
                   'h-2 rounded-full transition-all duration-300',
                   idx === currentImageIndex ? 'w-6 bg-white' : 'w-2 bg-white/60',
                 )}
-                aria-label={t('common.aria.view_image', { index: idx + 1 })}
+                aria-label={t('accessibility.view_image', { index: idx + 1 })}
               />
             ))}
           </nav>
@@ -155,30 +155,53 @@ export const TransferCard: React.FC<Props> = ({ transfer, className }) => {
           {transfer.title}
         </h2>
         <p className="text-size-sm text-gray-800">{transfer.vehicle}</p>
+
         <div className="mt-6 flex flex-col items-end justify-between gap-x-4 gap-y-4 md:flex-row">
           <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(120px,auto))] gap-x-8 gap-y-2">
-            {features
-              .filter((feature) => feature.visible)
-              .map((feature) => (
-                <div key={feature.key} className="flex items-center gap-2">
-                  <Icon
-                    name={feature.icon}
-                    className={`size-4 shrink-0 ${
-                      feature.key.startsWith('has') ? 'font-medium text-badge-green' : 'text-black'
-                    }`}
-                  />
-                  <span
-                    className={`text-size-sm ${
-                      feature.key.startsWith('has') ? 'font-medium text-badge-green' : 'text-black'
-                    }`}
-                  >
-                    {feature.text}
-                  </span>
-                </div>
-              ))}
+            {/* Passenger Capacity */}
+            <div className="flex items-center gap-2">
+              <Icon name="person" className="size-4 shrink-0 text-black" />
+              <span className="text-size-sm text-black">
+                {t('features.passengers', {
+                  capacity: transfer.features.passengerCapacity,
+                })}
+              </span>
+            </div>
+
+            {/* Baggage Capacity */}
+            <div className="flex items-center gap-2">
+              <Icon name="valise" className="size-4 shrink-0 text-black" />
+              <span className="text-size-sm text-black">
+                {t('features.baggage', { capacity: transfer.features.baggageCapacity })}
+              </span>
+            </div>
+
+            {/* Food and Beverage */}
+            {transfer.features.hasFoodAndBeverage && (
+              <div className="flex items-center gap-2">
+                <Icon
+                  name="include-food"
+                  className="size-4 shrink-0 font-medium text-badge-green"
+                />
+                <span className="text-size-sm font-medium text-badge-green">
+                  {t('features.food_beverage')}
+                </span>
+              </div>
+            )}
+
+            {/* Free Cancellation */}
+            {transfer.features.hasFreeCancellation && (
+              <div className="flex items-center gap-2">
+                <Icon name="check" className="size-4 shrink-0 font-medium text-badge-green" />
+                <span className="text-size-sm font-medium text-badge-green">
+                  {t('features.free_cancellation')}
+                </span>
+              </div>
+            )}
           </div>
+
           <div className="flex w-full shrink-0 items-center justify-center rounded-xs bg-btn-primary px-4 py-2 text-size-sm font-bold text-on-btn-primary md:w-fit">
-            {t('common.buttons.transfer')}
+            {t('actions.transfer')}
           </div>
         </div>
       </div>

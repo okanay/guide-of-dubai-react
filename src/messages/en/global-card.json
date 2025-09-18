@@ -1,138 +1,74 @@
 {
-  "common": {
-    "buttons": {
-      "book_now": "Book Now",
-      "buy_now": "Buy Now",
-      "rent_now": "Rent Now",
-      "view_all": "View All",
-      "view_details": "View Details",
-      "reserve": "Reserve",
-      "transfer": "Reserve My Seat Now"
-    },
-    "actions": {
-      "like": "Like",
-      "unlike": "Unlike",
-      "share": "Share",
-      "save": "Save"
-    },
-    "labels": {
-      "per_person": "/ per person",
-      "per_night": "/ per night",
-      "per_day": "/ per day",
-      "from": "From",
-      "starting_at": "Starting at",
-      "rating": "Rating",
-      "reviews": "reviews",
-      "review": "review"
-    },
-    "aria": {
-      "image_alt": "{{title}} - View {{index}}",
-      "prev_image": "Previous image",
-      "next_image": "Next image",
-      "view_image": "View image {{index}}"
-    }
+  "actions": {
+    "book_now": "Book Now",
+    "buy_now": "Buy Now",
+    "rent_now": "Rent Now",
+    "reserve": "Reserve",
+    "transfer": "Reserve My Seat Now",
+    "view_all": "View All",
+    "view_details": "View Details",
+    "like": "Like",
+    "unlike": "Unlike",
+    "share": "Share",
+    "save": "Save"
   },
-  "hotel": {
-    "features": {
-      "breakfast": {
-        "label": "Breakfast",
-        "value": "Included"
-      },
-      "freeCancellation": {
-        "label": "Cancellation",
-        "value": "Free"
-      },
-      "forTwoPeople": {
-        "label": "Capacity",
-        "value": "For Two People"
-      }
-    },
-    "labels": {
-      "distance_to_center": "Distance to center",
-      "per_night_guests": "{{count}} Night, {{adults}} Adult",
-      "map_view": "View on Map",
-      "star_rating": "{{count}} Star Hotel"
-    }
+
+  "labels": {
+    "per_person": "/ per person",
+    "per_night": "/ per night",
+    "per_day": "/ per day",
+    "from": "From",
+    "starting_at": "Starting at",
+    "rating": "Rating",
+    "reviews": "reviews",
+    "review": "review",
+    "capacity": "Capacity",
+    "duration": "Duration",
+    "location": "Location",
+    "distance_to_center": "Distance to center",
+    "min_rental": "Minimum Rental Duration",
+    "price_per_days": "Price for {{days}} Days",
+    "important_info": "Important Information"
   },
-  "activity": {
-    "labels": {
-      "duration": "Duration",
-      "group_size": "Group Size",
-      "included": "Included",
-      "difficulty": "Difficulty",
-      "age_limit": "Age Limit"
-    },
-    "discount": {
-      "save_percent": "Save %{{percent}}",
-      "original_price": "Original Price",
-      "discounted_price": "Discounted Price"
-    }
+
+  "features": {
+    "breakfast": "Breakfast Included",
+    "free_cancellation": "Free Cancellation",
+    "air_conditioning": "Air Conditioning",
+    "hotel_pickup": "Hotel Pickup",
+    "food_beverage": "Food & Beverage Included",
+    "shared_vehicle": "Shared Vehicle",
+    "automatic": "Automatic",
+    "manual": "Manual",
+    "passengers": "{{capacity}} Passengers",
+    "baggage": "{{capacity}} Baggage"
   },
-  "tour": {
-    "labels": {
-      "duration": "Duration",
-      "departure": "Departure",
-      "language": "Language",
-      "group_type": "Group Type",
-      "pickup_included": "Pickup Included"
-    }
+
+  "discount": {
+    "save_percent": "Save %{{percent}}",
+    "original_price": "Original Price",
+    "discounted_price": "Discounted Price"
   },
-  "rent_a_car": {
-    "features": {
-      "passengers": "1-4 Passengers",
-      "air_conditioning": "Air Conditioning",
-      "transmission": {
-        "automatic": "Automatic",
-        "manual": "Manual"
-      },
-      "fuel_type": {
-        "petrol": "Petrol",
-        "diesel": "Diesel",
-        "electric": "Electric",
-        "hybrid": "Hybrid"
-      }
-    },
-    "labels": {
-      "distance_to_center": "Distance to city center",
-      "important_info": "Important Information",
-      "price_per_days": "Price for {{days}} Days",
-      "pickup_locations": "Pickup Locations",
-      "fuel_policy": "Fuel Policy"
-    }
+
+  "ranking": {
+    "rank": "Rank {{rank}}",
+    "purchased_count": "{{count}}+ purchased",
+    "iconic_place": "Iconic Place",
+    "most_popular": "Most Popular"
   },
-  "yacht": {
-    "labels": {
-      "location": "Location",
-      "min_rental": "Minimum Rental Duration",
-      "capacity": "Capacity",
-      "amenities": "Amenities",
-      "size": "Yacht Size"
-    }
-  },
-  "popular": {
-    "labels": {
-      "rank": "Rank {{rank}}",
-      "purchased_count": "{{count}}+ purchased",
-      "iconic_place": "Iconic Place",
-      "most_popular": "Most Popular"
-    }
-  },
+
   "safari": {
     "morning": {
       "title": "Morning Desert Safari Tour",
-      "button": "Join Morning Safari"
+      "cta": "Join Morning Safari"
     },
     "night": {
       "title": "Evening Desert Safari Tour",
-      "button": "Join Evening Safari"
+      "cta": "Join Evening Safari"
     },
-    "features": {
-      "capacity": "Capacity for {{count}} People",
-      "sharedVehicle": "Shared Vehicle",
-      "hotelPickup": "Hotel Pickup"
-    },
-    "nightCampOptions": "4 Different Camp Options:",
+    "capacity": "Capacity for {{capacity}} People",
     "camps": {
+      "title": "5 Different Camp Options:",
       "silver": "Silver Camp",
       "platinum": "Platinum Camp",
       "gold": "Gold Camp",
@@ -140,16 +76,17 @@
       "heritage": "Heritage Camp"
     }
   },
-  "transfer": {
-    "features": {
-      "pax": "{{capacity}} Passengers",
-      "baggage": "{{count}} Baggage",
-      "food_and_beverage": "Food & Beverage Included",
-      "free_cancellation": "Free Cancellation"
-    }
-  },
+
   "flight": {
     "starting_from": "/ starting from",
     "view_flights": "View Flights"
+  },
+
+  "accessibility": {
+    "image_alt": "{{title}} - View {{index}}",
+    "prev_image": "Previous image",
+    "next_image": "Next image",
+    "view_image": "View image {{index}}",
+    "map_view": "View on Map"
   }
 }

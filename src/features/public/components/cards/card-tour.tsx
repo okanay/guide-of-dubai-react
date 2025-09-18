@@ -110,7 +110,7 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, className, onLikeToggl
             <div key={`image-${imgIndex}`} className="w-full flex-shrink-0 snap-start">
               <img
                 src={image}
-                alt={t('common.aria.image_alt', { title: tour.title, index: imgIndex + 1 })}
+                alt={t('accessibility.image_alt', { title: tour.title, index: imgIndex + 1 })}
                 className="h-full w-full object-cover"
                 loading={'lazy'}
                 fetchPriority="low"
@@ -126,7 +126,7 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, className, onLikeToggl
               type="button"
               onClick={handlePrevImage}
               className="absolute top-1/2 left-1 z-20 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-70 hover:opacity-100"
-              aria-label={t('common.aria.prev_image')}
+              aria-label={t('accessibility.prev_image')}
             >
               <Icon name="chevron-left" className="size-3" />
             </button>
@@ -135,7 +135,7 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, className, onLikeToggl
               type="button"
               onClick={handleNextImage}
               className="absolute top-1/2 right-1 z-20 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-70 hover:opacity-100"
-              aria-label={t('common.aria.next_image')}
+              aria-label={t('accessibility.next_image')}
             >
               <Icon name="chevron-right" className="size-3" />
             </button>
@@ -153,7 +153,7 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, className, onLikeToggl
                 key={`indicator-${imgIndex}`}
                 type="button"
                 onClick={() => scrollToImage(imgIndex)}
-                aria-label={t('common.aria.view_image', { index: imgIndex + 1 })}
+                aria-label={t('accessibility.view_image', { index: imgIndex + 1 })}
                 aria-current={imgIndex === currentImageIndex ? 'true' : 'false'}
                 className={twMerge(
                   'h-1 rounded-full transition-all duration-300 hover:bg-white/80',
@@ -193,7 +193,7 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, className, onLikeToggl
             <span className="font-medium text-on-box-black">{tour.rating.toFixed(1)}</span>
             <span className="text-gray-600">
               ({tour.reviewCount}{' '}
-              {tour.reviewCount === 1 ? t('common.labels.review') : t('common.labels.reviews')})
+              {tour.reviewCount === 1 ? t('labels.review') : t('labels.reviews')})
             </span>
           </div>
 
@@ -216,7 +216,7 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, className, onLikeToggl
             onClick={handleBookingClick}
             className="h-8 w-fit rounded-xs bg-btn-primary px-2 text-size-xs font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus sm:px-6 sm:text-size-sm"
           >
-            {t('common.buttons.reserve')}
+            {t('actions.reserve')}
           </button>
         </div>
       </Link>

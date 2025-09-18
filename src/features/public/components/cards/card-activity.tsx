@@ -110,7 +110,7 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
             <div key={`image-${imgIndex}`} className="w-full flex-shrink-0 snap-start">
               <img
                 src={image}
-                alt={`${activity.title} - View ${imgIndex + 1}`}
+                alt={t('accessibility.image_alt', { title: activity.title, index: imgIndex + 1 })}
                 className="h-full w-full object-cover"
                 loading={'lazy'}
                 fetchPriority="low"
@@ -126,7 +126,7 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
               type="button"
               onClick={handlePrevImage}
               className="absolute top-1/2 left-1 z-20 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-75 hover:opacity-100"
-              aria-label="Previous image"
+              aria-label={t('accessibility.prev_image')}
             >
               <Icon name="chevron-left" className="size-3" />
             </button>
@@ -135,7 +135,7 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
               type="button"
               onClick={handleNextImage}
               className="absolute top-1/2 right-1 z-20 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-75 hover:opacity-100"
-              aria-label="Next image"
+              aria-label={t('accessibility.next_image')}
             >
               <Icon name="chevron-right" className="size-3" />
             </button>
@@ -153,7 +153,7 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
                 key={`indicator-${imgIndex}`}
                 type="button"
                 onClick={() => scrollToImage(imgIndex)}
-                aria-label={`View image ${imgIndex + 1}`}
+                aria-label={t('accessibility.view_image', { index: imgIndex + 1 })}
                 aria-current={imgIndex === currentImageIndex ? 'true' : 'false'}
                 className={twMerge(
                   'h-1 rounded-full transition-all duration-300 hover:bg-white/80',
@@ -182,7 +182,7 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
           {/* Discount Badge */}
           {activity.hasDiscount && activity.discountPercentage && (
             <div className="w-fit rounded-xs bg-primary-500 px-2 py-1 text-size-xs font-bold text-white">
-              {t('activity.discount.save_percent', { percent: activity.discountPercentage })}
+              {t('discount.save_percent', { percent: activity.discountPercentage })}
             </div>
           )}
           {/* Title */}
@@ -217,7 +217,7 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
               <span className="text-size-lg font-bold text-on-box-black">
                 {formatPrice(activity.price)}
               </span>
-              <span className="text-size-xs text-gray-500">{t('common.labels.per_person')}</span>
+              <span className="text-size-xs text-gray-500">{t('labels.per_person')}</span>
             </div>
           </div>
 
@@ -227,7 +227,7 @@ export const ActivityCard: React.FC<Props> = ({ activity, className, onLikeToggl
             onClick={handleBookingClick}
             className="h-8 w-fit rounded-xs bg-btn-primary px-2 text-size-xs font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus sm:px-6 sm:text-size-sm"
           >
-            {t('common.buttons.buy_now')}
+            {t('actions.buy_now')}
           </button>
         </div>
       </Link>

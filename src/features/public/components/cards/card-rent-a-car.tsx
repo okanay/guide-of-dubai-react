@@ -109,7 +109,10 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
             <img
               key={`${car.id}-image-${idx}`}
               src={image}
-              alt={`${car.brand} ${car.model} - View ${idx + 1} of ${car.images.length}`}
+              alt={t('accessibility.image_alt', {
+                title: `${car.brand} ${car.model}`,
+                index: idx + 1,
+              })}
               className="h-full w-full shrink-0 snap-start object-cover"
               loading={'lazy'}
               fetchPriority="low"
@@ -124,7 +127,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
             <button
               onClick={handlePrevImage}
               className="absolute top-1/2 left-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-70 hover:opacity-100"
-              aria-label="Previous car image"
+              aria-label={t('accessibility.prev_image')}
             >
               <Icon name="chevron-left" className="h-4 w-4 text-black" />
             </button>
@@ -133,7 +136,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
             <button
               onClick={handleNextImage}
               className="absolute top-1/2 right-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-70 hover:opacity-100"
-              aria-label="Next car image"
+              aria-label={t('accessibility.next_image')}
             >
               <Icon name="chevron-right" className="h-4 w-4 text-black" />
             </button>
@@ -154,7 +157,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
                   'h-1 rounded-full transition-all duration-300 hover:bg-white/80',
                   idx === currentImageIndex ? 'w-4 bg-white' : 'w-2 bg-white/60',
                 )}
-                aria-label={`View image ${idx + 1}`}
+                aria-label={t('accessibility.view_image', { index: idx + 1 })}
                 aria-current={idx === currentImageIndex ? 'true' : 'false'}
               />
             ))}
@@ -190,7 +193,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
           {/* Passenger Count */}
           <div className="flex items-center gap-1">
             <Icon name="person" className="size-3" aria-hidden="true" />
-            <span className="text-size-sm">{t('rent_a_car.features.passengers')}</span>
+            <span className="text-size-sm">{t('features.passengers', { capacity: 4 })}</span>
           </div>
 
           {/* Seats */}
@@ -206,9 +209,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
             <div className="flex items-center gap-1">
               <Icon name="rent-a-car/gear" className="size-4" aria-hidden="true" />
               <span className="text-size-sm">
-                {t(
-                  `rent_a_car.features.transmission.${car.features.automaticTransmission ? 'automatic' : 'manual'}`,
-                )}
+                {t(`features.${car.features.automaticTransmission ? 'automatic' : 'manual'}`)}
               </span>
             </div>
           )}
@@ -217,7 +218,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
           {car.features.airConditioning && (
             <div className="flex items-center gap-1">
               <Icon name="rent-a-car/air-conditioning" className="size-4" aria-hidden="true" />
-              <span className="text-size-sm">{t('rent_a_car.features.air_conditioning')}</span>
+              <span className="text-size-sm">{t('features.air_conditioning')}</span>
             </div>
           )}
         </div>
@@ -228,7 +229,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
           <div className="flex flex-col gap-y-1.5">
             <span className="text-size-sm text-on-box-black">{car.location}</span>
             <span className="text-size-xs">
-              {t('rent_a_car.labels.distance_to_center')} {car.distanceFromCenter}
+              {t('labels.distance_to_center')} {car.distanceFromCenter}
             </span>
           </div>
         </div>
@@ -237,9 +238,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
 
         {/* Important Info */}
         <div className="mb-3 flex items-center gap-1.5">
-          <span className="text-size-xs text-gray-600">
-            {t('rent_a_car.labels.important_info')}
-          </span>
+          <span className="text-size-xs text-gray-600">{t('labels.important_info')}</span>
           <Icon name="info-bg" className="mt-0.5 size-4 text-gray-900" aria-hidden="true" />
         </div>
 
@@ -247,7 +246,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
         <div className="mt-auto space-y-2">
           <div className="flex flex-col">
             <span className="text-body-xs text-gray-500">
-              {t('rent_a_car.labels.price_per_days', { days: 3 })}
+              {t('labels.price_per_days', { days: 3 })}
             </span>
 
             <div className="flex items-baseline gap-1">
@@ -262,7 +261,7 @@ export const RentACarCard: React.FC<RentACarCardProps> = ({ car, className, onLi
             onClick={handleBookingClick}
             className="h-10 w-full rounded-xs border border-btn-primary bg-btn-primary text-body-sm font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus"
           >
-            {t('common.buttons.rent_now')}
+            {t('actions.rent_now')}
           </button>
         </div>
       </Link>

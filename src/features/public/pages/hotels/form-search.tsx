@@ -57,12 +57,12 @@ export const SearchForm = () => {
         onSubmit={handleSubmit}
         className="mx-auto flex max-w-main flex-col gap-y-4 border-b border-gray-200 bg-white p-4 md:flex-row md:items-center md:p-0 md:shadow"
       >
-        {/* Arama Kelimesi */}
+        {/* Search Input */}
         <div
           ref={searchTriggerRef}
           className="relative flex h-14 flex-1 flex-col items-start justify-center border-gray-200 px-4 py-2.5 text-start shadow md:border-r md:py-0 md:shadow-none"
         >
-          <label className="text-xs font-medium text-gray-700">{t('labels.search-otel')}</label>
+          <label className="text-xs font-medium text-gray-700">{t('labels.search')}</label>
 
           <div className="relative -mt-1.5 w-full">
             <input
@@ -75,13 +75,7 @@ export const SearchForm = () => {
                 }
               }}
               onFocus={() => setIsSearchOpen(true)}
-              onBlur={(e) => {
-                const relatedTarget = e.relatedTarget as HTMLElement
-                if (!relatedTarget?.closest('[data-search-dropdown]')) {
-                  setTimeout(() => setIsSearchOpen(false), 200)
-                }
-              }}
-              placeholder={t('placeholders.search-hotel')}
+              placeholder={t('placeholders.search_hotel')}
               className="w-full border-none bg-transparent pr-6 text-start text-size-sm font-semibold focus:outline-none"
               autoComplete="off"
             />
@@ -91,7 +85,7 @@ export const SearchForm = () => {
                 type="button"
                 onClick={() => {
                   setFilterValue('search', '')
-                  setIsSearchOpen(true) // Temizleme sonrası dropdown'ı aç
+                  setIsSearchOpen(true)
                 }}
                 className="absolute top-1/2 right-0 -translate-y-1/2 text-gray-400 hover:text-gray-600"
               >
@@ -114,11 +108,9 @@ export const SearchForm = () => {
           />
         </div>
 
-        {/* Tarih Başlangıç */}
+        {/* Check-in Date */}
         <div className="relative flex h-14 min-w-[200px] flex-col items-start justify-center border-gray-200 px-4 py-2.5 text-start shadow md:border-r md:py-0 md:shadow-none">
-          <label className="text-xs font-medium text-gray-700">
-            {t('labels.date-hotel-start')}
-          </label>
+          <label className="text-xs font-medium text-gray-700">{t('labels.checkin')}</label>
           <DatePickerText
             value={filters.dateStart ? parseISO(filters.dateStart) : new Date()}
             onChange={(dateStart) =>
@@ -130,9 +122,9 @@ export const SearchForm = () => {
           />
         </div>
 
-        {/* Tarih Dönüş */}
+        {/* Check-out Date */}
         <div className="relative flex h-14 min-w-[200px] flex-col items-start justify-center border-gray-200 px-4 py-2.5 text-start shadow md:border-r md:py-0 md:shadow-none">
-          <label className="text-xs font-medium text-gray-700">{t('labels.date-hotel-end')}</label>
+          <label className="text-xs font-medium text-gray-700">{t('labels.checkout')}</label>
           <DatePickerText
             value={filters.dateEnd ? parseISO(filters.dateEnd) : new Date()}
             onChange={(dateEnd) =>
@@ -144,14 +136,12 @@ export const SearchForm = () => {
           />
         </div>
 
-        {/* Katılımcı Seçici */}
+        {/* Guests Selector */}
         <div
           ref={participantTriggerRef}
           className="relative flex h-14 min-w-[200px] flex-col items-start justify-center px-4 py-2.5 text-start shadow md:py-0 md:shadow-none"
         >
-          <label className="text-xs font-medium text-gray-700">
-            {t('labels.participants-hotel')}
-          </label>
+          <label className="text-xs font-medium text-gray-700">{t('labels.guests')}</label>
           <button
             type="button"
             onClick={() => setIsParticipantOpen(!isParticipantOpen)}
@@ -170,13 +160,13 @@ export const SearchForm = () => {
           />
         </div>
 
-        {/* Arama Butonu */}
+        {/* Search Button */}
         <button
           type="submit"
           className="flex h-14 w-full shrink-0 items-center justify-center gap-x-2 bg-btn-primary px-6 font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover md:w-fit"
         >
           <Icon name="search" className="h-5 w-5" />
-          <span>{t('search.hotel')}</span>
+          <span>{t('actions.search_hotels')}</span>
         </button>
       </form>
     </section>
@@ -256,11 +246,10 @@ const ParticipantsDropdown = ({ isOpen, triggerRef, onClose }: ParticipantsDropd
       isOpen={isOpen}
       triggerRef={triggerRef}
       onClose={onClose}
-      placement="bottom-end"
+      placement="bottom-start"
       className="w-full max-w-[calc(100%_-_2rem)] rounded-xs border border-gray-200 bg-white shadow-xl md:max-w-[320px]"
     >
       <div className="flex flex-col gap-y-4 p-4">
-        {/* Adults Counter */}
         <div className="flex items-center justify-between">
           <label className="text-sm font-medium text-black">{t('participants.adults')}</label>
           <NumericStepper
@@ -270,8 +259,6 @@ const ParticipantsDropdown = ({ isOpen, triggerRef, onClose }: ParticipantsDropd
             className="w-32"
           />
         </div>
-
-        {/* Children Counter */}
         <div className="flex items-center justify-between">
           <label className="text-sm font-medium text-black">{t('participants.children')}</label>
           <NumericStepper

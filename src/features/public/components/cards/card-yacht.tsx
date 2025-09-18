@@ -109,7 +109,7 @@ export const YachtCard: React.FC<YachtCardProps> = ({ yacht, className, onLikeTo
             <img
               key={`${yacht.id}-image-${idx}`}
               src={image}
-              alt={`${yacht.name} - View ${idx + 1} of ${yacht.images.length}`}
+              alt={t('accessibility.image_alt', { title: yacht.name, index: idx + 1 })}
               className="h-full w-full shrink-0 snap-start object-cover"
               loading={'lazy'}
               fetchPriority="low"
@@ -124,7 +124,7 @@ export const YachtCard: React.FC<YachtCardProps> = ({ yacht, className, onLikeTo
             <button
               onClick={handlePrevImage}
               className="absolute top-1/2 left-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-70 hover:opacity-100"
-              aria-label="Previous yacht image"
+              aria-label={t('accessibility.prev_image')}
             >
               <Icon name="chevron-left" className="h-4 w-4 text-black" />
             </button>
@@ -133,7 +133,7 @@ export const YachtCard: React.FC<YachtCardProps> = ({ yacht, className, onLikeTo
             <button
               onClick={handleNextImage}
               className="absolute top-1/2 right-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-70 hover:opacity-100"
-              aria-label="Next yacht image"
+              aria-label={t('accessibility.next_image')}
             >
               <Icon name="chevron-right" className="h-4 w-4 text-black" />
             </button>
@@ -154,7 +154,7 @@ export const YachtCard: React.FC<YachtCardProps> = ({ yacht, className, onLikeTo
                   'h-1 rounded-full transition-all duration-300 hover:bg-white/80',
                   idx === currentImageIndex ? 'w-4 bg-white' : 'w-2 bg-white/60',
                 )}
-                aria-label={`View image ${idx + 1}`}
+                aria-label={t('accessibility.view_image', { index: idx + 1 })}
                 aria-current={idx === currentImageIndex ? 'true' : 'false'}
               />
             ))}
@@ -191,7 +191,7 @@ export const YachtCard: React.FC<YachtCardProps> = ({ yacht, className, onLikeTo
           <div className="flex items-start gap-2">
             <Icon name="location-pin" className="mt-0.5 size-4" aria-hidden="true" />
             <span className="">
-              {t('yacht.labels.location')}: {yacht.location}
+              {t('labels.location')}: {yacht.location}
             </span>
           </div>
 
@@ -199,7 +199,7 @@ export const YachtCard: React.FC<YachtCardProps> = ({ yacht, className, onLikeTo
           <div className="flex items-start gap-2">
             <Icon name="duration" className="mt-0.5 size-4" aria-hidden="true" />
             <span className="">
-              {t('yacht.labels.min_rental')}: {yacht.rentalDuration}
+              {t('labels.min_rental')}: {yacht.rentalDuration}
             </span>
           </div>
 
@@ -207,7 +207,7 @@ export const YachtCard: React.FC<YachtCardProps> = ({ yacht, className, onLikeTo
           <div className="ml-0.5 flex items-start gap-2">
             <Icon name="person" className="mt-0.5 mr-0.5 size-3" aria-hidden="true" />
             <span className="">
-              {yacht.capacity} {t('yacht.labels.capacity')}
+              {yacht.capacity} {t('labels.capacity')}
             </span>
           </div>
         </div>
@@ -226,7 +226,7 @@ export const YachtCard: React.FC<YachtCardProps> = ({ yacht, className, onLikeTo
             onClick={handleBookingClick}
             className="h-10 w-full rounded-xs bg-btn-primary text-size-sm font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus"
           >
-            {t('common.buttons.rent_now')}
+            {t('actions.rent_now')}
           </button>
         </div>
       </Link>

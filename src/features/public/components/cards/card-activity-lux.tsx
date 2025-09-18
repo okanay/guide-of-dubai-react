@@ -106,7 +106,7 @@ export const ActivityCardLux: React.FC<Props> = ({ activity, className, onLikeTo
             <div key={`image-${imgIndex}`} className="w-full flex-shrink-0 snap-start">
               <img
                 src={image}
-                alt={`${activity.title} - View ${imgIndex + 1}`}
+                alt={t('accessibility.image_alt', { title: activity.title, index: imgIndex + 1 })}
                 className="h-[220px] w-full object-cover"
                 loading={imgIndex === 0 ? 'eager' : 'lazy'}
               />
@@ -121,7 +121,7 @@ export const ActivityCardLux: React.FC<Props> = ({ activity, className, onLikeTo
               type="button"
               onClick={handlePrevImage}
               className="absolute top-1/2 left-3 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-btn-white text-on-btn-white opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-70 hover:opacity-100"
-              aria-label="Previous image"
+              aria-label={t('accessibility.prev_image')}
             >
               <Icon name="chevron-left" className="size-5" />
             </button>
@@ -130,7 +130,7 @@ export const ActivityCardLux: React.FC<Props> = ({ activity, className, onLikeTo
               type="button"
               onClick={handleNextImage}
               className="absolute top-1/2 right-3 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-btn-white text-on-btn-white opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-70 hover:opacity-100"
-              aria-label="Next image"
+              aria-label={t('accessibility.next_image')}
             >
               <Icon name="chevron-right" className="size-5" />
             </button>
@@ -148,7 +148,7 @@ export const ActivityCardLux: React.FC<Props> = ({ activity, className, onLikeTo
                 key={`indicator-${imgIndex}`}
                 type="button"
                 onClick={() => scrollToImage(imgIndex)}
-                aria-label={`View image ${imgIndex + 1}`}
+                aria-label={t('accessibility.view_image', { index: imgIndex + 1 })}
                 aria-current={imgIndex === currentImageIndex ? 'true' : 'false'}
                 className={twMerge(
                   'h-1 rounded-full transition-all duration-300 hover:bg-white/80',
@@ -184,7 +184,7 @@ export const ActivityCardLux: React.FC<Props> = ({ activity, className, onLikeTo
               <span className="font-medium text-on-box-black">{activity.rating.toFixed(1)}</span>
               <span className="text-gray-600">({activity.reviewCount})</span>
               <div className="ml-1 rounded-xs bg-gray-100 px-2 py-1 text-body-xs text-gray-700">
-                {t('popular.labels.purchased_count', { count: activity.reviewCount })}
+                {t('ranking.purchased_count', { count: activity.reviewCount })}
               </div>
             </div>
 
@@ -205,7 +205,7 @@ export const ActivityCardLux: React.FC<Props> = ({ activity, className, onLikeTo
               <span className="text-body-xl font-bold text-on-box-black">
                 {formatPrice(activity.price)}
               </span>
-              <span className="text-body-xs text-gray-500">{t('common.labels.per_person')}</span>
+              <span className="text-body-xs text-gray-500">{t('labels.per_person')}</span>
             </div>
           </div>
         </div>
@@ -216,7 +216,7 @@ export const ActivityCardLux: React.FC<Props> = ({ activity, className, onLikeTo
           onClick={handleBookingClick}
           className="mt-auto h-10 w-full rounded-xs border border-btn-primary bg-btn-primary text-body-sm font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover focus:bg-btn-primary-focus sm:bg-transparent sm:text-btn-primary sm:hover:bg-primary-50 sm:focus:bg-primary-50"
         >
-          {t('common.buttons.book_now')}
+          {t('actions.book_now')}
         </button>
       </Link>
     </article>

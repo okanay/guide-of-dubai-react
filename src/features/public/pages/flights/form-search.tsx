@@ -90,13 +90,16 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
   return (
     <section className="bg-box-surface pb-4 md:py-4">
       <form onSubmit={handleSubmit} className="mx-auto max-w-main bg-white md:shadow">
-        {/* Trip Type and Direct Flights Row */}
+        {/* Trip Type and Options Row */}
         <div className="flex items-center justify-between border-b border-gray-100 px-4 py-3">
           <RadioGroup
             name="tripType"
             value={filters.tripType}
             onChange={(value) => handleTripTypeChange(value as 'one-way' | 'round-trip')}
-            options={tripTypeOptions}
+            options={[
+              { value: 'one-way', label: t('options.trip_types.one_way') },
+              { value: 'round-trip', label: t('options.trip_types.round_trip') },
+            ]}
             className="flex w-full flex-row flex-wrap space-y-0 gap-x-4"
           />
 
@@ -104,7 +107,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
             id="direct-flights"
             checked={filters.directFlightsOnly}
             onChange={(e) => setFilterValue('directFlightsOnly', e.target.checked)}
-            label={t('flight.direct_flights_only')}
+            label={t('options.direct_flights_only')}
             className="ml-4"
           />
         </div>
@@ -117,7 +120,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
               ref={fromTriggerRef}
               className="relative flex h-14 flex-1 flex-col items-start justify-center border-gray-200 py-2.5 pr-6 pl-4 text-start shadow md:border-r md:py-0 md:shadow-none"
             >
-              <label className="text-xs font-medium text-gray-700">{t('flight.from')}</label>
+              <label className="text-xs font-medium text-gray-700">{t('labels.from')}</label>
               <LocationInput
                 value={filters.from}
                 onChange={(value) => {
@@ -126,7 +129,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
                 }}
                 onFocus={() => setIsFromOpen(true)}
                 onClear={() => setFilterValue('from', '')}
-                placeholder={t('flight.departure_placeholder')}
+                placeholder={t('placeholders.departure_point')}
               />
 
               <LocationDropdown
@@ -150,7 +153,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
                 type="button"
                 onClick={handleSwapLocations}
                 className="flex size-8 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-800 md:size-10 md:h-8 md:w-8"
-                aria-label={t('flight.swap_locations')}
+                aria-label={t('actions.swap_locations')}
               >
                 <ArrowUpDown className="size-4 text-primary-500 md:size-4" />
               </button>
@@ -161,7 +164,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
               ref={toTriggerRef}
               className="relative flex h-14 flex-1 flex-col items-start justify-center border-gray-200 py-2.5 pr-4 pl-6 text-start shadow md:border-r md:py-0 md:shadow-none"
             >
-              <label className="text-xs font-medium text-gray-700">{t('flight.to')}</label>
+              <label className="text-xs font-medium text-gray-700">{t('labels.to')}</label>
               <LocationInput
                 value={filters.to}
                 onChange={(value) => {
@@ -170,7 +173,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
                 }}
                 onFocus={() => setIsToOpen(true)}
                 onClear={() => setFilterValue('to', '')}
-                placeholder={t('flight.arrival_placeholder')}
+                placeholder={t('placeholders.arrival_point')}
               />
 
               <LocationDropdown
@@ -191,9 +194,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
 
           {/* Departure Date */}
           <div className="relative flex h-14 min-w-[200px] flex-col items-start justify-center border-gray-200 py-2.5 pl-4 text-start shadow md:border-r md:py-0 md:shadow-none">
-            <label className="text-xs font-medium text-gray-700">
-              {t('flight.departure_date')}
-            </label>
+            <label className="text-xs font-medium text-gray-700">{t('labels.departure')}</label>
             <DatePickerText
               value={filters.departureDate ? parseISO(filters.departureDate) : new Date()}
               onChange={(date) =>
@@ -208,7 +209,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
           {/* Return Date - Only show for round-trip */}
           {filters.tripType === 'round-trip' && (
             <div className="relative flex h-14 min-w-[200px] flex-col items-start justify-center border-gray-200 px-4 py-2.5 text-start shadow md:border-r md:py-0 md:shadow-none">
-              <label className="text-xs font-medium text-gray-700">{t('flight.return_date')}</label>
+              <label className="text-xs font-medium text-gray-700">{t('labels.arrival')}</label>
               <DatePickerText
                 value={filters.returnDate ? parseISO(filters.returnDate) : new Date()}
                 onChange={(date) =>
@@ -226,14 +227,14 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
             ref={passengerTriggerRef}
             className="relative flex h-14 min-w-[200px] flex-col items-start justify-center px-4 py-2.5 text-start shadow md:py-0 md:shadow-none"
           >
-            <label className="text-xs font-medium text-gray-700">{t('flight.passengers')}</label>
+            <label className="text-xs font-medium text-gray-700">{t('labels.passengers')}</label>
             <button
               type="button"
               onClick={() => setIsPassengerOpen(!isPassengerOpen)}
               className="flex w-full items-center justify-between text-left"
             >
               <span className="text-size-sm font-semibold">
-                {`${filters.adults} ${t('flight.adults')}${filters.children > 0 ? `, ${filters.children} ${t('flight.children')}` : ''}`}
+                {`${filters.adults} ${t('participants.adults')}${filters.children > 0 ? `, ${filters.children} ${t('participants.children')}` : ''}`}
               </span>
             </button>
 
@@ -250,7 +251,7 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
             className="flex h-14 w-full shrink-0 items-center justify-center gap-x-2 bg-btn-primary px-6 font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover md:w-fit"
           >
             <Icon name="search" className="h-5 w-5" />
-            <span>{t('flight.search_button')}</span>
+            <span>{t('actions.search_flights')}</span>
           </button>
         </div>
       </form>
@@ -316,7 +317,7 @@ const LocationDropdown = ({
   excludeValue = '',
 }: LocationDropdownProps) => {
   const { t } = useTranslation('global-form')
-  const filteredAirports = [] // NOTE: You should implement your airport filtering logic here
+  const filteredAirports: any[] = []
 
   if (!isOpen) return null
 
@@ -331,20 +332,74 @@ const LocationDropdown = ({
         {filteredAirports.length === 0 && searchValue.trim().length > 0 && (
           <div className="px-4 py-6 text-center text-sm text-gray-500">
             <MapPin className="mx-auto mb-2 h-8 w-8 text-gray-300" />
-            <p className="font-medium">{t('flight.no_results_title')}</p>
-            <p className="mt-1">{t('flight.no_results_description', { searchValue })}</p>
+            <p className="font-medium">{t('suggestions.no_results.title')}</p>
+            <p className="mt-1">{t('suggestions.no_results.description', { searchValue })}</p>
           </div>
         )}
 
         {filteredAirports.length === 0 && searchValue.trim().length === 0 && (
           <div className="px-4 py-6 text-center text-sm text-gray-500">
             <Clock className="mx-auto mb-2 h-8 w-8 text-gray-300" />
-            <p>{t('flight.start_typing_title')}</p>
-            <p className="mt-1 text-xs">{t('flight.start_typing_description')}</p>
+            <p>{t('suggestions.start_typing.title')}</p>
+            <p className="mt-1 text-xs">{t('suggestions.start_typing.description')}</p>
           </div>
         )}
 
-        {/* Render your filtered airports here */}
+        {/* Popular Destinations when no search */}
+        {filteredAirports.length === 0 && searchValue.trim().length === 0 && (
+          <div className="px-4 py-2">
+            <h4 className="mb-2 text-xs font-medium tracking-wide text-gray-500 uppercase">
+              {t('suggestions.popular_destinations')}
+            </h4>
+            {/* Example popular destinations */}
+            {[
+              { code: 'IST', name: 'Istanbul', city: 'Istanbul', country: 'Turkey' },
+              { code: 'DXB', name: 'Dubai', city: 'Dubai', country: 'UAE' },
+              { code: 'LHR', name: 'London', city: 'London', country: 'UK' },
+            ].map((airport) => (
+              <button
+                key={airport.code}
+                onClick={() => onSelect(airport)}
+                className="flex w-full items-center gap-3 rounded px-2 py-2 text-left hover:bg-gray-50"
+              >
+                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded bg-gray-100">
+                  <span className="text-xs font-medium text-gray-600">{airport.code}</span>
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-gray-900">{airport.city}</p>
+                  <p className="text-xs text-gray-500">
+                    {airport.name}, {airport.country}
+                  </p>
+                </div>
+                <span className="text-xs text-gray-400">{t('suggestions.types.airport')}</span>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Render filtered airports here when search results exist */}
+        {filteredAirports.map((airport) => (
+          <button
+            key={airport.code}
+            onClick={() => onSelect(airport)}
+            className="w-full border-b border-gray-50 px-4 py-3 text-left last:border-b-0 hover:bg-gray-50"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded bg-gray-100">
+                  <span className="text-sm font-medium text-gray-600">{airport.code}</span>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-900">{airport.city}</p>
+                  <p className="text-xs text-gray-500">{airport.name}</p>
+                </div>
+              </div>
+              <span className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-400">
+                {t(`suggestions.types.${airport.type || 'airport'}`)}
+              </span>
+            </div>
+          </button>
+        ))}
       </div>
     </DropdownPortal>
   )
@@ -368,34 +423,25 @@ const PassengerDropdown = ({ isOpen, triggerRef, onClose }: PassengerDropdownPro
       isOpen={isOpen}
       triggerRef={triggerRef}
       onClose={onClose}
-      placement="bottom-end"
+      placement="bottom-start"
       className="w-full max-w-[calc(100%_-_2rem)] rounded-xs border border-gray-200 bg-white shadow-xl md:max-w-[320px]"
     >
       <div className="flex flex-col gap-y-4 p-4">
         <div className="flex items-center justify-between">
-          <div>
-            <label className="text-sm font-medium text-black">{t('flight.adults')}</label>
-            <p className="text-xs text-gray-500">{t('flight.adults_description')}</p>
-          </div>
+          <label className="text-sm font-medium text-black">{t('participants.adults')}</label>
           <NumericStepper
             value={filters.adults}
             onChange={(value) => setFilterValue('adults', value)}
             min={1}
-            max={9}
             className="w-32"
           />
         </div>
-
         <div className="flex items-center justify-between">
-          <div>
-            <label className="text-sm font-medium text-black">{t('flight.children')}</label>
-            <p className="text-xs text-gray-500">{t('flight.children_description')}</p>
-          </div>
+          <label className="text-sm font-medium text-black">{t('participants.children')}</label>
           <NumericStepper
             value={filters.children}
             onChange={(value) => setFilterValue('children', value)}
             min={0}
-            max={8}
             className="w-32"
           />
         </div>

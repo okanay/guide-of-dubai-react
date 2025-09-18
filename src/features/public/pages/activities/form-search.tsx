@@ -55,11 +55,9 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
         onSubmit={handleSubmit}
         className="mx-auto flex max-w-main flex-col gap-y-4 border-b border-gray-200 bg-white p-4 md:flex-row md:items-center md:p-0 md:shadow"
       >
-        {/* Tarih Seçici */}
+        {/* Date Picker */}
         <div className="relative flex h-14 flex-1 flex-col items-start justify-center border-gray-200 px-4 py-2.5 text-start shadow md:border-r md:py-0 md:shadow-none">
-          <label className="text-xs font-medium text-gray-700">
-            {t('global-form:labels.date')}
-          </label>
+          <label className="text-xs font-medium text-gray-700">{t('labels.date')}</label>
           <DatePickerText
             value={filters.date ? parseISO(filters.date) : new Date()}
             onChange={(date) => setFilterValue('date', date ? format(date, 'yyyy-MM-dd') : '')}
@@ -69,21 +67,19 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
           />
         </div>
 
-        {/* Katılımcı Seçici */}
+        {/* Participants Selector */}
         <div
           ref={participantTriggerRef}
           className="relative flex h-14 flex-1 flex-col items-start justify-center px-4 py-2.5 text-start shadow md:py-0 md:shadow-none"
         >
-          <label className="text-xs font-medium text-gray-700">
-            {t('global-form:labels.participants-hotel')}
-          </label>
+          <label className="text-xs font-medium text-gray-700">{t('labels.participants')}</label>
           <button
             type="button"
             onClick={() => setIsParticipantOpen(!isParticipantOpen)}
             className="flex w-full items-center justify-between text-left"
           >
             <span className="text-size-sm font-semibold">
-              {`${filters.adult} ${t('global-form:participants.adults')}, ${filters.child} ${t('global-form:participants.children')}`}
+              {`${filters.adult} ${t('participants.adults')}, ${filters.child} ${t('participants.children')}`}
             </span>
           </button>
 
@@ -95,13 +91,13 @@ export const SearchForm = ({ initialData }: SearchFormProps) => {
           />
         </div>
 
-        {/* Arama Butonu */}
+        {/* Search Button */}
         <button
           type="submit"
           className="flex h-14 w-full shrink-0 items-center justify-center gap-x-2 bg-btn-primary px-6 font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover md:w-fit"
         >
           <Icon name="search" className="h-5 w-5" />
-          <span>{t('global-form:search.tour')}</span>
+          <span>{t('actions.search_activities')}</span>
         </button>
       </form>
     </section>
@@ -120,7 +116,7 @@ interface ParticipantsDropdownProps {
 }
 
 const ParticipantsDropdown = ({ isOpen, triggerRef, onClose }: ParticipantsDropdownProps) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('global-form')
   const { filters, setFilterValue } = useActivityStore()
 
   return (
@@ -133,9 +129,7 @@ const ParticipantsDropdown = ({ isOpen, triggerRef, onClose }: ParticipantsDropd
     >
       <div className="flex flex-col gap-y-4 p-4">
         <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-black">
-            {t('global-form:participants.adults')}
-          </label>
+          <label className="text-sm font-medium text-black">{t('participants.adults')}</label>
           <NumericStepper
             value={filters.adult}
             onChange={(value) => setFilterValue('adult', value)}
@@ -144,9 +138,7 @@ const ParticipantsDropdown = ({ isOpen, triggerRef, onClose }: ParticipantsDropd
           />
         </div>
         <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-black">
-            {t('global-form:participants.children')}
-          </label>
+          <label className="text-sm font-medium text-black">{t('participants.children')}</label>
           <NumericStepper
             value={filters.child}
             onChange={(value) => setFilterValue('child', value)}
