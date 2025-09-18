@@ -31,8 +31,8 @@ interface NavTab {
   to: LinkProps['to']
   preload: false | 'viewport' | 'render' | 'intent' | undefined
   exact?: boolean
-  extended?: boolean // Extended tab flag - sadece ilgili URL'de görünür
-  mobileExtend?: boolean // Mobile'da extended olarak görünür
+  extended?: boolean
+  mobileExtend?: boolean
 }
 
 const ResponsivePicture = ({ slide, priority = false }: ResponsivePictureProps) => (
@@ -443,7 +443,7 @@ function ExtendedNavigationTabs() {
       <div
         ref={scrollContainerRef}
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        className="scrollbar-hide flex h-full translate-y-px snap-x snap-mandatory items-center justify-start overflow-x-auto text-size-sm font-semibold"
+        className="scrollbar-hide flex h-full snap-x snap-mandatory items-center justify-start overflow-x-auto text-size-sm font-semibold"
       >
         {navigationTabs.map((tab) => {
           const isVisible = !tab.extended || (tab.extended && href.includes(tab.path))
@@ -454,7 +454,7 @@ function ExtendedNavigationTabs() {
               to={tab.to}
               activeOptions={{ exact: tab.exact }}
               preload={'viewport'}
-              resetScroll={false}
+              resetScroll={true}
               data-visible={isVisible}
               className={twMerge(
                 'group hidden h-12 w-fit items-center justify-center gap-x-2 px-4 py-3 text-center font-bold text-nowrap text-white transition-colors duration-300 ease-in hover:bg-white/20 data-[status=active]:bg-white data-[status=active]:text-btn-primary data-[visible=true]:flex sm:min-w-[calc(1120px/9)]',
@@ -462,7 +462,7 @@ function ExtendedNavigationTabs() {
             >
               <Icon
                 name={tab.icon}
-                className="shrink-0 text-[#F8F8F8] group-data-[status=active]:text-gray-700"
+                className="size-5 shrink-0 text-on-box-white group-data-[status=active]:text-gray-700"
               />
               {t(tab.labelKey)}
             </Link>
@@ -480,7 +480,7 @@ function ExtendedNavigationTabs() {
       >
         <Icon
           name="app/all"
-          className="shrink-0 text-[#F8F8F8] group-data-[status=active]:text-gray-700"
+          className="size-4 shrink-0 text-on-box-white group-data-[status=active]:text-gray-700"
         />
         {t('nav.all')}
       </Link>
