@@ -1,11 +1,12 @@
-import { Link, LinkProps, useLocation } from '@tanstack/react-router'
-import { useMemo, useState, useEffect } from 'react'
+import { LinkProps, useLocation } from '@tanstack/react-router'
+import { useMemo, useState, useEffect, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useTranslation } from 'react-i18next'
 
 import { Route } from 'src/routes/$lang/_public/route'
 import Icon from 'src/components/icon'
 import { SearchButton } from '@/features/modals/search/button'
+import { Link } from '@/i18n/router/link'
 
 interface SlideConfig {
   index: number
@@ -16,16 +17,21 @@ interface SlideConfig {
   titleKey: string
   searchPlaceholderKey: string
 }
+
 interface ResponsivePictureProps {
   slide: SlideConfig
   priority?: boolean
 }
-interface NavigationTabProps {
-  to: LinkProps['to']
-  exact?: boolean
+
+// Navigation tab configuration
+interface NavTab {
+  path: string
   icon: string
   labelKey: string
-  className?: string
+  to: LinkProps['to']
+  exact?: boolean
+  extended?: boolean // Extended tab flag - sadece ilgili URL'de görünür
+  mobileExtend?: boolean // Mobile'da extended olarak görünür
 }
 
 const ResponsivePicture = ({ slide, priority = false }: ResponsivePictureProps) => (
@@ -41,40 +47,6 @@ const ResponsivePicture = ({ slide, priority = false }: ResponsivePictureProps) 
     />
   </picture>
 )
-
-function NavigationTab({ to, exact = false, icon, labelKey, className }: NavigationTabProps) {
-  const { t } = useTranslation('layout-header')
-  return (
-    <Link
-      to={to}
-      activeOptions={{ exact }}
-      preload={'render'}
-      resetScroll={false}
-      className={twMerge(
-        'group flex w-full shrink-0 items-center justify-center gap-x-2 py-3 text-center font-bold text-white transition-colors duration-300 ease-in hover:bg-white/20 data-[status=active]:bg-white data-[status=active]:text-btn-primary sm:w-1/8 sm:min-w-[120px] xl:w-full dark:text-black data-[status=active]:dark:bg-black',
-        className,
-      )}
-    >
-      <Icon name={icon} className="text-[#F8F8F8] group-data-[status=active]:text-gray-700" />
-      {t(labelKey)}
-    </Link>
-  )
-}
-
-const getActiveSlideIndex = (href: string, configs: SlideConfig[]): number | null => {
-  try {
-    const url = href.startsWith('http') ? new URL(href) : new URL(href, 'http://localhost')
-    const pathSegments = url.pathname
-      .split('/')
-      .filter((segment) => segment !== '' && segment.length > 2)
-    if (pathSegments.length > 1) return null
-    const targetPath = pathSegments.length === 0 ? '' : pathSegments[0]
-    const match = configs.find((slide) => slide.path === targetPath)
-    return match ? match.index : null
-  } catch {
-    return null
-  }
-}
 
 export const PublicHeaderBackground = () => {
   const location = useLocation()
@@ -301,61 +273,187 @@ export const PublicHeaderBackground = () => {
           />
 
           <div className="absolute -bottom-px left-0 z-32 w-full px-4">
-            <nav className="mx-auto grid w-full max-w-main grid-cols-4 items-center justify-start overflow-x-auto text-size-sm font-semibold [scrollbar-width:none] sm:flex lg:grid lg:grid-cols-9 [&::-webkit-scrollbar]:hidden">
-              <NavigationTab
-                to="/$lang"
-                exact={true}
-                icon="app/explore"
-                labelKey="nav.explore"
-                className="flex"
-              />
-              <NavigationTab
-                to="/$lang/tours"
-                icon="app/tours"
-                labelKey="nav.tours"
-                className="flex"
-              />
-              <NavigationTab
-                to="/$lang/activities"
-                icon="app/tickets"
-                labelKey="nav.activities"
-                className="hidden sm:flex"
-              />
-              <NavigationTab
-                to="/$lang/hotels"
-                icon="app/hotels"
-                labelKey="nav.hotels"
-                className="flex"
-              />
-              <NavigationTab
-                to="/$lang/safari-tour"
-                icon="app/safari"
-                labelKey="nav.safari_tour"
-                className="hidden sm:flex"
-              />
-              <NavigationTab
-                to="/$lang/rent-a-car"
-                icon="app/car-rental"
-                labelKey="nav.rent_a_car"
-                className="hidden sm:flex"
-              />
-              <NavigationTab
-                to="/$lang/transfer"
-                icon="app/transfer"
-                labelKey="nav.transfer"
-                className="hidden sm:flex"
-              />
-              <NavigationTab
-                to="/$lang/flights"
-                icon="app/flight"
-                labelKey="nav.flight"
-                className="hidden sm:flex"
-              />
-              <NavigationTab to="/$lang/guide" icon="app/all" labelKey="nav.all" className="flex" />
-            </nav>
+            <ExtendedNavigationTabs />
           </div>
         </div>
       </div>
     </>
   )
+}
+
+// Extended Navigation Component
+function ExtendedNavigationTabs() {
+  const { href } = Route.useLoaderData()
+  const { t } = useTranslation('layout-header')
+  const location = useLocation()
+
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const [isInitialized, setIsInitialized] = useState(false)
+
+  // Tüm navigation tab'leri tek listede
+  const navigationTabs: NavTab[] = useMemo(
+    () => [
+      {
+        path: '',
+        icon: 'app/explore',
+        labelKey: 'nav.explore',
+        to: '/$lang',
+        exact: true,
+      },
+      {
+        path: 'tours',
+        icon: 'app/tours',
+        labelKey: 'nav.tours',
+        to: '/$lang/tours',
+      },
+      {
+        path: 'activities',
+        icon: 'app/tickets',
+        labelKey: 'nav.activities',
+        to: '/$lang/activities',
+        mobileExtend: true,
+      },
+      {
+        path: 'hotels',
+        icon: 'app/hotels',
+        labelKey: 'nav.hotels',
+        to: '/$lang/hotels',
+      },
+      {
+        path: 'safari-tour',
+        icon: 'app/safari',
+        labelKey: 'nav.safari_tour',
+        to: '/$lang/safari-tour',
+        mobileExtend: true,
+      },
+      {
+        path: 'rent-a-car',
+        icon: 'app/car-rental',
+        labelKey: 'nav.rent_a_car',
+        to: '/$lang/rent-a-car',
+        mobileExtend: true,
+      },
+      {
+        path: 'transfer',
+        icon: 'app/transfer',
+        labelKey: 'nav.transfer',
+        to: '/$lang/transfer',
+        mobileExtend: true,
+      },
+      {
+        path: 'flights',
+        icon: 'app/flight',
+        labelKey: 'nav.flight',
+        to: '/$lang/flights',
+        mobileExtend: true,
+      },
+      // Extended tabs - sadece ilgili sayfalarda görünür
+      {
+        path: 'yacht',
+        icon: 'app/yacht',
+        labelKey: 'nav.yacht',
+        to: '/$lang/yacht',
+        extended: true,
+      },
+      {
+        path: 'guide/visa',
+        icon: 'app/visa',
+        labelKey: 'nav.visa',
+        to: '/$lang/guide/visa',
+        extended: true,
+      },
+      {
+        path: 'guide/sim-card',
+        icon: 'app/sim-card',
+        labelKey: 'nav.sim_card',
+        to: '/$lang/guide/sim-card',
+        extended: true,
+      },
+      {
+        path: 'guide/restaurants',
+        icon: 'app/restaurant',
+        labelKey: 'nav.restaurants',
+        to: '/$lang/guide/restaurants',
+        extended: true,
+      },
+      {
+        path: 'guide/hospitals',
+        icon: 'app/hospital',
+        labelKey: 'nav.hospitals',
+        to: '/$lang/guide/hospitals',
+        extended: true,
+      },
+      {
+        path: 'guide/museums',
+        icon: 'app/museum',
+        labelKey: 'nav.museums',
+        to: '/$lang/guide/museums',
+        extended: true,
+      },
+      {
+        path: 'guide/bundles',
+        icon: 'app/bundles',
+        labelKey: 'nav.bundles',
+        to: '/$lang/guide/bundles',
+        extended: true,
+      },
+    ],
+    [],
+  )
+
+  return (
+    <nav className="mx-auto flex w-full max-w-main">
+      <div
+        ref={scrollContainerRef}
+        className="flex flex-1 items-center justify-start overflow-x-auto text-size-sm font-semibold [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {navigationTabs.map((tab) => {
+          return (
+            <Link
+              key={tab.to as string}
+              to={tab.to}
+              activeOptions={{ exact: tab.exact }}
+              preload={'render'}
+              resetScroll={false}
+              className={twMerge(
+                'group flex w-fit min-w-[120px] shrink-0 items-center justify-center gap-x-2 py-3 text-center font-bold text-white transition-colors duration-300 ease-in hover:bg-white/20 data-[status=active]:bg-white data-[status=active]:text-btn-primary sm:w-1/8',
+              )}
+            >
+              <Icon
+                name={tab.icon}
+                className="text-[#F8F8F8] group-data-[status=active]:text-gray-700"
+              />
+              {t(tab.labelKey)}
+            </Link>
+          )
+        })}
+      </div>
+
+      <Link
+        to="/$lang/guide"
+        activeOptions={{ exact: false }}
+        preload={'render'}
+        resetScroll={false}
+        className="group flex w-fit items-center justify-center gap-x-2 px-3 py-3 text-center font-bold text-white transition-colors duration-300 ease-in hover:bg-white/20 data-[status=active]:bg-white data-[status=active]:text-btn-primary sm:w-1/8 sm:min-w-[120px]"
+      >
+        <Icon name="app/all" className="text-[#F8F8F8] group-data-[status=active]:text-gray-700" />
+        {t('nav.all')}
+      </Link>
+    </nav>
+  )
+}
+
+const getActiveSlideIndex = (href: string, configs: SlideConfig[]): number | null => {
+  try {
+    const url = href.startsWith('http') ? new URL(href) : new URL(href, 'http://localhost')
+    const pathSegments = url.pathname
+      .split('/')
+      .filter((segment) => segment !== '' && segment.length > 2)
+    if (pathSegments.length > 1) return null
+    const targetPath = pathSegments.length === 0 ? '' : pathSegments[0]
+    const match = configs.find((slide) => slide.path === targetPath)
+    return match ? match.index : null
+  } catch {
+    return null
+  }
 }

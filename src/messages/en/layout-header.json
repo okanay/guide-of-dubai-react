@@ -11,7 +11,14 @@
     "all": "All",
     "wishlist": "Wishlist",
     "reservations": "Reservations",
-    "blog": "Blog"
+    "blog": "Blog",
+    "yacht": "Yacht Tours",
+    "visa": "Dubai Visa",
+    "sim_card": "eSIM Card",
+    "restaurants": "Restaurants",
+    "hospitals": "Hospitals",
+    "museums": "Museums",
+    "bundles": "Travel Bundles"
   },
   "slides": {
     "explore": {
@@ -58,6 +65,41 @@
       "title": "Discover Everything in Dubai",
       "placeholder": "Search for any place or activity...",
       "alt": "Dubai General view"
+    },
+    "yacht": {
+      "title": "Luxury Yacht Tours in Dubai",
+      "placeholder": "Search for yacht tours and experiences...",
+      "alt": "Dubai Yacht Tours view"
+    },
+    "visa": {
+      "title": "Dubai Visa Services",
+      "placeholder": "Search for visa information and services...",
+      "alt": "Dubai Visa Services view"
+    },
+    "sim_card": {
+      "title": "eSIM & Connectivity in Dubai",
+      "placeholder": "Search for eSIM and mobile connectivity options...",
+      "alt": "Dubai eSIM Services view"
+    },
+    "restaurants": {
+      "title": "Best Restaurants in Dubai",
+      "placeholder": "Search for restaurants and dining experiences...",
+      "alt": "Dubai Restaurants view"
+    },
+    "hospitals": {
+      "title": "Healthcare Services in Dubai",
+      "placeholder": "Search for hospitals and medical facilities...",
+      "alt": "Dubai Healthcare view"
+    },
+    "museums": {
+      "title": "Museums & Culture in Dubai",
+      "placeholder": "Search for museums and cultural attractions...",
+      "alt": "Dubai Museums view"
+    },
+    "bundles": {
+      "title": "Dubai Travel Bundles",
+      "placeholder": "Search for travel packages and bundles...",
+      "alt": "Dubai Travel Bundles view"
     }
   },
   "categories": {
@@ -117,13 +159,18 @@
     "museums": {
       "title": "Museums",
       "description": "More than 50 activities are waiting for you."
+    },
+    "bundles": {
+      "title": "Travel Bundles",
+      "description": "Complete travel packages with activities, hotels, and transfers."
     }
   },
   "buttons": {
     "all_categories": "All Categories",
     "basket": "My Basket",
     "search": "Search...",
-    "go_ai": "Go.Ai"
+    "go_ai": "Go.Ai",
+    "menu": "Menu"
   },
   "profile": {
     "title": "Profile",

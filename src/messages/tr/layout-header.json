@@ -11,7 +11,14 @@
     "all": "Tümü",
     "wishlist": "Beğendiklerim",
     "reservations": "Rezervasyonlar",
-    "blog": "Blog"
+    "blog": "Blog",
+    "yacht": "Yat Turları",
+    "visa": "Dubai Vizesi",
+    "sim_card": "eSIM Kart",
+    "restaurants": "Restoranlar",
+    "hospitals": "Hastaneler",
+    "museums": "Müzeler",
+    "bundles": "Seyahat Paketleri"
   },
   "slides": {
     "explore": {
@@ -50,14 +57,49 @@
       "alt": "Dubai Transfer Hizmetleri manzarası"
     },
     "flight": {
-      "title": "Dubai Biletlerini Keşfedin",
-      "placeholder": "Bilet almak istediğiniz yer veya etkinliği arayın...",
-      "alt": "Dubai Biletleri manzarası"
+      "title": "Dubai Uçak Biletlerini Keşfedin",
+      "placeholder": "Uçuş seçeneklerini arayın...",
+      "alt": "Dubai Uçuş manzarası"
     },
     "all": {
       "title": "Dubai'de Her Şeyi Keşfedin",
       "placeholder": "Herhangi bir yer veya aktiviteyi arayın...",
       "alt": "Dubai Genel manzarası"
+    },
+    "yacht": {
+      "title": "Dubai'de Lüks Yat Turları",
+      "placeholder": "Yat turları ve deneyimlerini arayın...",
+      "alt": "Dubai Yat Turları manzarası"
+    },
+    "visa": {
+      "title": "Dubai Vize Hizmetleri",
+      "placeholder": "Vize bilgilerini ve hizmetlerini arayın...",
+      "alt": "Dubai Vize Hizmetleri manzarası"
+    },
+    "sim_card": {
+      "title": "Dubai'de eSIM ve Bağlantı",
+      "placeholder": "eSIM ve mobil bağlantı seçeneklerini arayın...",
+      "alt": "Dubai eSIM Hizmetleri manzarası"
+    },
+    "restaurants": {
+      "title": "Dubai'nin En İyi Restoranları",
+      "placeholder": "Restoran ve yemek deneyimlerini arayın...",
+      "alt": "Dubai Restoranları manzarası"
+    },
+    "hospitals": {
+      "title": "Dubai'de Sağlık Hizmetleri",
+      "placeholder": "Hastane ve sağlık tesislerini arayın...",
+      "alt": "Dubai Sağlık manzarası"
+    },
+    "museums": {
+      "title": "Dubai'de Müzeler ve Kültür",
+      "placeholder": "Müze ve kültürel cazibe merkezlerini arayın...",
+      "alt": "Dubai Müzeleri manzarası"
+    },
+    "bundles": {
+      "title": "Dubai Seyahat Paketleri",
+      "placeholder": "Seyahat paketlerini ve kampanyaları arayın...",
+      "alt": "Dubai Seyahat Paketleri manzarası"
     }
   },
   "categories": {
@@ -86,7 +128,7 @@
       "title": "Rent a Car",
       "description": "50'den fazla etkinlik seni bekliyor."
     },
-    "sim_card": {
+    "sim_cards": {
       "title": "eSIM",
       "description": "6, 10, 18GB seçenekleri ile kesintisiz internet."
     },
@@ -95,7 +137,7 @@
       "description": "50'den fazla etkinlik seni bekliyor."
     },
     "restaurants": {
-      "title": "Restorantlar",
+      "title": "Restoranlar",
       "description": "Dubai'nin en lezzetli restoranlarını keşfet."
     },
     "flights": {
@@ -117,13 +159,18 @@
     "museums": {
       "title": "Müzeler",
       "description": "50'den fazla etkinlik seni bekliyor."
+    },
+    "bundles": {
+      "title": "Seyahat Paketleri",
+      "description": "Aktiviteler, oteller ve transferleri içeren komple seyahat paketleri."
     }
   },
   "buttons": {
     "all_categories": "Tüm Kategoriler",
     "basket": "Sepetim",
     "search": "Ara...",
-    "go_ai": "Go.Ai"
+    "go_ai": "Go.Ai",
+    "menu": "Menü"
   },
   "profile": {
     "title": "Profil",
