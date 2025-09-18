@@ -454,7 +454,7 @@ function ExtendedNavigationTabs() {
               to={tab.to}
               activeOptions={{ exact: tab.exact }}
               preload={'viewport'}
-              resetScroll={true}
+              resetScroll={false}
               data-visible={isVisible}
               className={twMerge(
                 'group hidden h-12 w-fit items-center justify-center gap-x-2 px-4 py-3 text-center font-bold text-nowrap text-white transition-colors duration-300 ease-in hover:bg-white/20 data-[status=active]:bg-white data-[status=active]:text-btn-primary data-[visible=true]:flex sm:min-w-[calc(1120px/9)]',
