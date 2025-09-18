@@ -29,6 +29,7 @@ interface NavTab {
   icon: string
   labelKey: string
   to: LinkProps['to']
+  preload: false | 'viewport' | 'render' | 'intent' | undefined
   exact?: boolean
   extended?: boolean // Extended tab flag - sadece ilgili URL'de görünür
   mobileExtend?: boolean // Mobile'da extended olarak görünür
@@ -272,7 +273,13 @@ export const PublicHeaderBackground = () => {
             style={{ opacity: hasSlide ? 0.5 : 1 }}
           />
 
-          <div className="absolute -bottom-px left-0 z-32 w-full px-4">
+          <div
+            className="absolute bottom-0 left-0 z-32 w-full px-4"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+          >
             <ExtendedNavigationTabs />
           </div>
         </div>
@@ -285,12 +292,8 @@ export const PublicHeaderBackground = () => {
 function ExtendedNavigationTabs() {
   const { href } = Route.useLoaderData()
   const { t } = useTranslation('layout-header')
-  const location = useLocation()
-
   const scrollContainerRef = useRef<HTMLDivElement>(null)
-  const [isInitialized, setIsInitialized] = useState(false)
 
-  // Tüm navigation tab'leri tek listede
   const navigationTabs: NavTab[] = useMemo(
     () => [
       {
@@ -299,18 +302,21 @@ function ExtendedNavigationTabs() {
         labelKey: 'nav.explore',
         to: '/$lang',
         exact: true,
+        preload: 'viewport',
       },
       {
         path: 'tours',
         icon: 'app/tours',
         labelKey: 'nav.tours',
         to: '/$lang/tours',
+        preload: 'viewport',
       },
       {
         path: 'activities',
         icon: 'app/tickets',
         labelKey: 'nav.activities',
         to: '/$lang/activities',
+        preload: 'viewport',
         mobileExtend: true,
       },
       {
@@ -318,12 +324,14 @@ function ExtendedNavigationTabs() {
         icon: 'app/hotels',
         labelKey: 'nav.hotels',
         to: '/$lang/hotels',
+        preload: 'viewport',
       },
       {
         path: 'safari-tour',
         icon: 'app/safari',
         labelKey: 'nav.safari_tour',
         to: '/$lang/safari-tour',
+        preload: 'viewport',
         mobileExtend: true,
       },
       {
@@ -331,6 +339,7 @@ function ExtendedNavigationTabs() {
         icon: 'app/car-rental',
         labelKey: 'nav.rent_a_car',
         to: '/$lang/rent-a-car',
+        preload: 'viewport',
         mobileExtend: true,
       },
       {
@@ -338,6 +347,7 @@ function ExtendedNavigationTabs() {
         icon: 'app/transfer',
         labelKey: 'nav.transfer',
         to: '/$lang/transfer',
+        preload: 'viewport',
         mobileExtend: true,
       },
       {
@@ -345,6 +355,7 @@ function ExtendedNavigationTabs() {
         icon: 'app/flight',
         labelKey: 'nav.flight',
         to: '/$lang/flights',
+        preload: 'viewport',
         mobileExtend: true,
       },
       // Extended tabs - sadece ilgili sayfalarda görünür
@@ -353,6 +364,7 @@ function ExtendedNavigationTabs() {
         icon: 'app/yacht',
         labelKey: 'nav.yacht',
         to: '/$lang/yacht',
+        preload: false,
         extended: true,
       },
       {
@@ -360,6 +372,7 @@ function ExtendedNavigationTabs() {
         icon: 'app/visa',
         labelKey: 'nav.visa',
         to: '/$lang/guide/visa',
+        preload: false,
         extended: true,
       },
       {
@@ -367,6 +380,7 @@ function ExtendedNavigationTabs() {
         icon: 'app/sim-card',
         labelKey: 'nav.sim_card',
         to: '/$lang/guide/sim-card',
+        preload: false,
         extended: true,
       },
       {
@@ -374,6 +388,7 @@ function ExtendedNavigationTabs() {
         icon: 'app/restaurant',
         labelKey: 'nav.restaurants',
         to: '/$lang/guide/restaurants',
+        preload: false,
         extended: true,
       },
       {
@@ -381,6 +396,7 @@ function ExtendedNavigationTabs() {
         icon: 'app/hospital',
         labelKey: 'nav.hospitals',
         to: '/$lang/guide/hospitals',
+        preload: false,
         extended: true,
       },
       {
@@ -388,6 +404,7 @@ function ExtendedNavigationTabs() {
         icon: 'app/museum',
         labelKey: 'nav.museums',
         to: '/$lang/guide/museums',
+        preload: false,
         extended: true,
       },
       {
@@ -395,33 +412,57 @@ function ExtendedNavigationTabs() {
         icon: 'app/bundles',
         labelKey: 'nav.bundles',
         to: '/$lang/guide/bundles',
+        preload: false,
         extended: true,
       },
     ],
     [],
   )
 
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current
+    if (!scrollContainer) return
+
+    const activeLink = scrollContainer.querySelector<HTMLElement>('[data-status="active"]')
+
+    if (activeLink) {
+      activeLink.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center',
+      })
+    }
+  }, [href])
+
   return (
-    <nav className="mx-auto flex w-full max-w-main">
+    <nav
+      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      className="mx-auto flex h-full w-full max-w-main"
+      data-theme="force-main"
+    >
       <div
         ref={scrollContainerRef}
-        className="flex flex-1 items-center justify-start overflow-x-auto text-size-sm font-semibold [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        className="scrollbar-hide flex h-full translate-y-px snap-x snap-mandatory items-center justify-start overflow-x-auto text-size-sm font-semibold"
       >
         {navigationTabs.map((tab) => {
+          const isVisible = !tab.extended || (tab.extended && href.includes(tab.path))
+
           return (
             <Link
               key={tab.to as string}
               to={tab.to}
               activeOptions={{ exact: tab.exact }}
-              preload={'render'}
+              preload={'viewport'}
               resetScroll={false}
+              data-visible={isVisible}
               className={twMerge(
-                'group flex w-fit min-w-[120px] shrink-0 items-center justify-center gap-x-2 py-3 text-center font-bold text-white transition-colors duration-300 ease-in hover:bg-white/20 data-[status=active]:bg-white data-[status=active]:text-btn-primary sm:w-1/8',
+                'group hidden h-12 w-fit items-center justify-center gap-x-2 px-4 py-3 text-center font-bold text-nowrap text-white transition-colors duration-300 ease-in hover:bg-white/20 data-[status=active]:bg-white data-[status=active]:text-btn-primary data-[visible=true]:flex sm:min-w-[calc(1120px/9)]',
               )}
             >
               <Icon
                 name={tab.icon}
-                className="text-[#F8F8F8] group-data-[status=active]:text-gray-700"
+                className="shrink-0 text-[#F8F8F8] group-data-[status=active]:text-gray-700"
               />
               {t(tab.labelKey)}
             </Link>
@@ -429,14 +470,18 @@ function ExtendedNavigationTabs() {
         })}
       </div>
 
+      {/* Her Zaman Görünür Olan "All" Butonu */}
       <Link
         to="/$lang/guide"
-        activeOptions={{ exact: false }}
+        activeOptions={{ exact: true }}
         preload={'render'}
         resetScroll={false}
-        className="group flex w-fit items-center justify-center gap-x-2 px-3 py-3 text-center font-bold text-white transition-colors duration-300 ease-in hover:bg-white/20 data-[status=active]:bg-white data-[status=active]:text-btn-primary sm:w-1/8 sm:min-w-[120px]"
+        className="group flex h-12 w-fit flex-shrink-0 items-center justify-center gap-x-2 px-4 text-center font-bold text-nowrap text-white transition-colors duration-300 ease-in hover:bg-white/20 data-[status=active]:bg-white data-[status=active]:text-btn-primary sm:min-w-[calc(1120px/9)]"
       >
-        <Icon name="app/all" className="text-[#F8F8F8] group-data-[status=active]:text-gray-700" />
+        <Icon
+          name="app/all"
+          className="shrink-0 text-[#F8F8F8] group-data-[status=active]:text-gray-700"
+        />
         {t('nav.all')}
       </Link>
     </nav>
