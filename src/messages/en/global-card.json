@@ -15,7 +15,6 @@
     "save": "Save",
     "visa_apply": "Apply for Visa"
   },
-
   "labels": {
     "price": "Price",
     "per_person": "/ per person",
@@ -43,7 +42,6 @@
     "processing_time": "Processing Time",
     "validity_period": "Validity Period"
   },
-
   "features": {
     "breakfast": "Breakfast Included",
     "free_cancellation": "Free Cancellation",
@@ -56,7 +54,6 @@
     "passengers": "{{capacity}} Passengers",
     "baggage": "{{capacity}} Baggage"
   },
-
   "hospital": {
     "specialties": {
       "cardiology": "Cardiology",
@@ -90,45 +87,32 @@
       "polyclinic": "Polyclinic"
     }
   },
-
   "discount": {
     "save_percent": "Save %{{percent}}",
     "original_price": "Original Price",
     "discounted_price": "Discounted Price"
   },
-
   "ranking": {
     "rank": "Rank {{rank}}",
     "purchased_count": "{{count}}+ purchased",
     "iconic_place": "Iconic Place",
     "most_popular": "Most Popular"
   },
-
-  "safari": {
-    "morning": {
-      "title": "Morning Desert Safari Tour",
-      "cta": "Join Morning Safari"
-    },
-    "night": {
-      "title": "Evening Desert Safari Tour",
-      "cta": "Join Evening Safari"
-    },
-    "capacity": "Capacity for {{capacity}} People",
-    "camps": {
-      "title": "5 Different Camp Options:",
-      "silver": "Silver Camp",
-      "platinum": "Platinum Camp",
-      "gold": "Gold Camp",
-      "premium": "Premium Camp",
-      "heritage": "Heritage Camp"
-    }
-  },
-
   "flight": {
     "starting_from": "/ starting from",
     "view_flights": "View Flights"
   },
-
+  "safari": {
+    "capacity": "{{capacity}} People",
+    "duration": "{{duration}} Hours",
+    "camps": {
+      "silver": "Silver Camp",
+      "gold": "Gold Camp",
+      "platinum": "Platinum Camp",
+      "premium": "Premium Camp",
+      "heritage": "Heritage Camp"
+    }
+  },
   "accessibility": {
     "image_alt": "{{title}} - View {{index}}",
     "prev_image": "Previous image",

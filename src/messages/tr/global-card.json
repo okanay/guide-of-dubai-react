@@ -15,7 +15,6 @@
     "share": "Paylaş",
     "save": "Kaydet"
   },
-
   "labels": {
     "price": "Fiyat",
     "per_person": "/ kişi başı",
@@ -43,7 +42,6 @@
     "processing_time": "İşlem süresi",
     "validity_period": "Geçerlilik süresi"
   },
-
   "features": {
     "breakfast": "Kahvaltı Dahil",
     "free_cancellation": "Ücretsiz İptal",
@@ -56,7 +54,6 @@
     "passengers": "{{capacity}} Yolcu",
     "baggage": "{{capacity}} Bagaj"
   },
-
   "hospital": {
     "specialties": {
       "cardiology": "Kardiyoloji",
@@ -90,45 +87,32 @@
       "polyclinic": "Poliklinik"
     }
   },
-
   "discount": {
     "save_percent": "%{{percent}} Tasarruf",
     "original_price": "Orijinal Fiyat",
     "discounted_price": "İndirimli Fiyat"
   },
-
   "ranking": {
     "rank": "{{rank}} Numara",
     "purchased_count": "{{count}}+ satın alındı",
     "iconic_place": "İkonik Yer",
     "most_popular": "En Popüler"
   },
-
-  "safari": {
-    "morning": {
-      "title": "Sabah Çöl Safari Turu",
-      "cta": "Sabah Safarisine Katıl"
-    },
-    "night": {
-      "title": "Akşam Çöl Safari Turu",
-      "cta": "Akşam Safarisine Katıl"
-    },
-    "capacity": "{{capacity}} Kişilik",
-    "camps": {
-      "title": "5 Farklı Kamp Seçeneği:",
-      "silver": "Silver Kamp",
-      "platinum": "Platinyum Kamp",
-      "gold": "Gold Kamp",
-      "premium": "Premium Kamp",
-      "heritage": "Heritage Kamp"
-    }
-  },
-
   "flight": {
     "starting_from": "/ Başlayan fiyatlar",
     "view_flights": "Uçuşları Gör"
   },
-
+  "safari": {
+    "capacity": "{{capacity}} Kişi",
+    "duration": "{{duration}} Saat",
+    "camps": {
+      "silver": "Gümüş Kamp",
+      "gold": "Altın Kamp",
+      "platinum": "Platin Kamp",
+      "premium": "Premium Kamp",
+      "heritage": "Miras Kampı"
+    }
+  },
   "accessibility": {
     "image_alt": "{{title}} - Görünüm {{index}}",
     "prev_image": "Önceki resim",

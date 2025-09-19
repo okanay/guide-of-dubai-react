@@ -2,5 +2,53 @@
   "selection": {
     "title": "Safari Tours",
     "description": "You can choose the safari tour that suits you best"
-  }
+  },
+  "tours": [
+    {
+      "id": "safari-morning",
+      "type": "morning",
+      "title": "Morning Desert Safari Tour",
+      "cta": "Join Morning Safari",
+      "images": ["/images/public/header/safari.jpg", "/images/public/header/safari-mobile.jpg"],
+      "rating": 4.0,
+      "reviewCount": 156,
+      "href": "/$lang/tour-safari/morning",
+      "camps": null,
+      "prices": {
+        "aed": 715.52,
+        "usd": 194.96,
+        "eur": 184.25,
+        "gbp": 157.8
+      }
+    },
+    {
+      "id": "safari-night",
+      "type": "night",
+      "title": "Evening Desert Safari Tour",
+      "cta": "Join Evening Safari",
+      "images": [
+        "/images/public/header/rent-a-car.jpg",
+        "/images/public/header/rent-a-car-mobile.jpg"
+      ],
+      "rating": 4.0,
+      "reviewCount": 156,
+      "href": "/$lang/tour-safari/night",
+      "camps": {
+        "title": "5 Different Camp Options:",
+        "options": [
+          { "key": "silver", "icon": "safari/camp-silver" },
+          { "key": "platinum", "icon": "safari/camp-plat" },
+          { "key": "gold", "icon": "safari/camp-gold" },
+          { "key": "premium", "icon": "safari/camp-premium" },
+          { "key": "heritage", "icon": "safari/camp-heritage" }
+        ]
+      },
+      "prices": {
+        "aed": 715.52,
+        "usd": 194.96,
+        "eur": 184.25,
+        "gbp": 157.8
+      }
+    }
+  ]
 }

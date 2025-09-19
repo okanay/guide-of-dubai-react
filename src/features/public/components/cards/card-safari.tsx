@@ -6,60 +6,19 @@ import { useTranslation } from 'react-i18next'
 import { twMerge } from 'tailwind-merge'
 import { ButtonFavorite } from '../buttons/button-favorite'
 
-// Multi-currency pricing data
-const safariPricing = {
-  morning: {
-    aed: 715.52,
-    usd: 194.96,
-    eur: 184.25,
-    gbp: 157.8,
-  },
-  night: {
-    aed: 715.52,
-    usd: 194.96,
-    eur: 184.25,
-    gbp: 157.8,
-  },
-}
-
-const safariData = {
-  morning: {
-    id: 'safari-morning',
-    images: ['/images/public/header/safari.jpg', '/images/public/header/safari-mobile.jpg'],
-    rating: 4.0,
-    reviewCount: 156,
-    href: '/$lang/tour-safari/morning',
-  },
-  night: {
-    id: 'safari-night',
-    images: ['/images/public/header/rent-a-car.jpg', '/images/public/header/rent-a-car-mobile.jpg'],
-    rating: 4.0,
-    reviewCount: 156,
-    href: '/$lang/tour-safari/night',
-  },
-}
-
 interface SafariCardProps {
-  type: 'morning' | 'night'
+  tour: SafariTour
   className?: string
 }
 
-export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
+export const CardSafari: React.FC<SafariCardProps> = ({ tour, className }) => {
   const { t } = useTranslation('global-card')
   const { currency } = useSystemSettings()
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const imageContainerRef = useRef<HTMLDivElement>(null)
 
-  const data = safariData[type]
-  const pricing = safariPricing[type]
-  const currentPrice = pricing[currency.code as keyof typeof pricing]
-
-  const formatPrice = useCallback(
-    (price: number): string => {
-      return `${currency.symbol}${price.toFixed(2)}`
-    },
-    [currency],
-  )
+  const pricing = tour.prices
+  const currentPrice = pricing[currency.code]
 
   const scrollToImage = useCallback((imageIndex: number) => {
     if (!imageContainerRef.current) return
@@ -80,20 +39,20 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
     (e: React.MouseEvent) => {
       e.preventDefault()
       e.stopPropagation()
-      const prevIndex = (currentImageIndex - 1 + data.images.length) % data.images.length
+      const prevIndex = (currentImageIndex - 1 + tour.images.length) % tour.images.length
       scrollToImage(prevIndex)
     },
-    [currentImageIndex, data.images.length, scrollToImage],
+    [currentImageIndex, tour.images.length, scrollToImage],
   )
 
   const handleNextImage = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault()
       e.stopPropagation()
-      const nextIndex = (currentImageIndex + 1) % data.images.length
+      const nextIndex = (currentImageIndex + 1) % tour.images.length
       scrollToImage(nextIndex)
     },
-    [currentImageIndex, data.images.length, scrollToImage],
+    [currentImageIndex, tour.images.length, scrollToImage],
   )
 
   return (
@@ -102,7 +61,7 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
         'group relative flex h-full w-full flex-col overflow-hidden rounded-xs border border-gray-100 bg-white',
         className,
       )}
-      aria-labelledby={`safari-${type}-title`}
+      aria-labelledby={`safari-${tour.type}-title`}
     >
       {/* Image Gallery Header */}
       <header className="relative h-[280px] shrink-0 overflow-hidden">
@@ -112,14 +71,14 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
           onScroll={handleImageScroll}
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           role="region"
-          aria-label={t('accessibility.image_alt', { title: t(`safari.${type}.title`) })}
+          aria-label={t('accessibility.image_alt', { title: tour.title })}
         >
-          {data.images.map((image, idx) => (
+          {tour.images.map((image, idx) => (
             <img
-              key={`${data.id}-image-${idx}`}
+              key={`${tour.id}-image-${idx}`}
               src={image}
               alt={t('accessibility.image_alt', {
-                title: t(`safari.${type}.title`),
+                title: tour.title,
                 index: idx + 1,
               })}
               className="h-full w-full shrink-0 snap-start object-cover"
@@ -129,7 +88,7 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
         </div>
 
         {/* Navigation Buttons */}
-        {data.images.length > 1 && (
+        {tour.images.length > 1 && (
           <>
             <button
               onClick={handlePrevImage}
@@ -149,12 +108,12 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
         )}
 
         {/* Image Indicators */}
-        {data.images.length > 1 && (
+        {tour.images.length > 1 && (
           <nav
             className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2"
             aria-label="Image navigation"
           >
-            {data.images.map((_, idx) => (
+            {tour.images.map((_, idx) => (
               <button
                 key={`indicator-${idx}`}
                 onClick={() => scrollToImage(idx)}
@@ -169,23 +128,23 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
         )}
 
         {/* Favorite Button */}
-        <ButtonFavorite contentId={data.id} className="right-2.25" />
+        <ButtonFavorite contentId={tour.id} className="right-2.25" />
       </header>
 
       {/* Content */}
       <Link to={'/$lang/not-found'} className="flex flex-1 flex-col gap-y-2 p-4">
         <div className="flex flex-wrap items-center justify-start gap-x-4 gap-y-2 text-start">
           {/* Title */}
-          <h2 id={`safari-${type}-title`} className="text-size font-bold text-black">
-            {t(`safari.${type}.title`)}
+          <h2 id={`safari-${tour.type}-title`} className="text-size font-bold text-black">
+            {tour.title}
           </h2>
 
           {/* Rating */}
           <div className="flex items-center gap-1.5 text-size-sm">
             <Icon name="star" className="size-4 text-primary-500" />
-            <span className="font-medium text-black">{data.rating}</span>
+            <span className="font-medium text-black">{tour.rating}</span>
             <span className="text-gray-700">
-              ({data.reviewCount} {data.reviewCount > 1 ? t('labels.reviews') : t('labels.review')})
+              ({tour.reviewCount} {tour.reviewCount > 1 ? t('labels.reviews') : t('labels.review')})
             </span>
           </div>
         </div>
@@ -214,29 +173,20 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
         </div>
 
         {/* Night Safari Camp Options */}
-        {type === 'night' && (
+        {tour.camps && (
           <div className="flex flex-wrap gap-x-4 gap-y-2 pb-4">
-            <h4 className="text-size font-medium text-black">{t('safari.camps.title')}</h4>
-            <div className="flex items-center gap-1.5 rounded bg-gray-50 px-2 py-1">
-              <Icon name="safari/camp-silver" className="size-4.5" />
-              <span className="text-xs font-medium text-black">{t('safari.camps.silver')}</span>
-            </div>
-            <div className="flex items-center gap-1.5 rounded bg-gray-50 px-2 py-1">
-              <Icon name="safari/camp-plat" className="size-4.5" />
-              <span className="text-xs font-medium text-black">{t('safari.camps.platinum')}</span>
-            </div>
-            <div className="flex items-center gap-1.5 rounded bg-gray-50 px-2 py-1">
-              <Icon name="safari/camp-gold" className="size-4.5" />
-              <span className="text-xs font-medium text-black">{t('safari.camps.gold')}</span>
-            </div>
-            <div className="flex items-center gap-1.5 rounded bg-gray-50 px-2 py-1">
-              <Icon name="safari/camp-premium" className="size-4.5" />
-              <span className="text-xs font-medium text-black">{t('safari.camps.premium')}</span>
-            </div>
-            <div className="flex items-center gap-1.5 rounded bg-gray-50 px-2 py-1">
-              <Icon name="safari/camp-heritage" className="size-4.5" />
-              <span className="text-xs font-medium text-black">{t('safari.camps.heritage')}</span>
-            </div>
+            <h4 className="text-size font-medium text-black">{tour.camps.title}</h4>
+            {tour.camps.options.map((camp) => (
+              <div
+                key={camp.key}
+                className="flex items-center gap-1.5 rounded bg-gray-50 px-2 py-1"
+              >
+                <Icon name={camp.icon} className="size-4.5" />
+                <span className="text-xs font-medium text-black">
+                  {t(`safari.camps.${camp.key}`)}
+                </span>
+              </div>
+            ))}
           </div>
         )}
 
@@ -245,12 +195,12 @@ export const CardSafari: React.FC<SafariCardProps> = ({ type, className }) => {
         {/* Price ve Button */}
         <div className="mt-auto flex w-full flex-col gap-y-2 md:flex-row md:items-center md:justify-between">
           <div className="flex items-baseline gap-1">
-            <span className="text-xl font-bold text-black">{formatPrice(currentPrice)}</span>
+            <span className="text-xl font-bold text-black">{currentPrice}</span>
             <span className="text-sm text-gray-700">{t('labels.per_person')}</span>
           </div>
 
           <div className="flex w-full items-center justify-center rounded-xs bg-btn-primary px-4 py-2 text-size-sm font-bold text-on-btn-primary md:w-fit">
-            {t(`safari.${type}.cta`)}
+            {tour.cta}
           </div>
         </div>
       </Link>

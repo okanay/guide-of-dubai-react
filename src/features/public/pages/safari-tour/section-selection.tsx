@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next'
-import { CardSafari } from '@/features/public/components/cards/card-safari'
+import { CardSafari } from '../../components/cards/card-safari'
 
 export const SafariSelection = () => {
   const { t } = useTranslation('page-safari')
+  const tours = t('tours', { returnObjects: true }) as SafariTour[]
 
   return (
     <section className="bg-box-surface px-4 text-on-box-black">
@@ -14,8 +15,9 @@ export const SafariSelection = () => {
 
         {/* Safari Cards Grid */}
         <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2">
-          <CardSafari type="morning" />
-          <CardSafari type="night" />
+          {tours.map((tour) => (
+            <CardSafari key={tour.id} tour={tour} />
+          ))}
         </div>
       </div>
     </section>
