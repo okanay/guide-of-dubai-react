@@ -8,9 +8,6 @@ interface VisaProduct {
   stayDays?: string
   validityDays?: string
   prices: {
-    aed: number
-    usd: number
-    eur: number
-    gbp: number
+    [key: string]: number
   }
 }

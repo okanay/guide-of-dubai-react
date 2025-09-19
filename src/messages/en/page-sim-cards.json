@@ -2,5 +2,71 @@
   "hero": {
     "title": "eSIMs",
     "description": "Your next adventure might be closer than you think. Explore hotels."
-  }
+  },
+  "cards": [
+    {
+      "id": "sim-1",
+      "title": "AIS eSIM",
+      "subtitle": "Unlimited UAE 30 Day More SIM 10 GB",
+      "image": "/images/public/sim-cards/card-cover.png",
+      "features": {
+        "validity": "30 Days",
+        "data": "10 GB"
+      },
+      "prices": {
+        "aed": 194.96,
+        "usd": 53.08,
+        "eur": 49.95,
+        "gbp": 42.79
+      }
+    },
+    {
+      "id": "sim-2",
+      "title": "AIS eSIM",
+      "subtitle": "Unlimited UAE 30 Day More SIM 20 GB",
+      "image": "/images/public/sim-cards/card-cover.png",
+      "features": {
+        "validity": "30 Days",
+        "data": "20 GB"
+      },
+      "prices": {
+        "aed": 250.0,
+        "usd": 68.07,
+        "eur": 64.05,
+        "gbp": 54.88
+      }
+    },
+    {
+      "id": "sim-3",
+      "title": "AIS eSIM",
+      "subtitle": "Unlimited UAE 30 Day More SIM 30 GB",
+      "image": "/images/public/sim-cards/card-cover.png",
+      "features": {
+        "validity": "30 Days",
+        "data": "30 GB"
+      },
+      "prices": {
+        "aed": 300.0,
+        "usd": 81.68,
+        "eur": 76.86,
+        "gbp": 65.86
+      }
+    },
+    {
+      "id": "sim-4",
+      "title": "AIS eSIM",
+      "subtitle": "Unlimited UAE 30 Day More SIM 50 GB",
+      "image": "/images/public/sim-cards/card-cover.png",
+      "features": {
+        "validity": "30 Days",
+        "data": "50 GB"
+      },
+      "prices": {
+        "aed": 400.0,
+        "usd": 108.91,
+        "eur": 102.48,
+        "gbp": 87.81
+      }
+    }
+  ]
 }

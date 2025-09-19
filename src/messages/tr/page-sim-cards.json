@@ -1,6 +1,72 @@
 {
   "hero": {
-    "title": "eSIM’ler",
-    "description": "Guide of Dubai Visa Online is an approved online platform for obtaining tourist visas or visa extensions. You will receive a confirmation email where you can submit your application online. Once your visa is approved, you can download it online or receive it via email. There is no need to visit UAE immigration and authorized authorities."
-  }
+    "title": "eSIM'ler",
+    "description": "Bir sonraki maceranız sandığınızdan daha yakın olabilir. Otelleri keşfedin."
+  },
+  "cards": [
+    {
+      "id": "sim-1",
+      "title": "AIS eSIM",
+      "subtitle": "Unlimited UAE 30 Day Daha SIM 10 GB",
+      "image": "/images/public/sim-cards/card-cover.png",
+      "features": {
+        "validity": "30 Gün",
+        "data": "10 GB"
+      },
+      "prices": {
+        "aed": 194.96,
+        "usd": 53.08,
+        "eur": 49.95,
+        "gbp": 42.79
+      }
+    },
+    {
+      "id": "sim-2",
+      "title": "AIS eSIM",
+      "subtitle": "Unlimited UAE 30 Day Daha SIM 20 GB",
+      "image": "/images/public/sim-cards/card-cover.png",
+      "features": {
+        "validity": "30 Gün",
+        "data": "20 GB"
+      },
+      "prices": {
+        "aed": 250.0,
+        "usd": 68.07,
+        "eur": 64.05,
+        "gbp": 54.88
+      }
+    },
+    {
+      "id": "sim-3",
+      "title": "AIS eSIM",
+      "subtitle": "Unlimited UAE 30 Day Daha SIM 30 GB",
+      "image": "/images/public/sim-cards/card-cover.png",
+      "features": {
+        "validity": "30 Gün",
+        "data": "30 GB"
+      },
+      "prices": {
+        "aed": 300.0,
+        "usd": 81.68,
+        "eur": 76.86,
+        "gbp": 65.86
+      }
+    },
+    {
+      "id": "sim-4",
+      "title": "AIS eSIM",
+      "subtitle": "Unlimited UAE 30 Day Daha SIM 50 GB",
+      "image": "/images/public/sim-cards/card-cover.png",
+      "features": {
+        "validity": "30 Gün",
+        "data": "50 GB"
+      },
+      "prices": {
+        "aed": 400.0,
+        "usd": 108.91,
+        "eur": 102.48,
+        "gbp": 87.81
+      }
+    }
+  ]
 }
