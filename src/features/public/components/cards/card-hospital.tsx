@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { twMerge } from 'tailwind-merge'
 import { ButtonFavorite } from '../buttons/button-favorite'
 import { Hotel } from 'lucide-react'
+import { useLeafletModalStore } from '@/features/modals/leaflet-map/store'
 
 interface HospitalCardProps {
   hospital: Hospital
@@ -20,7 +21,7 @@ export const HospitalCard: React.FC<HospitalCardProps> = ({
   const { t } = useTranslation('global-card')
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const imageContainerRef = useRef<HTMLDivElement>(null)
-
+  const { openModal } = useLeafletModalStore()
   const scrollToImage = useCallback((imageIndex: number) => {
     if (!imageContainerRef.current) return
     const imageWidth = imageContainerRef.current.clientWidth
@@ -71,6 +72,10 @@ export const HospitalCard: React.FC<HospitalCardProps> = ({
     },
     [currentImageIndex, hospital.images.length, scrollToImage],
   )
+
+  const handleOpenMap = useCallback(() => {
+    openModal({ mode: 'pin', data: { coords: hospital.coords } })
+  }, [])
 
   return (
     <article
@@ -149,10 +154,7 @@ export const HospitalCard: React.FC<HospitalCardProps> = ({
       </header>
 
       {/* Content */}
-      <Link
-        to="/$lang/not-found"
-        className="flex flex-1 flex-col p-4 transition-colors hover:bg-gray-50/50"
-      >
+      <div className="flex flex-1 flex-col p-4 transition-colors hover:bg-gray-50/50">
         {/* Hospital Title */}
         <h2
           id={`hospital-${hospital.id}-title`}
@@ -174,7 +176,7 @@ export const HospitalCard: React.FC<HospitalCardProps> = ({
         {/* Hospital Information */}
         <div className="mb-3 flex flex-col items-start gap-3 text-size-sm text-on-box-black">
           {/* Location */}
-          {hospital.location && (
+          {hospital.coords && (
             <div className="flex items-center gap-1">
               <Icon name="location-pin" className="size-4" aria-hidden="true" />
               <span className="font-bold text-on-box-black">{t('labels.location')}:</span>
@@ -204,11 +206,14 @@ export const HospitalCard: React.FC<HospitalCardProps> = ({
           <button className="h-10 flex-1 bg-btn-primary text-on-btn-primary">
             {t('actions.more_info')}
           </button>
-          <button className="h-10 flex-1 border border-btn-white-hover bg-btn-white text-on-btn-white">
+          <button
+            onClick={handleOpenMap}
+            className="h-10 flex-1 border border-btn-white-hover bg-btn-white text-on-btn-white"
+          >
             {t('actions.view_on_map')}
           </button>
         </div>
-      </Link>
+      </div>
     </article>
   )
 }

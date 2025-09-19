@@ -4,7 +4,7 @@ interface Hospital {
   images: string[]
   rating: number
   reviewCount: number
-  location: [string, string] // [latitude, longitude]
+  coords: [number, number] // [latitude, longitude]
   phone: string
   openStatus: string
   url: string

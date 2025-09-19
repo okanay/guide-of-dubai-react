@@ -168,14 +168,6 @@ export const TransferCard: React.FC<Props> = ({ transfer, className }) => {
               </span>
             </div>
 
-            {/* Baggage Capacity */}
-            <div className="flex items-center gap-2">
-              <Icon name="valise" className="size-4 shrink-0 text-black" />
-              <span className="text-size-sm text-black">
-                {t('features.baggage', { capacity: transfer.features.baggageCapacity })}
-              </span>
-            </div>
-
             {/* Food and Beverage */}
             {transfer.features.hasFoodAndBeverage && (
               <div className="flex items-center gap-2">
@@ -188,6 +180,14 @@ export const TransferCard: React.FC<Props> = ({ transfer, className }) => {
                 </span>
               </div>
             )}
+
+            {/* Baggage Capacity */}
+            <div className="flex items-center gap-2">
+              <Icon name="valise" className="size-4 shrink-0 text-black" />
+              <span className="text-size-sm text-black">
+                {t('features.baggage', { capacity: transfer.features.baggageCapacity })}
+              </span>
+            </div>
 
             {/* Free Cancellation */}
             {transfer.features.hasFreeCancellation && (
