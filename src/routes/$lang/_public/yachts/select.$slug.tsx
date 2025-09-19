@@ -1,9 +1,6 @@
+import { YachtsSelectBySlugPage } from '@/features/public/pages/yachts/page-select-by-slug'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/$lang/_public/yachts/select/$slug')({
-  component: RouteComponent,
+  component: YachtsSelectBySlugPage,
 })
-
-function RouteComponent() {
-  return <div>Hello "/$lang/_public/yacht/select/$slug"!</div>
-}

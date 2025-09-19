@@ -1,9 +1,6 @@
+import { YachtsSearchPage } from '@/features/public/pages/yachts/page-search'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/$lang/_public/yachts/search/')({
-  component: RouteComponent,
+  component: YachtsSearchPage,
 })
-
-function RouteComponent() {
-  return <div>Hello "/$lang/_public/yatch/search"!</div>
-}
