@@ -7,15 +7,17 @@
     "transfer": "Reserve My Seat Now",
     "view_all": "View All",
     "view_details": "View Details",
-    "more_info": "More Information",
+    "more_info": "More Info",
     "view_on_map": "View on Map",
     "like": "Like",
     "unlike": "Unlike",
     "share": "Share",
-    "save": "Save"
+    "save": "Save",
+    "visa_apply": "Apply for Visa"
   },
 
   "labels": {
+    "price": "Price",
     "per_person": "/ per person",
     "per_night": "/ per night",
     "per_day": "/ per day",
@@ -37,7 +39,9 @@
     "open_now": "Open now",
     "closed_now": "Closed now",
     "opens_at": "Opens at {{time}}",
-    "closes_at": "Closes at {{time}}"
+    "closes_at": "Closes at {{time}}",
+    "processing_time": "Processing Time",
+    "validity_period": "Validity Period"
   },
 
   "features": {

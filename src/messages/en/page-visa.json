@@ -1,0 +1,97 @@
+{
+  "hero": {
+    "title": "Guide of Dubai Tourist Visa Service",
+    "description": "Guide of Dubai Visa Online is an approved online platform for obtaining tourist visas or visa extensions. You will receive a confirmation email where you can submit your application online. Once your visa is approved, you can download it online or receive it via email. There is no need to visit UAE immigration and authorized authorities."
+  },
+
+  "visas": [
+    {
+      "id": "tourist_30_single",
+      "title": "Tourist Visa",
+      "subtitle": "30 Days Single Entry",
+      "hasValidityPeriod": true,
+      "processingDays": "3-4 Days",
+      "stayDays": "30 Days Stay",
+      "validityDays": "60 Days Validity",
+      "prices": {
+        "aed": 459,
+        "usd": 125,
+        "eur": 118,
+        "gbp": 100
+      }
+    },
+    {
+      "id": "tourist_30_multiple",
+      "title": "Tourist Visa",
+      "subtitle": "30 Days Multiple Entry",
+      "hasValidityPeriod": true,
+      "processingDays": "3-4 Days",
+      "stayDays": "30 Days Stay",
+      "validityDays": "60 Days Validity",
+      "prices": {
+        "aed": 770,
+        "usd": 210,
+        "eur": 198,
+        "gbp": 168
+      }
+    },
+    {
+      "id": "tourist_30_extension",
+      "title": "Tourist Visa",
+      "subtitle": "30 Days Visa Extension",
+      "hasValidityPeriod": true,
+      "processingDays": "3-4 Days",
+      "stayDays": "30 Days Stay",
+      "validityDays": "60 Days Validity",
+      "prices": {
+        "aed": 1213,
+        "usd": 330,
+        "eur": 312,
+        "gbp": 265
+      }
+    },
+    {
+      "id": "tourist_60_single",
+      "title": "Tourist Visa",
+      "subtitle": "60 Days Single Entry",
+      "hasValidityPeriod": true,
+      "processingDays": "3-4 Days",
+      "stayDays": "30 Days Stay",
+      "validityDays": "60 Days Validity",
+      "prices": {
+        "aed": 699,
+        "usd": 190,
+        "eur": 179,
+        "gbp": 152
+      }
+    },
+    {
+      "id": "tourist_60_multiple",
+      "title": "Tourist Visa",
+      "subtitle": "60 Days Multiple Entry",
+      "hasValidityPeriod": true,
+      "processingDays": "3-4 Days",
+      "stayDays": "30 Days Stay",
+      "validityDays": "60 Days Validity",
+      "prices": {
+        "aed": 1102,
+        "usd": 300,
+        "eur": 283,
+        "gbp": 240
+      }
+    },
+    {
+      "id": "transit",
+      "title": "Visa Cancellation",
+      "subtitle": "",
+      "hasValidityPeriod": false,
+      "processingDays": "3-4 Days",
+      "prices": {
+        "aed": 257,
+        "usd": 70,
+        "eur": 66,
+        "gbp": 56
+      }
+    }
+  ]
+}

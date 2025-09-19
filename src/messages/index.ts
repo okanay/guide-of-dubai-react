@@ -15,6 +15,7 @@ import enTransfer from './en/page-transfer.json'
 import enFlights from './en/page-flights.json'
 import enGuides from './en/page-guides.json'
 import enHospitals from './en/page-hospitals.json'
+import enVisa from './en/page-visa.json'
 import enErrors from './en/page-errors.json'
 import enZod from './en/errors-zod.json'
 import enApi from './en/errors-api.json'
@@ -37,6 +38,7 @@ import trTransfer from './tr/page-transfer.json'
 import trFlights from './tr/page-flights.json'
 import trGuides from './tr/page-guides.json'
 import trHospitals from './tr/page-hospitals.json'
+import trVisa from './tr/page-visa.json'
 import trErrors from './tr/page-errors.json'
 import trZod from './tr/errors-zod.json'
 import trApi from './tr/errors-api.json'
@@ -64,6 +66,7 @@ export const namespaces = [
   'page-flights',
   'page-guides',
   'page-hospitals',
+  'page-visa',
   'page-errors',
   'errors-zod',
   'errors-api',
@@ -88,6 +91,7 @@ const resource = {
     'page-flights': enFlights,
     'page-guides': enGuides,
     'page-hospitals': enHospitals,
+    'page-visa': enVisa,
     'page-errors': enErrors,
     'errors-zod': enZod,
     'errors-api': enApi,
@@ -111,6 +115,7 @@ const resource = {
     'page-flights': trFlights,
     'page-guides': trGuides,
     'page-hospitals': trHospitals,
+    'page-visa': trVisa,
     'page-errors': trErrors,
     'errors-zod': trZod,
     'errors-api': trApi,

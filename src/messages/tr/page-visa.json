@@ -1,0 +1,97 @@
+{
+  "hero": {
+    "title": "Guide of Dubai Turist Vizesi Hizmeti",
+    "description": "Guide of Dubai Visa Online, turistik vize veya vize uzatma almak için onaylı bir çevrimiçi platformdur. Başvurunuzu çevrimiçi olarak gönderebileceğiniz bir onay e-postası alacaksınız. Vizeniz onaylandıktan sonra çevrimiçi olarak indirebilir veya e-posta yoluyla alabilirsiniz. BAE göçmenlik ve yetkili makamlarını ziyaret etmenize gerek yok."
+  },
+
+  "visas": [
+    {
+      "id": "tourist_30_single",
+      "title": "Turist Vizesi",
+      "subtitle": "30 Günlük Tek Giriş",
+      "hasValidityPeriod": true,
+      "processingDays": "3-4 Gün",
+      "stayDays": "30 Gün Kalım",
+      "validityDays": "60 Gün Geçerlilik",
+      "prices": {
+        "aed": 459,
+        "usd": 125,
+        "eur": 118,
+        "gbp": 100
+      }
+    },
+    {
+      "id": "tourist_30_multiple",
+      "title": "Turist Vizesi",
+      "subtitle": "30 Günlük Çok Giriş",
+      "hasValidityPeriod": true,
+      "processingDays": "3-4 Gün",
+      "stayDays": "30 Gün Kalım",
+      "validityDays": "60 Gün Geçerlilik",
+      "prices": {
+        "aed": 770,
+        "usd": 210,
+        "eur": 198,
+        "gbp": 168
+      }
+    },
+    {
+      "id": "tourist_30_extension",
+      "title": "Turist Vizesi",
+      "subtitle": "30 Günlük Vize Uzatma",
+      "hasValidityPeriod": true,
+      "processingDays": "3-4 Gün",
+      "stayDays": "30 Gün Kalım",
+      "validityDays": "60 Gün Geçerlilik",
+      "prices": {
+        "aed": 1213,
+        "usd": 330,
+        "eur": 312,
+        "gbp": 265
+      }
+    },
+    {
+      "id": "tourist_60_single",
+      "title": "Turist Vizesi",
+      "subtitle": "60 Günlük Tek Giriş",
+      "hasValidityPeriod": true,
+      "processingDays": "3-4 Gün",
+      "stayDays": "30 Gün Kalım",
+      "validityDays": "60 Gün Geçerlilik",
+      "prices": {
+        "aed": 699,
+        "usd": 190,
+        "eur": 179,
+        "gbp": 152
+      }
+    },
+    {
+      "id": "tourist_60_multiple",
+      "title": "Turist Vizesi",
+      "subtitle": "60 Günlük Çok Giriş",
+      "hasValidityPeriod": true,
+      "processingDays": "3-4 Gün",
+      "stayDays": "30 Gün Kalım",
+      "validityDays": "60 Gün Geçerlilik",
+      "prices": {
+        "aed": 1102,
+        "usd": 300,
+        "eur": 283,
+        "gbp": 240
+      }
+    },
+    {
+      "id": "transit",
+      "title": "Vize İptali",
+      "subtitle": "",
+      "hasValidityPeriod": false,
+      "processingDays": "3-4 Gün",
+      "prices": {
+        "aed": 257,
+        "usd": 70,
+        "eur": 66,
+        "gbp": 56
+      }
+    }
+  ]
+}

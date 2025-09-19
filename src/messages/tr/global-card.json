@@ -9,6 +9,7 @@
     "view_details": "Detayları Gör",
     "more_info": "Daha Fazla Bilgi",
     "view_on_map": "Haritada Gör",
+    "visa_apply": "Vizeye Başvurun",
     "like": "Beğen",
     "unlike": "Beğenme",
     "share": "Paylaş",
@@ -16,6 +17,7 @@
   },
 
   "labels": {
+    "price": "Fiyat",
     "per_person": "/ kişi başı",
     "per_night": "/ gece",
     "per_day": "/ gün",
@@ -37,7 +39,9 @@
     "open_now": "Şu anda açık",
     "closed_now": "Şu anda kapalı",
     "opens_at": "{{time}} saatinde açılıyor",
-    "closes_at": "{{time}} saatinde kapanıyor"
+    "closes_at": "{{time}} saatinde kapanıyor",
+    "processing_time": "İşlem süresi",
+    "validity_period": "Geçerlilik süresi"
   },
 
   "features": {
