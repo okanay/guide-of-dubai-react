@@ -5,10 +5,22 @@ import { NumericStepper } from '@/features/public/components/form-ui/numeric-ste
 import { useLanguage } from '@/i18n/prodiver'
 import { useNavigate } from '@tanstack/react-router'
 import { format, parseISO } from 'date-fns'
-import { Clock, MapPin, X } from 'lucide-react'
+import { Clock, MapPin, X, Building, Star, Bed } from 'lucide-react'
 import { useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useHotelStore } from './store'
+
+interface HotelSuggestion {
+  id: string
+  name: string
+  type: 'hotel' | 'location' | 'recent'
+  location?: string
+  stars?: number
+  rating?: number
+  priceFrom?: number
+  description?: string
+  isPopular?: boolean
+}
 
 // ============================================================================
 // MAIN SEARCH FORM COMPONENT
@@ -182,8 +194,8 @@ interface SearchSuggestionsDropdownProps {
   isOpen: boolean
   triggerRef: any
   onClose: () => void
-  onSelect: (suggestion: any) => void
-  suggestions: unknown[]
+  onSelect: (suggestion: HotelSuggestion) => void
+  suggestions: HotelSuggestion[]
   searchValue: string
 }
 
@@ -211,9 +223,9 @@ const SearchSuggestionsDropdown = ({
         {/* Sonuç bulunamadı mesajı */}
         {suggestions.length === 0 && searchValue.trim().length > 0 && (
           <div className="px-4 py-6 text-center text-sm text-gray-500">
-            <MapPin className="mx-auto mb-2 h-8 w-8 text-gray-300" />
-            <p className="font-medium">{t('suggestions.no-results-title')}</p>
-            <p className="mt-1">{t('suggestions.no-results-description', { searchValue })}</p>
+            <Building className="mx-auto mb-2 h-8 w-8 text-gray-300" />
+            <p className="font-medium">{t('suggestions.no_results.title')}</p>
+            <p className="mt-1">{t('suggestions.no_results.description', { searchValue })}</p>
           </div>
         )}
 
@@ -221,10 +233,80 @@ const SearchSuggestionsDropdown = ({
         {suggestions.length === 0 && searchValue.trim().length === 0 && (
           <div className="px-4 py-6 text-center text-sm text-gray-500">
             <Clock className="mx-auto mb-2 h-8 w-8 text-gray-300" />
-            <p>{t('suggestions.start-typing-title')}</p>
-            <p className="mt-1 text-xs">{t('suggestions.start-typing-description')}</p>
+            <p>{t('suggestions.start_typing.title')}</p>
+            <p className="mt-1 text-xs">{t('suggestions.start_typing.description')}</p>
           </div>
         )}
+
+        {/* Popüler destinasyonlar/oteller başlığı (arama boşken) */}
+        {searchValue.trim().length === 0 && suggestions.length > 0 && (
+          <div className="px-4 py-2">
+            <h4 className="mb-2 text-xs font-medium tracking-wide text-gray-500 uppercase">
+              {t('suggestions.popular_hotels')}
+            </h4>
+          </div>
+        )}
+
+        {/* Öneriler listesi */}
+        {suggestions.map((suggestion) => (
+          <button
+            key={suggestion.id}
+            onClick={() => onSelect(suggestion)}
+            className="w-full border-b border-gray-50 px-4 py-3 text-left last:border-b-0 hover:bg-gray-50"
+          >
+            <div className="flex items-start justify-between">
+              <div className="flex flex-1 items-start gap-3">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded bg-primary-50">
+                  {suggestion.type === 'hotel' ? (
+                    <Building className="h-5 w-5 text-primary-500" />
+                  ) : (
+                    <MapPin className="h-5 w-5 text-primary-500" />
+                  )}
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-medium text-gray-900">{suggestion.name}</p>
+                    {suggestion.stars && (
+                      <div className="flex items-center">
+                        {Array.from({ length: suggestion.stars }, (_, i) => (
+                          <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {suggestion.type === 'hotel' && suggestion.location && (
+                    <div className="mt-1 flex items-center gap-1">
+                      <MapPin className="h-3 w-3 text-gray-400" />
+                      <span className="text-xs text-gray-500">{suggestion.location}</span>
+                    </div>
+                  )}
+
+                  {suggestion.description && (
+                    <p className="mt-1 text-xs text-gray-500">{suggestion.description}</p>
+                  )}
+
+                  {suggestion.rating && suggestion.priceFrom && (
+                    <div className="mt-1 flex items-center gap-3">
+                      <div className="flex items-center gap-1">
+                        <Icon name="star" className="h-3 w-3 text-yellow-500" />
+                        <span className="text-xs text-gray-600">{suggestion.rating}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span className="text-xs text-gray-600">
+                          ${suggestion.priceFrom}+ {t('labels.per_night')}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <span className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-500">
+                {t(`suggestions.types.${suggestion.type}`)}
+              </span>
+            </div>
+          </button>
+        ))}
       </div>
     </DropdownPortal>
   )

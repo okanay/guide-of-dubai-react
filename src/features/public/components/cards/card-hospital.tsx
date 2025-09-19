@@ -90,13 +90,16 @@ export const HospitalCard: React.FC<HospitalCardProps> = ({
             msOverflowStyle: 'none',
           }}
           role="region"
-          aria-label="Hospital images"
+          aria-label={t('accessibility.image_alt', {
+            title: hospital.name,
+            index: currentImageIndex + 1,
+          })}
         >
           {hospital.images.map((image, idx) => (
             <img
               key={`${hospital.id}-image-${idx}`}
               src={image}
-              alt={`${hospital.name} - View ${idx + 1} of ${hospital.images.length}`}
+              alt={t('accessibility.image_alt', { title: hospital.name, index: idx + 1 })}
               className="h-full w-full shrink-0 snap-start object-cover"
               loading={'lazy'}
               fetchPriority="low"
@@ -109,14 +112,14 @@ export const HospitalCard: React.FC<HospitalCardProps> = ({
             <button
               onClick={handlePrevImage}
               className="absolute top-1/2 left-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-70 hover:opacity-100"
-              aria-label="Previous hospital image"
+              aria-label={t('accessibility.prev_image')}
             >
               <Icon name="chevron-left" className="h-4 w-4 text-black" />
             </button>
             <button
               onClick={handleNextImage}
               className="absolute top-1/2 right-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-70 hover:opacity-100"
-              aria-label="Next hospital image"
+              aria-label={t('accessibility.next_image')}
             >
               <Icon name="chevron-right" className="h-4 w-4 text-black" />
             </button>
@@ -136,7 +139,7 @@ export const HospitalCard: React.FC<HospitalCardProps> = ({
                   'h-1 rounded-full transition-all duration-300 hover:bg-white/80',
                   idx === currentImageIndex ? 'w-4 bg-white' : 'w-2 bg-white/60',
                 )}
-                aria-label={`View image ${idx + 1}`}
+                aria-label={t('accessibility.view_image', { index: idx + 1 })}
                 aria-current={idx === currentImageIndex ? 'true' : 'false'}
               />
             ))}
@@ -150,9 +153,9 @@ export const HospitalCard: React.FC<HospitalCardProps> = ({
         to="/$lang/not-found"
         className="flex flex-1 flex-col p-4 transition-colors hover:bg-gray-50/50"
       >
-        {/* Car Title */}
+        {/* Hospital Title */}
         <h2
-          id={`car-${hospital.id}-title`}
+          id={`hospital-${hospital.id}-title`}
           className="mb-2 line-clamp-2 text-size font-bold text-on-box-black"
         >
           {hospital.name}
@@ -162,25 +165,28 @@ export const HospitalCard: React.FC<HospitalCardProps> = ({
         <div className="mb-2 flex items-center gap-1 text-size-sm">
           <Icon name="star" className="size-4 text-primary-500" aria-hidden="true" />
           <span className="font-bold text-on-box-black">{hospital.rating.toFixed(1)}</span>
-          <span className="text-gray-600">({hospital.reviewCount})</span>
+          <span className="text-gray-600">
+            ({hospital.reviewCount}{' '}
+            {hospital.reviewCount === 1 ? t('labels.review') : t('labels.reviews')})
+          </span>
         </div>
 
-        {/* Car Features */}
+        {/* Hospital Information */}
         <div className="mb-3 flex flex-col items-start gap-3 text-size-sm text-on-box-black">
-          {/* Konum */}
+          {/* Location */}
           {hospital.location && (
             <div className="flex items-center gap-1">
               <Icon name="location-pin" className="size-4" aria-hidden="true" />
-              <span className="font-bold text-on-box-black">Konum:</span>
+              <span className="font-bold text-on-box-black">{t('labels.location')}:</span>
               <span className="text-size-sm">Abu Dhabi - UAE</span>
             </div>
           )}
 
-          {/* Telefon */}
+          {/* Phone */}
           {hospital.phone && (
             <div className="flex items-center gap-1">
               <Icon name="phone" className="size-4" aria-hidden="true" />
-              <span className="font-bold text-on-box-black">Telefon:</span>
+              <span className="font-bold text-on-box-black">{t('labels.phone')}:</span>
               <span className="text-size-sm">{hospital.phone}</span>
             </div>
           )}
@@ -189,17 +195,17 @@ export const HospitalCard: React.FC<HospitalCardProps> = ({
           {hospital.openStatus && (
             <div className="flex items-center gap-1 text-badge-green">
               <Icon name="clock-dotted" className="size-4" aria-hidden="true" />
-              <span className="text-size-sm">Şu anda açık.</span>
+              <span className="text-size-sm">{t('labels.open_now')}</span>
             </div>
           )}
         </div>
 
         <div className="mt-auto flex items-center gap-x-2 text-size-sm font-bold">
           <button className="h-10 flex-1 bg-btn-primary text-on-btn-primary">
-            Daha fazla bilgi
+            {t('actions.more_info')}
           </button>
           <button className="h-10 flex-1 border border-btn-white-hover bg-btn-white text-on-btn-white">
-            Haritada Gör
+            {t('actions.view_on_map')}
           </button>
         </div>
       </Link>

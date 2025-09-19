@@ -26,6 +26,7 @@
   "placeholders": {
     "search_general": "Ara...",
     "search_hotel": "Otel, şehir veya bölge ara...",
+    "search_hospital": "Hastane, klinik veya doktor ara...",
     "search_flight": "Destinasyon ara...",
     "departure_point": "Kalkış yeri",
     "arrival_point": "Varış yeri",
@@ -38,6 +39,7 @@
     "search": "Ara",
     "search_flights": "Uçuş Ara",
     "search_hotels": "Otel Ara",
+    "search_hospitals": "Hastane Ara",
     "search_tours": "Tur Ara",
     "search_cars": "Araç Ara",
     "search_activities": "Aktivite Ara",
@@ -66,7 +68,7 @@
   "suggestions": {
     "no_results": {
       "title": "Sonuç bulunamadı",
-      "description": "\"{{searchValue}\" için herhangi bir sonuç bulunamadı"
+      "description": "\"{{searchValue}}\" için herhangi bir sonuç bulunamadı"
     },
     "start_typing": {
       "title": "Arama yapmaya başlayın",
@@ -74,12 +76,33 @@
     },
     "recent_searches": "Son aramalar",
     "popular_destinations": "Popüler destinasyonlar",
+    "popular_hospitals": "Popüler hastaneler",
+    "popular_hotels": "Popüler oteller",
     "types": {
       "hotel": "Otel",
+      "hospital": "Hastane",
+      "clinic": "Klinik",
+      "pharmacy": "Eczane",
       "location": "Bölge",
       "city": "Şehir",
       "airport": "Havalimanı",
-      "recent": "Geçmiş"
+      "recent": "Geçmiş",
+      "specialist": "Uzman",
+      "department": "Bölüm"
+    },
+    "hospital_specialties": {
+      "cardiology": "Kardiyoloji",
+      "neurology": "Nöroloji",
+      "orthopedics": "Ortopedi",
+      "emergency": "Acil Servis",
+      "pediatrics": "Pediatri",
+      "gynecology": "Kadın Doğum",
+      "general_surgery": "Genel Cerrahi",
+      "dermatology": "Deri Hastalıkları",
+      "ophthalmology": "Göz Hastalıkları",
+      "ent": "Kulak Burun Boğaz",
+      "urology": "Üroloji",
+      "oncology": "Onkoloji"
     }
   },
 

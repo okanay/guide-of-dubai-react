@@ -26,6 +26,7 @@
   "placeholders": {
     "search_general": "Search...",
     "search_hotel": "Search for hotel, city or region...",
+    "search_hospital": "Search for hospital, clinic or doctor...",
     "search_flight": "Search destination...",
     "departure_point": "Departure point",
     "arrival_point": "Arrival point",
@@ -38,6 +39,7 @@
     "search": "Search",
     "search_flights": "Search Flights",
     "search_hotels": "Search Hotels",
+    "search_hospitals": "Search Hospitals",
     "search_tours": "Search Tours",
     "search_cars": "Search Cars",
     "search_activities": "Search Activities",
@@ -74,12 +76,33 @@
     },
     "recent_searches": "Recent searches",
     "popular_destinations": "Popular destinations",
+    "popular_hospitals": "Popular hospitals",
+    "popular_hotels": "Popular hotels",
     "types": {
       "hotel": "Hotel",
+      "hospital": "Hospital",
+      "clinic": "Clinic",
+      "pharmacy": "Pharmacy",
       "location": "Location",
       "city": "City",
       "airport": "Airport",
-      "recent": "Recent"
+      "recent": "Recent",
+      "specialist": "Specialist",
+      "department": "Department"
+    },
+    "hospital_specialties": {
+      "cardiology": "Cardiology",
+      "neurology": "Neurology",
+      "orthopedics": "Orthopedics",
+      "emergency": "Emergency",
+      "pediatrics": "Pediatrics",
+      "gynecology": "Gynecology",
+      "general_surgery": "General Surgery",
+      "dermatology": "Dermatology",
+      "ophthalmology": "Ophthalmology",
+      "ent": "ENT",
+      "urology": "Urology",
+      "oncology": "Oncology"
     }
   },
 

@@ -7,6 +7,8 @@
     "transfer": "Reserve My Seat Now",
     "view_all": "View All",
     "view_details": "View Details",
+    "more_info": "More Information",
+    "view_on_map": "View on Map",
     "like": "Like",
     "unlike": "Unlike",
     "share": "Share",
@@ -25,10 +27,17 @@
     "capacity": "Capacity",
     "duration": "Duration",
     "location": "Location",
+    "phone": "Phone",
+    "address": "Address",
+    "website": "Website",
     "distance_to_center": "Distance to center",
     "min_rental": "Minimum Rental Duration",
     "price_per_days": "Price for {{days}} Days",
-    "important_info": "Important Information"
+    "important_info": "Important Information",
+    "open_now": "Open now",
+    "closed_now": "Closed now",
+    "opens_at": "Opens at {{time}}",
+    "closes_at": "Closes at {{time}}"
   },
 
   "features": {
@@ -42,6 +51,40 @@
     "manual": "Manual",
     "passengers": "{{capacity}} Passengers",
     "baggage": "{{capacity}} Baggage"
+  },
+
+  "hospital": {
+    "specialties": {
+      "cardiology": "Cardiology",
+      "neurology": "Neurology",
+      "orthopedics": "Orthopedics",
+      "emergency": "Emergency",
+      "pediatrics": "Pediatrics",
+      "gynecology": "Gynecology",
+      "general_surgery": "General Surgery",
+      "dermatology": "Dermatology",
+      "ophthalmology": "Ophthalmology",
+      "ent": "ENT",
+      "urology": "Urology",
+      "oncology": "Oncology"
+    },
+    "services": {
+      "emergency_24_7": "24/7 Emergency",
+      "parking": "Parking",
+      "pharmacy": "Pharmacy",
+      "laboratory": "Laboratory",
+      "radiology": "Radiology",
+      "cafeteria": "Cafeteria",
+      "wifi": "Free Wi-Fi"
+    },
+    "types": {
+      "public": "Public Hospital",
+      "private": "Private Hospital",
+      "university": "University Hospital",
+      "clinic": "Clinic",
+      "medical_center": "Medical Center",
+      "polyclinic": "Polyclinic"
+    }
   },
 
   "discount": {

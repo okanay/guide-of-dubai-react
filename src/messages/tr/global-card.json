@@ -7,6 +7,8 @@
     "transfer": "Yerimi Şimdi Ayırt",
     "view_all": "Tümünü Gör",
     "view_details": "Detayları Gör",
+    "more_info": "Daha Fazla Bilgi",
+    "view_on_map": "Haritada Gör",
     "like": "Beğen",
     "unlike": "Beğenme",
     "share": "Paylaş",
@@ -25,10 +27,17 @@
     "capacity": "Kişilik",
     "duration": "Süre",
     "location": "Konum",
+    "phone": "Telefon",
+    "address": "Adres",
+    "website": "Website",
     "distance_to_center": "Merkeze uzaklık",
     "min_rental": "Min Kiralama Süresi",
     "price_per_days": "{{days}} Günlük Fiyat",
-    "important_info": "Önemli Bilgiler"
+    "important_info": "Önemli Bilgiler",
+    "open_now": "Şu anda açık",
+    "closed_now": "Şu anda kapalı",
+    "opens_at": "{{time}} saatinde açılıyor",
+    "closes_at": "{{time}} saatinde kapanıyor"
   },
 
   "features": {
@@ -42,6 +51,40 @@
     "manual": "Manuel",
     "passengers": "{{capacity}} Yolcu",
     "baggage": "{{capacity}} Bagaj"
+  },
+
+  "hospital": {
+    "specialties": {
+      "cardiology": "Kardiyoloji",
+      "neurology": "Nöroloji",
+      "orthopedics": "Ortopedi",
+      "emergency": "Acil Servis",
+      "pediatrics": "Pediatri",
+      "gynecology": "Kadın Doğum",
+      "general_surgery": "Genel Cerrahi",
+      "dermatology": "Deri Hastalıkları",
+      "ophthalmology": "Göz Hastalıkları",
+      "ent": "Kulak Burun Boğaz",
+      "urology": "Üroloji",
+      "oncology": "Onkoloji"
+    },
+    "services": {
+      "emergency_24_7": "7/24 Acil Servis",
+      "parking": "Otopark",
+      "pharmacy": "Eczane",
+      "laboratory": "Laboratuvar",
+      "radiology": "Radyoloji",
+      "cafeteria": "Kafeterya",
+      "wifi": "Ücretsiz Wi-Fi"
+    },
+    "types": {
+      "public": "Devlet Hastanesi",
+      "private": "Özel Hastane",
+      "university": "Üniversite Hastanesi",
+      "clinic": "Klinik",
+      "medical_center": "Tıp Merkezi",
+      "polyclinic": "Poliklinik"
+    }
   },
 
   "discount": {

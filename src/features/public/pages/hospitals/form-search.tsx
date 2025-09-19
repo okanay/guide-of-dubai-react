@@ -1,14 +1,29 @@
 import { useHospitalStore } from './store'
 import { DropdownPortal } from '@/components/dropdown-portal'
 import Icon from '@/components/icon'
-import { Clock, MapPin, X } from 'lucide-react'
+import { Clock, MapPin, X, Building2, Stethoscope, Phone } from 'lucide-react'
 import { useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from '@tanstack/react-router'
+import { useLanguage } from '@/i18n/prodiver'
+
+interface HospitalSuggestion {
+  id: string
+  name: string
+  type: 'hospital' | 'clinic' | 'specialty' | 'location'
+  specialty?: string
+  location?: string
+  phone?: string
+  rating?: number
+  isPopular?: boolean
+}
 
 // ============================================================================
 // MAIN SEARCH FORM COMPONENT
 // ============================================================================
 export const SearchForm = () => {
+  const navigate = useNavigate()
+  const { language } = useLanguage()
   const { t } = useTranslation('global-form')
   const { filters, setFilterValue } = useHospitalStore()
 
@@ -19,10 +34,23 @@ export const SearchForm = () => {
   // Search değeri değiştiğinde filtreleme yap
   const filteredSuggestions = useMemo(() => {
     return []
-  }, [])
+  }, [filters.search])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+
+    const searchParams = Object.fromEntries(
+      Object.entries(filters).filter(
+        ([key, value]) => value !== undefined && key !== 'setFilterValue',
+      ),
+    )
+
+    navigate({
+      to: '/$lang/hospitals',
+      params: { lang: language.value },
+      search: searchParams,
+      resetScroll: false,
+    })
   }
 
   return (
@@ -49,7 +77,7 @@ export const SearchForm = () => {
                 }
               }}
               onFocus={() => setIsSearchOpen(true)}
-              placeholder={t('placeholders.search_hotel')}
+              placeholder={t('placeholders.search_hospital')}
               className="w-full border-none bg-transparent pr-6 text-start text-size-sm font-semibold focus:outline-none"
               autoComplete="off"
             />
@@ -88,7 +116,7 @@ export const SearchForm = () => {
           className="flex h-14 w-full shrink-0 items-center justify-center gap-x-2 bg-btn-primary px-6 font-bold text-on-btn-primary transition-colors hover:bg-btn-primary-hover md:w-fit"
         >
           <Icon name="search" className="h-5 w-5" />
-          <span>{t('actions.search_hotels')}</span>
+          <span>{t('actions.search_hospitals')}</span>
         </button>
       </form>
     </section>
@@ -104,8 +132,8 @@ interface SearchSuggestionsDropdownProps {
   isOpen: boolean
   triggerRef: any
   onClose: () => void
-  onSelect: (suggestion: any) => void
-  suggestions: unknown[]
+  onSelect: (suggestion: HospitalSuggestion) => void
+  suggestions: HospitalSuggestion[]
   searchValue: string
 }
 
@@ -133,9 +161,9 @@ const SearchSuggestionsDropdown = ({
         {/* Sonuç bulunamadı mesajı */}
         {suggestions.length === 0 && searchValue.trim().length > 0 && (
           <div className="px-4 py-6 text-center text-sm text-gray-500">
-            <MapPin className="mx-auto mb-2 h-8 w-8 text-gray-300" />
-            <p className="font-medium">{t('suggestions.no-results-title')}</p>
-            <p className="mt-1">{t('suggestions.no-results-description', { searchValue })}</p>
+            <Building2 className="mx-auto mb-2 h-8 w-8 text-gray-300" />
+            <p className="font-medium">{t('suggestions.no_results.title')}</p>
+            <p className="mt-1">{t('suggestions.no_results.description', { searchValue })}</p>
           </div>
         )}
 
@@ -143,10 +171,56 @@ const SearchSuggestionsDropdown = ({
         {suggestions.length === 0 && searchValue.trim().length === 0 && (
           <div className="px-4 py-6 text-center text-sm text-gray-500">
             <Clock className="mx-auto mb-2 h-8 w-8 text-gray-300" />
-            <p>{t('suggestions.start-typing-title')}</p>
-            <p className="mt-1 text-xs">{t('suggestions.start-typing-description')}</p>
+            <p>{t('suggestions.start_typing.title')}</p>
+            <p className="mt-1 text-xs">{t('suggestions.start_typing.description')}</p>
           </div>
         )}
+
+        {/* Hastane önerileri */}
+        {suggestions.map((suggestion) => (
+          <button
+            key={suggestion.id}
+            onClick={() => onSelect(suggestion)}
+            className="w-full border-b border-gray-50 px-4 py-3 text-left last:border-b-0 hover:bg-gray-50"
+          >
+            <div className="flex items-start justify-between">
+              <div className="flex flex-1 items-start gap-3">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded bg-primary-50">
+                  <Building2 className="h-5 w-5 text-primary-500" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-medium text-gray-900">{suggestion.name}</p>
+                    {suggestion.rating && (
+                      <div className="flex items-center gap-1">
+                        <Icon name="star" className="h-3 w-3 text-yellow-500" />
+                        <span className="text-xs text-gray-500">{suggestion.rating}</span>
+                      </div>
+                    )}
+                  </div>
+                  {suggestion.specialty && (
+                    <p className="text-xs font-medium text-primary-600">{suggestion.specialty}</p>
+                  )}
+                  {suggestion.location && (
+                    <div className="mt-1 flex items-center gap-1">
+                      <MapPin className="h-3 w-3 text-gray-400" />
+                      <span className="text-xs text-gray-500">{suggestion.location}</span>
+                    </div>
+                  )}
+                  {suggestion.phone && (
+                    <div className="mt-0.5 flex items-center gap-1">
+                      <Phone className="h-3 w-3 text-gray-400" />
+                      <span className="text-xs text-gray-500">{suggestion.phone}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <span className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-500">
+                {t(`suggestions.types.${suggestion.type}`)}
+              </span>
+            </div>
+          </button>
+        ))}
       </div>
     </DropdownPortal>
   )
