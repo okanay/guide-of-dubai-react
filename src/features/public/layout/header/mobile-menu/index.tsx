@@ -55,13 +55,13 @@ export function MobileMenu() {
         className="absolute top-0 left-0 flex h-full w-full transform flex-col bg-box-surface shadow-xl transition-transform duration-300 ease-out data-[open=false]:-translate-x-full data-[open=true]:translate-x-0 md:max-w-sm lg:hidden"
       >
         {/* Header */}
-        <div className="flex shrink-0 items-center justify-between border-b border-gray-200 px-6 py-4">
+        <div className="flex shrink-0 items-center justify-between border-b border-gray-100 px-6 py-2">
           <h2 className="text-lg font-semibold text-on-box-black">{t('buttons.menu')}</h2>
           <button
             onClick={closeMenu}
-            className="flex items-center justify-center rounded-lg p-2 text-gray-500 transition-colors hover:bg-gray-100"
+            className="flex items-center justify-center rounded-full p-2 text-on-box-black transition-colors hover:bg-gray-100"
           >
-            <X className="h-5 w-5" />
+            <X className="size-6" />
           </button>
         </div>
 
@@ -84,7 +84,7 @@ function MenuContent() {
   return (
     <div className="space-y-6">
       {/* Auth Section */}
-      <div className="border-b border-gray-200 pb-6">
+      <div>
         {sessionStatus === 'authenticated' ? (
           <div className="space-y-3">
             <div className="flex items-center gap-3">
