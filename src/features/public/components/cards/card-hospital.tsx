@@ -4,6 +4,7 @@ import { useRef, useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { twMerge } from 'tailwind-merge'
 import { ButtonFavorite } from '../buttons/button-favorite'
+import { Hotel } from 'lucide-react'
 
 interface HospitalCardProps {
   hospital: Hospital
@@ -143,6 +144,65 @@ export const HospitalCard: React.FC<HospitalCardProps> = ({
         )}
         <ButtonFavorite contentId={hospital.id} onToggle={handleLikeToggle} />
       </header>
+
+      {/* Content */}
+      <Link
+        to="/$lang/not-found"
+        className="flex flex-1 flex-col p-4 transition-colors hover:bg-gray-50/50"
+      >
+        {/* Car Title */}
+        <h2
+          id={`car-${hospital.id}-title`}
+          className="mb-2 line-clamp-2 text-size font-bold text-on-box-black"
+        >
+          {hospital.name}
+        </h2>
+
+        {/* Rating and Reviews */}
+        <div className="mb-2 flex items-center gap-1 text-size-sm">
+          <Icon name="star" className="size-4 text-primary-500" aria-hidden="true" />
+          <span className="font-bold text-on-box-black">{hospital.rating.toFixed(1)}</span>
+          <span className="text-gray-600">({hospital.reviewCount})</span>
+        </div>
+
+        {/* Car Features */}
+        <div className="mb-3 flex flex-col items-start gap-3 text-size-sm text-on-box-black">
+          {/* Konum */}
+          {hospital.location && (
+            <div className="flex items-center gap-1">
+              <Icon name="location-pin" className="size-4" aria-hidden="true" />
+              <span className="font-bold text-on-box-black">Konum:</span>
+              <span className="text-size-sm">Abu Dhabi - UAE</span>
+            </div>
+          )}
+
+          {/* Telefon */}
+          {hospital.phone && (
+            <div className="flex items-center gap-1">
+              <Icon name="phone" className="size-4" aria-hidden="true" />
+              <span className="font-bold text-on-box-black">Telefon:</span>
+              <span className="text-size-sm">{hospital.phone}</span>
+            </div>
+          )}
+
+          {/* Open Status */}
+          {hospital.openStatus && (
+            <div className="flex items-center gap-1 text-badge-green">
+              <Icon name="clock-dotted" className="size-4" aria-hidden="true" />
+              <span className="text-size-sm">Şu anda açık.</span>
+            </div>
+          )}
+        </div>
+
+        <div className="mt-auto flex items-center gap-x-2 text-size-sm font-bold">
+          <button className="h-10 flex-1 bg-btn-primary text-on-btn-primary">
+            Daha fazla bilgi
+          </button>
+          <button className="h-10 flex-1 border border-btn-white-hover bg-btn-white text-on-btn-white">
+            Haritada Gör
+          </button>
+        </div>
+      </Link>
     </article>
   )
 }

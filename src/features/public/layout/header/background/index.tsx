@@ -416,7 +416,7 @@ function ExtendedNavigationTabs() {
       },
       {
         path: 'restaurants',
-        icon: 'app/restaurant',
+        icon: 'app/restaurants',
         labelKey: 'nav.restaurants',
         to: '/$lang/restaurants',
         preload: false,

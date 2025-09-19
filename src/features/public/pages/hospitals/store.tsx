@@ -1,20 +1,53 @@
-import { create } from 'zustand'
+import { createContext, PropsWithChildren, useContext, useState } from 'react'
+import { createStore, StoreApi, useStore } from 'zustand'
+import { immer } from 'zustand/middleware/immer'
+import { format } from 'date-fns'
+import { HospitalSearchFilter } from './form-schema'
 
-interface HospitalState {
-  hospitals: Hospital[]
-  filteredHospitals: Hospital[]
-  setHospitals: (hospitals: Hospital[]) => void
-  filterHospitals: (searchTerm: string) => void
+// Store'un tam tipi
+type HospitalFilterStore = {
+  filters: HospitalSearchFilter
+  setFilterValue: <K extends keyof HospitalSearchFilter>(
+    key: K,
+    value: HospitalSearchFilter[K],
+  ) => void
 }
 
-export const useHospitalStore = create<HospitalState>((set) => ({
-  hospitals: [],
-  filteredHospitals: [],
-  setHospitals: (hospitals) => set({ hospitals, filteredHospitals: hospitals }),
-  filterHospitals: (searchTerm) =>
-    set((state) => ({
-      filteredHospitals: state.hospitals.filter((hospital) =>
-        hospital.name.toLowerCase().includes(searchTerm.toLowerCase()),
-      ),
-    })),
-}))
+// Provider'a verilecek başlangıç verisi için tip
+type Props = PropsWithChildren<{
+  initialState: Partial<HospitalSearchFilter>
+}>
+
+// Store'u oluşturmak için Context
+const HospitalFilterContext = createContext<StoreApi<HospitalFilterStore> | undefined>(undefined)
+
+export function HospitalFilterProvider({ children, initialState }: Props) {
+  const [store] = useState(() =>
+    createStore<HospitalFilterStore>()(
+      immer((set) => ({
+        filters: {
+          search: initialState.search || '',
+        },
+
+        // Tek bir input'un değerini güncelleyen eylem
+        setFilterValue: (key, value) => {
+          set((state) => {
+            state.filters[key] = value
+          })
+        },
+      })),
+    ),
+  )
+
+  return <HospitalFilterContext.Provider value={store}>{children}</HospitalFilterContext.Provider>
+}
+
+export function useHospitalStore(): HospitalFilterStore {
+  const store = useContext(HospitalFilterContext)
+
+  if (!store) {
+    throw new Error('useHotelStore must be used within a HotelFilterProvider')
+  }
+
+  return useStore(store)
+}

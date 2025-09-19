@@ -1,18 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import { HospitalCard } from '../../components/cards/card-hospital'
-import { useHospitalStore } from './store'
 import { MOCK_HOSPITALS } from '@/mockdata/hospitals'
-import { useEffect } from 'react'
 import { useSnapScroll } from '@/hooks/use-snap-scroll'
 
 export const HospitalSuggestionSection = () => {
   const { t } = useTranslation('page-hospitals')
-  const { filteredHospitals, setHospitals } = useHospitalStore()
-
-  useEffect(() => {
-    setHospitals(MOCK_HOSPITALS)
-  }, [setHospitals])
-
   const { containerRef, cardRefs } = useSnapScroll({ updateOnMount: true })
 
   const setCardRef = (index: number) => (el: HTMLDivElement | null) => {
@@ -27,6 +19,7 @@ export const HospitalSuggestionSection = () => {
         <header className="mb-4 flex items-start justify-between sm:items-center">
           <div className="flex flex-col gap-y-1">
             <h2 className="text-2xl font-bold">{t('suggestions.title')}</h2>
+            <p className="text-size-base text-gray-700"> {t('suggestions.description')}</p>
           </div>
         </header>
         <div className="relative">
@@ -38,7 +31,7 @@ export const HospitalSuggestionSection = () => {
               msOverflowStyle: 'none',
             }}
           >
-            {filteredHospitals.map((hospital, index) => (
+            {MOCK_HOSPITALS.map((hospital, index) => (
               <div
                 key={hospital.id}
                 ref={setCardRef(index)}
