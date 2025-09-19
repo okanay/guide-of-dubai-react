@@ -338,6 +338,16 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
 
         <div className="h-20 md:hidden" />
       </div>
+
+      {/* Register Footer */}
+      <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4 text-center">
+        <div className="text-sm">
+          <span>{t('global-modal:auth.have_account')} </span>
+          <button onClick={() => setMode('email-login')} className="font-semibold text-btn-primary">
+            {t('global-modal:auth.login_link')}
+          </button>
+        </div>
+      </div>
     </>
   )
 }

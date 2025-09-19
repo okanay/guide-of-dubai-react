@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next'
 
 export function AuthModal() {
   const { isOpen, closeModal, scopeId, mode, setMode } = useAuthModal()
-  const { t } = useTranslation('global-modal')
 
   const handleClose = () => {
     closeModal()
@@ -34,54 +33,14 @@ export function AuthModal() {
   return (
     <ModalWrapper isOpen={isOpen} onClose={handleClose} scopeId={scopeId}>
       <div className="relative flex h-full w-full flex-col overflow-hidden bg-box-surface md:h-auto md:max-h-[90vh] md:w-full md:max-w-md md:shadow-2xl">
-        {/* Dinamik içerik (Header + Body) */}
+        {/* Dinamik içerik - artık footer da dahil */}
         {renderContent()}
-
-        {/* Footer */}
-        <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4 text-center">
-          {mode === 'login' && (
-            <p className="text-xs text-gray-500">
-              {t('auth.terms_text')}{' '}
-              <a href="#" className="underline">
-                {t('auth.terms_link')}
-              </a>{' '}
-              ve{' '}
-              <a href="#" className="underline">
-                {t('auth.privacy_link')}
-              </a>{' '}
-              {t('auth.terms_accept')}
-            </p>
-          )}
-          {(mode === 'email-login' || mode === 'forgot-password') && (
-            <div className="text-sm">
-              <span>{t('auth.no_account')} </span>
-              <button
-                onClick={() => setMode('register')}
-                className="font-semibold text-btn-primary"
-              >
-                {t('auth.create_account')}
-              </button>
-            </div>
-          )}
-          {mode === 'register' && (
-            <div className="text-sm">
-              <span>{t('auth.have_account')} </span>
-              <button
-                onClick={() => setMode('email-login')}
-                className="font-semibold text-btn-primary"
-              >
-                {t('auth.login_link')}
-              </button>
-            </div>
-          )}
-        </div>
       </div>
     </ModalWrapper>
   )
 }
 
 function LoginOptions({ onClose }: { onClose: () => void }) {
-  const { setMode } = useAuthModal()
   const { t } = useTranslation('global-modal')
 
   return (
@@ -103,50 +62,86 @@ function LoginOptions({ onClose }: { onClose: () => void }) {
           </button>
         </div>
       </div>
+
       <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto p-6">
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <AuthButton
-              icon="phone"
-              iconClass="h-5 w-5 text-black"
-              label={t('auth.continue_with_phone')}
-              onClick={() => setMode('phone-login')}
-            />
-            <AuthButton
-              icon="email"
-              iconClass="h-5 w-5"
-              label={t('auth.continue_with_email')}
-              onClick={() => setMode('email-login')}
-            />
-          </div>
-          <div className="flex items-center gap-x-2 py-2">
-            <div className="h-px flex-1 bg-gray-200" />
-            <span className="text-xs text-gray-500">{t('auth.or_divider')}</span>
-            <div className="h-px flex-1 bg-gray-200" />
-          </div>
-          <div className="space-y-2">
-            <AuthButton
-              icon="socials/apple"
-              iconClass="h-5 w-5 text-black dark:invert"
-              label={t('auth.continue_with_apple')}
-              onClick={() => {}}
-            />
-            <AuthButton
-              icon="socials/google"
-              iconClass="h-5 w-5"
-              label={t('auth.continue_with_google')}
-              onClick={() => {}}
-            />
-            <AuthButton
-              icon="socials/facebook"
-              iconClass="h-5 w-5"
-              label={t('auth.continue_with_facebook')}
-              onClick={() => {}}
-            />
-          </div>
-        </div>
+        <LoginAuthButtons />
+      </div>
+
+      {/* Login Options Footer */}
+      <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4 text-center text-balance">
+        <LoginTermsText />
       </div>
     </>
+  )
+}
+
+export const LoginAuthButtons = ({ scopeId }: { scopeId?: string }) => {
+  const { openModal } = useAuthModal()
+  const { t } = useTranslation('global-modal')
+
+  return (
+    <div className="flex flex-col gap-y-2">
+      {/* Main Options */}
+      <div className="space-y-2">
+        <AuthButton
+          icon="phone"
+          iconClass="h-5 w-5 text-black"
+          label={t('auth.continue_with_phone')}
+          onClick={() => openModal('phone-login', scopeId)}
+        />
+        <AuthButton
+          icon="email"
+          iconClass="h-5 w-5"
+          label={t('auth.continue_with_email')}
+          onClick={() => openModal('email-login', scopeId)}
+        />
+      </div>
+      {/* Divider */}
+      <div className="flex items-center gap-x-2 py-2">
+        <div className="h-px flex-1 bg-gray-200" />
+        <span className="text-xs text-gray-500">{t('auth.or_divider')}</span>
+        <div className="h-px flex-1 bg-gray-200" />
+      </div>
+      {/* Social Options */}
+      <div className="space-y-2">
+        <AuthButton
+          icon="socials/apple"
+          iconClass="h-5 w-5 text-black dark:invert"
+          label={t('auth.continue_with_apple')}
+          onClick={() => {}}
+        />
+        <AuthButton
+          icon="socials/google"
+          iconClass="h-5 w-5"
+          label={t('auth.continue_with_google')}
+          onClick={() => {}}
+        />
+        <AuthButton
+          icon="socials/facebook"
+          iconClass="h-5 w-5"
+          label={t('auth.continue_with_facebook')}
+          onClick={() => {}}
+        />
+      </div>
+    </div>
+  )
+}
+
+export const LoginTermsText = () => {
+  const { t } = useTranslation('global-modal')
+
+  return (
+    <p className="text-xs text-gray-500">
+      {t('auth.terms_text')}{' '}
+      <a href="#" className="underline">
+        {t('auth.terms_link')}
+      </a>{' '}
+      ve{' '}
+      <a href="#" className="underline">
+        {t('auth.privacy_link')}
+      </a>{' '}
+      {t('auth.terms_accept')}
+    </p>
   )
 }
 

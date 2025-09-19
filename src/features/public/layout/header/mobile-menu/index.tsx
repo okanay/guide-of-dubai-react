@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { useMobileMenu } from './store'
 import { useModalBodyLock } from '@/features/modals/components/use-modal-body-lock'
 import { useMediaQuery } from '@/hooks/use-media-query'
+import { LoginAuthButtons, LoginTermsText } from '@/features/modals/auth/modal'
 
 export function MobileMenu() {
   const { isOpen, closeMenu } = useMobileMenu()
@@ -78,19 +79,7 @@ export function MobileMenu() {
 
 function MenuContent() {
   const { sessionStatus, user, logout } = useAuth()
-  const { openModal: openAuthModal } = useAuthModal()
-  const { openModal: openSystemSettingsModal, currency } = useSystemSettings()
-  const { language } = useLanguage()
-  const { theme } = useTheme()
   const { t } = useTranslation(['layout-header', 'global-modal'])
-
-  const openSettingsModal = (type: any) => {
-    openSystemSettingsModal(type, 'mobile-menu-container')
-  }
-
-  const openAuthInMenu = () => {
-    openAuthModal('login', 'mobile-menu-container')
-  }
 
   return (
     <div className="space-y-6">
@@ -117,59 +106,13 @@ function MenuContent() {
             </button>
           </div>
         ) : (
-          <button
-            onClick={openAuthInMenu}
-            className="w-full rounded-lg bg-primary-500 px-4 py-3 text-white transition-colors hover:bg-primary-600"
-          >
-            {t('layout-header:profile.login_register')}
-          </button>
+          <div className="flex flex-col gap-y-3">
+            <LoginAuthButtons scopeId="mobile-menu-container" />
+            <div className="text-start text-pretty">
+              <LoginTermsText />
+            </div>
+          </div>
         )}
-      </div>
-
-      {/* Settings */}
-      <div className="space-y-4">
-        <h3 className="text-sm font-semibold text-gray-500 uppercase">
-          {t('global-modal:settings.title')}
-        </h3>
-
-        <button
-          onClick={() => openSettingsModal('language')}
-          className="flex w-full items-center justify-between rounded-lg border border-gray-200 p-4 text-left transition-colors hover:bg-gray-50"
-        >
-          <span className="font-medium text-on-box-black">
-            {t('global-modal:settings.language')}
-          </span>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-600">{language.label}</span>
-            <ChevronRight className="h-4 w-4 text-gray-400" />
-          </div>
-        </button>
-
-        <button
-          onClick={() => openSettingsModal('currency')}
-          className="flex w-full items-center justify-between rounded-lg border border-gray-200 p-4 text-left transition-colors hover:bg-gray-50"
-        >
-          <span className="font-medium text-on-box-black">
-            {t('global-modal:settings.currency')}
-          </span>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-600">{currency.name}</span>
-            <ChevronRight className="h-4 w-4 text-gray-400" />
-          </div>
-        </button>
-
-        <button
-          onClick={() => openSettingsModal('theme')}
-          className="flex w-full items-center justify-between rounded-lg border border-gray-200 p-4 text-left transition-colors hover:bg-gray-50"
-        >
-          <span className="font-medium text-on-box-black">{t('global-modal:settings.theme')}</span>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-600">
-              {t(`global-modal:settings.${theme}_theme`)}
-            </span>
-            <ChevronRight className="h-4 w-4 text-gray-400" />
-          </div>
-        </button>
       </div>
     </div>
   )

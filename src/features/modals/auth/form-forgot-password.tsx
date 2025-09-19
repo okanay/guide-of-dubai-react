@@ -74,6 +74,7 @@ export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
           {t('global-modal:auth.forgot_password_description')}
         </p>
       </header>
+
       <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto px-6 py-4">
         <form onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)} className="space-y-4">
           <Controller
@@ -102,6 +103,16 @@ export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
               : t('global-modal:auth.forgot_password_button')}
           </button>
         </form>
+      </div>
+
+      {/* Forgot Password Footer */}
+      <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4 text-center">
+        <div className="text-sm">
+          <span>{t('global-modal:auth.no_account')} </span>
+          <button onClick={() => setMode('register')} className="font-semibold text-btn-primary">
+            {t('global-modal:auth.create_account')}
+          </button>
+        </div>
       </div>
     </>
   )
