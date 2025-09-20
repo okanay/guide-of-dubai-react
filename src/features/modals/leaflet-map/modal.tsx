@@ -1,4 +1,4 @@
-import { ModalWrapper } from '@/features/modals/components/wrapper'
+import { ModalWrapper } from './wrapper'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import Icon from '@/components/icon'
 import { useLeafletModalStore, type ModalPayload, type Hotel } from './store'

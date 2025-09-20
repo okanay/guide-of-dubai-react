@@ -43,11 +43,9 @@ export function GlobalModalStoreProvider({ children }: GlobalModalStoreProps) {
   const [store] = useState(() =>
     createStore<GlobalModalStore>()(
       immer((set, get) => ({
-        // INITIAL STATE
         stack: [],
         nextZIndex: 1000,
 
-        // ACTIONS
         open: <T = any,>(
           component: React.ComponentType<any>,
           props: Record<string, any> = {},
@@ -60,7 +58,6 @@ export function GlobalModalStoreProvider({ children }: GlobalModalStoreProps) {
               component,
               props: {
                 ...props,
-                // Modal'a otomatik olarak close fonksiyonunu geç
                 onClose: (data?: any) => get().close(modalId, data),
                 onGoBack: (data?: any) => get().goBack(data),
               },
@@ -162,41 +159,4 @@ export function useGlobalModalStore() {
     throw new Error('useGlobalModalStore must be used within GlobalModalStoreProvider')
   }
   return useStore(context, (state) => state)
-}
-
-// =============================================================================
-// CONVENIENCE HOOKS
-// =============================================================================
-
-/**
- * Modal açmak için convenience hook
- * Örnek kullanım:
- * const modal = useModal()
- * const result = await modal.open(AuthModal, { mode: 'login' })
- */
-export function useModal() {
-  const { open, close, goBack } = useGlobalModalStore()
-
-  return {
-    open,
-    close,
-    goBack,
-  }
-}
-
-/**
- * Modal içinde kullanılmak üzere convenience hook
- * Modal component'leri bu hook ile kendi durumlarını yönetebilir
- */
-export function useModalInstance() {
-  const store = useGlobalModalStore()
-
-  return {
-    close: (data?: any) => store.goBack(data),
-    isTopModal: () => {
-      const topModal = store.getTopModal()
-      return topModal !== null
-    },
-    stackCount: store.getStackCount(),
-  }
 }
