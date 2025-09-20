@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSearchModal } from './store'
 import { X } from 'lucide-react'
+import { GoAiButton } from '../go-ai/button'
 
 interface SearchModalProps {
   onClose?: () => void
@@ -52,6 +53,8 @@ export const SearchModalComponent: React.FC<SearchModalProps> = ({ onClose, onGo
               </div>
             </div>
           </div>
+
+          <GoAiButton />
 
           <div className="h-20 md:hidden" />
         </div>

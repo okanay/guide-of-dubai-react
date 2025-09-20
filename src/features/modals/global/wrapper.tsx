@@ -57,7 +57,7 @@ interface ModalLayerProps {
 }
 
 const ModalLayer: React.FC<ModalLayerProps> = ({ modal }) => {
-  const { close, goBack, getTopModal } = useGlobalModalStore()
+  const { close, goBack, getTopModal, getStackCount } = useGlobalModalStore()
 
   useEffect(() => {
     const isTopModal = () => {
@@ -74,14 +74,13 @@ const ModalLayer: React.FC<ModalLayerProps> = ({ modal }) => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Element
 
-      if (!isTopModal()) return
-
-      // Scrim check - data-scrim true ise modal'ı kapat
-      const scrimElement = document.querySelector('[data-scrim="true"]')
-      if (scrimElement && scrimElement.contains(target)) {
+      const scrimElement = target.getAttribute('data-scrim')
+      if (scrimElement === 'true') {
         goBack()
         return
       }
+
+      if (!isTopModal()) return
 
       // Modal content'e tıklanmışsa return et
       const modalElement = document.querySelector(`[data-modal-id="${modal.id}"]`)
