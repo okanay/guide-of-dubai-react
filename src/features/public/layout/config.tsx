@@ -13,7 +13,8 @@ import { Route } from '@/routes/__root'
 import { SystemSettingsModalStore } from '@/features/modals/system-settings/store'
 import { MobileMenuStore } from './header/mobile-menu/store'
 import { GlobalModalStoreProvider } from '@/features/modals/global/store'
-import { GlobalModalRenderer } from '@/features/modals/global/wrapper'
+import { MobileMenu } from './header/mobile-menu'
+import { GlobalModalProvider } from '@/features/modals/global/wrapper'
 
 export const PublicLayoutConfig = ({ children }: { children: React.ReactNode }) => {
   const data = Route.useLoaderData()
@@ -37,7 +38,8 @@ export const PublicLayoutConfig = ({ children }: { children: React.ReactNode }) 
           <AuthModal />
           <BasketModal />
           <LeafletModal />
-          <GlobalModalRenderer />
+          <MobileMenu />
+          <GlobalModalProvider />
         </ComposeProviders>
       </SystemSettingsModalStore>
     </GlobalModalStoreProvider>

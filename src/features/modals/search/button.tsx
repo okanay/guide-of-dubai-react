@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Icon from 'src/components/icon'
 import { useTranslation } from 'react-i18next'
-import { useGlobalModalStore, useSearchModalGlobal } from '@/features/modals/global/store'
+import { useGlobalModalStore } from '@/features/modals/global/store'
+import { SearchModalComponent } from './modal'
 
 interface SearchButtonProps {
   variant?: 'icon' | 'hero'
@@ -12,11 +13,10 @@ interface SearchButtonProps {
 export function SearchButton({ variant = 'icon', placeholder, className = '' }: SearchButtonProps) {
   const { open } = useGlobalModalStore()
   const { t } = useTranslation('layout-header')
-
   const defaultPlaceholder = placeholder || t('buttons.search')
 
-  const handleOpenSearch = () => {
-    open('search', { replace: false })
+  const handleOpenSearch = async () => {
+    const response = await open(SearchModalComponent, {})
   }
 
   if (variant === 'hero') {

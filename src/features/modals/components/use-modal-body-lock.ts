@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { modalManager } from './manager'
+import { modalManager } from '../global/manager'
 
 export function useModalBodyLock(isOpen: boolean, scopeId: string = 'body') {
   useEffect(() => {

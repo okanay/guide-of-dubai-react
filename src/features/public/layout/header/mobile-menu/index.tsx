@@ -1,72 +1,80 @@
 import { LoginAuthButtons, LoginTermsText } from '@/features/modals/auth/modal'
-import { useAuth } from '@/providers/auth'
 import { useMediaQuery } from '@/hooks/use-media-query'
+import { useAuth } from '@/providers/auth'
 import { X } from 'lucide-react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
-import { SearchButton } from '@/features/modals/search/button'
+import { useMobileMenu } from './store'
+import { modalManager } from '@/features/modals/global/manager'
 
-interface MobileMenuProps {
-  onClose?: () => void
-  onGoBack?: () => void
-  ref: any
-}
-
-export function MobileMenuComponent({ onClose, onGoBack, ref }: MobileMenuProps) {
+export function MobileMenu() {
+  const { isOpen, closeMenu } = useMobileMenu()
   const { t } = useTranslation('layout-header')
+  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null)
   const isLargeScreen = useMediaQuery('(min-width: 1024px)')
+
+  // Portal container set et
+  useEffect(() => {
+    setPortalContainer(document.body)
+  }, [])
 
   // Ekran büyüyünce zorla kapat
   useEffect(() => {
-    if (isLargeScreen) {
-      onClose?.()
+    if (isLargeScreen && isOpen) {
+      closeMenu()
     }
-  }, [isLargeScreen, onClose])
+  }, [isLargeScreen, isOpen, closeMenu])
 
-  const handleContentClick = (e: React.MouseEvent) => {
-    console.log('📱 Mobile menu content clicked, preventing propagation')
-    e.stopPropagation()
-  }
+  useEffect(() => {
+    if (isOpen) {
+      modalManager.openModal('body')
+    } else {
+      modalManager.closeModal()
+    }
+  }, [isOpen])
 
-  return (
+  if (!portalContainer) return null
+
+  return createPortal(
     <div
-      ref={ref}
-      className="pointer-events-auto relative flex h-full w-full max-w-sm transform flex-col bg-box-surface"
-      onClick={handleContentClick}
-      data-mobile-menu="true"
+      id="mobile-menu-container"
+      data-open={isOpen}
+      className="pointer-events-none fixed inset-0 z-50 transition-all duration-300 data-[open=true]:pointer-events-auto"
     >
-      {/* Header */}
-      <div className="flex shrink-0 items-center justify-between border-b border-gray-100 px-6 py-4">
-        <h2 className="text-lg font-semibold text-on-box-black">{t('buttons.menu')}</h2>
-        <button
-          onClick={(e) => {
-            e.stopPropagation()
-            console.log('❌ Mobile menu close button clicked')
-            onClose?.()
-          }}
-          className="flex items-center justify-center rounded-full p-2 text-on-box-black transition-colors hover:bg-gray-100"
-          aria-label="Close mobile menu"
-        >
-          <X className="size-6" />
-        </button>
-      </div>
+      {/* Scrim/Overlay */}
+      <div
+        onClick={closeMenu}
+        data-open={isOpen}
+        data-theme="force-main"
+        className="absolute inset-0 bg-black/50 transition-opacity duration-300 data-[open=false]:opacity-0 data-[open=true]:opacity-100"
+      />
 
-      {/* Content - Scrollable */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="p-6">
-          <MenuContent />
+      {/* Menu Panel */}
+      <div
+        data-open={isOpen}
+        className="absolute top-0 left-0 flex h-full w-full transform flex-col bg-box-surface shadow-xl transition-transform duration-300 ease-out data-[open=false]:-translate-x-full data-[open=true]:translate-x-0 md:max-w-sm lg:hidden"
+      >
+        {/* Header */}
+        <div className="flex shrink-0 items-center justify-between border-b border-gray-100 px-6 py-2">
+          <h2 className="text-lg font-semibold text-on-box-black">{t('buttons.menu')}</h2>
+          <button
+            onClick={closeMenu}
+            className="flex items-center justify-center rounded-full p-2 text-on-box-black transition-colors hover:bg-gray-100"
+          >
+            <X className="size-6" />
+          </button>
+        </div>
+
+        {/* Content - Scrollable */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="p-6">
+            <MenuContent />
+          </div>
         </div>
       </div>
-
-      {/* Debug Info */}
-      <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4">
-        <div className="text-xs text-gray-600">
-          <p>✅ Global Modal System</p>
-          <p>✅ Smart Outside Click</p>
-          <p>✅ CSS Animations</p>
-        </div>
-      </div>
-    </div>
+    </div>,
+    portalContainer,
   )
 }
 
@@ -100,16 +108,13 @@ function MenuContent() {
           </div>
         ) : (
           <div className="flex flex-col gap-y-3">
-            {/* Global modal sistemi için scopeId kaldırıldı */}
-            <LoginAuthButtons />
+            <LoginAuthButtons scopeId="mobile-menu-container" />
             <div className="text-start text-pretty">
               <LoginTermsText />
             </div>
           </div>
         )}
       </div>
-
-      <SearchButton variant="icon" />
     </div>
   )
 }

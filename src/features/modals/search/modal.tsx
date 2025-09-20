@@ -5,17 +5,13 @@ import { X } from 'lucide-react'
 interface SearchModalProps {
   onClose?: () => void
   onGoBack?: () => void
-  ref: any
 }
 
-export const SearchModalComponent: React.FC<SearchModalProps> = ({ onClose, onGoBack, ref }) => {
+export const SearchModalComponent: React.FC<SearchModalProps> = ({ onClose, onGoBack }) => {
   const { searchQuery, setSearchQuery } = useSearchModal()
 
   return (
-    <div
-      ref={ref}
-      className="pointer-events-auto relative flex h-full w-full flex-col overflow-hidden bg-box-surface md:h-auto md:max-h-[90vh] md:w-full md:max-w-md md:shadow-2xl"
-    >
+    <div className="pointer-events-auto relative flex h-full w-full flex-col overflow-hidden bg-box-surface md:h-auto md:max-h-[90vh] md:w-full md:max-w-md md:shadow-2xl">
       {/* Header */}
       <div className="flex shrink-0 items-center justify-between border-b border-gray-200 bg-box-surface p-4">
         <h2 id="search-title" className="text-lg font-semibold text-on-box-black">

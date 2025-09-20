@@ -1,47 +1,33 @@
 import React, { createContext, useContext, useState } from 'react'
 import { createStore, StoreApi, useStore } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
-import { modalManager } from '../components/manager'
 
 // =============================================================================
 // TYPES
 // =============================================================================
 export interface ModalInstance {
   id: string
-  name: string
-  props?: Record<string, any>
-  isVisible: boolean
-  replace?: boolean
+  component: React.ComponentType<any>
+  props: Record<string, any>
+  resolve?: (data?: any) => void
+  reject?: (error?: any) => void
   zIndex: number
-  stackIndex: number
+  createdAt: number
 }
 
 interface GlobalModalState {
   stack: ModalInstance[]
   nextZIndex: number
-  currentStackIndex: number
 }
 
 interface GlobalModalActions {
-  open: (
-    name: string,
-    options?: {
-      replace?: boolean
-      visible?: boolean
-      props?: Record<string, any>
-    },
-  ) => string
-  close: () => void
-  closeModal: (id: string) => void
-  closeByName: (name: string) => void
-  goBack: () => void
-  setVisible: (id: string, visible: boolean) => void
-  getActiveModal: () => ModalInstance | null
-  getModalByName: (name: string) => ModalInstance | null
-  isModalOpen: (name: string) => boolean
+  open: <T = any>(component: React.ComponentType<any>, props?: Record<string, any>) => Promise<T>
+  close: (id: string, data?: any) => void
+  goBack: (data?: any) => void
   clear: () => void
-  getCurrentStackIndex: () => number
-  getVisibleModals: () => ModalInstance[]
+  isOpen: (id?: string) => boolean
+  getTopModal: () => ModalInstance | null
+  getStackCount: () => number
 }
 
 type GlobalModalStore = GlobalModalState & GlobalModalActions
@@ -59,214 +45,102 @@ export function GlobalModalStoreProvider({ children }: GlobalModalStoreProps) {
       immer((set, get) => ({
         // INITIAL STATE
         stack: [],
-        nextZIndex: 50,
-        currentStackIndex: 0,
+        nextZIndex: 1000,
 
         // ACTIONS
-        open: (name, options = {}) => {
-          const { replace = false, visible = true, props = {} } = options
-          const { stack, nextZIndex, currentStackIndex } = get()
+        open: <T = any,>(
+          component: React.ComponentType<any>,
+          props: Record<string, any> = {},
+        ): Promise<T> => {
+          return new Promise<T>((resolve, reject) => {
+            const modalId = `modal_${Date.now()}_${Math.random().toString(36).slice(2)}`
 
-          // Aynı isimde modal zaten açık mı kontrol et
-          const existingModal = stack.find((modal) => modal.name === name)
+            const newModal: ModalInstance = {
+              id: modalId,
+              component,
+              props: {
+                ...props,
+                // Modal'a otomatik olarak close fonksiyonunu geç
+                onClose: (data?: any) => get().close(modalId, data),
+                onGoBack: (data?: any) => get().goBack(data),
+              },
+              resolve,
+              reject,
+              zIndex: get().nextZIndex,
+              createdAt: Date.now(),
+            }
 
-          if (existingModal) {
             set((state) => {
-              const modalIndex = state.stack.findIndex((m) => m.id === existingModal.id)
-              if (modalIndex !== -1) {
-                const modal = state.stack[modalIndex]
-                modal.isVisible = true
-                modal.props = { ...modal.props, ...props }
-                modal.zIndex = state.nextZIndex
-                modal.stackIndex = state.currentStackIndex
-                state.nextZIndex += 10
-                state.currentStackIndex += 1
-
-                // En üste taşı
-                state.stack.splice(modalIndex, 1)
-                state.stack.push(modal)
-              }
+              state.stack.push(newModal)
+              state.nextZIndex += 10
             })
-            return existingModal.id
-          }
-
-          // Yeni modal instance oluştur
-          const modalId = `modal_${name}_${Date.now()}`
-          const newModal: ModalInstance = {
-            id: modalId,
-            name,
-            props,
-            isVisible: visible,
-            replace,
-            zIndex: nextZIndex,
-            stackIndex: currentStackIndex,
-          }
-
-          set((state) => {
-            // Replace true ise önceki modalları gizle
-            if (replace && state.stack.length > 0) {
-              state.stack.forEach((modal) => {
-                modal.isVisible = false
-              })
-            }
-
-            // Yeni modalı ekle
-            state.stack.push(newModal)
-            state.nextZIndex += 10
-            state.currentStackIndex += 1
-
-            // Body lock ekle - DEBUG
-            const visibleModals = state.stack.filter((m) => m.isVisible)
-
-            if (visibleModals.length === 1) {
-              modalManager.openModal('body')
-            }
-          })
-
-          return modalId
-        },
-
-        close: () => {
-          const { stack } = get()
-          if (stack.length === 0) {
-            return
-          }
-
-          set((state) => {
-            // En üstteki (son) modalı kaldır
-            const removedModal = state.stack.pop()
-
-            // Body lock durumunu güncelle
-            const visibleModals = state.stack.filter((m) => m.isVisible)
-
-            if (visibleModals.length === 0) {
-              modalManager.closeModal('body')
-            }
-
-            // Eğer kaldırılan modal replace=true idi ve altında gizli modal varsa, onu görünür yap
-            if (removedModal?.replace && state.stack.length > 0) {
-              const lastModal = state.stack[state.stack.length - 1]
-              if (!lastModal.isVisible) {
-                lastModal.isVisible = true
-              }
-            }
           })
         },
 
-        closeModal: (id: string) => {
+        close: (id: string, data?: any) => {
           set((state) => {
             const modalIndex = state.stack.findIndex((modal) => modal.id === id)
-            if (modalIndex === -1) {
-              return
+            if (modalIndex === -1) return
+
+            const modal = state.stack[modalIndex]
+
+            // Promise'i resolve et
+            if (modal.resolve) {
+              modal.resolve(data)
             }
 
-            // Modalı kaldır
+            // Modal'ı stack'ten kaldır
             state.stack.splice(modalIndex, 1)
-
-            // Body lock durumunu güncelle
-            const visibleModals = state.stack.filter((m) => m.isVisible)
-
-            if (visibleModals.length === 0) {
-              modalManager.closeModal('body')
-            }
           })
         },
 
-        closeByName: (name: string) => {
+        goBack: (data?: any) => {
           set((state) => {
-            const modalIndex = state.stack.findIndex((modal) => modal.name === name)
-            if (modalIndex === -1) {
-              return
+            if (state.stack.length === 0) return
+
+            // En üstteki (son) modal'ı al
+            const topModal = state.stack[state.stack.length - 1]
+
+            // Promise'i resolve et
+            if (topModal.resolve) {
+              topModal.resolve(data)
             }
 
-            // Modalı kaldır
-            state.stack.splice(modalIndex, 1)
-
-            // Body lock durumunu güncelle
-            const visibleModals = state.stack.filter((m) => m.isVisible)
-            if (visibleModals.length === 0) {
-              modalManager.closeModal('body')
-            }
-          })
-        },
-
-        goBack: () => {
-          const { stack } = get()
-          if (stack.length === 0) return
-
-          set((state) => {
-            const currentModal = state.stack[state.stack.length - 1]
-
-            // Mevcut modalı kaldır
+            // Stack'ten kaldır
             state.stack.pop()
-
-            // Body lock durumunu güncelle
-            const visibleModals = state.stack.filter((m) => m.isVisible)
-            if (visibleModals.length === 0) {
-              modalManager.closeModal('body')
-            }
-
-            // Eğer kaldırılan modal replace=true idi ve altında modal varsa, onu görünür yap
-            if (currentModal?.replace && state.stack.length > 0) {
-              const previousModal = state.stack[state.stack.length - 1]
-              if (!previousModal.isVisible) {
-                previousModal.isVisible = true
-              }
-            }
           })
-        },
-
-        setVisible: (id: string, visible: boolean) => {
-          set((state) => {
-            const modal = state.stack.find((m) => m.id === id)
-            if (modal) {
-              modal.isVisible = visible
-            }
-
-            // Body lock durumunu güncelle
-            const visibleModals = state.stack.filter((m) => m.isVisible)
-            if (visibleModals.length === 0) {
-              modalManager.closeModal('body')
-            } else if (visibleModals.length === 1 && visible) {
-              modalManager.openModal('body')
-            }
-          })
-        },
-
-        getActiveModal: () => {
-          const { stack } = get()
-          const visibleModals = stack.filter((modal) => modal.isVisible)
-          return visibleModals.length > 0 ? visibleModals[visibleModals.length - 1] : null
-        },
-
-        getModalByName: (name: string) => {
-          const { stack } = get()
-          return stack.find((modal) => modal.name === name) || null
-        },
-
-        isModalOpen: (name: string) => {
-          const { stack } = get()
-          const modal = stack.find((modal) => modal.name === name)
-          return modal ? modal.isVisible : false
-        },
-
-        getCurrentStackIndex: () => {
-          const { currentStackIndex } = get()
-          return currentStackIndex
-        },
-
-        getVisibleModals: () => {
-          const { stack } = get()
-          return stack.filter((modal) => modal.isVisible)
         },
 
         clear: () => {
           set((state) => {
+            // Tüm promise'leri reject et
+            state.stack.forEach((modal) => {
+              if (modal.reject) {
+                modal.reject(new Error('Modal cleared'))
+              }
+            })
+
             state.stack = []
-            state.nextZIndex = 50
-            state.currentStackIndex = 0
-            modalManager.closeModal('body')
+            state.nextZIndex = 1000
           })
+        },
+
+        isOpen: (id?: string) => {
+          const { stack } = get()
+          if (id) {
+            return stack.some((modal) => modal.id === id)
+          }
+          return stack.length > 0
+        },
+
+        getTopModal: () => {
+          const { stack } = get()
+          return stack.length > 0 ? stack[stack.length - 1] : null
+        },
+
+        getStackCount: () => {
+          const { stack } = get()
+          return stack.length
         },
       })),
     ),
@@ -288,4 +162,41 @@ export function useGlobalModalStore() {
     throw new Error('useGlobalModalStore must be used within GlobalModalStoreProvider')
   }
   return useStore(context, (state) => state)
+}
+
+// =============================================================================
+// CONVENIENCE HOOKS
+// =============================================================================
+
+/**
+ * Modal açmak için convenience hook
+ * Örnek kullanım:
+ * const modal = useModal()
+ * const result = await modal.open(AuthModal, { mode: 'login' })
+ */
+export function useModal() {
+  const { open, close, goBack } = useGlobalModalStore()
+
+  return {
+    open,
+    close,
+    goBack,
+  }
+}
+
+/**
+ * Modal içinde kullanılmak üzere convenience hook
+ * Modal component'leri bu hook ile kendi durumlarını yönetebilir
+ */
+export function useModalInstance() {
+  const store = useGlobalModalStore()
+
+  return {
+    close: (data?: any) => store.goBack(data),
+    isTopModal: () => {
+      const topModal = store.getTopModal()
+      return topModal !== null
+    },
+    stackCount: store.getStackCount(),
+  }
 }
