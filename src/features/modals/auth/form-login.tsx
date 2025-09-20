@@ -11,10 +11,10 @@ import { AuthModalMode } from './modal'
 interface EmailLoginFormProps {
   onClose: () => void
   setMode: (mode: AuthModalMode) => void
-  closeOnLoginBack?: boolean
+  closeOnBack?: boolean
 }
 
-export function EmailLoginForm({ onClose, setMode, closeOnLoginBack }: EmailLoginFormProps) {
+export function EmailLoginForm({ onClose, setMode, closeOnBack }: EmailLoginFormProps) {
   const { t } = useTranslation(['global-modal', 'errors-zod', 'global-common'])
 
   const loginSchema = z.object({
@@ -72,7 +72,7 @@ export function EmailLoginForm({ onClose, setMode, closeOnLoginBack }: EmailLogi
       <header className="flex flex-col px-6 py-4">
         <button
           onClick={() => {
-            if (closeOnLoginBack) {
+            if (closeOnBack) {
               onClose()
             } else {
               setMode('login')

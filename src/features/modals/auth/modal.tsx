@@ -18,14 +18,14 @@ interface AuthModalProps {
   onClose?: () => void
   onGoBack?: () => void
   mode?: AuthModalMode
-  closeOnLoginBack?: boolean
+  closeOnBack?: boolean
 }
 
 export const AuthModalComponent: React.FC<AuthModalProps> = ({
   onClose,
   onGoBack,
   mode: initialMode = 'login',
-  closeOnLoginBack = false,
+  closeOnBack = false,
 }) => {
   const { t } = useTranslation('global-modal')
   const [mode, setMode] = React.useState<AuthModalMode>(initialMode)
@@ -38,21 +38,9 @@ export const AuthModalComponent: React.FC<AuthModalProps> = ({
   const renderContent = () => {
     switch (mode) {
       case 'email-login':
-        return (
-          <EmailLoginForm
-            onClose={handleClose}
-            setMode={setMode}
-            closeOnLoginBack={closeOnLoginBack}
-          />
-        )
+        return <EmailLoginForm onClose={handleClose} setMode={setMode} closeOnBack={closeOnBack} />
       case 'register':
-        return (
-          <RegisterForm
-            onClose={handleClose}
-            setMode={setMode}
-            closeOnLoginBack={closeOnLoginBack}
-          />
-        )
+        return <RegisterForm onClose={handleClose} setMode={setMode} closeOnBack={closeOnBack} />
       case 'forgot-password':
         return <ForgotPasswordForm onClose={handleClose} setMode={setMode} />
       case 'phone-login':
