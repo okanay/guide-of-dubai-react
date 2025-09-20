@@ -1,79 +1,72 @@
-import { useAuthModal } from '@/features/modals/auth/store'
-import { useSystemSettings } from '@/features/modals/system-settings/store'
-import { useLanguage } from '@/i18n/prodiver'
-import { useAuth } from '@/providers/auth'
-import { useTheme } from '@/providers/theme-mode'
-import { X, ChevronRight } from 'lucide-react'
-import { useState, useEffect } from 'react'
-import { createPortal } from 'react-dom'
-import { useTranslation } from 'react-i18next'
-import { useMobileMenu } from './store'
-import { useModalBodyLock } from '@/features/modals/components/use-modal-body-lock'
-import { useMediaQuery } from '@/hooks/use-media-query'
 import { LoginAuthButtons, LoginTermsText } from '@/features/modals/auth/modal'
+import { useAuth } from '@/providers/auth'
+import { useMediaQuery } from '@/hooks/use-media-query'
+import { X } from 'lucide-react'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { SearchButton } from '@/features/modals/search/button'
 
-export function MobileMenu() {
-  const { isOpen, closeMenu } = useMobileMenu()
+interface MobileMenuProps {
+  onClose?: () => void
+  onGoBack?: () => void
+  ref: any
+}
+
+export function MobileMenuComponent({ onClose, onGoBack, ref }: MobileMenuProps) {
   const { t } = useTranslation('layout-header')
-  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null)
   const isLargeScreen = useMediaQuery('(min-width: 1024px)')
-
-  // Global modal body lock
-  useModalBodyLock(isOpen, 'mobile-menu-root')
-
-  // Portal container set et
-  useEffect(() => {
-    setPortalContainer(document.body)
-  }, [])
 
   // Ekran büyüyünce zorla kapat
   useEffect(() => {
-    if (isLargeScreen && isOpen) {
-      closeMenu()
+    if (isLargeScreen) {
+      onClose?.()
     }
-  }, [isLargeScreen, isOpen, closeMenu])
+  }, [isLargeScreen, onClose])
 
-  if (!portalContainer) return null
+  const handleContentClick = (e: React.MouseEvent) => {
+    console.log('📱 Mobile menu content clicked, preventing propagation')
+    e.stopPropagation()
+  }
 
-  return createPortal(
+  return (
     <div
-      id="mobile-menu-container"
-      data-open={isOpen}
-      className="pointer-events-none fixed inset-0 z-50 transition-all duration-300 data-[open=true]:pointer-events-auto"
+      ref={ref}
+      className="pointer-events-auto relative flex h-full w-full max-w-sm transform flex-col bg-box-surface"
+      onClick={handleContentClick}
+      data-mobile-menu="true"
     >
-      {/* Scrim/Overlay */}
-      <div
-        onClick={closeMenu}
-        data-open={isOpen}
-        data-theme="force-main"
-        className="absolute inset-0 bg-black/50 transition-opacity duration-300 data-[open=false]:opacity-0 data-[open=true]:opacity-100"
-      />
+      {/* Header */}
+      <div className="flex shrink-0 items-center justify-between border-b border-gray-100 px-6 py-4">
+        <h2 className="text-lg font-semibold text-on-box-black">{t('buttons.menu')}</h2>
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            console.log('❌ Mobile menu close button clicked')
+            onClose?.()
+          }}
+          className="flex items-center justify-center rounded-full p-2 text-on-box-black transition-colors hover:bg-gray-100"
+          aria-label="Close mobile menu"
+        >
+          <X className="size-6" />
+        </button>
+      </div>
 
-      {/* Menu Panel */}
-      <div
-        data-open={isOpen}
-        className="absolute top-0 left-0 flex h-full w-full transform flex-col bg-box-surface shadow-xl transition-transform duration-300 ease-out data-[open=false]:-translate-x-full data-[open=true]:translate-x-0 md:max-w-sm lg:hidden"
-      >
-        {/* Header */}
-        <div className="flex shrink-0 items-center justify-between border-b border-gray-100 px-6 py-2">
-          <h2 className="text-lg font-semibold text-on-box-black">{t('buttons.menu')}</h2>
-          <button
-            onClick={closeMenu}
-            className="flex items-center justify-center rounded-full p-2 text-on-box-black transition-colors hover:bg-gray-100"
-          >
-            <X className="size-6" />
-          </button>
-        </div>
-
-        {/* Content - Scrollable */}
-        <div className="flex-1 overflow-y-auto">
-          <div className="p-6">
-            <MenuContent />
-          </div>
+      {/* Content - Scrollable */}
+      <div className="flex-1 overflow-y-auto">
+        <div className="p-6">
+          <MenuContent />
         </div>
       </div>
-    </div>,
-    portalContainer,
+
+      {/* Debug Info */}
+      <div className="shrink-0 border-t border-gray-200 bg-gray-50 p-4">
+        <div className="text-xs text-gray-600">
+          <p>✅ Global Modal System</p>
+          <p>✅ Smart Outside Click</p>
+          <p>✅ CSS Animations</p>
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -107,13 +100,16 @@ function MenuContent() {
           </div>
         ) : (
           <div className="flex flex-col gap-y-3">
-            <LoginAuthButtons scopeId="mobile-menu-container" />
+            {/* Global modal sistemi için scopeId kaldırıldı */}
+            <LoginAuthButtons />
             <div className="text-start text-pretty">
               <LoginTermsText />
             </div>
           </div>
         )}
       </div>
+
+      <SearchButton variant="icon" />
     </div>
   )
 }

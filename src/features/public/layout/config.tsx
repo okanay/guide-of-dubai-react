@@ -6,39 +6,40 @@ import { BasketModal } from '@/features/modals/basket/modal'
 import { BasketModalStore } from '@/features/modals/basket/store'
 import { GoAiModal } from '@/features/modals/go-ai/modal'
 import { GoAiModalStore } from '@/features/modals/go-ai/store'
-import { SearchModal } from '@/features/modals/search/modal'
 import { SearchModalStore } from '@/features/modals/search/store'
 import { SystemSettingsModal } from '@/features/modals/system-settings/modal'
 import { LeafletModal } from '@/features/modals/leaflet-map/index'
 import { Route } from '@/routes/__root'
 import { SystemSettingsModalStore } from '@/features/modals/system-settings/store'
 import { MobileMenuStore } from './header/mobile-menu/store'
-import { MobileMenu } from './header/mobile-menu'
+import { GlobalModalStoreProvider } from '@/features/modals/global/store'
+import { GlobalModalRenderer } from '@/features/modals/global/wrapper'
 
 export const PublicLayoutConfig = ({ children }: { children: React.ReactNode }) => {
   const data = Route.useLoaderData()
 
   return (
-    <SystemSettingsModalStore initialCurrency={data.settings.currency}>
-      <ComposeProviders
-        components={[
-          HeaderStore,
-          SearchModalStore,
-          BasketModalStore,
-          AuthModalStore,
-          GoAiModalStore,
-          MobileMenuStore,
-        ]}
-      >
-        {children}
-        <GoAiModal />
-        <SystemSettingsModal />
-        <AuthModal />
-        <BasketModal />
-        <SearchModal />
-        <LeafletModal />
-        <MobileMenu />
-      </ComposeProviders>
-    </SystemSettingsModalStore>
+    <GlobalModalStoreProvider>
+      <SystemSettingsModalStore initialCurrency={data.settings.currency}>
+        <ComposeProviders
+          components={[
+            HeaderStore,
+            SearchModalStore,
+            BasketModalStore,
+            AuthModalStore,
+            GoAiModalStore,
+            MobileMenuStore,
+          ]}
+        >
+          {children}
+          <GoAiModal />
+          <SystemSettingsModal />
+          <AuthModal />
+          <BasketModal />
+          <LeafletModal />
+          <GlobalModalRenderer />
+        </ComposeProviders>
+      </SystemSettingsModalStore>
+    </GlobalModalStoreProvider>
   )
 }

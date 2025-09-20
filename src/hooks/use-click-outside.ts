@@ -1,3 +1,4 @@
+// src/hooks/use-click-outside.ts
 import { useEffect, useRef, RefObject } from 'react'
 
 type Handler = (event: MouseEvent | TouchEvent) => void
@@ -27,6 +28,11 @@ function useClickOutside<T extends HTMLElement = HTMLElement>(
         return
       }
 
+      // Dropdown elementine tıklanmışsa kapatma (mevcut dropdown desteği korunuyor)
+      if (isDropdownElement(event.target as Element)) {
+        return
+      }
+
       handler(event)
     }
 
@@ -40,6 +46,23 @@ function useClickOutside<T extends HTMLElement = HTMLElement>(
   }, [handler, active, exceptRef, exceptId])
 
   return ref
+}
+
+// Dropdown detection utility (existing logic preserved from your original code)
+const isDropdownElement = (element: Element | null): boolean => {
+  if (!element) return false
+
+  // Element kendisi dropdown mu?
+  if (element.id?.startsWith('dropdown-')) return true
+
+  // Parent elementleri kontrol et
+  let currentElement = element.parentElement
+  while (currentElement) {
+    if (currentElement.id?.startsWith('dropdown-')) return true
+    currentElement = currentElement.parentElement
+  }
+
+  return false
 }
 
 export default useClickOutside

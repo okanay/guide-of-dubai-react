@@ -3,15 +3,15 @@ import { createStore, StoreApi, useStore } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
 interface SearchModalState {
-  isOpen: boolean
-  scopeId: string | null
+  searchQuery: string
+  searchResults: any[]
+  isLoading: boolean
 }
 
 interface SearchModalActions {
-  openModal: (scopeId?: string) => void
-  closeModal: () => void
-  toggleModal: (scopeId?: string) => void
-  setScopeId: (scopeId: string | null) => void
+  setSearchQuery: (query: string) => void
+  clearSearch: () => void
+  setLoading: (loading: boolean) => void
 }
 
 type SearchModalStore = SearchModalState & SearchModalActions
@@ -20,35 +20,29 @@ export function SearchModalStore({ children }: PropsWithChildren) {
   const [store] = useState(() =>
     createStore<SearchModalStore>()(
       immer((set, get) => ({
-        isOpen: false,
-        scopeId: null,
+        // Initial state
+        searchQuery: '',
+        searchResults: [],
+        isLoading: false,
 
-        openModal: (scopeId = 'body') => {
+        // Actions - future search logic
+        setSearchQuery: (query) => {
           set((state) => {
-            state.isOpen = true
-            state.scopeId = scopeId
+            state.searchQuery = query
           })
         },
 
-        closeModal: () => {
+        clearSearch: () => {
           set((state) => {
-            state.isOpen = false
-            state.scopeId = null
+            state.searchQuery = ''
+            state.searchResults = []
+            state.isLoading = false
           })
         },
 
-        toggleModal: (scopeId = 'body') => {
-          const { isOpen } = get()
-          if (isOpen) {
-            get().closeModal()
-          } else {
-            get().openModal(scopeId)
-          }
-        },
-
-        setScopeId: (scopeId) => {
+        setLoading: (loading) => {
           set((state) => {
-            state.scopeId = scopeId
+            state.isLoading = loading
           })
         },
       })),

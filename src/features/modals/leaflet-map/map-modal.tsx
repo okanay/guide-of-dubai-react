@@ -1,4 +1,3 @@
-// LeafletModal.tsx - Refactored and clean
 import { ModalWrapper } from '@/features/modals/components/wrapper'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import Icon from '@/components/icon'

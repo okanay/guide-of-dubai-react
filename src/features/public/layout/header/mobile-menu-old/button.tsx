@@ -1,20 +1,14 @@
 import { useTranslation } from 'react-i18next'
+import { useMobileMenu } from './store'
 import Icon from '@/components/icon'
-import { useGlobalModalStore } from '@/features/modals/global/store'
 
 export function MobileMenuButton() {
-  const { open } = useGlobalModalStore()
+  const { toggleMenu } = useMobileMenu()
   const { t } = useTranslation('layout-header')
-
-  const handleOpenMenu = () => {
-    open('mobile-menu', {
-      replace: true,
-    })
-  }
 
   return (
     <button
-      onClick={handleOpenMenu}
+      onClick={toggleMenu}
       data-theme="force-main"
       className="mr-4 flex items-center justify-center gap-x-2 rounded-xs p-2 text-size font-bold text-white transition-colors hover:bg-white/10 focus:bg-white/10 lg:hidden"
       aria-label={t('buttons.menu')}

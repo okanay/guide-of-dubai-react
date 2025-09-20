@@ -16,7 +16,8 @@ class GlobalModalManager {
     const userAgent = window.navigator.userAgent
     const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream
     const isSafari = /Safari/.test(userAgent) && !/Chrome/.test(userAgent)
-    return isIOS && isSafari
+    const result = isIOS && isSafari
+    return result
   }
 
   public openModal(scopeId: string = 'body'): void {
@@ -47,8 +48,8 @@ class GlobalModalManager {
   private lockScope(scopeId: string): void {
     if (scopeId === 'body') {
       this.bodyLockCount++
+
       if (this.bodyLockCount === 1) {
-        // iOS Safari için eski yaklaşım (liquid glass fix)
         if (this.isIOSSafari()) {
           this.originalScrollPositions.set('body', window.scrollY)
           document.body.style.position = 'fixed'
@@ -58,12 +59,11 @@ class GlobalModalManager {
           document.body.style.width = '100%'
           document.body.style.overflow = 'hidden'
         } else {
-          // Diğer tarayıcılar için container-based (body'ye dokunma)
-          // Modal container'ın kendisi fixed olacak
+          this.originalScrollPositions.set('body', window.scrollY)
+          document.body.style.overflow = 'hidden'
         }
       }
     } else {
-      // Diğer scope'lar için normal işlem
       this.bodyLockCount++
       if (this.bodyLockCount === 1 && this.isIOSSafari()) {
         this.originalScrollPositions.set('body', window.scrollY)
@@ -86,10 +86,11 @@ class GlobalModalManager {
   private unlockScope(scopeId: string): void {
     if (scopeId === 'body') {
       this.bodyLockCount--
+
       if (this.bodyLockCount === 0) {
-        // iOS Safari için eski yaklaşım (scroll restore)
         if (this.isIOSSafari()) {
           const originalScrollY = this.originalScrollPositions.get('body') || 0
+
           document.body.style.position = ''
           document.body.style.top = ''
           document.body.style.left = ''
@@ -97,7 +98,6 @@ class GlobalModalManager {
           document.body.style.width = ''
           document.body.style.overflow = ''
 
-          // Scroll pozisyonunu restore et
           requestAnimationFrame(() => {
             window.scrollTo({
               top: originalScrollY,
@@ -107,7 +107,9 @@ class GlobalModalManager {
 
           this.originalScrollPositions.delete('body')
         } else {
-          // Diğer tarayıcılar için hiçbir şey yapma
+          const originalScrollY = this.originalScrollPositions.get('body') || 0
+          document.body.style.overflow = ''
+          this.originalScrollPositions.delete('body')
         }
       }
     } else {
@@ -157,7 +159,6 @@ class GlobalModalManager {
     this.originalScrollPositions.clear()
     this.bodyLockCount = 0
 
-    // Body stillerini temizle
     document.body.style.position = ''
     document.body.style.top = ''
     document.body.style.left = ''
@@ -165,7 +166,6 @@ class GlobalModalManager {
     document.body.style.width = ''
     document.body.style.overflow = ''
 
-    // Diğer elementleri temizle
     const allElements = document.querySelectorAll('[id]')
     allElements.forEach((element) => {
       if (element instanceof HTMLElement) {
