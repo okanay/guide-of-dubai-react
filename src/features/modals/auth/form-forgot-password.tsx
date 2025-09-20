@@ -4,12 +4,16 @@ import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { TextInput } from 'src/features/public/components/form-ui/text-input'
 import z from 'zod'
-import { useAuthModal } from './store'
 import Icon from '@/components/icon'
 import { useTranslation } from 'react-i18next'
+import { AuthModalMode } from './modal'
 
-export function ForgotPasswordForm({ onClose }: { onClose: () => void }) {
-  const { setMode } = useAuthModal()
+interface ForgotPasswordFormProps {
+  onClose: () => void
+  setMode: (mode: AuthModalMode) => void
+}
+
+export function ForgotPasswordForm({ onClose, setMode }: ForgotPasswordFormProps) {
   const { t } = useTranslation(['global-modal', 'errors-zod', 'global-common'])
 
   const forgotPasswordSchema = z.object({

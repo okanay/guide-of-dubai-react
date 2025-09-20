@@ -4,16 +4,21 @@ import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { TextInput } from 'src/features/public/components/form-ui/text-input'
 import z from 'zod'
-import { useAuthModal } from './store'
 import { PhoneInput } from 'src/features/public/components/form-ui/phone-input'
 import { Checkbox } from 'src/features/public/components/form-ui/checkbox'
 import parsePhoneNumberFromString from 'libphonenumber-js/min'
 import Icon from '@/components/icon'
 import { useTranslation } from 'react-i18next'
 import { CountrySelect } from '@/features/public/components/form-ui/country-select'
+import { AuthModalMode } from './modal'
 
-export function RegisterForm({ onClose }: { onClose: () => void }) {
-  const { setMode } = useAuthModal()
+interface RegisterFormProps {
+  onClose: () => void
+  setMode: (mode: AuthModalMode) => void
+  closeOnBack?: boolean
+}
+
+export function RegisterForm({ onClose, setMode, closeOnBack }: RegisterFormProps) {
   const { t } = useTranslation(['global-modal', 'errors-zod', 'global-common'])
 
   // Zod Schema with i18n
@@ -125,7 +130,13 @@ export function RegisterForm({ onClose }: { onClose: () => void }) {
     <>
       <header className="flex flex-col px-6 py-4">
         <button
-          onClick={() => setMode('login')}
+          onClick={() => {
+            if (closeOnBack) {
+              onClose()
+            } else {
+              setMode('login')
+            }
+          }}
           className="flex items-center gap-x-1 text-size font-semibold"
         >
           <ChevronLeft />

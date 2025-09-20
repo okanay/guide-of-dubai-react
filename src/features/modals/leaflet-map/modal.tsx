@@ -89,7 +89,7 @@ export const LeafletModal: React.FC = () => {
     <ModalWrapper
       isOpen={isOpen}
       onClose={closeModal}
-      containerClassName="fixed inset-0 z-50 flex h-[100dvh] w-screen items-start justify-start p-0 md:items-center md:justify-center "
+      containerClassName="fixed inset-0 z-50 flex h-[100dvh] w-screen items-start justify-start p-0 md:items-center md:justify-center"
     >
       <div className="relative h-full w-full max-w-screen bg-white">
         <CloseButton onClose={closeModal} />

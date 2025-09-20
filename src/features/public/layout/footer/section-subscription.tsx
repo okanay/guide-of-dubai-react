@@ -3,6 +3,8 @@ import { NewsletterForm } from './form-newsletter'
 import Icon from '@/components/icon'
 import { useTranslation } from 'react-i18next'
 import { useSystemSettings } from '@/features/modals/system-settings/store'
+import { useGlobalModalStore } from '@/features/modals/global/store'
+import { SystemSettingsModalComponent } from '@/features/modals/system-settings/modal'
 
 // Abonelik ve ödeme yöntemleri bölümü
 export const SubscriptionSection = () => {
@@ -37,9 +39,14 @@ export const SubscriptionSection = () => {
 }
 
 const SystemSettingsButton = () => {
-  const { openModal, currency } = useSystemSettings()
+  const { open: openGlobalModal } = useGlobalModalStore()
+  const { currency } = useSystemSettings()
   const { language } = useLanguage()
   const { t } = useTranslation('layout-footer')
+
+  const openSystemSettingsModal = async (mode = 'main') => {
+    await openGlobalModal(SystemSettingsModalComponent, { mode })
+  }
 
   return (
     <div>
@@ -47,7 +54,7 @@ const SystemSettingsButton = () => {
         {t('subscription.language_currency')}
       </h4>
       <button
-        onClick={() => openModal('main')}
+        onClick={() => openSystemSettingsModal('main')}
         className="w-30 rounded-xs bg-white py-2 text-size-sm font-semibold text-black transition-colors hover:bg-gray-200"
       >
         {language.label} - {currency.symbol}

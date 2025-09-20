@@ -1,8 +1,6 @@
 import { ArrowLeft, ChevronRight, DollarSign, Globe, Monitor, Moon, Sun, X } from 'lucide-react'
-import { ModalWrapper } from '@/features/modals/components/wrapper'
 import { useLanguage } from 'src/i18n/prodiver'
 import { useTheme } from 'src/providers/theme-mode'
-import { useSystemSettings } from './store'
 import { RadioIndicator } from 'src/features/public/components/form-ui/radio-input'
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
@@ -10,46 +8,58 @@ import Icon from '@/components/icon'
 import { useNavigate } from '@tanstack/react-router'
 import { SUPPORTED_LANGUAGES } from '@/i18n/config-language'
 import { SUPPORTED_CURRENCIES } from '@/i18n/config-currency'
+import { useSystemSettings } from './store'
 
-export function SystemSettingsModal() {
-  const { isOpen, closeModal, scopeId, mode, setMode } = useSystemSettings()
+export type SystemSettingsModalMode = 'main' | 'language' | 'currency' | 'theme'
+
+interface SystemSettingsModalProps {
+  onClose?: () => void
+  onGoBack?: () => void
+  mode?: SystemSettingsModalMode
+}
+
+export const SystemSettingsModalComponent: React.FC<SystemSettingsModalProps> = ({
+  onClose,
+  onGoBack,
+  mode: initialMode = 'main',
+}) => {
+  const [mode, setMode] = useState<SystemSettingsModalMode>(initialMode)
 
   const handleClose = () => {
-    closeModal()
-    setTimeout(() => setMode('main'), 300)
+    setMode('main') // Reset mode
+    onClose?.()
   }
 
   const renderContent = () => {
     switch (mode) {
       case 'language':
-        return <LanguageSection onClose={handleClose} />
+        return <LanguageSection onClose={handleClose} setMode={setMode} />
       case 'currency':
-        return <CurrencySection onClose={handleClose} />
+        return <CurrencySection onClose={handleClose} setMode={setMode} />
       case 'theme':
-        return <ThemeSection onClose={handleClose} />
+        return <ThemeSection onClose={handleClose} setMode={setMode} />
       case 'main':
       default:
-        return <MainSection onClose={handleClose} />
+        return <MainSection onClose={handleClose} setMode={setMode} />
     }
   }
 
   return (
-    <ModalWrapper
-      isOpen={isOpen}
-      onClose={handleClose}
-      scopeId={scopeId}
-      disableOutsideClick={false}
-    >
-      <div className="relative flex h-full w-full flex-col overflow-hidden bg-box-surface md:h-auto md:max-h-[90vh] md:w-full md:max-w-md md:shadow-2xl">
-        {renderContent()}
-      </div>
-    </ModalWrapper>
+    <div className="pointer-events-auto relative flex h-full w-full flex-col overflow-hidden bg-box-surface md:h-auto md:max-h-[90vh] md:w-full md:max-w-md md:shadow-2xl">
+      {renderContent()}
+    </div>
   )
 }
 
 // Ana Ayarlar Bölümü
-function MainSection({ onClose }: { onClose: () => void }) {
-  const { setMode, currency } = useSystemSettings()
+function MainSection({
+  onClose,
+  setMode,
+}: {
+  onClose: () => void
+  setMode: (mode: SystemSettingsModalMode) => void
+}) {
+  const { currency } = useSystemSettings()
   const { language } = useLanguage()
   const { theme } = useTheme()
   const { t } = useTranslation('global-modal')
@@ -142,8 +152,13 @@ function MainSection({ onClose }: { onClose: () => void }) {
 }
 
 // Dil Ayarları Bölümü
-function LanguageSection({ onClose }: { onClose: () => void }) {
-  const { setMode } = useSystemSettings()
+function LanguageSection({
+  onClose,
+  setMode,
+}: {
+  onClose: () => void
+  setMode: (mode: SystemSettingsModalMode) => void
+}) {
   const { language, changeLanguage } = useLanguage()
   const { t } = useTranslation('global-modal')
   const navigate = useNavigate()
@@ -243,8 +258,14 @@ function LanguageSection({ onClose }: { onClose: () => void }) {
 }
 
 // Para Birimi Ayarları Bölümü
-function CurrencySection({ onClose }: { onClose: () => void }) {
-  const { setMode, currency, setCurrency } = useSystemSettings()
+function CurrencySection({
+  onClose,
+  setMode,
+}: {
+  onClose: () => void
+  setMode: (mode: SystemSettingsModalMode) => void
+}) {
+  const { currency, setCurrency } = useSystemSettings()
   const { t } = useTranslation('global-modal')
 
   // Geçici seçim state'i
@@ -330,8 +351,13 @@ function CurrencySection({ onClose }: { onClose: () => void }) {
 }
 
 // Tema Ayarları Bölümü
-function ThemeSection({ onClose }: { onClose: () => void }) {
-  const { setMode } = useSystemSettings()
+function ThemeSection({
+  onClose,
+  setMode,
+}: {
+  onClose: () => void
+  setMode: (mode: SystemSettingsModalMode) => void
+}) {
   const { theme, setTheme } = useTheme()
   const { t } = useTranslation('global-modal')
 

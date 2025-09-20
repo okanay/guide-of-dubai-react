@@ -131,7 +131,7 @@ export const DropdownPortal: React.FC<DropdownPortalProps> = ({
         position: 'absolute',
         top: position.top,
         left: position.left,
-        zIndex: 50,
+        zIndex: 2000,
         opacity: 1,
         transform: getTransform(),
       }}

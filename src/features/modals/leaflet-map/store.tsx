@@ -1,4 +1,3 @@
-// store.ts - Refactored and unified
 import { create } from 'zustand'
 
 // ============================================================================
@@ -40,7 +39,7 @@ export type CardPayload = {
 export type ModalPayload = PinPayload | PricePayload | CardPayload
 
 // ============================================================================
-// STORE INTERFACE
+// STORE INTERFACE - Original Structure Preserved
 // ============================================================================
 interface LeafletModalState {
   // State
@@ -56,7 +55,7 @@ interface LeafletModalState {
 }
 
 // ============================================================================
-// ZUSTAND STORE
+// ZUSTAND STORE - Original Logic
 // ============================================================================
 export const useLeafletModalStore = create<LeafletModalState>((set) => ({
   // Initial State
@@ -84,7 +83,7 @@ export const useLeafletModalStore = create<LeafletModalState>((set) => ({
 }))
 
 // ============================================================================
-// HELPER FUNCTIONS
+// HELPER FUNCTIONS - Original API
 // ============================================================================
 export const openPinModal = (coords: [number, number], name?: string) => {
   useLeafletModalStore.getState().openModal({

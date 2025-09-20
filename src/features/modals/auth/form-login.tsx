@@ -4,12 +4,17 @@ import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { TextInput } from 'src/features/public/components/form-ui/text-input'
 import z from 'zod'
-import { useAuthModal } from './store'
 import Icon from '@/components/icon'
 import { useTranslation } from 'react-i18next'
+import { AuthModalMode } from './modal'
 
-export function EmailLoginForm({ onClose }: { onClose: () => void }) {
-  const { setMode } = useAuthModal()
+interface EmailLoginFormProps {
+  onClose: () => void
+  setMode: (mode: AuthModalMode) => void
+  closeOnLoginBack?: boolean
+}
+
+export function EmailLoginForm({ onClose, setMode, closeOnLoginBack }: EmailLoginFormProps) {
   const { t } = useTranslation(['global-modal', 'errors-zod', 'global-common'])
 
   const loginSchema = z.object({
@@ -66,7 +71,13 @@ export function EmailLoginForm({ onClose }: { onClose: () => void }) {
     <>
       <header className="flex flex-col px-6 py-4">
         <button
-          onClick={() => setMode('login')}
+          onClick={() => {
+            if (closeOnLoginBack) {
+              onClose()
+            } else {
+              setMode('login')
+            }
+          }}
           className="flex items-center gap-x-1 text-size font-semibold"
         >
           <ChevronLeft />

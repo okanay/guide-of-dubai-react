@@ -1,14 +1,21 @@
 import { ChevronDown } from 'lucide-react'
 import { useLanguage } from 'src/i18n/prodiver'
 import { useSystemSettings } from './store'
+import { useGlobalModalStore } from '@/features/modals/global/store'
+import { SystemSettingsModalComponent } from './modal'
 
 export function SystemSettingsButton() {
-  const { openModal, currency } = useSystemSettings()
+  const { open: openGlobalModal } = useGlobalModalStore()
+  const { currency } = useSystemSettings()
   const { language } = useLanguage()
+
+  const openSystemSettingsModal = async (mode = 'main') => {
+    await openGlobalModal(SystemSettingsModalComponent, { mode })
+  }
 
   return (
     <button
-      onClick={() => openModal()}
+      onClick={() => openSystemSettingsModal()}
       className="group btn-default flex items-center rounded-full px-2 py-1"
       aria-label="Dil, para birimi ve tema ayarları"
     >

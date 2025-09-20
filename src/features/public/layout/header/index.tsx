@@ -16,7 +16,7 @@ export function PublicHeader() {
   const { t } = useTranslation('layout-header')
 
   return (
-    <header>
+    <header id="public-header">
       <div className="relative z-40 lg:px-4">
         <nav
           className="mx-auto flex max-w-8xl items-center justify-between"

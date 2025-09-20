@@ -1,46 +1,82 @@
-import { ModalWrapper } from '@/features/modals/components/wrapper'
+// src/features/modals/auth/modal.tsx - Updated for Global Modal S
+import React from 'react'
 import { ForgotPasswordForm } from './form-forgot-password'
 import { EmailLoginForm } from './form-login'
 import { RegisterForm } from './form-register'
-import { useAuthModal } from './store'
 import Icon from '@/components/icon'
 import { useTranslation } from 'react-i18next'
 
-export function AuthModal() {
-  const { isOpen, closeModal, scopeId, mode, setMode } = useAuthModal()
+export type AuthModalMode =
+  | 'login'
+  | 'register'
+  | 'forgot-password'
+  | 'verify'
+  | 'email-login'
+  | 'phone-login'
+
+interface AuthModalProps {
+  onClose?: () => void
+  onGoBack?: () => void
+  mode?: AuthModalMode
+  closeOnLoginBack?: boolean
+}
+
+export const AuthModalComponent: React.FC<AuthModalProps> = ({
+  onClose,
+  onGoBack,
+  mode: initialMode = 'login',
+  closeOnLoginBack = false,
+}) => {
+  const { t } = useTranslation('global-modal')
+  const [mode, setMode] = React.useState<AuthModalMode>(initialMode)
 
   const handleClose = () => {
-    closeModal()
-    setTimeout(() => setMode('login'), 300)
+    setMode('login') // Reset mode
+    onClose?.()
   }
 
   const renderContent = () => {
     switch (mode) {
       case 'email-login':
-        return <EmailLoginForm onClose={handleClose} />
+        return (
+          <EmailLoginForm
+            onClose={handleClose}
+            setMode={setMode}
+            closeOnLoginBack={closeOnLoginBack}
+          />
+        )
       case 'register':
-        return <RegisterForm onClose={handleClose} />
+        return (
+          <RegisterForm
+            onClose={handleClose}
+            setMode={setMode}
+            closeOnLoginBack={closeOnLoginBack}
+          />
+        )
       case 'forgot-password':
-        return <ForgotPasswordForm onClose={handleClose} />
+        return <ForgotPasswordForm onClose={handleClose} setMode={setMode} />
       case 'phone-login':
-        return <EmailLoginForm onClose={handleClose} />
+        return <EmailLoginForm onClose={handleClose} setMode={setMode} />
       case 'login':
       default:
-        return <LoginOptions onClose={handleClose} />
+        return <LoginOptions onClose={handleClose} setMode={setMode} />
     }
   }
 
   return (
-    <ModalWrapper isOpen={isOpen} onClose={handleClose} scopeId={scopeId}>
-      <div className="relative flex h-full w-full flex-col overflow-hidden bg-box-surface md:h-auto md:max-h-[90vh] md:w-full md:max-w-md md:shadow-2xl">
-        {/* Dinamik içerik - artık footer da dahil */}
-        {renderContent()}
-      </div>
-    </ModalWrapper>
+    <div className="pointer-events-auto relative flex h-full w-full flex-col overflow-hidden bg-box-surface md:h-auto md:max-h-[90vh] md:w-full md:max-w-md md:shadow-2xl">
+      {renderContent()}
+    </div>
   )
 }
 
-function LoginOptions({ onClose }: { onClose: () => void }) {
+function LoginOptions({
+  onClose,
+  setMode,
+}: {
+  onClose: () => void
+  setMode: (mode: AuthModalMode) => void
+}) {
   const { t } = useTranslation('global-modal')
 
   return (
@@ -64,7 +100,7 @@ function LoginOptions({ onClose }: { onClose: () => void }) {
       </div>
 
       <div style={{ scrollbarWidth: 'thin' }} className="flex-1 overflow-y-auto p-6">
-        <LoginAuthButtons />
+        <LoginAuthButtons setMode={setMode} />
       </div>
 
       {/* Login Options Footer */}
@@ -75,8 +111,7 @@ function LoginOptions({ onClose }: { onClose: () => void }) {
   )
 }
 
-export const LoginAuthButtons = ({ scopeId }: { scopeId?: string }) => {
-  const { openModal } = useAuthModal()
+export const LoginAuthButtons = ({ setMode }: { setMode: (mode: AuthModalMode) => void }) => {
   const { t } = useTranslation('global-modal')
 
   return (
@@ -87,13 +122,13 @@ export const LoginAuthButtons = ({ scopeId }: { scopeId?: string }) => {
           icon="phone"
           iconClass="h-5 w-5 text-black"
           label={t('auth.continue_with_phone')}
-          onClick={() => openModal('phone-login', scopeId)}
+          onClick={() => setMode('phone-login')}
         />
         <AuthButton
           icon="email"
           iconClass="h-5 w-5"
           label={t('auth.continue_with_email')}
-          onClick={() => openModal('email-login', scopeId)}
+          onClick={() => setMode('email-login')}
         />
       </div>
       {/* Divider */}

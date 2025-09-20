@@ -10,8 +10,10 @@ import { useAuth } from 'src/providers/auth'
 import { useTheme } from 'src/providers/theme-mode'
 
 import { useHeader } from '../store'
-import { useAuthModal } from '@/features/modals/auth/store'
 import { useSystemSettings } from '@/features/modals/system-settings/store'
+import { useGlobalModalStore } from '@/features/modals/global/store'
+import { AuthModalComponent } from '@/features/modals/auth/modal'
+import { SystemSettingsModalComponent } from '@/features/modals/system-settings/modal'
 
 export function ProfileButton() {
   const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null)
@@ -19,7 +21,7 @@ export function ProfileButton() {
   const dropdownRef = useClickOutside<HTMLDivElement>(closeDropdown, true, buttonRef)
   const { t } = useTranslation()
 
-  const { openModal: openAuthModal } = useAuthModal()
+  const { open: openGlobalModal } = useGlobalModalStore()
   const { isProfileOpen, setProfileOpen } = useHeader()
   const { sessionStatus, user, logout } = useAuth()
 
@@ -93,10 +95,7 @@ export function ProfileButton() {
                 className="w-72 border border-gray-200 bg-box-surface shadow-lg data-[visible=true]:pointer-events-auto"
               >
                 {sessionStatus === 'unauthenticated' ? (
-                  <UnauthorizeDropdownContent
-                    openAuthModal={openAuthModal}
-                    closeDropdown={closeDropdown}
-                  />
+                  <UnauthorizeDropdownContent closeDropdown={closeDropdown} />
                 ) : (
                   <AuthorizeDropdownContent
                     user={user}
@@ -113,8 +112,9 @@ export function ProfileButton() {
   )
 }
 
-function UnauthorizeDropdownContent({ openAuthModal, closeDropdown }: any) {
-  const { openModal: openSystemSettingsModal, currency } = useSystemSettings()
+function UnauthorizeDropdownContent({ closeDropdown }: { closeDropdown: () => void }) {
+  const { open } = useGlobalModalStore()
+  const { currency } = useSystemSettings()
   const { language } = useLanguage()
   const { theme } = useTheme()
   const { t } = useTranslation()
@@ -124,7 +124,7 @@ function UnauthorizeDropdownContent({ openAuthModal, closeDropdown }: any) {
       <MenuItem
         label={t('layout-header:profile.login_register')}
         onClick={() => {
-          openAuthModal('login')
+          open(AuthModalComponent, { mode: 'login' })
           closeDropdown()
         }}
         showChevron
@@ -134,7 +134,7 @@ function UnauthorizeDropdownContent({ openAuthModal, closeDropdown }: any) {
         label={t('global-modal:settings.language')}
         value={language.label}
         onClick={() => {
-          openSystemSettingsModal('language')
+          open(SystemSettingsModalComponent, { mode: 'language' })
           closeDropdown()
         }}
         showChevron
@@ -145,7 +145,7 @@ function UnauthorizeDropdownContent({ openAuthModal, closeDropdown }: any) {
         label={t('global-modal:settings.currency')}
         value={currency.name}
         onClick={() => {
-          openSystemSettingsModal('currency')
+          open(SystemSettingsModalComponent, { mode: 'currency' })
           closeDropdown()
         }}
         showChevron
@@ -155,7 +155,7 @@ function UnauthorizeDropdownContent({ openAuthModal, closeDropdown }: any) {
         label={t('global-modal:settings.theme')}
         value={t(`global-modal:settings.${theme}_theme`)}
         onClick={() => {
-          openSystemSettingsModal('theme')
+          open(SystemSettingsModalComponent, { mode: 'theme' })
           closeDropdown()
         }}
         showChevron
@@ -166,8 +166,17 @@ function UnauthorizeDropdownContent({ openAuthModal, closeDropdown }: any) {
   )
 }
 
-function AuthorizeDropdownContent({ user, logout, closeDropdown }: any) {
-  const { openModal: openSystemSettingsModal, currency } = useSystemSettings()
+function AuthorizeDropdownContent({
+  user,
+  logout,
+  closeDropdown,
+}: {
+  user: any
+  logout: () => void
+  closeDropdown: () => void
+}) {
+  const { open } = useGlobalModalStore()
+  const { currency } = useSystemSettings()
   const { language } = useLanguage()
   const { theme } = useTheme()
   const { t } = useTranslation()
@@ -194,7 +203,7 @@ function AuthorizeDropdownContent({ user, logout, closeDropdown }: any) {
         label={t('global-modal:settings.language')}
         value={language.label}
         onClick={() => {
-          openSystemSettingsModal('language')
+          open(SystemSettingsModalComponent, { mode: 'language' })
           closeDropdown()
         }}
         showChevron
@@ -203,7 +212,7 @@ function AuthorizeDropdownContent({ user, logout, closeDropdown }: any) {
         label={t('global-modal:settings.currency')}
         value={currency.name}
         onClick={() => {
-          openSystemSettingsModal('currency')
+          open(SystemSettingsModalComponent, { mode: 'currency' })
           closeDropdown()
         }}
         showChevron
@@ -212,7 +221,7 @@ function AuthorizeDropdownContent({ user, logout, closeDropdown }: any) {
         label={t('global-modal:settings.theme')}
         value={t(`global-modal:settings.${theme}_theme`)}
         onClick={() => {
-          openSystemSettingsModal('theme')
+          open(SystemSettingsModalComponent, { mode: 'theme' })
           closeDropdown()
         }}
         showChevron
@@ -223,7 +232,21 @@ function AuthorizeDropdownContent({ user, logout, closeDropdown }: any) {
   )
 }
 
-function MenuItem({ label, description, value, onClick, showChevron, control }: any) {
+function MenuItem({
+  label,
+  description,
+  value,
+  onClick,
+  showChevron,
+  control,
+}: {
+  label: string
+  description?: string
+  value?: string
+  onClick: () => void
+  showChevron?: boolean
+  control?: React.ReactNode
+}) {
   return (
     <button
       onClick={onClick}
@@ -246,8 +269,8 @@ function MenuItem({ label, description, value, onClick, showChevron, control }: 
   )
 }
 
-function MobileAppDownload({ closeDropdown }: any) {
-  const { t } = useTranslation('global-modal')
+function MobileAppDownload({ closeDropdown }: { closeDropdown: () => void }) {
+  const { t } = useTranslation('layout-header')
 
   return (
     <button
@@ -262,12 +285,8 @@ function MobileAppDownload({ closeDropdown }: any) {
       }}
     >
       <div className="flex flex-col gap-y-1">
-        <h6 className="font-semibold text-primary-500">
-          {t('layout-header:profile.download_app')}
-        </h6>
-        <p className="text-size-sm text-gray-600">
-          {t('layout-header:profile.download_app_description')}
-        </p>
+        <h6 className="font-semibold text-primary-500">{t('profile.download_app')}</h6>
+        <p className="text-size-sm text-gray-600">{t('profile.download_app_description')}</p>
       </div>
       <ChevronRight size={18} className="shrink-0 text-black" />
     </button>

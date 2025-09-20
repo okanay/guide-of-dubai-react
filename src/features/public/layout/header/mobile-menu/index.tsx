@@ -1,4 +1,3 @@
-import { LoginAuthButtons, LoginTermsText } from '@/features/modals/auth/modal'
 import { useMediaQuery } from '@/hooks/use-media-query'
 import { useAuth } from '@/providers/auth'
 import { X } from 'lucide-react'
@@ -7,6 +6,10 @@ import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import { useMobileMenu } from './store'
 import { modalManager } from '@/features/modals/global/manager'
+import { useGlobalModalStore } from '@/features/modals/global/store'
+import { AuthModalComponent } from '@/features/modals/auth/modal'
+import { LoginTermsText } from '@/features/modals/auth/modal'
+import Icon from '@/components/icon'
 
 export function MobileMenu() {
   const { isOpen, closeMenu } = useMobileMenu()
@@ -30,7 +33,7 @@ export function MobileMenu() {
     if (isOpen) {
       modalManager.openModal('body')
     } else {
-      modalManager.closeModal()
+      modalManager.closeModal('body')
     }
   }, [isOpen])
 
@@ -81,6 +84,12 @@ export function MobileMenu() {
 function MenuContent() {
   const { sessionStatus, user, logout } = useAuth()
   const { t } = useTranslation(['layout-header', 'global-modal'])
+  const { open: openGlobalModal } = useGlobalModalStore()
+
+  // Auth modal açma fonksiyonu
+  const openAuthModal = async (mode = 'login') => {
+    await openGlobalModal(AuthModalComponent, { mode, closeOnLoginBack: true })
+  }
 
   return (
     <div className="space-y-6">
@@ -108,7 +117,7 @@ function MenuContent() {
           </div>
         ) : (
           <div className="flex flex-col gap-y-3">
-            <LoginAuthButtons scopeId="mobile-menu-container" />
+            <MobileLoginAuthButtons openAuthModal={openAuthModal} />
             <div className="text-start text-pretty">
               <LoginTermsText />
             </div>
@@ -116,5 +125,79 @@ function MenuContent() {
         )}
       </div>
     </div>
+  )
+}
+
+// Mobile için özel LoginAuthButtons bileşeni
+const MobileLoginAuthButtons = ({ openAuthModal }: { openAuthModal: (mode: string) => void }) => {
+  const { t } = useTranslation('global-modal')
+
+  return (
+    <div className="flex flex-col gap-y-2">
+      {/* Main Options */}
+      <div className="space-y-2">
+        <MobileAuthButton
+          icon="phone"
+          iconClass="h-5 w-5 text-black"
+          label={t('auth.continue_with_phone')}
+          onClick={() => openAuthModal('phone-login')}
+        />
+        <MobileAuthButton
+          icon="email"
+          iconClass="h-5 w-5"
+          label={t('auth.continue_with_email')}
+          onClick={() => openAuthModal('email-login')}
+        />
+      </div>
+      {/* Divider */}
+      <div className="flex items-center gap-x-2 py-2">
+        <div className="h-px flex-1 bg-gray-200" />
+        <span className="text-xs text-gray-500">{t('auth.or_divider')}</span>
+        <div className="h-px flex-1 bg-gray-200" />
+      </div>
+      {/* Social Options */}
+      <div className="space-y-2">
+        <MobileAuthButton
+          icon="socials/apple"
+          iconClass="h-5 w-5 text-black dark:invert"
+          label={t('auth.continue_with_apple')}
+          onClick={() => {}}
+        />
+        <MobileAuthButton
+          icon="socials/google"
+          iconClass="h-5 w-5"
+          label={t('auth.continue_with_google')}
+          onClick={() => {}}
+        />
+        <MobileAuthButton
+          icon="socials/facebook"
+          iconClass="h-5 w-5"
+          label={t('auth.continue_with_facebook')}
+          onClick={() => {}}
+        />
+      </div>
+    </div>
+  )
+}
+
+interface MobileAuthButtonProps {
+  icon: string
+  iconClass: string
+  label: string
+  onClick: () => void
+}
+
+function MobileAuthButton({ icon, iconClass, label, onClick }: MobileAuthButtonProps) {
+  return (
+    <button
+      onClick={onClick}
+      className="flex w-full items-center justify-between rounded-xs border border-gray-300 p-3 hover:bg-gray-50"
+    >
+      <div className="flex items-center gap-x-4">
+        <Icon name={icon} className={iconClass} />
+        <span className="font-semibold">{label}</span>
+      </div>
+      <Icon name="chevron-right" className="h-5 w-5 text-gray-400" />
+    </button>
   )
 }

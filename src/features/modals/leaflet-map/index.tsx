@@ -6,10 +6,6 @@ const LazyLocationMap = React.lazy(() =>
   import('./map-embeded').then((module) => ({ default: module.default })),
 )
 
-const LazyLeafletModal = React.lazy(() =>
-  import('./map-modal').then((module) => ({ default: module.LeafletModal })),
-)
-
 // Loading component
 export const MapLoadingFallback: React.FC = () => {
   return (
@@ -22,7 +18,7 @@ export const MapLoadingFallback: React.FC = () => {
   )
 }
 
-// SSR-safe LocationMap
+// SSR-safe LocationMap - Inline embedded maps
 export const LocationMap: React.FC<React.ComponentProps<typeof LazyLocationMap>> = (props) => {
   return (
     <ClientOnly fallback={<MapLoadingFallback />}>
@@ -33,13 +29,5 @@ export const LocationMap: React.FC<React.ComponentProps<typeof LazyLocationMap>>
   )
 }
 
-// SSR-safe LeafletModal
-export const LeafletModal: React.FC = () => {
-  return (
-    <ClientOnly fallback={null}>
-      <React.Suspense fallback={null}>
-        <LazyLeafletModal />
-      </React.Suspense>
-    </ClientOnly>
-  )
-}
+// LeafletModal - Original approach with ModalWrapper
+export { LeafletModal } from './modal'

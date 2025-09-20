@@ -1,4 +1,3 @@
-// InlineMap.tsx - Simple props-based map component
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useTheme } from '@/providers/theme-mode'

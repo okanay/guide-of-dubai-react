@@ -9,71 +9,28 @@ import { createContext, PropsWithChildren, useContext, useState } from 'react'
 import { createStore, StoreApi, useStore } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
-type ModalMode = 'main' | 'language' | 'currency' | 'theme'
-
-interface SystemSettingsModalState {
-  isOpen: boolean
-  scopeId: string | null
+interface SystemSettingsState {
   currency: Currency
-  mode: ModalMode
 }
 
-interface SystemSettingsModalActions {
-  openModal: (mode?: ModalMode, scopeId?: string) => void
-  closeModal: () => void
-  toggleModal: (mode?: ModalMode, scopeId?: string) => void
-  setScopeId: (scopeId: string | null) => void
+interface SystemSettingsActions {
   setCurrency: (currencyCode: CurrencyCode) => void
-  setMode: (mode: ModalMode) => void
 }
 
-type SystemSettingsModalStore = SystemSettingsModalState & SystemSettingsModalActions
+type SystemSettingsStore = SystemSettingsState & SystemSettingsActions
 
-interface SystemSettingsModalStoreProps extends PropsWithChildren {
+interface SystemSettingsStoreProps extends PropsWithChildren {
   initialCurrency?: Currency
 }
 
-export function SystemSettingsModalStore({
+export function SystemSettingsStore({
   children,
   initialCurrency = DEFAULT_CURRENCY,
-}: SystemSettingsModalStoreProps) {
+}: SystemSettingsStoreProps) {
   const [store] = useState(() =>
-    createStore<SystemSettingsModalStore>()(
-      immer((set, get) => ({
-        isOpen: false,
-        scopeId: null,
+    createStore<SystemSettingsStore>()(
+      immer((set) => ({
         currency: initialCurrency,
-        mode: 'main',
-
-        openModal: (mode = 'main', scopeId = 'body') => {
-          set((state) => {
-            state.isOpen = true
-            state.scopeId = scopeId
-            state.mode = mode
-          })
-        },
-
-        closeModal: () => {
-          set((state) => {
-            state.isOpen = false
-            state.scopeId = null
-          })
-        },
-
-        toggleModal: (mode = 'main', scopeId = 'body') => {
-          const { isOpen } = get()
-          if (isOpen) {
-            get().closeModal()
-          } else {
-            get().openModal(mode, scopeId)
-          }
-        },
-
-        setScopeId: (scopeId) => {
-          set((state) => {
-            state.scopeId = scopeId
-          })
-        },
 
         setCurrency: (currencyCode: CurrencyCode) => {
           const newCurrency = SUPPORTED_CURRENCIES.find(
@@ -96,30 +53,25 @@ export function SystemSettingsModalStore({
             document.documentElement.setAttribute('data-currency', newCurrency.code)
           }
         },
-        setMode: (mode) => {
-          set((state) => {
-            state.mode = mode
-          })
-        },
       })),
     ),
   )
 
   return (
-    <SystemSettingsModalStoreContext.Provider value={store}>
+    <SystemSettingsStoreContext.Provider value={store}>
       {children}
-    </SystemSettingsModalStoreContext.Provider>
+    </SystemSettingsStoreContext.Provider>
   )
 }
 
-const SystemSettingsModalStoreContext = createContext<
-  StoreApi<SystemSettingsModalStore> | undefined
->(undefined)
+const SystemSettingsStoreContext = createContext<StoreApi<SystemSettingsStore> | undefined>(
+  undefined,
+)
 
 export function useSystemSettings() {
-  const context = useContext(SystemSettingsModalStoreContext)
+  const context = useContext(SystemSettingsStoreContext)
   if (!context) {
-    throw new Error('useSystemSettingsModal must be used within SystemSettingsModalStore')
+    throw new Error('useSystemSettingsStore must be used within SystemSettingsStore')
   }
   return useStore(context, (state) => state)
 }
